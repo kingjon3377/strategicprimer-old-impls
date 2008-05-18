@@ -160,12 +160,16 @@ public class Map implements Serializable {
 	 * all but name.
 	 * 
 	 * @param _tiles
-	 * @throws InvalidActivityException
 	 */
-	// ESCA-JAVA0130:
-	@SuppressWarnings("unused")
-	public void setTiles(final Tile[][] _tiles) throws InvalidActivityException {
-		throw new InvalidActivityException(
-				"Can't substitute a new map array at runtime");
+	protected void setTiles(final Tile[][] _tiles) {
+		tiles = _tiles.clone();
+	}
+	
+	/**
+	 * To appease static analysis plugins, and Eclipse in general
+	 * @return the array of tiles
+	 */
+	protected Tile[][] getTiles() {
+		return tiles.clone();
 	}
 }

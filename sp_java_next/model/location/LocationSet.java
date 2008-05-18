@@ -29,6 +29,7 @@ public class LocationSet extends HashSet<Location> implements Location {
 
 	/**
 	 * @see model.location.Location#contains(model.module.Module)
+	 * @param module the module to search for.
 	 * @return whether the set contains the given module
 	 */
 	public boolean contains(final Module module) {
@@ -41,4 +42,26 @@ public class LocationSet extends HashSet<Location> implements Location {
 		return temp;
 	}
 
+	/**
+	 * Do not use this method -- call it on one of the members of the set.
+	 * @param module unused.
+	 */
+	public void add(@SuppressWarnings("unused")
+	final Module module) {
+		throw new IllegalStateException(
+				"Call add() on one of the members of a set of locations, not on the set itself.");
+	}
+	
+	/**
+	 * Removes the module from whichever of my children the module is in.
+	 * @param module The module to remove.
+	 */
+	public void remove(final Module module) {
+		for (Location loc : this) {
+			if (loc.contains(module)) {
+				loc.remove(module);
+				return;
+			}
+		}
+	}
 }

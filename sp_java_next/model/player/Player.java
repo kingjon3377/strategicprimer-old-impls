@@ -52,7 +52,7 @@ public class Player implements Serializable {
 	 *            The module that represents the player in the game-world.
 	 * 
 	 */
-	public Player(Module _associatedModule) {
+	public Player(final Module _associatedModule) {
 		associatedModule = _associatedModule;
 		forbiddenAdvances = new HashSet<Advance>();
 		advances = new HashSet<Advance>();
