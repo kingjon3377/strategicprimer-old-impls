@@ -1,6 +1,7 @@
 package model.main;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -78,7 +79,7 @@ public final class Game implements Serializable {
 	 * @return the teams in the game
 	 */
 	public Set<Side> getSides() {
-		return sides;
+		return Collections.unmodifiableSet(sides);
 	}
 
 	/**
@@ -86,5 +87,24 @@ public final class Game implements Serializable {
 	 */
 	public Map getMap() {
 		return map;
+	}
+	
+	// ESCA-JAVA0009:
+	/**
+	 * Setter method to appease static analysis plugins.
+	 * @param _sides ignored
+	 */
+	protected void setSides(final Set<Side> _sides) {
+		sides.addAll(_sides);
+	}
+	
+	// ESCA-JAVA0173:
+	/**
+	 * Setter method to appease static analysis plugins.
+	 * @param _map ignored
+	 */
+	protected void setMap(@SuppressWarnings("unused")
+	final Map _map) {
+		throw new IllegalStateException("Cannot insert a new map at runtime");
 	}
 }

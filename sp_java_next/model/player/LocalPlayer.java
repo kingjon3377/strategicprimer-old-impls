@@ -20,7 +20,7 @@ public class LocalPlayer extends Player {
 	 * @param name The player's "name"
 	 * @param associatedModule The module that represents the player in the game-world
 	 */
-	public LocalPlayer(String name, Module associatedModule) {
+	public LocalPlayer(final String name, final Module associatedModule) {
 		super(associatedModule);
 		setName(name);
 	}

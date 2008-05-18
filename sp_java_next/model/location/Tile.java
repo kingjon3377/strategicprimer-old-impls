@@ -3,6 +3,7 @@ package model.location;
 import java.awt.Point;
 
 import model.module.Module;
+import model.module.RootModule;
 
 /**
  * In a discrete 2D world, this is the most basic type of location possible.
@@ -13,12 +14,17 @@ public class Tile extends Point implements Location {
 
 	/**
 	 * Constructor, to make warnings go away
-	 * @param row The row the tile is in
-	 * @param col The column the tile is in
+	 * 
+	 * @param row
+	 *            The row the tile is in
+	 * @param col
+	 *            The column the tile is in
 	 */
 	public Tile(final int row, final int col) {
-		super(row,col);
+		super(row, col);
+		moduleOnTile = RootModule.getRootModule();
 	}
+
 	/**
 	 * Version UID.
 	 */
@@ -39,7 +45,7 @@ public class Tile extends Point implements Location {
 	 * The top-level module on the tile.
 	 */
 	private Module moduleOnTile;
-	
+
 	/**
 	 * @see model.location.Location#contains(model.module.Module)
 	 * 
@@ -49,10 +55,12 @@ public class Tile extends Point implements Location {
 	 * moving itself -- TODO: make some way of checking "is top-level for our
 	 * purposes" that doesn't exclude Buildings) has this tile as its Location.
 	 * 
+	 * @param module the module to search for.
 	 * @return whether the tile contains the given module
 	 */
 	public boolean contains(final Module module) {
-		return (module.isMobile() ? module.getLocation().equals(this) : contains(module.getParent()));
+		return (module.isMobile() ? module.getLocation().equals(this)
+				: contains(module.getParent()));
 	}
 
 	/**
@@ -63,9 +71,45 @@ public class Tile extends Point implements Location {
 	}
 
 	/**
-	 * @param _moduleOnTile the "top-level" module on the tile
+	 * @param _moduleOnTile
+	 *            the "top-level" module on the tile
 	 */
 	public void setModuleOnTile(final Module _moduleOnTile) {
 		this.moduleOnTile = _moduleOnTile;
+	}
+
+	/**
+	 * The interface-defined way of setting the module on the tile. TODO: Should
+	 * a tile be able to hold more than one?
+	 * 
+	 * @param module
+	 *            the module to put on the tile
+	 */
+	@Override
+	public void add(final Module module) {
+		if (moduleOnTile.equals(RootModule.getRootModule())) {
+			setModuleOnTile(module);
+		} else {
+			throw new IllegalStateException(
+					"There's already a module on this tile");
+		}
+	}
+
+	/**
+	 * If
+	 * 
+	 * @param module
+	 *            the module to remove
+	 * 
+	 * is the top-level module on the tile, remove it. Otherwise, object.
+	 */
+	@Override
+	public void remove(final Module module) {
+		if (moduleOnTile.equals(module)) {
+			moduleOnTile = RootModule.getRootModule();
+		} else {
+			throw new IllegalArgumentException(
+					"That isn't the top-level module on the tile!");
+		}
 	}
 }

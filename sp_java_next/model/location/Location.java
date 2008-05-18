@@ -34,4 +34,16 @@ public interface Location extends Serializable {
 	 *         false otherwise
 	 */
 	boolean contains(Module module);
+	
+	/**
+	 * Remove a module from the location.
+	 * @param module The module to be removed.
+	 */
+	void remove(Module module);
+	
+	/**
+	 * Add a module to the location.
+	 * @param module The module to be added.
+	 */
+	void add(Module module);
 }

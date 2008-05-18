@@ -27,6 +27,14 @@ public class Statistics implements Serializable {
 	 */
 	public enum Stats {
 		// TODO: Enumerate
+		/**
+		 * Hit points
+		 */
+		HP,
+		/**
+		 * Maximum hit points
+		 */
+		MAX_HP
 	}
 
 	/**

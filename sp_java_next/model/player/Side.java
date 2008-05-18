@@ -68,7 +68,7 @@ public class Side {
 	 * @param baseModule
 	 *            The root of the module tree.
 	 */
-	public Side(Module baseModule) {
+	public Side(final Module baseModule) {
 		forbiddenAdvances = new HashSet<Advance>();
 		universalAdvances = new HashSet<Advance>();
 		players = new HashSet<Player>();

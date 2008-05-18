@@ -28,7 +28,7 @@ public class AIPlayer extends Player {
 	 * @param associatedModule
 	 *            The module that represents this player in the game-world.
 	 */
-	public AIPlayer(Module associatedModule) {
+	public AIPlayer(final Module associatedModule) {
 		super(associatedModule);
 	}
 }
