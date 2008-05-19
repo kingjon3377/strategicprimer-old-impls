@@ -42,27 +42,6 @@ public class Side {
 	// 2/10/08 10:53 PM
 
 	/**
-	 * Discover an advance (all players on this side gain it)
-	 * 
-	 * @param advance
-	 *            The advance to discover
-	 */
-	public void discoverAdvance(final Advance advance) {
-		if (forbiddenAdvances.contains(advance)) {
-			throw new IllegalArgumentException(
-					"Side tried to discover a forbidden advance");
-		} else if (universalAdvances.contains(advance)) {
-			return;
-		} else {
-			universalAdvances.add(advance);
-			for (Player p : players) {
-				p.discoverAdvance(advance);
-			}
-			advance.normativeEffect(moduleTree);
-		}
-	}
-
-	/**
 	 * Constructor
 	 * 
 	 * @param baseModule
@@ -76,27 +55,24 @@ public class Side {
 	}
 
 	/**
-	 * @return the root of the module tree
+	 * Discover an advance (all players on this side gain it)
+	 * 
+	 * @param advance
+	 *            The advance to discover
 	 */
-	public Module getModuleTree() {
-		return moduleTree;
-	}
-
-	/**
-	 * @param _moduleTree
-	 *            the root of the module tree TODO: Sanity checking here ...
-	 */
-	public void setModuleTree(final Module _moduleTree) {
-		moduleTree = _moduleTree;
-	}
-
-	/**
-	 * @param getter
-	 *            a set to turn into the players on this side
-	 */
-	public void getPlayers(final Set<Player> getter) {
-		getter.addAll(players);
-		getter.retainAll(players);
+	public void discoverAdvance(final Advance advance) {
+		if (forbiddenAdvances.contains(advance)) {
+			throw new IllegalArgumentException(
+					"Side tried to discover a forbidden advance");
+		} else if (universalAdvances.contains(advance)) {
+			return;
+		} else {
+			universalAdvances.add(advance);
+			for (final Player p : players) {
+				p.discoverAdvance(advance);
+			}
+			advance.normativeEffect(moduleTree);
+		}
 	}
 
 	/**
@@ -110,6 +86,22 @@ public class Side {
 	}
 
 	/**
+	 * @return the root of the module tree
+	 */
+	public Module getModuleTree() {
+		return moduleTree;
+	}
+
+	/**
+	 * @param getter
+	 *            a set to turn into the players on this side
+	 */
+	public void getPlayers(final Set<Player> getter) {
+		getter.addAll(players);
+		getter.retainAll(players);
+	}
+
+	/**
 	 * @param getter
 	 *            becomes the set of the advances all players on this side
 	 *            automatically have
@@ -117,5 +109,13 @@ public class Side {
 	public void getUniversalAdvances(final Set<Advance> getter) {
 		getter.addAll(universalAdvances);
 		getter.retainAll(universalAdvances);
+	}
+
+	/**
+	 * @param _moduleTree
+	 *            the root of the module tree TODO: Sanity checking here ...
+	 */
+	public void setModuleTree(final Module _moduleTree) {
+		moduleTree = _moduleTree;
 	}
 }

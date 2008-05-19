@@ -16,6 +16,14 @@ import model.module.Module;
  */
 public interface Location extends Serializable {
 	/**
+	 * Add a module to the location.
+	 * 
+	 * @param module
+	 *            The module to be added.
+	 */
+	void add(Module module);
+
+	/**
 	 * Does this location contain another?
 	 * 
 	 * @param location
@@ -34,16 +42,12 @@ public interface Location extends Serializable {
 	 *         false otherwise
 	 */
 	boolean contains(Module module);
-	
+
 	/**
 	 * Remove a module from the location.
-	 * @param module The module to be removed.
+	 * 
+	 * @param module
+	 *            The module to be removed.
 	 */
 	void remove(Module module);
-	
-	/**
-	 * Add a module to the location.
-	 * @param module The module to be added.
-	 */
-	void add(Module module);
 }

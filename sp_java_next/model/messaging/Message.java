@@ -13,17 +13,6 @@ package model.messaging;
  */
 public class Message {
 	/**
-	 * "Time" the message arrived
-	 */
-	protected final long arrivalTime; // NOPMD by kingjon on 2/10/08 10:03 PM
-
-	/**
-	 * "Time" the message is intended to be dealt with (usually the same as the
-	 * arrival time unless it's an order)
-	 */
-	protected long targetTime = 0;
-
-	/**
 	 * The various priorities I can think of TODO: evaluate this decision
 	 * 
 	 * @author Jonathan Lovelace
@@ -76,6 +65,17 @@ public class Message {
 	}
 
 	/**
+	 * "Time" the message arrived
+	 */
+	protected final long arrivalTime; // NOPMD by kingjon on 2/10/08 10:03 PM
+
+	/**
+	 * "Time" the message is intended to be dealt with (usually the same as the
+	 * arrival time unless it's an order)
+	 */
+	protected long targetTime = 0;
+
+	/**
 	 * Message priority. Messages are ordered first by targetTime, then by
 	 * arrivalTime, then by priority. (Those last two might be switched, but the
 	 * algorithm for dealing with messages a module isn't ready to handle
@@ -107,18 +107,10 @@ public class Message {
 	}
 
 	/**
-	 * @return the time at which the message should be dealt with
+	 * @return the time the message arrived
 	 */
-	public long getTargetTime() {
-		return targetTime;
-	}
-
-	/**
-	 * @param _targetTime
-	 *            the time at which the message should be dealt with
-	 */
-	public void setTargetTime(final long _targetTime) {
-		this.targetTime = _targetTime;
+	public long getArrivalTime() {
+		return arrivalTime;
 	}
 
 	/**
@@ -126,6 +118,13 @@ public class Message {
 	 */
 	public Priority getPriority() {
 		return priority;
+	}
+
+	/**
+	 * @return the time at which the message should be dealt with
+	 */
+	public long getTargetTime() {
+		return targetTime;
 	}
 
 	/**
@@ -137,9 +136,10 @@ public class Message {
 	}
 
 	/**
-	 * @return the time the message arrived
+	 * @param _targetTime
+	 *            the time at which the message should be dealt with
 	 */
-	public long getArrivalTime() {
-		return arrivalTime;
+	public void setTargetTime(final long _targetTime) {
+		this.targetTime = _targetTime;
 	}
 }

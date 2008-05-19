@@ -29,25 +29,6 @@ public final class Game implements Serializable {
 	 */
 	private static final long serialVersionUID = -3912749657208931450L;
 	/**
-	 * All the teams in the game.
-	 */
-	private final Set<Side> sides; 
-
-	/**
-	 * The main map the game takes place on. Long-range TODO: Is this really the
-	 * best way to do this (given that various levels needed)?
-	 */
-	private final Map map;
-
-	/**
-	 * Constructor
-	 */
-	private Game() {
-		sides = new HashSet<Side>();
-		map = new Map();
-	}
-
-	/**
 	 * The game object
 	 */
 	private static Game theGame;
@@ -55,12 +36,31 @@ public final class Game implements Serializable {
 	static {
 		theGame = new Game();
 	}
-	
+
 	/**
 	 * @return The game object
 	 */
 	public static Game getGame() {
 		return theGame;
+	}
+
+	/**
+	 * All the teams in the game.
+	 */
+	private final Set<Side> sides; // NOPMD by kingjon on 5/19/08 4:29 PM
+
+	/**
+	 * The main map the game takes place on. Long-range TODO: Is this really the
+	 * best way to do this (given that various levels needed)?
+	 */
+	private final Map map; // NOPMD by kingjon on 5/19/08 4:29 PM
+
+	/**
+	 * Constructor
+	 */
+	private Game() {
+		sides = new HashSet<Side>();
+		map = new Map();
 	}
 
 	/**
@@ -74,37 +74,18 @@ public final class Game implements Serializable {
 	}
 
 	/**
+	 * @return the map
+	 */
+	public Map getMap() {
+		return map;
+	}
+
+	/**
 	 * Accessor.
 	 * 
 	 * @return the teams in the game
 	 */
 	public Set<Side> getSides() {
 		return Collections.unmodifiableSet(sides);
-	}
-
-	/**
-	 * @return the map
-	 */
-	public Map getMap() {
-		return map;
-	}
-	
-	// ESCA-JAVA0009:
-	/**
-	 * Setter method to appease static analysis plugins.
-	 * @param _sides ignored
-	 */
-	protected void setSides(final Set<Side> _sides) {
-		sides.addAll(_sides);
-	}
-	
-	// ESCA-JAVA0173:
-	/**
-	 * Setter method to appease static analysis plugins.
-	 * @param _map ignored
-	 */
-	protected void setMap(@SuppressWarnings("unused")
-	final Map _map) {
-		throw new IllegalStateException("Cannot insert a new map at runtime");
 	}
 }

@@ -16,18 +16,6 @@ import model.module.Module;
 public final class NullLocation implements Location {
 
 	/**
-	 * The modules in the null location.
-	 */
-	private final transient Set<Module> members;
-
-	/**
-	 * Private to allow Singleton pattern.
-	 */
-	private NullLocation() {
-		members = new HashSet<Module>();
-	}
-
-	/**
 	 * The one null location.
 	 */
 	private static NullLocation nloc;
@@ -36,6 +24,11 @@ public final class NullLocation implements Location {
 	 * A lock to synchronize on (to avoid a synchronized method)
 	 */
 	private static Lock lock = new ReentrantLock();
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 4346702324428423006L;
 
 	/**
 	 * @return the null location.
@@ -50,9 +43,24 @@ public final class NullLocation implements Location {
 	}
 
 	/**
-	 * 
+	 * The modules in the null location.
 	 */
-	private static final long serialVersionUID = 4346702324428423006L;
+	private final transient Set<Module> members;
+
+	/**
+	 * Private to allow Singleton pattern.
+	 */
+	private NullLocation() {
+		members = new HashSet<Module>();
+	}
+
+	/**
+	 * Do nothing -- this is the null location.
+	 */
+	@Override
+	public void add(final Module module) {
+		members.add(module);
+	}
 
 	/**
 	 * The null location contains no other locations, so
@@ -73,14 +81,6 @@ public final class NullLocation implements Location {
 	@Override
 	public boolean contains(final Module module) {
 		return members.contains(module);
-	}
-
-	/**
-	 * Do nothing -- this is the null location.
-	 */
-	@Override
-	public void add(final Module module) {
-		members.add(module);
 	}
 
 	/**

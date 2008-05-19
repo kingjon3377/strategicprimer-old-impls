@@ -17,8 +17,11 @@ public class LocalPlayer extends Player {
 
 	/**
 	 * Constructor. Decisions here only made to make warnings go away
-	 * @param name The player's "name"
-	 * @param associatedModule The module that represents the player in the game-world
+	 * 
+	 * @param name
+	 *            The player's "name"
+	 * @param associatedModule
+	 *            The module that represents the player in the game-world
 	 */
 	public LocalPlayer(final String name, final Module associatedModule) {
 		super(associatedModule);

@@ -2,6 +2,7 @@ package model.module;
 
 /**
  * Thrown when a module is unable to move.
+ * 
  * @author Jonathan Lovelace
  */
 public class UnableToMoveException extends Exception {
@@ -13,9 +14,10 @@ public class UnableToMoveException extends Exception {
 
 	/**
 	 * @see Exception#Exception(String)
-	 * @param message a message describing the circumstances
+	 * @param message
+	 *            a message describing the circumstances
 	 */
-	public UnableToMoveException(String message) {
+	public UnableToMoveException(final String message) {
 		super(message);
 	}
 }

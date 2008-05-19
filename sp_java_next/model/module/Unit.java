@@ -28,18 +28,17 @@ public interface Unit {
 	 * @throws UnableToMoveException
 	 *             if we can't move.
 	 */
-//	public void move(final Location loc) throws UnableToMoveException {
-//		if (!isMobile()) {
-//			throw new UnableToMoveException("I'm not able to move!");
-//		}
-//		if (location == null) {
-//			throw new UnableToMoveException("I don't know where I am!");
-//		}
-//		if (!topLevel) {
-//			throw new UnableToMoveException(
-//					"Not a top-level module; use parent instead");
-//		}
-//		location = loc;
-//	}
-
+	// public void move(final Location loc) throws UnableToMoveException {
+	// if (!isMobile()) {
+	// throw new UnableToMoveException("I'm not able to move!");
+	// }
+	// if (location == null) {
+	// throw new UnableToMoveException("I don't know where I am!");
+	// }
+	// if (!topLevel) {
+	// throw new UnableToMoveException(
+	// "Not a top-level module; use parent instead");
+	// }
+	// location = loc;
+	// }
 }

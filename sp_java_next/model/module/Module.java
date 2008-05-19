@@ -4,26 +4,20 @@ import model.location.Location;
 
 /**
  * A module in the game.
+ * 
  * @author Jonathan Lovelace
  */
 public interface Module {
 
 	/**
-	 * Take an attack from a specified module.
-	 * 
-	 * @see Weapon#attack(Module)
-	 * @param attacker
-	 *            The attacker
+	 * @return The module's location
 	 */
-	void takeAttack(Weapon attacker);
+	Location getLocation();
 
 	/**
-	 * Execute upkeep functions. Should pass this on to submodules.
-	 * 
-	 * @param interval
-	 *            How long it's been since the last time upkeep was executed.
+	 * @return the module's parent in the tree
 	 */
-	void upkeep(long interval);
+	Module getParent();
 
 	/**
 	 * @return whether the module is able to move
@@ -43,13 +37,20 @@ public interface Module {
 	boolean isTopLevel();
 
 	/**
-	 * @return The module's location
+	 * Take an attack from a specified module.
+	 * 
+	 * @see Weapon#attack(Module)
+	 * @param attacker
+	 *            The attacker
 	 */
-	Location getLocation();
+	void takeAttack(Weapon attacker);
 
 	/**
-	 * @return the module's parent in the tree
+	 * Execute upkeep functions. Should pass this on to submodules.
+	 * 
+	 * @param interval
+	 *            How long it's been since the last time upkeep was executed.
 	 */
-	Module getParent();
+	void upkeep(long interval);
 
 }

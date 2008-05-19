@@ -6,8 +6,9 @@ import javax.swing.JPanel;
 
 /**
  * A panel to show the initiative queue.
+ * 
  * @author Jonathan Lovelace
- *
+ * 
  */
 public class InitiativeQueue extends JPanel {
 	/**

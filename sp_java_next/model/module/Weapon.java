@@ -11,21 +11,13 @@ import java.io.Serializable;
  */
 public interface Weapon extends Serializable {
 	/**
-	 * How much damage is the attack likely to do?
-	 * 
-	 * @param target
-	 *            The module we might be attacking
-	 * @return The projected damage
-	 */
-	int projectedDamage(Module target);
-
-	/**
 	 * Actually make the attack
 	 * 
 	 * @param target
 	 *            The module we're attacking
 	 */
 	void attack(Module target);
+
 	/**
 	 * Attack the specified Module. If I can attack directly (or my weapons are
 	 * inferior to my direct-attack capability), do so; otherwise pass this on
@@ -52,10 +44,17 @@ public interface Weapon extends Serializable {
 	 * 
 	 * weapon = ac; } }
 	 * 
-	 * if (weapon != null) { weapon.attack(target); } 
-	 * 
-	 * // TODO: Make and send a result, since this method is void.
-	 * 
-	 * }
+	 * if (weapon != null) { weapon.attack(target); }
+	 *  // TODO: Make and send a result, since this method is void.
+	 *  }
 	 */
+
+	/**
+	 * How much damage is the attack likely to do?
+	 * 
+	 * @param target
+	 *            The module we might be attacking
+	 * @return The projected damage
+	 */
+	int projectedDamage(Module target);
 }

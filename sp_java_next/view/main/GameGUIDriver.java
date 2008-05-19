@@ -8,7 +8,6 @@ import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 
 import model.main.Game;
-
 import view.map.GUIMap;
 import view.map.MiniMap;
 import view.module.CurrentModulePanel;
@@ -30,10 +29,19 @@ public class GameGUIDriver extends JFrame {
 	private static GameGUIDriver gui;
 
 	/**
+	 * @param args
+	 */
+	public static void main(final String[] args) {
+		gui = new GameGUIDriver();
+		gui.run();
+	}
+
+	/**
 	 * The window's menu. TODO: Should this be made its own class, hiding the
 	 * initialization details?
 	 */
 	private transient JMenuBar menu;
+
 	/**
 	 * The main map
 	 */
@@ -43,23 +51,15 @@ public class GameGUIDriver extends JFrame {
 	 * The panel showing the initiative queue.
 	 */
 	private transient InitiativeQueue initQueue;
-
 	/**
 	 * The panel showing the current module.
 	 */
 	private transient CurrentModulePanel modulePanel;
+
 	/**
 	 * The mini-map
 	 */
 	private transient MiniMap miniMap;
-
-	/**
-	 * @param args
-	 */
-	public static void main(final String[] args) {
-		gui = new GameGUIDriver();
-		gui.run();
-	}
 
 	/**
 	 * Constructor.
@@ -82,6 +82,20 @@ public class GameGUIDriver extends JFrame {
 	}
 
 	/**
+	 * @param inStream
+	 *            The stream
+	 * @throws IOException
+	 *             When caught
+	 * @throws ClassNotFoundException
+	 *             When caught
+	 */
+	private void readObject(final ObjectInputStream inStream)
+			throws IOException, ClassNotFoundException {
+		inStream.defaultReadObject();
+		constructor();
+	}
+
+	/**
 	 * The main loop.
 	 */
 	private void run() {
@@ -91,20 +105,6 @@ public class GameGUIDriver extends JFrame {
 		modulePanel.getActionMap();
 		miniMap.getActionMap();
 		initQueue.getActionMap();
-	}
-
-	/**
-	 * @param inStream
-	 *            The stream
-	 * @throws IOException
-	 *             When caught
-	 * @throws ClassNotFoundException
-	 *             When caught
-	 */
-	private void readObject(final ObjectInputStream inStream) throws IOException,
-			ClassNotFoundException {
-		inStream.defaultReadObject();
-		constructor();
 	}
 
 	/**

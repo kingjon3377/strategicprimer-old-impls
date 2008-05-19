@@ -19,6 +19,18 @@ public class LocationSet extends HashSet<Location> implements Location {
 	private static final long serialVersionUID = 932215871788666938L;
 
 	/**
+	 * Do not use this method -- call it on one of the members of the set.
+	 * 
+	 * @param module
+	 *            unused.
+	 */
+	public void add(@SuppressWarnings("unused")
+	final Module module) {
+		throw new IllegalStateException(
+				"Call add() on one of the members of a set of locations, not on the set itself.");
+	}
+
+	/**
 	 * @see model.location.Location#contains(model.location.Location)
 	 * @return whether the set contains the given location.
 	 */
@@ -29,13 +41,14 @@ public class LocationSet extends HashSet<Location> implements Location {
 
 	/**
 	 * @see model.location.Location#contains(model.module.Module)
-	 * @param module the module to search for.
+	 * @param module
+	 *            the module to search for.
 	 * @return whether the set contains the given module
 	 */
 	public boolean contains(final Module module) {
 		// TODO Auto-generated method stub
-		boolean temp = false;
-		for (Location loc : this) {
+		boolean temp = false; // NOPMD by kingjon on 5/19/08 12:26 AM
+		for (final Location loc : this) {
 			// ESCA-JAVA0119:
 			temp = temp || loc.contains(module);
 		}
@@ -43,21 +56,13 @@ public class LocationSet extends HashSet<Location> implements Location {
 	}
 
 	/**
-	 * Do not use this method -- call it on one of the members of the set.
-	 * @param module unused.
-	 */
-	public void add(@SuppressWarnings("unused")
-	final Module module) {
-		throw new IllegalStateException(
-				"Call add() on one of the members of a set of locations, not on the set itself.");
-	}
-	
-	/**
 	 * Removes the module from whichever of my children the module is in.
-	 * @param module The module to remove.
+	 * 
+	 * @param module
+	 *            The module to remove.
 	 */
 	public void remove(final Module module) {
-		for (Location loc : this) {
+		for (final Location loc : this) {
 			if (loc.contains(module)) {
 				loc.remove(module);
 				return;

@@ -10,19 +10,15 @@ import java.util.Map;
  * remaining power) need to be encapsulated.
  * 
  * TODO: Should this extend Map<Stats,Number> rather than having one?
- *
+ * 
  * @author Jonathan Lovelace
- *
+ * 
  */
 public class Statistics implements Serializable {
 
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -4949435769559622883L;
-
-	/**
 	 * The possible statistics. Not all modules will have all of them.
+	 * 
 	 * @author Jonathan Lovelace
 	 */
 	public enum Stats {
@@ -38,15 +34,21 @@ public class Statistics implements Serializable {
 	}
 
 	/**
-	 * The statistics
+	 * 
 	 */
-	protected final Map<Stats, Number> stats; // NOPMD by kingjon on 2/10/08 10:49 PM
+	private static final long serialVersionUID = -4949435769559622883L;
 
 	/**
-	 * Constructor. 
+	 * The statistics
+	 */
+	protected final Map<Stats, Number> stats; // NOPMD by kingjon on 2/10/08
+												// 10:49 PM
+
+	/**
+	 * Constructor.
 	 */
 	public Statistics() {
-		stats = new EnumMap<Stats,Number>(Stats.class);
+		stats = new EnumMap<Stats, Number>(Stats.class);
 	}
 
 	/**

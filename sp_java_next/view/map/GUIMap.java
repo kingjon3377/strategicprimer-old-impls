@@ -61,37 +61,10 @@ public class GUIMap extends JPanel {
 	}
 
 	/**
-	 * @param row
-	 *            the row number
-	 * @param col
-	 *            the column number
+	 * @return the cols
 	 */
-	private void initializeTile(final int row, final int col) {
-		tiles[row][col] = new GUITile();
-	}
-
-	/**
-	 * TODO: Is this really needed?
-	 * 
-	 * @param row
-	 *            A row number
-	 * @param col
-	 *            A column number
-	 * @return The tile at that position
-	 */
-	public GUITile tileAt(final int row, final int col) {
-		return tiles[row][col];
-	}
-	// ESCA-JAVA0173:
-	/**
-	 * To make static analysis plugins happy despite rows being final in all but name
-	 * @param _rows
-	 * @throws InvalidActivityException
-	 */
-	public void setRows(@SuppressWarnings("unused")
-	final int _rows) throws InvalidActivityException {
-		throw new InvalidActivityException(
-				"Size of a map cannot be changed at runtime");
+	public int getCols() {
+		return cols;
 	}
 
 	/**
@@ -102,23 +75,13 @@ public class GUIMap extends JPanel {
 	}
 
 	/**
-	 * @return the cols
+	 * @param row
+	 *            the row number
+	 * @param col
+	 *            the column number
 	 */
-	public int getCols() {
-		return cols;
-	}
-
-	/**
-	 * To make the static analysis plugins happy despite cols being final in all
-	 * but name.
-	 * 
-	 * @param _cols
-	 * @throws InvalidActivityException
-	 */
-	public void setCols(@SuppressWarnings("unused")
-	final int _cols) throws InvalidActivityException {
-		throw new InvalidActivityException(
-				"Size of a map cannot be changed at runtime");
+	private void initializeTile(final int row, final int col) {
+		tiles[row][col] = new GUITile();
 	}
 
 	/**
@@ -133,6 +96,47 @@ public class GUIMap extends JPanel {
 			throws IOException, ClassNotFoundException {
 		inStream.defaultReadObject();
 		constructor(rows, cols);
+	}
+
+	// ESCA-JAVA0173:
+	/**
+	 * To make the static analysis plugins happy despite cols being final in all
+	 * but name.
+	 * 
+	 * @param _cols
+	 * @throws InvalidActivityException
+	 */
+	public void setCols(@SuppressWarnings("unused")
+	final int _cols) throws InvalidActivityException {
+		throw new InvalidActivityException(
+				"Size of a map cannot be changed at runtime");
+	}
+
+	// ESCA-JAVA0173:
+	/**
+	 * To make static analysis plugins happy despite rows being final in all but
+	 * name
+	 * 
+	 * @param _rows
+	 * @throws InvalidActivityException
+	 */
+	public void setRows(@SuppressWarnings("unused")
+	final int _rows) throws InvalidActivityException {
+		throw new InvalidActivityException(
+				"Size of a map cannot be changed at runtime");
+	}
+
+	/**
+	 * TODO: Is this really needed?
+	 * 
+	 * @param row
+	 *            A row number
+	 * @param col
+	 *            A column number
+	 * @return The tile at that position
+	 */
+	public GUITile tileAt(final int row, final int col) {
+		return tiles[row][col];
 	}
 
 	/**
