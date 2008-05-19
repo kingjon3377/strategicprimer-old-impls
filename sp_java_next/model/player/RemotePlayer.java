@@ -28,14 +28,17 @@ public class RemotePlayer extends Player implements Serializable {
 
 	/**
 	 * Constructor. Decisions made only to make warnings go away.
-	 * @param address The IP address of the player
-	 * @param associatedModule The module that represents the player in the game-world
+	 * 
+	 * @param address
+	 *            The IP address of the player
+	 * @param associatedModule
+	 *            The module that represents the player in the game-world
 	 */
 	public RemotePlayer(final InetAddress address, final Module associatedModule) {
 		super(associatedModule);
 		ipAddress = address;
 	}
-	
+
 	/**
 	 * @return The IP address of the player
 	 */

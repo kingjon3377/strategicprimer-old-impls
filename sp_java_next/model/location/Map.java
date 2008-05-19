@@ -72,14 +72,6 @@ public class Map implements Serializable {
 	}
 
 	/**
-	 * @param row
-	 * @param col
-	 */
-	private void initializeTile(final int row, final int col) {
-		tiles[row][col] = new Tile(row, col);
-	}
-
-	/**
 	 * @return the number of columns wide this map is
 	 */
 	public int getSizeCols() {
@@ -105,6 +97,23 @@ public class Map implements Serializable {
 	}
 
 	/**
+	 * To appease static analysis plugins, and Eclipse in general
+	 * 
+	 * @return the array of tiles
+	 */
+	protected Tile[][] getTiles() {
+		return tiles.clone();
+	}
+
+	/**
+	 * @param row
+	 * @param col
+	 */
+	private void initializeTile(final int row, final int col) {
+		tiles[row][col] = new Tile(row, col);
+	}
+
+	/**
 	 * @param inStream
 	 *            The stream
 	 * @throws IOException
@@ -116,15 +125,6 @@ public class Map implements Serializable {
 			throws IOException, ClassNotFoundException {
 		inStream.defaultReadObject();
 		constructor(sizeRows, sizeCols);
-	}
-
-	/**
-	 * @param out
-	 *            the stream
-	 * @throws IOException
-	 */
-	private void writeObject(final ObjectOutputStream out) throws IOException {
-		out.defaultWriteObject();
 	}
 
 	// ESCA-JAVA0173:
@@ -164,12 +164,13 @@ public class Map implements Serializable {
 	protected void setTiles(final Tile[][] _tiles) {
 		tiles = _tiles.clone();
 	}
-	
+
 	/**
-	 * To appease static analysis plugins, and Eclipse in general
-	 * @return the array of tiles
+	 * @param out
+	 *            the stream
+	 * @throws IOException
 	 */
-	protected Tile[][] getTiles() {
-		return tiles.clone();
+	private void writeObject(final ObjectOutputStream out) throws IOException {
+		out.defaultWriteObject();
 	}
 }

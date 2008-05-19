@@ -13,9 +13,10 @@ public class CannotPerformActionException extends Exception {
 
 	/**
 	 * @see Exception#Exception(String)
-	 * @param message a message describing the circumstances
+	 * @param message
+	 *            a message describing the circumstances
 	 */
-	public CannotPerformActionException(String message) {
+	public CannotPerformActionException(final String message) {
 		super(message);
 	}
 }

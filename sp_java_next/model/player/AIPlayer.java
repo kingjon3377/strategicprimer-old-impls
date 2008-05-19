@@ -11,16 +11,16 @@ import model.module.Module;
  */
 public class AIPlayer extends Player {
 	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1310880988917379941L;
-
-	/**
 	 * Types of AIs.
 	 */
 	public enum AIType {
 		// TODO: Specify
 	}
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1310880988917379941L;
 
 	/**
 	 * Constructor

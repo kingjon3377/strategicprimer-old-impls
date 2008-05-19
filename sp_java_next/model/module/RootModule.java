@@ -25,6 +25,11 @@ public final class RootModule implements Module, Serializable {
 	private static Lock lock = new ReentrantLock();
 
 	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2504997378608944492L;
+
+	/**
 	 * @return The single root module of the tree.
 	 */
 	public static RootModule getRootModule() {
@@ -37,6 +42,11 @@ public final class RootModule implements Module, Serializable {
 	}
 
 	/**
+	 * This module's direct children
+	 */
+	private final transient Set<Module> children;
+
+	/**
 	 * Private because of singleton pattern.
 	 */
 	private RootModule() {
@@ -44,14 +54,14 @@ public final class RootModule implements Module, Serializable {
 	}
 
 	/**
+	 * Add a module as a child.
 	 * 
+	 * @param child
+	 *            The new child
 	 */
-	private static final long serialVersionUID = -2504997378608944492L;
-
-	/**
-	 * This module's direct children
-	 */
-	private final transient Set<Module> children;
+	public void addChild(final Module child) {
+		children.add(child);
+	}
 
 	/**
 	 * The root module doesn't really exist anywhere, and so we
@@ -95,6 +105,16 @@ public final class RootModule implements Module, Serializable {
 	}
 
 	/**
+	 * Remove a module as a child.
+	 * 
+	 * @param child
+	 *            The module to be removed.
+	 */
+	public void removeChild(final Module child) {
+		children.remove(child);
+	}
+
+	/**
 	 * The root module can't take an attack.
 	 * 
 	 * @param attacker
@@ -112,28 +132,8 @@ public final class RootModule implements Module, Serializable {
 	 */
 	@Override
 	public void upkeep(final long interval) {
-		for (Module mod : children) {
+		for (final Module mod : children) {
 			mod.upkeep(interval);
 		}
-	}
-
-	/**
-	 * Add a module as a child.
-	 * 
-	 * @param child
-	 *            The new child
-	 */
-	public void addChild(final Module child) {
-		children.add(child);
-	}
-
-	/**
-	 * Remove a module as a child.
-	 * 
-	 * @param child
-	 *            The module to be removed.
-	 */
-	public void removeChild(final Module child) {
-		children.remove(child);
 	}
 }

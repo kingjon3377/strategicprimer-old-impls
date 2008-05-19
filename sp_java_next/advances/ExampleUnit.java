@@ -17,6 +17,31 @@ import model.module.Weapon;
 public class ExampleUnit implements Module, Serializable {
 
 	/**
+	 */
+	private static final long serialVersionUID = -1201325245093673269L;
+
+	/**
+	 * Whether the unit is a member (direct or indirect) of a top-level unit
+	 * (false if it is, true if this is this is the uppermost
+	 * possibly-"top-level" module in this branch of the tree).
+	 */
+	private boolean topLevel;
+	/**
+	 * Where I am.
+	 */
+	private Location location;
+
+	/**
+	 * My parent in the tree.
+	 */
+	protected Module parent;
+
+	/**
+	 * My set of statistics.
+	 */
+	private Statistics statistics;
+
+	/**
 	 * Constructor.
 	 */
 	public ExampleUnit() {
@@ -25,21 +50,6 @@ public class ExampleUnit implements Module, Serializable {
 		parent = RootModule.getRootModule();
 		topLevel = true;
 	}
-	
-	/**
-	 * Whether the unit is a member (direct or indirect) of a top-level unit
-	 * (false if it is, true if this is this is the uppermost
-	 * possibly-"top-level" module in this branch of the tree).
-	 */
-	private boolean topLevel;
-	/**
-	 */
-	private static final long serialVersionUID = -1201325245093673269L;
-
-	/**
-	 * Where I am.
-	 */
-	private Location location;
 
 	/**
 	 * Accessor.
@@ -52,11 +62,6 @@ public class ExampleUnit implements Module, Serializable {
 	}
 
 	/**
-	 * My parent in the tree.
-	 */
-	protected Module parent;
-
-	/**
 	 * Accessor
 	 * 
 	 * @return the module that contains me
@@ -67,11 +72,10 @@ public class ExampleUnit implements Module, Serializable {
 	}
 
 	/**
-	 * @param _parent
-	 *            My new parent in the tree.
+	 * @return my set of statistics
 	 */
-	protected void setParent(final Module _parent) {
-		parent = _parent;
+	public Statistics getStatistics() {
+		return statistics;
 	}
 
 	/**
@@ -107,15 +111,11 @@ public class ExampleUnit implements Module, Serializable {
 	}
 
 	/**
-	 * My set of statistics.
+	 * @param _parent
+	 *            My new parent in the tree.
 	 */
-	private Statistics statistics;
-
-	/**
-	 * @return my set of statistics
-	 */
-	public Statistics getStatistics() {
-		return statistics;
+	protected void setParent(final Module _parent) {
+		parent = _parent;
 	}
 
 	/**
@@ -124,6 +124,15 @@ public class ExampleUnit implements Module, Serializable {
 	 */
 	protected void setStatistics(final Statistics stats) {
 		statistics = stats;
+	}
+
+	/**
+	 * @param _topLevel
+	 *            whether there is not a possibly-"top-level" module above me in
+	 *            the tree
+	 */
+	protected void setTopLevel(final boolean _topLevel) {
+		topLevel = _topLevel;
 	}
 
 	/**
@@ -147,15 +156,6 @@ public class ExampleUnit implements Module, Serializable {
 					"Negative time elapsed doesn't make sense");
 		}
 		// TODO: Finish implementing.
-	}
-
-	/**
-	 * @param _topLevel
-	 *            whether there is not a possibly-"top-level" module above me in
-	 *            the tree
-	 */
-	protected void setTopLevel(final boolean _topLevel) {
-		topLevel = _topLevel;
 	}
 
 }

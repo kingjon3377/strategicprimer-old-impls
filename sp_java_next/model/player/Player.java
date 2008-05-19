@@ -75,34 +75,6 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * Set a player's chosen "name" or "handle"
-	 * 
-	 * @param _name
-	 *            The player's chosen name
-	 * 
-	 * TODO: Implement (see Yudexen?)
-	 */
-	protected void setName(final String _name) {
-		this.name = _name;
-		// TODO Auto-generated method stub
-	}
-
-	/**
-	 * @return the associatedModule
-	 */
-	public Module getAssociatedModule() {
-		return associatedModule;
-	}
-
-	/**
-	 * @param _associatedModule
-	 *            the module that represents the player in the game-world
-	 */
-	public void setAssociatedModule(final Module _associatedModule) {
-		associatedModule = _associatedModule;
-	}
-
-	/**
 	 * Forbid the player from discovering an advance
 	 * 
 	 * @param advance
@@ -110,6 +82,22 @@ public class Player implements Serializable {
 	 */
 	public void forbid(final Advance advance) {
 		forbiddenAdvances.add(advance);
+	}
+
+	/**
+	 * @param getter
+	 *            becomes the set of the advances the player knows
+	 */
+	public void getAdvances(final Set<Advance> getter) {
+		getter.addAll(advances);
+		getter.retainAll(advances);
+	}
+
+	/**
+	 * @return the associatedModule
+	 */
+	public Module getAssociatedModule() {
+		return associatedModule;
 	}
 
 	/**
@@ -126,17 +114,30 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * @param getter becomes the set of the advances the player knows
-	 */
-	public void getAdvances(final Set<Advance> getter) {
-		getter.addAll(advances);
-		getter.retainAll(advances);
-	}
-
-	/**
 	 * @return the player's chosen "name" or handle.
 	 */
 	public String getName() {
 		return name;
+	}
+
+	/**
+	 * @param _associatedModule
+	 *            the module that represents the player in the game-world
+	 */
+	public void setAssociatedModule(final Module _associatedModule) {
+		associatedModule = _associatedModule;
+	}
+
+	/**
+	 * Set a player's chosen "name" or "handle"
+	 * 
+	 * @param _name
+	 *            The player's chosen name
+	 * 
+	 * TODO: Implement (see Yudexen?)
+	 */
+	protected void setName(final String _name) {
+		this.name = _name;
+		// TODO Auto-generated method stub
 	}
 }

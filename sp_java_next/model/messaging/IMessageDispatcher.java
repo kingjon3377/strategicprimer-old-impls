@@ -4,6 +4,7 @@ import model.module.Module;
 
 /**
  * A centralized dispatcher for inter-module messaging.
+ * 
  * @author Jonathan Lovelace
  */
 public interface IMessageDispatcher {
@@ -15,12 +16,16 @@ public interface IMessageDispatcher {
 
 	/**
 	 * Send a message from sender to receiver
-	 * @param receiver The module receiving the message
-	 * @param sender The module sending the message
-	 * @param message The message being sent
+	 * 
+	 * @param receiver
+	 *            The module receiving the message
+	 * @param sender
+	 *            The module sending the message
+	 * @param message
+	 *            The message being sent
 	 */
 	void message(Module receiver, Module sender, Message message);
-	
+
 	/**
 	 * Increment the clock and evaluate all actions that would have taken place.
 	 */

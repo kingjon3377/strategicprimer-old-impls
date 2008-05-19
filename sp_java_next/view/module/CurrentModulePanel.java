@@ -45,15 +45,19 @@ public class CurrentModulePanel extends JPanel {
 	}
 
 	/**
-	 * @param inStream The serialized object stream
-	 * @throws IOException Required by the spec
-	 * @throws ClassNotFoundException Required by the spec
+	 * @param inStream
+	 *            The serialized object stream
+	 * @throws IOException
+	 *             Required by the spec
+	 * @throws ClassNotFoundException
+	 *             Required by the spec
 	 */
 	private void readObject(final ObjectInputStream inStream)
 			throws IOException, ClassNotFoundException {
 		inStream.defaultReadObject();
 		label = new JLabel();
 	}
+
 	/**
 	 * @param out
 	 *            the stream

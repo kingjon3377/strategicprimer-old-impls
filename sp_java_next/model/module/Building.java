@@ -15,7 +15,7 @@ public interface Building {
 	 *            Anything used by the action (and perhaps a Container for
 	 *            results to be returned in)
 	 */
-	void action(long action, Module args[]);
+	void action(long action, Module... args);
 	// args[] should be the "any number of arguments" construct, but the
 	// compiler doesn't like what I remember that as.
 }

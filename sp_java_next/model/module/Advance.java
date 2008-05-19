@@ -28,6 +28,16 @@ package model.module;
  */
 public interface Advance extends Comparable<Advance> {
 	/**
+	 * Compare this advance with another
+	 * 
+	 * @param advance
+	 *            The other advance
+	 * @return The result of the comparison
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 */
+	int compareTo(final Advance advance);
+
+	/**
 	 * Converts the source Module into the one specified by id, using
 	 * sub-Modules from the given Vault.
 	 * 
@@ -55,11 +65,4 @@ public interface Advance extends Comparable<Advance> {
 	 * TODO: Figure out a way to make sure a change isn't made more than once.
 	 */
 	void normativeEffect(final Module root);
-	
-	/** Compare this advance with another
-	 * @param advance The other advance
-	 * @return The result of the comparison
-	 * @see java.lang.Comparable#compareTo(java.lang.Object)
-	 */
-	int compareTo(final Advance advance);
 }
