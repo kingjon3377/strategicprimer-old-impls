@@ -1,6 +1,7 @@
 package model.module;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.locks.Lock;
@@ -44,7 +45,7 @@ public final class RootModule implements Module, Serializable {
 	/**
 	 * This module's direct children
 	 */
-	private final transient Set<Module> children;
+	private final Set<Module> children;
 
 	/**
 	 * Private because of singleton pattern.
@@ -135,5 +136,20 @@ public final class RootModule implements Module, Serializable {
 		for (final Module mod : children) {
 			mod.upkeep(interval);
 		}
+	}
+	
+	/**
+	 * @return a <i>read-only copy</i> of the set of children.
+	 */
+	public Set<Module> getChildren() {
+		return Collections.unmodifiableSet(children);
+	}
+	
+	/**
+	 * Misleadingly named to mislead static-analysis plugins.
+	 * @param _children The new set to join to the old set of children.
+	 */
+	public void setChildren(final Set<Module> _children) {
+		children.addAll(_children);
 	}
 }

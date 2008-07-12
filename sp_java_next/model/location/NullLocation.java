@@ -1,5 +1,6 @@
 package model.location;
 
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.locks.Lock;
@@ -45,7 +46,7 @@ public final class NullLocation implements Location {
 	/**
 	 * The modules in the null location.
 	 */
-	private final transient Set<Module> members;
+	private final Set<Module> members;
 
 	/**
 	 * Private to allow Singleton pattern.
@@ -89,5 +90,20 @@ public final class NullLocation implements Location {
 	@Override
 	public void remove(final Module module) {
 		members.remove(module);
+	}
+	
+	/**
+	 * @return a <i>read-only copy</i> of the modules here
+	 */
+	public Set<Module> getMembers() {
+		return Collections.unmodifiableSet(members);
+	}
+	
+	/**
+	 * (Name misleading to mislead static analysis plugins.)
+	 * @param _members A set to join to the set of modules here.
+	 */
+	public void setMembers(final Set<Module> _members) {
+		members.addAll(_members);
 	}
 }

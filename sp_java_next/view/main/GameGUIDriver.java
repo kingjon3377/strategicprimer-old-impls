@@ -1,8 +1,6 @@
 package view.main;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.awt.BorderLayout;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -60,7 +58,7 @@ public class GameGUIDriver extends JFrame {
 	 * The mini-map
 	 */
 	private transient MiniMap miniMap;
-
+	
 	/**
 	 * Constructor.
 	 */
@@ -73,27 +71,35 @@ public class GameGUIDriver extends JFrame {
 	 * 
 	 */
 	private void constructor() {
+//		mainPanel = new JPanel();
+//		mainPanel.setLayout(new BorderLayout());
+		setLayout(new BorderLayout());
 		map = new GUIMap(Game.getGame().getMap().getSizeRows(), Game.getGame()
 				.getMap().getSizeCols());
+		add(map, BorderLayout.CENTER);
 		menu = new JMenuBar();
+		add(menu, BorderLayout.NORTH);
 		initQueue = new InitiativeQueue();
+		add(initQueue, BorderLayout.WEST);
 		modulePanel = new CurrentModulePanel();
+		add(modulePanel, BorderLayout.EAST);
 		miniMap = new MiniMap();
+		add(miniMap, BorderLayout.SOUTH);
 	}
 
-	/**
-	 * @param inStream
-	 *            The stream
-	 * @throws IOException
-	 *             When caught
-	 * @throws ClassNotFoundException
-	 *             When caught
-	 */
-	private void readObject(final ObjectInputStream inStream)
-			throws IOException, ClassNotFoundException {
-		inStream.defaultReadObject();
-		constructor();
-	}
+//	/**
+//	 * @param inStream
+//	 *            The stream
+//	 * @throws IOException
+//	 *             When caught
+//	 * @throws ClassNotFoundException
+//	 *             When caught
+//	 */
+//	private void readObject(final ObjectInputStream inStream)
+//			throws IOException, ClassNotFoundException {
+//		inStream.defaultReadObject();
+//		constructor();
+//	}
 
 	/**
 	 * The main loop.
@@ -107,12 +113,12 @@ public class GameGUIDriver extends JFrame {
 		initQueue.getActionMap();
 	}
 
-	/**
-	 * @param out
-	 *            the stream
-	 * @throws IOException
-	 */
-	private void writeObject(final ObjectOutputStream out) throws IOException {
-		out.defaultWriteObject();
-	}
+//	/**
+//	 * @param out
+//	 *            the stream
+//	 * @throws IOException
+//	 */
+//	private void writeObject(final ObjectOutputStream out) throws IOException {
+//		out.defaultWriteObject();
+//	}
 }
