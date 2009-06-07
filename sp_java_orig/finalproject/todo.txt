@@ -1,0 +1,14 @@
+1.  Fix bugs and incorrect documentation.
+2.  Implement more full module system.
+3.  Scrolling/partial map [DONE] (first design;untested -- testing TODO)
+4.  Buildings
+5.  Remove the requirement for the game to be hotseat.
+6.  Add uuid field to modules, to be used for now in top-level modules
+	as index for Image representation (rather than the circles)
+	and to determine passable terrain. [TODO]
+7.  Add hooks for actions at specified events (use interfaces; default none)
+8.  Integrate with C++ (Yudexen) code.
+9.  Saved game format and loading mechanism.
+10. CLI
+11. Client-server model (cs.calvin.edu/cliser)
+12. Simplify SP Java heirarchy (using eclipse, to convert metadata)
