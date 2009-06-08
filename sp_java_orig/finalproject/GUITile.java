@@ -24,19 +24,27 @@ import finalproject.astar.Tile;
  */
 public class GUITile extends JPanel {
 	/**
-	 * UID for serialization 
+	 * A version UID for serialization
 	 */
 	private static final long serialVersionUID = 5998100741966380772L;
 	/**
-	 * Default width of a tile
+	 * The tile's default width
 	 */
 	public static final int DEFAULT_WIDTH = 10;
 	/**
-	 * Default height of a tile
+	 * The tile's default height
 	 */
 	public static final int DEFAULT_HEIGHT = 10;
 	/**
-	 * The image representing this tile's terrain (?)
+	 * The tile's height
+	 */
+	private int myHeight;
+	/**
+	 * The tile's width
+	 */
+	private int myWidth;
+	/**
+	 * The image representing the tile's terrain
 	 */
 	private final Image image;
 

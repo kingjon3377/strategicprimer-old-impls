@@ -24,7 +24,6 @@ public class BuildPanel extends JPanel implements ActionListener {
 	 * Version UID for serialization
 	 */
 	private static final long serialVersionUID = 1987612092544868685L;
-
 	/**
 	 * Add a button with the specified properties.
 	 * 

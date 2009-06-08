@@ -25,7 +25,7 @@ public final class LabelPanel extends JPanel {
 	 */
 	private static final long serialVersionUID = 2808827787235226010L;
 	/**
-	 * A label to describe the terrain
+	 * A label to describe the terrain of a tile
 	 */
 	private final transient JLabel terrainLabel;
 	/**
@@ -33,7 +33,7 @@ public final class LabelPanel extends JPanel {
 	 */
 	private final transient JLabel unitLabel;
 	/**
-	 * A label to describe the mode
+	 * A label to describe the current mode
 	 */
 	private final transient JLabel modeLabel;
 	/**
@@ -125,7 +125,7 @@ public final class LabelPanel extends JPanel {
 							+ " to select something to build.");
 			break;
 		default:
-			throw new IllegalStateException("Unknown mode!");
+			throw new IllegalStateException("Unknown mode");
 		}
 		unitLabel
 				.setText((Game.getGame().getTile1() == null)

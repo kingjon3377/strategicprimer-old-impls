@@ -87,7 +87,7 @@ public final class Game {
 	 */
 	public static final int ATTACK_MODE = 1;
 	/**
-	 * The none-of-the-above mode.
+	 * None of the above.
 	 */
 	public static final int NO_MODE = 0;
 	/**
@@ -229,7 +229,7 @@ public final class Game {
 	}
 
 	/**
-	 * Set the mode. FIXME: Should be an enumerated type.
+	 * Sets the mode, clearing the selected tiles if it's a new mode. FIXME: Should be an enumerated type.
 	 * 
 	 * @param _mode
 	 *            The new mode.
@@ -299,16 +299,17 @@ public final class Game {
 
 	/**
 	 * Set a player's resource amount
-	 * 
-	 * @param amt
-	 *            The resource amount
-	 * @param index
-	 *            The player we're interested in
+	 * @param i The player we're interested in
+	 * @param amt That player's new resource count
 	 */
 	public void setPlayerResources(final int amt, final int index) {
 		if (amt < 0) {
 			throw new IllegalArgumentException(
 					"Player resource level must be nonnegative");
+		} else if (i < 1) {
+			throw new IllegalArgumentException("Player number must be positive");
+		} else if (i > numPlayers) {
+			throw new IllegalArgumentException("Invalid player number");
 		}
 		playerResources[index] = amt;
 	}
@@ -319,11 +320,11 @@ public final class Game {
 	 * specific units publicly available.
 	 * 
 	 * @param playerID
-	 *            The player building (MUST be the current player
+	 *            The player building it (MUST be the current player)
 	 * @param location
-	 *            Where the unit is to be
+	 *            Where the unit is to be (MUST be an empty tile)
 	 * @param name
-	 *            The name of the unit
+	 *            The name to give the unit.
 	 * @param maxHP
 	 *            The unit's max HP
 	 * @param hitPoints

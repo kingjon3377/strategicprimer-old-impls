@@ -75,15 +75,15 @@ public abstract class SimpleModule {
 	protected boolean myHasAttacked;
 
 	/**
-	 * @return the module's name
-	 */
-	public abstract String getName();
-
-	/**
 	 * If true, remove me from any collections the next time they are pruned.
 	 * @return whether the module should be pruned.
 	 */
 	public abstract boolean isDelete();
+	/**
+	 * @return the module's name
+	 */
+	public abstract String getName();
+
 	/**
 	 * Remove the module from any collections the next time they are pruned.
 	 * @see SimpleModule#isDelete()
@@ -120,7 +120,7 @@ public abstract class SimpleModule {
 		return myHP;
 	}
 	/**
-	 * @return the module's owner
+	 * @return the player that owns the module
 	 */
 	public int getOwner() {
 		return myOwner;

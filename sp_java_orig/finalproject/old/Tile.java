@@ -133,7 +133,7 @@ public class Tile {
 		moduleOnTile = modules;
 	}
 	/**
-	 * @return a String representation of the tile.
+	 * @return a String representation of the tile and its contents
 	 */
 	@Override
 	public String toString() {
@@ -148,7 +148,7 @@ public class Tile {
 	 * any damage done to) the module on the tile. For most tiles it is
 	 * zero; for something that hinders movement it might conceivably be
 	 * negative, but that seems unlikely at this point.
-	 * @return the tile's defense bonus
+	 * @return the defense bonus of the terrain
 	 */
 	public int getTerrainDefenseBonus() {
 		return myType == TERRAIN_FOREST ? 5 : 0;
@@ -162,7 +162,7 @@ public class Tile {
 	 * speed left.) For most tiles it will be 1. Under no circumstances
 	 * should it be zero or negative -- that would cause infinite loops and
 	 * stack overflows in the path checking algorithm.
-	 * @return the movement cost of the tile
+	 * @return the terrain's movement cost
 	 */
 	public int getMovementCost() {
 		return (myType == TERRAIN_FOREST ? 2 : (myType == TERRAIN_OCEAN ? 3 : 1));
