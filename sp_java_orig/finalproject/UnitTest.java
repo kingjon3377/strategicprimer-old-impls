@@ -5,6 +5,12 @@ import java.util.List;
 
 import junit.framework.TestCase;
 
+import org.junit.Before;
+import org.junit.Test;
+
+import finalproject.astar.Location;
+import finalproject.astar.Tile;
+
 // ESCA-JAVA0137:
 /**
  * Test class for the Strategic Primer/Yudexen model's SimpleUnit class.
@@ -15,12 +21,12 @@ import junit.framework.TestCase;
  * @semester FA06
  * 
  */
-public class UnitTest extends TestCase {
+public class UnitTest extends TestCase { // NOPMD
 	/**
 	 * The second dimension of the test map; to make a "magic number" warning go
 	 * away.
 	 */
-	private static final int TESTMAP_SECOND_DIM = 6;
+	private static final int TESTMAP_2D_DIM = 6;
 	/**
 	 * The first unit we're testing
 	 */
@@ -41,15 +47,16 @@ public class UnitTest extends TestCase {
 	 *             thrown by the superclass setUp().
 	 */
 	@Override
+	@Before
 	public void setUp() throws Exception {
 		super.setUp();
 		unit = new SimpleUnit();
 		unit.setSpeed(5);
 		final List<List<Tile>> tiles = new ArrayList<List<Tile>>();
 		for (int i = 0; i < 5; i++) {
-			tiles.set(i, new ArrayList<Tile>());
-			for (int j = 0; j < TESTMAP_SECOND_DIM; j++) {
-				tiles.get(i).set(j, new Tile(i,j,2));
+			tiles.set(i, new ArrayList<Tile>());//NOPMD
+			for (int j = 0; j < TESTMAP_2D_DIM; j++) {
+				tiles.get(i).set(j, new Tile(new Location(i,j),2));//NOPMD
 			}
 		}
 		tiles.get(0).get(0).setModuleOnTile(unit);
@@ -60,28 +67,32 @@ public class UnitTest extends TestCase {
 		unit2.setAccuracy(0.9);
 		tiles.get(0).get(1).setModuleOnTile(unit2);
 		unit2.setLocation(tiles.get(0).get(1));
-		map = new SPMap(5, TESTMAP_SECOND_DIM, tiles);
-		for (int i = 0; i < TESTMAP_SECOND_DIM; i++) {
-			tiles.get(2).get(i).setModuleOnTile(new SimpleUnit());
+		map = new SPMap(5, TESTMAP_2D_DIM, tiles);
+		for (int i = 0; i < TESTMAP_2D_DIM; i++) {
+			tiles.get(2).get(i).setModuleOnTile(new SimpleUnit());//NOPMD
 		}
 	}
-
+	/**
+	 * Tests setAccuracy(): don't accept negative input
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testSetAccuracyNegative() {
+		unit.setAccuracy(-0.1);
+		fail("setAccuracy() accepted negative accuracy");
+	}
+	/**
+	 * Tests setAccuracy(): don't accept input > 1
+	 */
+	@Test(expected = IllegalArgumentException.class)
+	public void testSetAccuracyTooBig() {
+		unit.setAccuracy(1.1);
+		fail("setAccuracy() accepted accuracy > 1");
+	}
 	/**
 	 * Tests SimpleUnit.setAccuracy()
 	 */
+	@Test
 	public void testSetAccuracy() {
-		try {
-			unit.setAccuracy(-0.1);
-			fail("setAccuracy() accepted negative accuracy");
-		} catch (IllegalArgumentException e) {
-			// Do nothing
-		}
-		try {
-			unit.setAccuracy(1.1);
-			fail("setAccuracy() accepted accuracy > 1");
-		} catch (IllegalArgumentException e) {
-			// Do nothing
-		}
 		try {
 			unit.setAccuracy(0.2);
 		} catch (IllegalArgumentException e) {
@@ -92,22 +103,23 @@ public class UnitTest extends TestCase {
 	/**
 	 * Tests Unit.move()
 	 */
+	@Test
 	public void testMove() {
-		unit.move(map.getTile(4, 4), map);
-		if (unit.getLocation() == map.getTile(4, 4)) {
+		unit.move(map.getTile(new Location(4, 4)), map);
+		if (unit.getLocation() == map.getTile(new Location(4, 4))) {
 			fail("Unit moved to unreachable location");
 		}
-		unit.move(map.getTile(1, 1), map);
-		if (map.getTile(1, 1).getModuleOnTile() != unit) {
+		unit.move(map.getTile(new Location(1, 1)), map);
+		if (map.getTile(new Location(1, 1)).getModuleOnTile() != unit) {
 			fail("Unit failed to move to reachable location (tile.moduleOnTile)");
 		}
-		if (map.getTile(0, 0).getModuleOnTile() != null) {
+		if (map.getTile(new Location(0, 0)).getModuleOnTile() != null) {
 			fail("Unit failed to be removed from start tile when moving");
 		}
-		if (unit.getLocation() != map.getTile(1, 1)) {
+		if (unit.getLocation() != map.getTile(new Location(1, 1))) {
 			fail("Unit failed to move to reachable location");
 		}
-		if (!unit.getHasMoved()) {
+		if (!unit.isHasMoved()) {
 			fail("Unit, having moved, is not so marked");
 		}
 
@@ -116,6 +128,7 @@ public class UnitTest extends TestCase {
 	/**
 	 * Tests unit.attack()
 	 */
+	@Test
 	public void testAttack() {
 		unit.setMaxHP(BuildConstants.PHALANX_HP);
 		unit.setHP(BuildConstants.PHALANX_HP);
@@ -124,7 +137,7 @@ public class UnitTest extends TestCase {
 				- BuildConstants.BALLISTA_RANGED) {
 			fail("Attack() dealt wrong amount of damage");
 		}
-		if (!unit2.getHasAttacked()) {
+		if (!unit2.isHasAttacked()) {
 			fail("Attack() didn't set hasAttacked");
 		}
 		unit.setHP(BuildConstants.PHALANX_HP);
@@ -140,6 +153,7 @@ public class UnitTest extends TestCase {
 	/**
 	 * Test SimpleUnit.rangedAttack()
 	 */
+	@Test
 	public void testRangedAttack() {
 		unit.setMaxHP(BuildConstants.PHALANX_HP);
 		unit.setHP(BuildConstants.PHALANX_HP);
@@ -148,7 +162,7 @@ public class UnitTest extends TestCase {
 				- BuildConstants.BALLISTA_ATTACK) {
 			fail("RangedAttack() dealt wrong amount of damage");
 		}
-		if (!unit2.getHasAttacked()) {
+		if (!unit2.isHasAttacked()) {
 			fail("RangedAttack() didn't set hasAttacked");
 		}
 		unit.setHP(BuildConstants.PHALANX_HP);
@@ -164,76 +178,86 @@ public class UnitTest extends TestCase {
 	/**
 	 * Tests SimpleUnit.checkMove()
 	 */
+	@Test
 	public void testCheckMove() {
 		assertFalse("FIXME: Can't recall why this is false", ((SimpleUnit) map
-				.getTile(2, 0).getModuleOnTile()).checkMove(map.getTile(3, 0),
+				.getTile(new Location(2, 0)).getModuleOnTile()).checkMove(map.getTile(new Location(3, 0)),
 				map));
-		assertFalse("Can't move to occupied tile", unit.checkMove(map.getTile(
-				2, 0), map));
+		assertFalse("Can't move to occupied tile", unit.checkMove(map.getTile(new Location(
+				2, 0)), map));
 		unit2.setHasMoved(true);
-		assertFalse("Can't move twice", unit2.checkMove(map.getTile(1, 1), map));
+		assertFalse("Can't move twice", unit2.checkMove(map.getTile(new Location(1, 1)), map));
 		assertFalse("FIXME: Can't recall why this is false", unit.checkMove(map
-				.getTile(3, 3), map));
-		assertTrue("A legal move", unit.checkMove(map.getTile(1, 1), map));
+				.getTile(new Location(3, 3)), map));
+		assertTrue("A legal move", unit.checkMove(map.getTile(new Location(1, 1)), map));
 	}
-
+	/**
+	 * Tests the checkAttack() method's handling of a null argument
+	 */
+	@Test(expected=IllegalArgumentException.class)
+	public void testCheckAttackNull() {
+		unit.checkAttack(null);
+		fail("checkAttack() didn't catch null argument");
+	}
+	/**
+	 * Tests the checkAttack() method's handling of an argument not on the map
+	 */
+	@Test(expected=IllegalArgumentException.class)
+	public void testCheckAttackDisconnected() {
+		unit.checkAttack(map.getTile(new Location(2, 2)).getModuleOnTile());
+		fail("checkAttack() didn't catch target with no location or parent");
+	}
 	/**
 	 * Tests the checkAttack() method
 	 */
+	@Test
 	public void testCheckAttack() {
 		unit2.setHasAttacked(true);
 		assertFalse("Can't attack twice", unit2.checkAttack(unit));
-		try {
-			unit.checkAttack(null);
-			fail("checkAttack() didn't catch null argument");
-		} catch (IllegalArgumentException e) {
-			// Do nothing
-		}
-		try {
-			unit.checkAttack(map.getTile(2, 2).getModuleOnTile());
-			fail("checkAttack() didn't catch target with no location or parent");
-		} catch (IllegalArgumentException e) {
-			// Do nothing
-		}
-		map.getTile(2, 2).getModuleOnTile().setLocation(map.getTile(2, 2));
-		assertFalse("Non-adjacent unit", unit.checkAttack(map.getTile(2, 2)
+		map.getTile(new Location(2, 2)).getModuleOnTile().setLocation(map.getTile(new Location(2, 2)));
+		assertFalse("Non-adjacent unit", unit.checkAttack(map.getTile(new Location(2, 2))
 				.getModuleOnTile()));
 		assertTrue("Adjacent unit", unit.checkAttack(unit2));
 	}
-
+	/**
+	 * Tests the checkRangedAttack() method's handling of a null argument
+	 */
+	@Test(expected=IllegalArgumentException.class)
+	public void testCheckRangedAttackNull() {
+		unit.checkRangedAttack(null);
+		fail("checkRangedAttack() didn't catch null argument");
+	}
+	/**
+	 * Tests the checkRangedAttack() method's handling of an argument not on the map
+	 */
+	@Test(expected=IllegalArgumentException.class)
+	public void testCheckRangedAttackDisconnected() {
+		unit.checkRangedAttack(map.getTile(new Location(2, 2)).getModuleOnTile());
+		fail("checkRangedAttack() didn't catch target with no location or parent");
+	}
 	/**
 	 * Tests checkRangedAttack()
 	 */
+	@Test
 	public void testCheckRangedAttack() {
 		unit2.setHasAttacked(true);
 		assertFalse("Can't ranged-attack if already attacked", unit2
 				.checkRangedAttack(unit));
-		try {
-			unit.checkRangedAttack(null);
-			fail("checkRangedAttack() didn't catch null argument");
-		} catch (IllegalArgumentException e) {
-			// Do nothing
-		}
-		try {
-			unit.checkRangedAttack(map.getTile(2, 2).getModuleOnTile());
-			fail("checkRangedAttack() didn't catch target with no location or parent");
-		} catch (IllegalArgumentException e) {
-			// Do nothing
-		}
-		map.getTile(2, 2).getModuleOnTile().setLocation(map.getTile(2, 2));
+		map.getTile(new Location(2, 2)).getModuleOnTile().setLocation(map.getTile(new Location(2, 2)));
 		assertTrue("One successful possible attack", unit.checkRangedAttack(map
-				.getTile(2, 2).getModuleOnTile()));
+				.getTile(new Location(2, 2)).getModuleOnTile()));
 		assertTrue("Another true possible attack", unit
 				.checkRangedAttack(unit2));
 	}
 	/**
 	 * Tests the takeAttack() method.
 	 */
+	@Test
 	public void testTakeAttack() {
 		unit.setMaxHP(BuildConstants.PHALANX_DEFENSE);
 		unit.setHP(BuildConstants.PHALANX_DEFENSE);
 		unit2.attack(unit);
-		assertTrue("Killed units get deleted",unit.getDelete());
+		assertTrue("Killed units get deleted",unit.isDelete());
 	}
 
 }

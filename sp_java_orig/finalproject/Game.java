@@ -299,16 +299,16 @@ public final class Game {
 
 	/**
 	 * Set a player's resource amount
-	 * @param i The player we're interested in
+	 * @param index The player we're interested in
 	 * @param amt That player's new resource count
 	 */
 	public void setPlayerResources(final int amt, final int index) {
 		if (amt < 0) {
 			throw new IllegalArgumentException(
 					"Player resource level must be nonnegative");
-		} else if (i < 1) {
+		} else if (index < 1) {
 			throw new IllegalArgumentException("Player number must be positive");
-		} else if (i > numPlayers) {
+		} else if (index > numPlayers) {
 			throw new IllegalArgumentException("Invalid player number");
 		}
 		playerResources[index] = amt;
