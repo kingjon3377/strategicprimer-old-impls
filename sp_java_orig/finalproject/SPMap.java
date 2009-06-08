@@ -189,12 +189,12 @@ public class SPMap {
 	 * @param jDim The other dimension
 	 * @return A filled "array" of Tiles.
 	 */
-	public static List<List<Tile>> createArray(int iDim, int jDim) {
+	public static List<List<Tile>> createArray(final int iDim, final int jDim) {
 		final List<List<Tile>> tiles = new ArrayList<List<Tile>>();
 		for (int i = 0; i < iDim; i++) {
-			tiles.set(i, new ArrayList<Tile>());
+			tiles.set(i, new ArrayList<Tile>()); // NOPMD
 			for (int j = 0; j < jDim; j++) {
-				tiles.get(i).set(j, new Tile(i,j,0));
+				tiles.get(i).set(j, new Tile(new Location(i,j),0)); // NOPMD
 			}
 		}
 		return tiles;

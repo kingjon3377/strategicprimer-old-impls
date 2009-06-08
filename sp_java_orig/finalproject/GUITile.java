@@ -36,14 +36,6 @@ public class GUITile extends JPanel {
 	 */
 	public static final int DEFAULT_HEIGHT = 10;
 	/**
-	 * The tile's height
-	 */
-	private int myHeight;
-	/**
-	 * The tile's width
-	 */
-	private int myWidth;
-	/**
 	 * The image representing the tile's terrain
 	 */
 	private final Image image;
