@@ -117,7 +117,7 @@ public class SimpleUnit extends SimpleModule {
 	 *            the unit's accuracy
 	 */
 	public void setAccuracy(final double accuracy) {
-		if ((accuracy < 0) || (accuracy > 1)) {
+		if ((accuracy < 0.0) || (accuracy > 1.0)) {
 			throw new IllegalArgumentException(
 					"Accuracy must be between 0 and 1");
 		}
@@ -132,7 +132,7 @@ public class SimpleUnit extends SimpleModule {
 	 * @param tile
 	 *            The destination tile.
 	 * @param map
-	 *            The map we're on
+	 *            The map the tile is on
 	 */
 	public void move(final Tile tile, final SPMap map) {
 		if (checkMove(tile, map)) {
@@ -191,7 +191,7 @@ public class SimpleUnit extends SimpleModule {
 	 * @param tile
 	 *            The tile to which the unit would move
 	 * @param map
-	 *            The map we're on
+	 *            The map the tile is in
 	 * @return whether that tile is a valid destination
 	 */
 	public boolean checkMove(final Tile tile, final SPMap map) {

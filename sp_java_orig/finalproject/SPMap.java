@@ -183,4 +183,20 @@ public class SPMap {
 		}
 		return retval;
 	}
+	/**
+	 * Create an "array" of the specified size, for use in this class's constructor
+	 * @param iDim One dimension
+	 * @param jDim The other dimension
+	 * @return A filled "array" of Tiles.
+	 */
+	public static List<List<Tile>> createArray(int iDim, int jDim) {
+		final List<List<Tile>> tiles = new ArrayList<List<Tile>>();
+		for (int i = 0; i < iDim; i++) {
+			tiles.set(i, new ArrayList<Tile>());
+			for (int j = 0; j < jDim; j++) {
+				tiles.get(i).set(j, new Tile(i,j,0));
+			}
+		}
+		return tiles;
+	}
 }

@@ -284,7 +284,7 @@ public class MapPanel extends JPanel {
 				Game.getGame().setTile1(tiles[iCoord][jCoord].getTile());
 				break;
 			default:
-				throw new IllegalStateException("Unknown mode!");
+				throw new IllegalStateException("Unknown mode");
 			}
 		}
 		repaint();

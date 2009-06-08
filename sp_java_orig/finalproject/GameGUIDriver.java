@@ -25,6 +25,10 @@ import javax.swing.JPanel;
  * Primer's design) is a strategy game (turn-based for now; likely RTS at some
  * time in the future). This project is a prototype of some parts of it.
  * 
+ * Since this is a prototype, it has no win condition. (The final game, many
+ * years from now, may.) I need to implement some way of saving and loading
+ * games sometime soon -- to help with testing if nothing else.
+ * 
  * Main driver -- the GUI or view for the game. Most of the view is encapsulated
  * into several separate panels. The model is found in the game object, which
  * needs the terrainIconFilenames (URL objects rather than Strings in an attempt
@@ -36,25 +40,25 @@ import javax.swing.JPanel;
  * @semester FA06
  * 
  */
-public class GameGUIDriver extends JFrame implements ActionListener, 
+public class GameGUIDriver extends JFrame implements ActionListener,
 		ComponentListener {
+	/**
+	 * A version UID for serialization
+	 */
+	private static final long serialVersionUID = -8142817362548925853L;
+	/**
+	 * The size of a graphical tile
+	 */
+	private static final int TILE_SIZE = 200;
+	/**
+	 * How much of the resource each player starts with
+	 */
+	private static final int STARTING_RESOURCE = 6;
 	/**
 	 * A logger to replace System.out calls.
 	 */
 	private static final Logger LOGGER = Logger.getLogger(GameGUIDriver.class
 			.getName());
-	/**
-	 * The amount of resources each player starts with
-	 */
-	private static final int STARTING_RESOURCE = 6;
-	/**
-	 * How big each tile is in pixels
-	 */
-	private static final int TILE_SIZE_PIXELS = 200;
-	/**
-	 * Version UID for serialization
-	 */
-	private static final long serialVersionUID = -8142817362548925853L;
 	/**
 	 * The map panel. FIXME: Should be singleton
 	 */
@@ -65,7 +69,7 @@ public class GameGUIDriver extends JFrame implements ActionListener,
 	 * @param event
 	 *            The event; ignored.
 	 */
-    @Override
+	@Override
 	public void actionPerformed(final ActionEvent event) {
 		LabelPanel.getPanel().repaint();
 		mapPanel.repaint();
@@ -97,22 +101,22 @@ public class GameGUIDriver extends JFrame implements ActionListener,
 		setLayout(new BorderLayout());
 		mapPanel = new MapPanel(Game.getGame().getMap().getSizeX(), Game.getGame()
 				.getMap().getSizeY(), new TerrainIconFilenames(SPMap.MAX_TERRAIN_TYPE,
-					"../../../../Images/final/",".png"));
+					"../Images/final/",".png"));
 
 		mainPanel.add(LabelPanel.getPanel(), BorderLayout.SOUTH);
 
 		// Setting up modePanel
-        ModePanel.setupModePanel(new ModePanel(), mainPanel, PackComponentListener.LISTENER);
+		ModePanel.setupModePanel(new ModePanel(), mainPanel, PackComponentListener.LISTENER);
 		// Setting up inter-panel communication to allow updating labelPanel
 		mainPanel.add(mapPanel, BorderLayout.CENTER);
-		setPreferredSize(new Dimension(Game.getGame().getMap().getSizeX()
-				* TILE_SIZE_PIXELS, Game.getGame().getMap().getSizeY() * TILE_SIZE_PIXELS));
+		setPreferredSize(new Dimension(Game.getGame().getMap().getSizeX() * TILE_SIZE,
+				Game.getGame().getMap().getSizeY() * TILE_SIZE));
 		mapPanel.addComponentListener(PackComponentListener.LISTENER);
 		add(mainPanel, BorderLayout.WEST);
 
-	/**
-	 * The build panel
-	 */
+		/**
+		 * The build panel
+		 */
 		final JPanel buildPanel = new BuildPanel(this); // NOPMD
 		add(buildPanel, BorderLayout.EAST);
 		buildPanel.addComponentListener(PackComponentListener.LISTENER);
@@ -132,10 +136,10 @@ public class GameGUIDriver extends JFrame implements ActionListener,
 		try {
 			new GameGUIDriver(2).setVisible(true);
 		} catch (FileNotFoundException e) {
-			LOGGER.log(Level.SEVERE,"File not found error initializing GUI.",e);
+			LOGGER.log(Level.SEVERE,"File not found error initializing GUI",e);
 			System.exit(1);
 		} catch (IOException e) {
-			LOGGER.log(Level.SEVERE,"I/O error initializing GUI.",e);
+			LOGGER.log(Level.SEVERE,"I/O error initializing GUI",e);
 			System.exit(2);
 		}
 	}
@@ -164,7 +168,7 @@ public class GameGUIDriver extends JFrame implements ActionListener,
 	 * @param arg0
 	 *            ignored
 	 */
-     @Override
+	@Override
 	public void componentHidden(final ComponentEvent arg0) {
 		pack();
 	}
@@ -175,7 +179,7 @@ public class GameGUIDriver extends JFrame implements ActionListener,
 	 * @param arg0
 	 *            ignored
 	 */
-     @Override
+	@Override
 	public void componentMoved(final ComponentEvent arg0) {
 		repaint();
 	}
@@ -186,7 +190,7 @@ public class GameGUIDriver extends JFrame implements ActionListener,
 	 * @param arg0
 	 *            ignored
 	 */
-     @Override
+	@Override
 	public void componentResized(final ComponentEvent arg0) {
 		repaint();
 	}
@@ -197,7 +201,7 @@ public class GameGUIDriver extends JFrame implements ActionListener,
 	 * @param arg0
 	 *            ignored
 	 */
-     @Override
+	@Override
 	public void componentShown(final ComponentEvent arg0) {
 		pack();
 	}
