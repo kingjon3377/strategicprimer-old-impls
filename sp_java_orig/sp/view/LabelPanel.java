@@ -21,7 +21,7 @@ import sp.model.Game;
  * @semester FA06
  * 
  */
-public final class LabelPanel extends JPanel { // NOPMD
+public final class LabelPanel extends JPanel {
 
 	/**
 	 * Version UID for serialization

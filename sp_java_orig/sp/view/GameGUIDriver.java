@@ -21,8 +21,8 @@ import sp.model.SPMap;
 import sp.model.SPMapParser;
 
 /**
- * Strategic Primer/Yudexen (the first is my name for the game this will, I
- * hope, eventually become, which I began designing but had never created a
+ * Strategic Primer/Yudexen (the first is my name for the game this will
+ * hopefully eventually become, which I began designing but had never created a
  * successful even partial implementation of until now; the second is the name
  * of the game into which I put quite a bit of effort in the Spring 2006
  * semester in CSX, and of which I am now the maintainer due to lack of
@@ -180,6 +180,7 @@ public final class GameGUIDriver extends JFrame implements ActionListener,
 
 		setTitle("Prototype of Strategic Primer/Yudexen");
 		setUpTestUnits();
+		this.addWindowListener(new GameWindowListener(this));
 		mapPanel.repaint();
 		pack();
 	}
