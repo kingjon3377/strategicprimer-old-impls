@@ -108,7 +108,7 @@ public final class ModePanel extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(final ActionEvent event) {
 		if (event.getActionCommand().equals("Quit")) {
-			Game.quit(0); // NOPMD by kingjon on 5/19/08 12:38 PM
+			Game.quit(0);
 		} else if (event.getActionCommand().equals("No Mode")) {
 			Game.getGame().setMode(Game.Mode.NO_MODE);
 		} else if (event.getActionCommand().equals("Attack")) {

@@ -387,7 +387,7 @@ public final class Game implements Serializable {
 	}
 
 	/**
-	 * @return whose turn it is
+	 * @return the player whose turn it is
 	 */
 	public int getPlayer() {
 		return player;
@@ -442,9 +442,9 @@ public final class Game implements Serializable {
 	 * player resource levels?
 	 * 
 	 * @param amt
-	 *            The amount of resources to set
+	 *            The resource amount
 	 * @param index
-	 *            which player's resources to set
+	 *            The player we're interested in
 	 */
 	public void setPlayerResources(final int amt, final int index) {
 		if (amt < 0) {

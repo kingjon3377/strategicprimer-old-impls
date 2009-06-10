@@ -16,9 +16,8 @@ import finalproject.astar.Tile;
  * 
  */
 public class SimpleUnit extends Unit {
-
 	/**
-	 * 
+	 * Version UID for serialization.
 	 */
 	private static final long serialVersionUID = -3602916091364412048L;
 
@@ -42,7 +41,13 @@ public class SimpleUnit extends Unit {
 	protected double accuracy;
 
 	/**
-	 * Constructor, to make warnings go away.
+	 * Constructor: All stats should be initialized by the
+	 * caller. (Maybe I'll write a more full-featured constructor that takes
+	 * them as arguments later, but likely not, since this game is a prototype
+	 * of sorts for the game I hope to finish someday, and it will likely have
+	 * most units in separate classes, each of which would have to implement a
+	 * constructor with the same signature.
+	 * 
 	 */
 	public SimpleUnit() {
 		super();
@@ -50,8 +55,9 @@ public class SimpleUnit extends Unit {
 	}
 
 	/**
-	 * Module.attack() is a stub; here is the implementation for the simple
-	 * (scalar-based, non-modular) framework.
+	 * Attack a specified module (unit or building, thus far). Caller is
+	 * responsible for checking whether this attack is valid. This is the
+	 * implementation for the simple (scalar-based, non-modular) framework.
 	 * 
 	 * @param target
 	 *            The target module.
@@ -64,15 +70,15 @@ public class SimpleUnit extends Unit {
 						.getTerrainDefenseBonus()));
 		if (dmg < 0) {
 			dmg = 0;
-		}
+		} // FIXME: This is badly designed
 		target.setHitPoints(target.getHitPoints() - dmg);
 		target.takeAttack(this);
 	}
 
 	/**
-	 * Implements checkAttack(). This checks that the unit has not already
-	 * attacked this turn, that the target is not null, and that the target or
-	 * its parent is next to the unit.
+	 * Check to see whether it is possible to attack the specified module. This
+	 * checks that the unit has not already attacked this turn, that the target
+	 * is not null, and that the target or its parent is next to the unit.
 	 * 
 	 * @param target
 	 *            The potential target
@@ -95,10 +101,10 @@ public class SimpleUnit extends Unit {
 	}
 
 	/**
-	 * Implements checkMove(). This checks to see that the unit is
-	 * free-standing, that the pointer is non-null, that the unit has not moved
-	 * already, and that there is a route to the tile within the unit's maximum
-	 * movement.
+	 * Checks to see whether it is possible to move to the specified tile. This
+	 * checks to see that the unit is free-standing, that the pointer is
+	 * non-null, that the unit has not moved already, and that there is a route
+	 * to the tile within the unit's maximum movement.
 	 * 
 	 * @param tile
 	 *            The tile to which the unit would move
@@ -108,15 +114,16 @@ public class SimpleUnit extends Unit {
 	 */
 	@Override
 	public final boolean checkMove(final Tile tile, final SPMap map) {
-		return location == null || tile.getModuleOnTile() != null || hasMoved
-				|| !map.checkPath(location, tile, speed, this) ? false : true;
+		return (!(getLocation() == null) && tile.getModuleOnTile() == null
+				&& !hasMoved && map.checkPath(getLocation(), tile, speed, this));
 	}
 
 	/**
-	 * Implement checkRangedAttack(). At the moment this only checks that the
-	 * unit has not already attacked this turn, that the target is not null, and
-	 * that the target is connected to the map (either is free-standing or has
-	 * ancestors who are).
+	 * Check to see whether it is possible to make a ranged attack against the
+	 * specified module. At the moment this only checks that the unit has not
+	 * already attacked this turn, that the target is not null, and that the
+	 * target is connected to the map (either is free-standing or has ancestors
+	 * who are).
 	 * 
 	 * @param target
 	 *            The potential target
@@ -125,15 +132,10 @@ public class SimpleUnit extends Unit {
 	 */
 	@Override
 	public final boolean checkRangedAttack(final Module target) {
-		if (target == null) {
-			throw new IllegalArgumentException("Target must be non-null");
-		} else if (target.getLocation() == null && target.getParent() == null) {
-			throw new IllegalArgumentException(
-					"Target must have either location or parent");
-		} else {
-			return hasAttacked ? false : target.getParent() == null ? true
-					: checkRangedAttack(target.getParent());
-		}
+		return hasAttacked || target == null ? false
+				: target.getLocation() == null ? target.getParent() == null ? false
+						: checkRangedAttack(target.getParent())
+						: true;
 	}
 
 	/**
@@ -159,7 +161,8 @@ public class SimpleUnit extends Unit {
 
 	/**
 	 * More complicated -- make a ranged attack on a specified module. See the
-	 * description of the "ranged" and "accuracy" stats for explanation.
+	 * description of the "ranged" and "accuracy" stats for explanation. Caller
+	 * is responsible for checking whether this is valid.
 	 * 
 	 * @param target
 	 *            The target module.
@@ -171,10 +174,10 @@ public class SimpleUnit extends Unit {
 			int dmg = ranged - target.getDefense();
 			if (dmg < 0) {
 				dmg = 0;
-			}
+			} // FIXME: This is somewhat badly designed
 			target.setHitPoints(target.getHitPoints() - dmg);
-			target.takeAttack(this);
 		}
+		target.takeAttack(this);
 	}
 
 	/**
@@ -214,22 +217,12 @@ public class SimpleUnit extends Unit {
 	 */
 	@Override
 	public final String toString() {
-		return (name == null ? "Unit" : name) + ": Speed: " + speed
-				+ ", Defense: " + defense + ", HP: " + hitPoints + '/' + maxHP
-				+ ", Attack: " + meleeAttack + ", Ranged Attack: " + ranged
-				+ ", Accuracy: "
+		return (getName() == null ? "Unit" : name) + ": Speed: " + speed
+				+ ", Defense: " + getDefense() + ", HP: " + hitPoints + '/'
+				+ maxHP + ", Attack: " + meleeAttack + ", Ranged Attack: "
+				+ ranged + ", Accuracy: "
 				+ NumberFormat.getPercentInstance().format(accuracy)
-				+ ". Owned by player #" + owner;
-	}
-
-	/**
-	 * A Unit is always mobile.
-	 * 
-	 * @return true
-	 */
-	@Override
-	public boolean mobile() {
-		return true;
+				+ ". Owned by player #" + getOwner();
 	}
 
 	/**
@@ -237,7 +230,7 @@ public class SimpleUnit extends Unit {
 	 */
 	@Override
 	public void delete() {
-		myDelete = true;
+		deleted = true;
 	}
 
 	/**

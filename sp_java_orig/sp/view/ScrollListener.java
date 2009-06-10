@@ -2,6 +2,7 @@ package sp.view;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.io.Serializable;
 
 
 /**
@@ -9,7 +10,11 @@ import java.awt.event.MouseListener;
  * @author Jonathan Lovelace
  *
  */
-public class ScrollListener implements MouseListener {
+public class ScrollListener implements MouseListener, Serializable {
+	/**
+	 * Version UID for serialization
+	 */
+	private static final long serialVersionUID = 1414053910112731680L;
 	/**
 	 * The panel we're scrolling
 	 */
@@ -32,8 +37,8 @@ public class ScrollListener implements MouseListener {
 	public void mouseClicked(final MouseEvent arg0) {
 		if (panel != null) {
 			panel.moveMap(arg0.getSource());
-			LabelPanel.getLabelPanel().repaint();
 		}
+		LabelPanel.getLabelPanel().repaint();
 	}
 
 	/**

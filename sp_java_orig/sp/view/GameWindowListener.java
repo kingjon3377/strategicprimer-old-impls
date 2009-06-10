@@ -1,4 +1,4 @@
-package edu.calvin.jsl7.finalproject;
+package sp.view;
 
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
