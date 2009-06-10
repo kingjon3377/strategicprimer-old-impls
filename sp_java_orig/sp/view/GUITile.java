@@ -9,7 +9,8 @@ import java.util.Map;
 
 import javax.swing.JPanel;
 
-import finalproject.astar.Tile;
+import sp.model.astar.Tile;
+
 
 /**
  * A GUI wrapper around a Tile object, to make the MapPanel code less messy. It

@@ -1,4 +1,4 @@
-package finalproject.astar;
+package sp.model.astar;
 
 /*
  *  This file is part of an AStar implementation.

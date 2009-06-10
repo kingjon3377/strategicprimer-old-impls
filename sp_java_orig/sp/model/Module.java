@@ -1,6 +1,6 @@
 package sp.model;
 
-import finalproject.astar.Tile;
+import sp.model.astar.Tile;
 
 // ESCA-JAVA0136:
 // ESCA-JAVA0100:

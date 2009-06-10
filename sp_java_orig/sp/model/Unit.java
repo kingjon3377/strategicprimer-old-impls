@@ -1,7 +1,7 @@
 package sp.model;
 
 //import java.text.NumberFormat;
-import finalproject.astar.Tile;
+import sp.model.astar.Tile;
 
 /**
  * A Unit is a module that can be top-level and that, when top-level, can move.

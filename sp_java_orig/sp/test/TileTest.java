@@ -5,8 +5,9 @@ import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
 
-import finalproject.astar.Location;
-import finalproject.astar.Tile;
+import sp.model.astar.Location;
+import sp.model.astar.Tile;
+
 
 // ESCA-JAVA0137:
 /**

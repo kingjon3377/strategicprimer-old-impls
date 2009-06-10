@@ -1,7 +1,8 @@
 package sp.model;
 
 import java.text.NumberFormat;
-import finalproject.astar.Tile;
+
+import sp.model.astar.Tile;
 
 /**
  * A simplified Unit (i.e., mobile Module). It uses scalar Attack and

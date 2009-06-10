@@ -7,10 +7,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import finalproject.astar.AStar;
-import finalproject.astar.Location;
-import finalproject.astar.SimpleHeuristicCalculator;
-import finalproject.astar.Tile;
+import sp.model.astar.AStar;
+import sp.model.astar.Location;
+import sp.model.astar.SimpleHeuristicCalculator;
+import sp.model.astar.Tile;
+
 
 /**
  * The Map class models a map; it holds an array of tiles and (statically) the

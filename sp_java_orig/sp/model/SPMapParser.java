@@ -7,8 +7,9 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import finalproject.astar.Location;
-import finalproject.astar.Tile;
+import sp.model.astar.Location;
+import sp.model.astar.Tile;
+
 
 /**
  * Parser for map description files. Basically a wrapper class around one

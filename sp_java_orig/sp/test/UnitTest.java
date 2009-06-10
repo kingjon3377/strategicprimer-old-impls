@@ -10,8 +10,8 @@ import org.junit.Test;
 import sp.model.BuildConstants;
 import sp.model.SPMap;
 import sp.model.SimpleUnit;
-import finalproject.astar.Location;
-import finalproject.astar.Tile;
+import sp.model.astar.Location;
+import sp.model.astar.Tile;
 
 // ESCA-JAVA0137:
 /**

@@ -1,4 +1,4 @@
-package finalproject.astar;
+package sp.model.astar;
 
 import java.io.Serializable;
 import java.text.NumberFormat;
