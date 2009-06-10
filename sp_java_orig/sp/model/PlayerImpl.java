@@ -69,7 +69,7 @@ public class PlayerImpl extends Player {
 	}
 	/**
 	 * Check whether the player can make a ranged attack against the given module.
-	 * FIXME: IMplement
+	 * FIXME: Implement
 	 * @param target The module to attack
 	 * @return false (unimplemented)
 	 */
