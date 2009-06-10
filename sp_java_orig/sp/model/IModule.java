@@ -1,7 +1,8 @@
 package sp.model;
 
 import java.io.Serializable;
-import finalproject.astar.Tile;
+
+import sp.model.astar.Tile;
 
 /**
  * An extracted interface for a module.

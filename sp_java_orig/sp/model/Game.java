@@ -4,7 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import finalproject.astar.Tile;
+import sp.model.astar.Tile;
+
 
 /**
  * Strategic Primer/Yudexen (the first is my name for the game this will

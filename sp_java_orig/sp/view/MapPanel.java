@@ -9,7 +9,7 @@ import javax.swing.JPanel;
 
 import sp.model.Game;
 import sp.model.SimpleUnit;
-import finalproject.astar.Location;
+import sp.model.astar.Location;
 
 /**
  * GUI for the map. It has a two-dimensional array of GUITiles, which do all the

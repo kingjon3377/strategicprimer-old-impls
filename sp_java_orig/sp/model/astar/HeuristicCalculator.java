@@ -1,4 +1,4 @@
-package finalproject.astar;
+package sp.model.astar;
 
 /*
  *  This file is part of an AStar implementation.
@@ -20,21 +20,17 @@ package finalproject.astar;
  *  USA.
  */
 
-
-import sp.model.SPMap;
-
 /**
- * An interface for finding paths
+ * An interface for calculating heuristics
  * @author tofubeer+astar@gmail.com
  */
-public interface PathFinder
+public interface HeuristicCalculator
 {
 	/**
-	 * Find a path.
-	 * @param maze The map to search in
-	 * @param start The starting location
-	 * @param end The ending location
-	 * @return The shortest path between the two locations
+	 * Calculate the heuristic between two tiles
+	 * @param startTile the starting tile
+	 * @param endTile the ending tile
+	 * @return the heuristic between them
 	 */
-    Path findPath(SPMap maze, Location start, Location end);
+    int calculateHeuristic(Tile startTile, Tile endTile);
 }
