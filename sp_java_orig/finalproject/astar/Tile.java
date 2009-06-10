@@ -1,9 +1,10 @@
 package finalproject.astar;
 
+import java.io.Serializable;
 import java.text.NumberFormat;
 
-import finalproject.SPMap;
-import finalproject.SimpleModule;
+import sp.model.Module;
+import sp.model.SPMap;
 
 /**
  * The Tile class models a tile on the map; it knows its position and what kind
@@ -19,68 +20,33 @@ import finalproject.SimpleModule;
  * @date Summer 2009 Modified to help pathfinding use A* instead of my (bad)
  *       custom algorithm
  */
-public final class Tile {
+public final class Tile implements Serializable {
 	/**
-	 * The three terrain types in the current icon set that bear noticing. All
-	 * the others are plain coastline, with varying orientations and
-	 * concentrations of ocean.
+	 * Version UID for serialization
 	 */
+	private static final long serialVersionUID = 6270271577021821225L;
+
 	/**
-	 * Forest.
+	 * The amount of cover bonus a forest tile gives.
+	 */
+	private static final double WOODS_COVER_BONUS = 0.2;
+
+	/**
+	 * The first of three terrain types in the current icon set that bear
+	 * noticing. All the others are plain coastline, with varying orientations
+	 * and concentrations of ocean. TODO: Make this an enumerated type (look at
+	 * the pictures for accurate descriptions of the rest)
 	 */
 	public static final int TERRAIN_FOREST = 16;
+
 	/**
-	 * Plains
+	 * The second of three terrain types in the current icon set worth noticing.
 	 */
 	public static final int TERRAIN_PLAIN = 12;
 	/**
-	 * Ocean
+	 * The third of three terrain types in the current icon set worth noticing.
 	 */
 	public static final int TERRAIN_OCEAN = 14;
-	/**
-	 * The place the tile is in the grid
-	 */
-	private final Location location;
-	/**
-	 * The terrain type of the tile
-	 */
-	private final int myType;
-	/**
-	 * The module on the tile, if any
-	 */
-	private SimpleModule moduleOnTile;
-	/**
-	 * How much resource is on the tile
-	 */
-	private int myResourceOnTile;
-
-	/**
-	 * Constructor, taking coordinates and terrain type.
-	 * 
-	 * @param _loc
-	 *            The tile's location on the map
-	 * @param terrainType
-	 *            The terrain type of the tile
-	 */
-	public Tile(final Location _loc, final int terrainType) {
-		verifyInput(_loc, terrainType);
-		location = _loc;
-		myType = terrainType;
-	}
-
-	/**
-	 * @return the terrain type of the tile
-	 */
-	public int getTerrainType() {
-		return myType;
-	}
-
-	/**
-	 * @return the owner of the unit on the tile
-	 */
-	public int getUnitOwner() {
-		return moduleOnTile == null ? 0 : moduleOnTile.getOwner();
-	}
 
 	/**
 	 * Precondition checker, using bounds set as static constants in SPMap.
@@ -105,18 +71,74 @@ public final class Tile {
 	}
 
 	/**
+	 * The place the tile is in the grid
+	 */
+	private final Location location;
+	/**
+	 * The terrain type of the tile
+	 */
+	private final int myType;
+	/**
+	 * The module (unit or building) on the tile, if any
+	 */
+	private Module moduleOnTile;
+	/**
+	 * How much of the (single) resource is on the tile.
+	 */
+	private int myResourceOnTile;
+
+	/**
+	 * Constructor, taking coordinates and terrain type.
+	 * 
+	 * @param _loc
+	 *            The tile's location on the map
+	 * @param terrainType
+	 *            The terrain type of the tile
+	 */
+	public Tile(final Location _loc, final int terrainType) {
+		verifyInput(_loc, terrainType);
+		location = _loc;
+		myType = terrainType;
+	}
+
+	/**
+	 * This number, plus 1, is the amount that a module's accuracy stat plus a
+	 * random number between 0 and 1 must at least match for its ranged attack
+	 * to hit the module on this tile. Should be small.
+	 * 
+	 * @return the tile's cover bonus.
+	 */
+	public double getCoverBonus() {
+		return (myType == TERRAIN_FOREST ? WOODS_COVER_BONUS : 0.0);
+	}
+
+	/**
+	 * @return the terrain type of the tile
+	 */
+	public int getTerrainType() {
+		return myType;
+	}
+
+	/**
+	 * @return which player owns the unit on the tile
+	 */
+	public int getUnitOwner() {
+		return moduleOnTile == null ? 0 : moduleOnTile.getOwner();
+	}
+
+	/**
 	 * @return the module on the tile
 	 */
-	public SimpleModule getModuleOnTile() {
+	public Module getModuleOnTile() {
 		return moduleOnTile;
 	}
 
 	/**
-	 * @param modules
+	 * @param module
 	 *            the module on the tile
 	 */
-	public void setModuleOnTile(final SimpleModule modules) {
-		moduleOnTile = modules;
+	public void setModuleOnTile(final Module module) {
+		moduleOnTile = module;
 	}
 
 	/**
@@ -158,7 +180,7 @@ public final class Tile {
 	 * something that hinders movement it might conceivably be negative, but
 	 * that seems unlikely at this point.
 	 * 
-	 * @return the tile's defense bonus
+	 * @return the terrain's bonus to defense
 	 */
 	public int getTerrainDefenseBonus() {
 		return myType == TERRAIN_FOREST ? 5 : 0;
@@ -173,22 +195,11 @@ public final class Tile {
 	 * that would cause infinite loops and stack overflows in the path checking
 	 * algorithm.
 	 * 
-	 * @return the movement cost of the tile
+	 * @return the movement cost to leave this tile
 	 */
 	public int getMovementCost() {
 		return (myType == TERRAIN_FOREST ? 2
 				: (myType == TERRAIN_OCEAN ? 3 : 1));
-	}
-
-	/**
-	 * This number, plus 1, is the amount that a module's accuracy stat plus a
-	 * random number between 0 and 1 must at least match for its ranged attack
-	 * to hit the module on this tile. Should be small.
-	 * 
-	 * @return the tile's cover bonus.
-	 */
-	public double getCoverBonus() {
-		return myType == TERRAIN_FOREST ? 0.2 : 0.0;
 	}
 
 	/**
@@ -204,8 +215,7 @@ public final class Tile {
 	 */
 	public void setResourceOnTile(final int resourceOnTile) {
 		if (resourceOnTile < 0) {
-			throw new IllegalArgumentException(
-					"Resource on tile cannot be negative");
+			throw new IllegalArgumentException("Resource on tile cannot be negative");
 		}
 		myResourceOnTile = resourceOnTile;
 	}

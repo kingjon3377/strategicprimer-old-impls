@@ -1,0 +1,4 @@
+I would like to implement a turn-based strategy game of my own design. This is
+a partial prototype of my grandiose over-arching game idea, and so the
+feature-set here cannot be given an upper bound at this point, but the game
+will at the very least feature unit movement and simplfiied combat.

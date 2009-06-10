@@ -21,7 +21,7 @@ package finalproject.astar;
  */
 
 
-import finalproject.SPMap;
+import sp.model.SPMap;
 
 /**
  * An interface for finding paths

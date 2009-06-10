@@ -1,5 +1,7 @@
 package finalproject.astar;
 
+import java.io.Serializable;
+
 /*
  *  This file is part of an AStar implementation.
  *  Copyright (C) 2009 tofubeer+astar@gmail.com
@@ -24,7 +26,11 @@ package finalproject.astar;
  * 
  * @author tofubeer+astar@gmail.com
  */
-public final class Location {
+public final class Location implements Serializable{
+	/**
+	 * Version UID for serialization
+	 */
+	private static final long serialVersionUID = 3706427417887760864L;
 	/**
 	 * Row index
 	 */
