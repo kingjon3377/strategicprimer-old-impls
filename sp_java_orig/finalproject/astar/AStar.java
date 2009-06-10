@@ -24,7 +24,7 @@ import java.util.HashSet;
 import java.util.PriorityQueue;
 import java.util.Set;
 
-import finalproject.SPMap;
+import sp.model.SPMap;
 /**
  * An implementation of A* 
  * @author tofubeer+astar@gmail.com
