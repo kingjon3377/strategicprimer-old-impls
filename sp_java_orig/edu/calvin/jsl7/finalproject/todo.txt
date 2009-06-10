@@ -1,0 +1,6 @@
+1. Fix bugs and incorrect documentation.
+2. Implement more full module system.
+3. Scrolling/partial map (offsets?)
+4. Buildings
+5. Remove the requirement for the game to be hotseat.
+
