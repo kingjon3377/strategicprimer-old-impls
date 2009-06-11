@@ -24,8 +24,7 @@ public class LocationSet extends HashSet<Location> implements Location {
 	 * @param module
 	 *            unused.
 	 */
-	public void add(@SuppressWarnings("unused")
-	final Module module) {
+	public void add(final Module module) {
 		throw new IllegalStateException(
 				"Call add() on one of the members of a set of locations, not on the set itself.");
 	}
@@ -34,7 +33,6 @@ public class LocationSet extends HashSet<Location> implements Location {
 	 * @see model.location.Location#contains(model.location.Location)
 	 * @return whether the set contains the given location.
 	 */
-	@Override
 	public boolean contains(final Location loc) {
 		return false || super.contains(loc);
 	}

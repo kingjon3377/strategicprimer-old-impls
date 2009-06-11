@@ -3,8 +3,6 @@ package model.location;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 import model.module.Module;
 
@@ -22,9 +20,9 @@ public final class NullLocation implements Location {
 	private static NullLocation nloc;
 
 	/**
-	 * A lock to synchronize on (to avoid a synchronized method)
+	 * An object to synchronize on (to avoid a synchronized method)
 	 */
-	private static Lock lock = new ReentrantLock();
+	private static Object lock = new Float(3);
 
 	/**
 	 * 
@@ -57,8 +55,9 @@ public final class NullLocation implements Location {
 
 	/**
 	 * Do nothing -- this is the null location.
+	 * FIXME: Should modules be able to be "nowhere" and thus here?
+	 * @param module a module, ignored
 	 */
-	@Override
 	public void add(final Module module) {
 		members.add(module);
 	}
@@ -67,10 +66,9 @@ public final class NullLocation implements Location {
 	 * The null location contains no other locations, so
 	 * 
 	 * @return false
+	 * @param location a location, ignored
 	 */
-	@Override
-	public boolean contains(@SuppressWarnings("unused")
-	final Location location) {
+	public boolean contains(final Location location) {
 		return false;
 	}
 
@@ -79,15 +77,14 @@ public final class NullLocation implements Location {
 	 *            the module to search for
 	 * @return whether it is in the null location
 	 */
-	@Override
 	public boolean contains(final Module module) {
 		return members.contains(module);
 	}
 
 	/**
 	 * Do nothing -- this is the null location.
+	 * @param module a module, ignored
 	 */
-	@Override
 	public void remove(final Module module) {
 		members.remove(module);
 	}

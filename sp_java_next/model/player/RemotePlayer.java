@@ -1,6 +1,5 @@
 package model.player;
 
-import java.io.Serializable;
 import java.net.InetAddress;
 
 import model.module.Module;
@@ -15,7 +14,7 @@ import model.module.Module;
  * @author Jonathan Lovelace
  * 
  */
-public class RemotePlayer extends Player implements Serializable {
+public class RemotePlayer extends Player {
 	/**
 	 * 
 	 */

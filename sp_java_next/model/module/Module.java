@@ -1,13 +1,16 @@
 package model.module;
 
+import java.io.Serializable;
+
 import model.location.Location;
 
 /**
- * A module in the game.
+ * A module [unit, building, weapon, tool, wonder, resource, or
+ * other object] in the game.
  * 
  * @author Jonathan Lovelace
  */
-public interface Module {
+public interface Module extends Serializable {
 
 	/**
 	 * @return The module's location
@@ -54,3 +57,4 @@ public interface Module {
 	void upkeep(long interval);
 
 }
+

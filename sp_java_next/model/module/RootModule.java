@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.concurrent.locks.Lock;
-import java.util.concurrent.locks.ReentrantLock;
 
 import model.location.Location;
 
@@ -21,11 +19,6 @@ public final class RootModule implements Module, Serializable {
 	private static RootModule root;
 
 	/**
-	 * A lock to synchronize on (to avoid a synchronized method)
-	 */
-	private static Lock lock = new ReentrantLock();
-
-	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -2504997378608944492L;
@@ -34,7 +27,7 @@ public final class RootModule implements Module, Serializable {
 	 * @return The single root module of the tree.
 	 */
 	public static RootModule getRootModule() {
-		synchronized (lock) {
+		synchronized (RootModule.class) {
 			if (root == null) {
 				root = new RootModule();
 			}
@@ -69,7 +62,6 @@ public final class RootModule implements Module, Serializable {
 	 * 
 	 * @return null
 	 */
-	@Override
 	public Location getLocation() {
 		return null;
 	}
@@ -79,7 +71,6 @@ public final class RootModule implements Module, Serializable {
 	 * 
 	 * @return null
 	 */
-	@Override
 	public Module getParent() {
 		return null;
 	}
@@ -89,7 +80,6 @@ public final class RootModule implements Module, Serializable {
 	 * 
 	 * @return false
 	 */
-	@Override
 	public boolean isMobile() {
 		return false;
 	}
@@ -100,7 +90,6 @@ public final class RootModule implements Module, Serializable {
 	 * 
 	 * @return false
 	 */
-	@Override
 	public boolean isTopLevel() {
 		return false;
 	}
@@ -121,17 +110,15 @@ public final class RootModule implements Module, Serializable {
 	 * @param attacker
 	 *            ignored
 	 */
-	@Override
-	public void takeAttack(@SuppressWarnings("unused")
-	final Weapon attacker) {
+	public void takeAttack(final Weapon attacker) {
 		throw new IllegalStateException(
 				"The root of the module tree doesn't really exist.");
 	}
 
 	/**
 	 * Have our children take upkeep.
+	 * @param interval how long it's been since the last upkeep
 	 */
-	@Override
 	public void upkeep(final long interval) {
 		for (final Module mod : children) {
 			mod.upkeep(interval);

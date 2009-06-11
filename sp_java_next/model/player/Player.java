@@ -69,9 +69,8 @@ public class Player implements Serializable {
 		if (forbiddenAdvances.contains(advance)) {
 			throw new IllegalArgumentException(
 					"Player tried to discover a forbidden advance");
-		} else {
-			advances.add(advance);
 		}
+		advances.add(advance);
 	}
 
 	/**

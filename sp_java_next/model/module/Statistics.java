@@ -41,7 +41,7 @@ public class Statistics implements Serializable {
 	/**
 	 * The statistics
 	 */
-	protected final Map<Stats, Number> stats; // NOPMD by kingjon on 2/10/08
+	protected final EnumMap<Stats, Number> stats; // NOPMD by kingjon on 2/10/08
 												// 10:49 PM
 
 	/**
