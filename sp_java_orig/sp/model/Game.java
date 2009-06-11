@@ -497,7 +497,7 @@ public final class Game implements Serializable {
 	 *            The exit code
 	 */
 	public static void quit(final int status) {
-		System.exit(status); // NOPMD by kingjon on 5/19/08 5:24 PM
+		System.exit(status); // NOPMD
 	}
 	/**
 	 * @return all the modules in the game
