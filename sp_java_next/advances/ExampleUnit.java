@@ -56,7 +56,6 @@ public class ExampleUnit implements Module, Serializable {
 	 * 
 	 * @return my location
 	 */
-	@Override
 	public Location getLocation() {
 		return location;
 	}
@@ -66,7 +65,6 @@ public class ExampleUnit implements Module, Serializable {
 	 * 
 	 * @return the module that contains me
 	 */
-	@Override
 	public Module getParent() {
 		return parent;
 	}
@@ -83,7 +81,6 @@ public class ExampleUnit implements Module, Serializable {
 	 * 
 	 * @return true
 	 */
-	@Override
 	public boolean isMobile() {
 		return true;
 	}
@@ -94,7 +91,6 @@ public class ExampleUnit implements Module, Serializable {
 	 *         possibly-"top-level" module in this branch of the tree).
 	 * 
 	 */
-	@Override
 	public boolean isTopLevel() {
 		return topLevel;
 	}
@@ -137,8 +133,8 @@ public class ExampleUnit implements Module, Serializable {
 
 	/**
 	 * Take an attack from the given module.
+	 * @param attacker a module attacking the unit
 	 */
-	@Override
 	public void takeAttack(final Weapon attacker) {
 		statistics.getStats().put(
 				Statistics.Stats.HP,
@@ -148,8 +144,8 @@ public class ExampleUnit implements Module, Serializable {
 
 	/**
 	 * Do upkeep-related things
+	 * @param interval how long it's been since the last upkeep
 	 */
-	@Override
 	public void upkeep(final long interval) {
 		if (interval < 0) {
 			throw new IllegalArgumentException(

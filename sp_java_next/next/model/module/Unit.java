@@ -13,26 +13,31 @@ import model.module.Vault;
  */
 public interface Unit extends Module {
 	/**
-	 * A person can have several jobs. (Or "classes" -- but that's a reserved
-	 * word in lowercase and an existing class capitalized in Java.)
+	 * A person can have several jobs. (Or "classes" -- but that's
+	 * a reserved word in lowercase and an existing class
+	 * capitalized in Java.)
 	 * 
-	 * A job represents training. To avoid the problems of inheritance, using
-	 * this training is also put into the job rather than into the unit. Using
-	 * the training may require specific equipment (TODO: Something like APT's
-	 * replacement/other-name mechanism is needed here so a better version of
-	 * something, sufficiently superior to become its own module type rather
-	 * than a higher level one, will still work without modification to jobs
-	 * requiring the old one ... and something like Gentoo's virtuals for
-	 * categorization while we're at it.)
+	 * A job represents training. To avoid the problems of
+	 * inheritance, using this training is also put into the job
+	 * rather than into the unit. Using the training may require
+	 * specific equipment (TODO: Something like APT's
+	 * replacement/other-name mechanism is needed here so a better
+	 * version of something, sufficiently superior to become its
+	 * own module type rather than a higher level one, will still
+	 * work without modification to jobs requiring the old one ...
+	 * and something like Gentoo's virtuals for categorization
+	 * while we're at it.)
 	 * 
-	 * TODO: But what about multi-person Units? And what about upgrades? (And
-	 * with multi-class characters how can we enforce mutually exclusive
-	 * branching upgrades?)
+	 * TODO: But what about multi-person Units? (Can they have
+	 * Jobs?) And what about upgrades? (And with multi-class
+	 * characters how can we enforce mutually exclusive branching
+	 * upgrades?)
 	 * 
-	 * This is an inner class because it is a Unit that has equipment, not the
-	 * Job, and it's not acceptable to have to pass the Unit into every call
-	 * (and to have to have the Unit expose functionality when there isn't a
-	 * friend keyword in Java. Though we seem to be doing that already.)
+	 * This is an inner class because it is a Unit that has
+	 * equipment, not the Job, and it's not acceptable to have to
+	 * pass the Unit into every call (and to have to have the Unit
+	 * expose functionality when there isn't a friend keyword in
+	 * Java. Though we seem to be doing that already.)
 	 * 
 	 * @author Jonathan Lovelace
 	 * 
@@ -84,29 +89,54 @@ public interface Unit extends Module {
 	 *         an interface.)
 	 */
 	Collection<Module> getEquipment();
+
 	/**
 	 * Add equipment
-	 * @param _equipment The equipment to add.
+	 * 
+	 * @param _equipment
+	 *            The equipment to add.
 	 */
 	void addEquipment(Collection<Module> _equipment);
+
 	/**
 	 * Remove equipment
-	 * @param _equipment The equipment to remove.
+	 * 
+	 * @param _equipment
+	 *            The equipment to remove.
 	 */
 	void removeEquipment(Collection<Module> _equipment);
+
 	/**
 	 * @return The jobs the unit has.
 	 */
 	Set<Job> getJobs();
+
 	/**
 	 * Add a job
-	 * @param job The job to add.
+	 * 
+	 * @param job
+	 *            The job to add.
 	 */
 	void addJob(Job job);
+
 	/**
 	 * Remove a job
-	 * @param job The job to remove.
+	 * 
+	 * @param job
+	 *            The job to remove.
 	 */
 	void removeJob(Job job);
+
+	/**
+	 * A Unit can use equipment it does not possess (e.g. if the equipment is
+	 * fixed in place)
+	 * 
+	 * @return (A copy of) the Unit's collection of external equipment within
+	 *         reach that it knows how to use.
+	 * 
+	 *         TODO: Make this more robust. E.g.: What if more than one Unit is
+	 *         within reach of a piece of equipment?
+	 */
+	Collection<Module> getExternalEquipment();
 	// TODO: what else?
 }

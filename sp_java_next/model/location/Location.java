@@ -11,6 +11,9 @@ import model.module.Module;
  * the FPS interface.
  * 
  * TODO: Should this be an interface or an abstract class?
+ *
+ * TODO: How do we model the effects of terrain (other that difficulty
+ * of movement)?
  * 
  * @author Jonathan Lovelace.
  */

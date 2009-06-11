@@ -3,6 +3,8 @@ package model.messaging;
 import java.io.Serializable;
 import java.util.Comparator;
 
+// ESCA-JAVA0044:
+// ESCA-JAVA0235:
 /**
  * A comparator for Messages. The ordering is not what you might expect -- the
  * earlier a message is, the "greater" it is -- because Messages are to be
@@ -14,8 +16,7 @@ import java.util.Comparator;
  * @author Jonathan Lovelace
  * 
  */
-public final class TimestampMessageComparator implements Comparator<Message>,
-		Serializable {
+public final class TimestampMessageComparator implements Comparator<Message>, Serializable {
 
 	/**
 	 * 

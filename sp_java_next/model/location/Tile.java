@@ -42,7 +42,6 @@ public class Tile extends Point implements Location {
 	 * @param module
 	 *            the module to put on the tile
 	 */
-	@Override
 	public void add(final Module module) {
 		if (moduleOnTile.equals(RootModule.getRootModule())) {
 			setModuleOnTile(module);
@@ -58,8 +57,7 @@ public class Tile extends Point implements Location {
 	 * @see model.location.Location#contains(model.location.Location)
 	 * @return false -- a Tile cannot contain another location.
 	 */
-	public boolean contains(@SuppressWarnings("unused")
-	final Location location) {
+	public boolean contains(final Location location) {
 		return false;
 	}
 
@@ -96,7 +94,6 @@ public class Tile extends Point implements Location {
 	 * 
 	 * is the top-level module on the tile, remove it. Otherwise, object.
 	 */
-	@Override
 	public void remove(final Module module) {
 		if (moduleOnTile.equals(module)) {
 			moduleOnTile = RootModule.getRootModule();
