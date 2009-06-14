@@ -3,7 +3,8 @@ package sp.model.astar;
 import java.io.Serializable;
 import java.text.NumberFormat;
 
-import sp.model.Module;
+import sp.model.IModule;
+import sp.model.MoveTarget;
 import sp.model.SPMap;
 
 /**
@@ -20,7 +21,7 @@ import sp.model.SPMap;
  * @date Summer 2009 Modified to help pathfinding use A* instead of my (bad)
  *       custom algorithm
  */
-public final class Tile implements Serializable {
+public final class Tile implements Serializable, MoveTarget {
 	/**
 	 * Version UID for serialization
 	 */
@@ -56,18 +57,10 @@ public final class Tile implements Serializable {
 	 * @param type
 	 *            The terrain type
 	 * @return Whether these are valid
-	 * @throws IllegalArgumentException
-	 *             on invalid input
 	 */
-	private static boolean verifyInput(final Location loc, final int type)
-			throws IllegalArgumentException {
-		if ((loc.getCol() < 0) || (loc.getRow() < 0)) {
-			throw new IllegalArgumentException("Tile coordinates out of bounds");
-		} else if ((type < 0) || (type > SPMap.MAX_TERRAIN_TYPE)) {
-			throw new IllegalArgumentException("Tile terrain type invalid");
-		} else {
-			return true;
-		}
+	private static boolean verifyInput(final Location loc, final int type) {
+		return loc.getCol() >= 0 && loc.getRow() >= 0 && type >= 0
+				&& type <= SPMap.MAX_TERRAIN_TYPE;
 	}
 
 	/**
@@ -81,7 +74,7 @@ public final class Tile implements Serializable {
 	/**
 	 * The module (unit or building) on the tile, if any
 	 */
-	private Module moduleOnTile;
+	private IModule moduleOnTile;
 	/**
 	 * How much of the (single) resource is on the tile.
 	 */
@@ -96,7 +89,9 @@ public final class Tile implements Serializable {
 	 *            The terrain type of the tile
 	 */
 	public Tile(final Location _loc, final int terrainType) {
-		verifyInput(_loc, terrainType);
+		if (!verifyInput(_loc, terrainType)) {
+			throw new IllegalArgumentException("Invalid input");
+		}
 		location = _loc;
 		myType = terrainType;
 	}
@@ -106,9 +101,23 @@ public final class Tile implements Serializable {
 	 * random number between 0 and 1 must at least match for its ranged attack
 	 * to hit the module on this tile. Should be small.
 	 * 
+	 * @param module
+	 *            The module benefiting -- ignored. (FIXME: Fix this.)
+	 * 
 	 * @return the tile's cover bonus.
 	 */
-	public double getCoverBonus() {
+	public double coverBonus(final IModule module) {
+		return coverBonus();
+	}
+
+	/**
+	 * This number, plus 1, is the amount that a module's accuracy stat plus a
+	 * random number between 0 and 1 must at least match for its ranged attack
+	 * to hit the module on this tile. Should be small.
+	 * 
+	 * @return the tile's cover bonus.
+	 */
+	public double coverBonus() {
 		return (myType == TERRAIN_FOREST ? WOODS_COVER_BONUS : 0.0);
 	}
 
@@ -129,7 +138,7 @@ public final class Tile implements Serializable {
 	/**
 	 * @return the module on the tile
 	 */
-	public Module getModuleOnTile() {
+	public IModule getModuleOnTile() {
 		return moduleOnTile;
 	}
 
@@ -137,7 +146,7 @@ public final class Tile implements Serializable {
 	 * @param module
 	 *            the module on the tile
 	 */
-	public void setModuleOnTile(final Module module) {
+	public void setModuleOnTile(final IModule module) {
 		moduleOnTile = module;
 	}
 
@@ -168,9 +177,9 @@ public final class Tile implements Serializable {
 	@Override
 	public String toString() {
 		return location.toString() + ", type " + myType + ", Defense bonus "
-				+ getTerrainDefenseBonus() + ", Movement cost "
-				+ getMovementCost() + ", Cover bonus "
-				+ NumberFormat.getPercentInstance().format(getCoverBonus())
+				+ defenseBonus() + ", Movement cost " + getMovementCost()
+				+ ", Cover bonus "
+				+ NumberFormat.getPercentInstance().format(coverBonus(null))
 				+ ", Resource on tile: " + myResourceOnTile;
 	}
 
@@ -182,8 +191,23 @@ public final class Tile implements Serializable {
 	 * 
 	 * @return the terrain's bonus to defense
 	 */
-	public int getTerrainDefenseBonus() {
+	public int defenseBonus() {
 		return myType == TERRAIN_FOREST ? 5 : 0;
+	}
+
+	/**
+	 * This number is added to the defense stat of (i.e., subtracted from any
+	 * damage done to) the module on the tile. For most tiles it is zero; for
+	 * something that hinders movement it might conceivably be negative, but
+	 * that seems unlikely at this point.
+	 * 
+	 * @param module
+	 *            The module whose defense this tile may be boosting
+	 * 
+	 * @return the terrain's bonus to defense
+	 */
+	public int defenseBonus(final IModule module) {
+		return defenseBonus();
 	}
 
 	/**
@@ -215,14 +239,41 @@ public final class Tile implements Serializable {
 	 */
 	public void setResourceOnTile(final int resourceOnTile) {
 		if (resourceOnTile < 0) {
-			throw new IllegalArgumentException("Resource on tile cannot be negative");
+			throw new IllegalArgumentException(
+					"Resource on tile cannot be negative");
 		}
 		myResourceOnTile = resourceOnTile;
 	}
+
 	/**
 	 * @return the tile's location on the map
 	 */
 	public Location getLocation() {
 		return location;
+	}
+
+	/**
+	 * Add a module to this tile (displacing the current one)
+	 * 
+	 * @param module
+	 *            The module to add
+	 */
+	@Override
+	public void add(final IModule module) {
+		this.setModuleOnTile(module);
+	}
+
+	/**
+	 * Remove a module from the tile.
+	 * 
+	 * @param module
+	 *            the module to remove (MUST be on the tile)
+	 */
+	@Override
+	public void remove(final IModule module) {
+		if (module == null || !module.equals(moduleOnTile)) {
+			throw new IllegalArgumentException("Module not on this tile");
+		}
+		this.setModuleOnTile(null);
 	}
 }

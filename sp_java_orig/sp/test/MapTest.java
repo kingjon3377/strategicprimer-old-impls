@@ -8,6 +8,7 @@ import junit.framework.TestCase;
 import org.junit.Before;
 import org.junit.Test;
 
+import sp.model.Module;
 import sp.model.SPMap;
 import sp.model.SimpleUnit;
 import sp.model.astar.Location;
@@ -61,7 +62,7 @@ public class MapTest extends TestCase { // NOPMD
 		map.getTile(new Location(3, 3)).setModuleOnTile(new SimpleUnit());
 		map.getTile(new Location(3, 3)).getModuleOnTile().setLocation(
 				map.getTile(new Location(3, 3)));
-		map.getTile(new Location(3, 3)).getModuleOnTile().setSpeed(5);
+		((Module)map.getTile(new Location(3, 3)).getModuleOnTile()).setSpeed(5);
 	}
 
 	/**
@@ -181,19 +182,19 @@ public class MapTest extends TestCase { // NOPMD
 	public void testCheckPath() {
 		assertFalse("Can't go to occupied tile", map.checkPath(map
 				.getTile(new Location(3, 3)), map.getTile(new Location(1, 1)),
-				map.getTile(new Location(3, 3)).getModuleOnTile().getSpeed(),
+				((Module)map.getTile(new Location(3, 3)).getModuleOnTile()).getSpeed(),
 				map.getTile(new Location(3, 3)).getModuleOnTile()));
 		assertFalse("Can't go to own tile", map.checkPath(map
 				.getTile(new Location(3, 3)), map.getTile(new Location(3, 3)),
-				map.getTile(new Location(3, 3)).getModuleOnTile().getSpeed(),
+				((Module)map.getTile(new Location(3, 3)).getModuleOnTile()).getSpeed(),
 				map.getTile(new Location(3, 3)).getModuleOnTile()));
 		assertTrue("Can go to nearby unoccupied tile", map.checkPath(map
 				.getTile(new Location(3, 3)), map.getTile(new Location(4, 5)),
-				map.getTile(new Location(3, 3)).getModuleOnTile().getSpeed(),
+				((Module)map.getTile(new Location(3, 3)).getModuleOnTile()).getSpeed(),
 				map.getTile(new Location(3, 3)).getModuleOnTile()));
 		assertFalse("Why can't go here?", map.checkPath(map
 				.getTile(new Location(3, 3)), map.getTile(new Location(2, 4)),
-				map.getTile(new Location(3, 3)).getModuleOnTile().getSpeed(),
+				((Module)map.getTile(new Location(3, 3)).getModuleOnTile()).getSpeed(),
 				map.getTile(new Location(3, 3)).getModuleOnTile()));
 	}
 }

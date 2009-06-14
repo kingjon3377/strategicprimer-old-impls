@@ -1,13 +1,12 @@
 package sp.model;
 
-import sp.model.astar.Tile;
 
 // ESCA-JAVA0136:
 // ESCA-JAVA0100:
 /**
- * The Module class is the base class from which all units, buildings,
- * and (in future versions) weapons, etc., descend. It knows all of
- * its statistics that are common to those categories.
+ * The Module class is the base class from which all units, buildings, and (in
+ * future versions) weapons, etc., descend. It knows all of its statistics that
+ * are common to those categories.
  * 
  * @author Jonathan Lovelace
  * @date 27 November 2006
@@ -16,19 +15,18 @@ import sp.model.astar.Tile;
  * @semester 06FA
  * 
  */
-public abstract class Module implements IModule, Weapon, Statistician {
+public abstract class Module implements IModule, Statistician {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -501346868850104985L;
 
 	/**
-	 * Unit Unique Identifier; this should be unique for each kind
-	 * of module. At first it should be used in top-level modules
-	 * (units and buildings) as an index for what image should be
-	 * used to represent the module and to determine what terrain
-	 * is passable. The implicit value, -1, is not valid; it
-	 * should be overridden in a subclass.
+	 * Unit Unique Identifier; this should be unique for each kind of module. At
+	 * first it should be used in top-level modules (units and buildings) as an
+	 * index for what image should be used to represent the module and to
+	 * determine what terrain is passable. The implicit value, -1, is not valid;
+	 * it should be overridden in a subclass.
 	 */
 	protected long uuid = -1;
 
@@ -69,12 +67,12 @@ public abstract class Module implements IModule, Weapon, Statistician {
 	 * If this module is free-standing, this is its location. (Encapsulates
 	 * [x,y], and provides for "null".)
 	 */
-	protected Tile location;
+	protected MoveTarget location;
 
 	/**
 	 * If this module is not free-standing, this is the module that holds it.
 	 */
-	protected Module parent;
+	protected IModule parent;
 
 	/**
 	 * True if the module has moved this turn (it can move at most once per
@@ -89,8 +87,8 @@ public abstract class Module implements IModule, Weapon, Statistician {
 	protected boolean hasAttacked;
 
 	/**
-	 * If true, remove me from any collections the next time they
-	 * are pruned.  Cannot be set directly.
+	 * If true, remove me from any collections the next time they are pruned.
+	 * Cannot be set directly.
 	 */
 	protected boolean deleted; // NOPMD by kingjon on 5/19/08 12:55 AM
 
@@ -100,12 +98,11 @@ public abstract class Module implements IModule, Weapon, Statistician {
 	protected String name;
 
 	/**
-	 * Constructor: Make sure that the module won't be deleted on
-	 * the next round. If a subclass needs more features, it can
-	 * extend this.
+	 * Constructor.
+	 * @param initialLocation The module's starting location.
 	 */
-	protected Module() {
-		deleted = false;
+	protected Module(final MoveTarget initialLocation) {
+		location = initialLocation;
 	}
 
 	/**
@@ -125,7 +122,7 @@ public abstract class Module implements IModule, Weapon, Statistician {
 	/**
 	 * @return the tile the module is on
 	 */
-	public Tile getLocation() {
+	public MoveTarget getLocation() {
 		return location;
 	}
 
@@ -155,7 +152,7 @@ public abstract class Module implements IModule, Weapon, Statistician {
 	/**
 	 * @return the module's parent in the tree
 	 */
-	public Module getParent() {
+	public IModule getParent() {
 		return parent;
 	}
 
@@ -197,12 +194,6 @@ public abstract class Module implements IModule, Weapon, Statistician {
 	}
 
 	/**
-	 * Is the module a mobile one? Determines what its speed stat means.
-	 * @return whether the module can move
-	 */
-	public abstract boolean mobile();
-
-	/**
 	 * @param _defense
 	 *            the module's defense stat
 	 */
@@ -242,7 +233,7 @@ public abstract class Module implements IModule, Weapon, Statistician {
 	 * @param _location
 	 *            the module's new location
 	 */
-	public void setLocation(final Tile _location) {
+	public void setLocation(final MoveTarget _location) {
 		location = _location;
 	}
 
@@ -256,12 +247,6 @@ public abstract class Module implements IModule, Weapon, Statistician {
 		}
 		maxHP = _maxHP;
 	}
-
-	/**
-	 * @param _mobile
-	 *            whether the module can move
-	 */
-	public abstract void setMobile(final boolean _mobile);
 
 	/**
 	 * @param _name
@@ -283,7 +268,7 @@ public abstract class Module implements IModule, Weapon, Statistician {
 	 * @param _parent
 	 *            the module's parent in the tree
 	 */
-	public void setParent(final Module _parent) {
+	public void setParent(final IModule _parent) {
 		parent = _parent;
 	}
 
@@ -307,30 +292,34 @@ public abstract class Module implements IModule, Weapon, Statistician {
 	}
 
 	/**
-	 * This is called during an attack on the module, as the last
-	 * step, immediately after damage has been dealt. It takes
-	 * care of removing the module if it has zero HP, so
-	 * overriding implementations should call super.takeAttack().
+	 * This is called during an attack on the module, as the last step,
+	 * immediately after damage has been dealt. It takes care of removing the
+	 * module if it has zero HP, so overriding implementations should call
+	 * super.takeAttack().
 	 * 
 	 * @param attacker
 	 *            The attacking module (most likely a unit)
 	 */
-	public void takeAttack(final Module attacker) {
-		if (attacker.deleted) {
-			throw new IllegalStateException(
-					"Attacked by a delete-flagged module!");
-		}
-		if (hitPoints <= 0) {
-			// Remove me from parent -- since no module
-			// can have another module yet, this is
-			// unimplementable at the present time.
-			// Similarly for removing or moving to my
-			// parent all my children. We can, however,
-			// remove me from my location.
-			if (location != null) {
-				location.setModuleOnTile(null);
+	public void takeAttack(final Weapon attacker) {
+		if ((attacker instanceof Module)) {
+			if (((Module)attacker).deleted) {
+				throw new IllegalStateException(
+						"Attacked by a delete-flagged module!");
+			} else if (hitPoints <= 0) {
+				// Remove me from parent -- since no module
+				// can have another module yet, this is
+				// unimplementable at the present time.
+				// Similarly for removing or moving to my
+				// parent all my children. We can, however,
+				// remove me from my location.
+				if (location != null) {
+					location.remove(this);
+				}
+				deleted = true;
 			}
-			deleted = true;
+		} else {
+			throw new IllegalStateException(
+					"Module can't handle attacks from non-Modules yet");
 		}
 	}
 
@@ -354,4 +343,12 @@ public abstract class Module implements IModule, Weapon, Statistician {
 	 *      called.
 	 */
 	public abstract void delete();
+
+	/**
+	 * @return whether this Module can move.
+	 */
+	@Override
+	public boolean mobile() {
+		return this instanceof Unit;
+	}
 }
