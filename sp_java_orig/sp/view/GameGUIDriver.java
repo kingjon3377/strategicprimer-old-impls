@@ -16,7 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import sp.model.Game;
-import sp.model.Module;
+import sp.model.IModule;
 import sp.model.SPMap;
 import sp.model.SPMapParser;
 
@@ -149,7 +149,7 @@ public final class GameGUIDriver extends JFrame implements ActionListener,
 		// Creating map
 		Game.getGame(SPMapParser.createBoard(getClass()
 				.getResource("board.txt"), getClass().getResource(
-				"resources.txt")), new ArrayList<Module>(), players);
+				"resources.txt")), new ArrayList<IModule>(), players);
 
 		// Setting up the map panel
 		setLayout(new BorderLayout());

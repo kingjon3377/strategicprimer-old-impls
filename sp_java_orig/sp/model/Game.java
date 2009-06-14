@@ -2,6 +2,7 @@ package sp.model;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import sp.model.astar.Tile;
@@ -206,7 +207,7 @@ public final class Game implements Serializable {
 	 *            How many players
 	 * @return the singleton object
 	 */
-	public static Game getGame(final SPMap _map, final List<Module> _modules,
+	public static Game getGame(final SPMap _map, final List<IModule> _modules,
 			final int players) {
 		synchronized (Game.class) {
 			if (theGame == null) {
@@ -269,7 +270,7 @@ public final class Game implements Serializable {
 	 * @param players
 	 *            How many players there are
 	 */
-	private Game(final SPMap _map, final List<Module> _modules, final int players) {
+	private Game(final SPMap _map, final List<IModule> _modules, final int players) {
 		map = _map;
 		mode = Mode.NO_MODE;
 		modules = new ArrayList<IModule>(_modules);
@@ -504,7 +505,14 @@ public final class Game implements Serializable {
 	/**
 	 * @return all the modules in the game
 	 */
-	public List<IModule> getModules() {
-		return modules;
+	public List<IModule >getModules() {
+		return Collections.unmodifiableList(modules);
+	}
+	/**
+	 * Add a module to the game.
+	 * @param module The module to add
+	 */
+	public void addModule(final IModule module) {
+		modules.add(module);
 	}
 }
