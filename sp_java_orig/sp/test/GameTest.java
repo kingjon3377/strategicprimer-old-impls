@@ -10,6 +10,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import sp.model.Game;
+import sp.model.IModule;
 import sp.model.Module;
 import sp.model.SPMap;
 import sp.model.SimpleUnit;
@@ -52,11 +53,11 @@ public final class GameTest extends TestCase implements Serializable { // NOPMD
 		final List<List<Tile>> tiles = SPMap.createArray(5, TESTMAP_2D_DIM, 2);
 
 		game = Game.getGame(new SPMap(5, TESTMAP_2D_DIM, tiles),
-				new ArrayList<Module>(), 2);
+				new ArrayList<IModule>(), 2);
 		for (int i = 0; i < TESTMAP_2D_DIM; i++) {
 			tiles.get(2).get(i).setModuleOnTile(new SimpleUnit()); // NOPMD
 			tiles.get(2).get(i).getModuleOnTile().setLocation(tiles.get(2).get(i));
-			game.getModules().add(tiles.get(2).get(i).getModuleOnTile());
+			game.addModule(tiles.get(2).get(i).getModuleOnTile());
 			tiles.get(2).get(i).getModuleOnTile().setOwner(1);
 			tiles.get(2).get(i).setResourceOnTile(1);
 		}
