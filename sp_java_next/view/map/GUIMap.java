@@ -35,10 +35,8 @@ public class GUIMap extends JPanel {
 	/**
 	 * Constructor
 	 * 
-	 * @param _rows
-	 *            the number of rows
-	 * @param _cols
-	 *            the number of columns
+	 * @param _rows the number of rows
+	 * @param _cols the number of columns
 	 */
 	public GUIMap(final int _rows, final int _cols) {
 		super();
@@ -46,8 +44,8 @@ public class GUIMap extends JPanel {
 	}
 
 	/**
-	 * @param _rows
-	 * @param _cols
+	 * @param _rows the number of rows
+	 * @param _cols the number of columns
 	 */
 	private void constructor(final int _rows, final int _cols) {
 		rows = _rows;
@@ -103,8 +101,8 @@ public class GUIMap extends JPanel {
 	 * To make the static analysis plugins happy despite cols being final in all
 	 * but name.
 	 * 
-	 * @param _cols
-	 * @throws InvalidActivityException
+	 * @param _cols The new size of the map in columns
+	 * @throws InvalidActivityException Always
 	 */
 	public void setCols(@SuppressWarnings("unused")
 	final int _cols) throws InvalidActivityException {
@@ -117,8 +115,8 @@ public class GUIMap extends JPanel {
 	 * To make static analysis plugins happy despite rows being final in all but
 	 * name
 	 * 
-	 * @param _rows
-	 * @throws InvalidActivityException
+	 * @param _rows The new size of the map in rows
+	 * @throws InvalidActivityException Always
 	 */
 	public void setRows(@SuppressWarnings("unused")
 	final int _rows) throws InvalidActivityException {
