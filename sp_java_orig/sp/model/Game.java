@@ -241,7 +241,7 @@ public final class Game implements Serializable {
 	/**
 	 * All the modules in the game (TODO: verify).
 	 */
-	private final List<Module> modules;
+	private final List<IModule> modules;
 
 	/**
 	 * Whose turn it is.
@@ -272,7 +272,7 @@ public final class Game implements Serializable {
 	private Game(final SPMap _map, final List<Module> _modules, final int players) {
 		map = _map;
 		mode = Mode.NO_MODE;
-		modules = new ArrayList<Module>(_modules);
+		modules = new ArrayList<IModule>(_modules);
 		player = 1;
 		numPlayers = players;
 		playerResources = new int[players + 1];
@@ -343,13 +343,15 @@ public final class Game implements Serializable {
 		// player should come to own those tiles which his
 		// units ended on or next to.
 		for (int i = 0; i < modules.size(); i++) {
-			modules.get(i).setHasAttacked(false);
-			modules.get(i).setHasMoved(false);
+			if (modules.get(i) instanceof Weapon) {
+				((Weapon) modules.get(i)).setHasAttacked(false);
+			}
+			((Module)modules.get(i)).setHasMoved(false);
 			if (modules.get(i).isDeleted()) {
 				removableIndices.add(i);
 			} else if ((modules.get(i).getLocation() != null)
 					&& (modules.get(i).getOwner() == player)) {
-				setPlayerResources(modules.get(i).getLocation().getResourceOnTile()
+				setPlayerResources(((Tile)modules.get(i).getLocation()).getResourceOnTile()
 						+ getPlayerResources(player), modules.get(i).getOwner());
 			}
 		}
@@ -502,7 +504,7 @@ public final class Game implements Serializable {
 	/**
 	 * @return all the modules in the game
 	 */
-	public List<Module> getModules() {
+	public List<IModule> getModules() {
 		return modules;
 	}
 }

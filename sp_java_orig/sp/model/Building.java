@@ -1,4 +1,4 @@
-package model;
+package sp.model;
 /**
  * A building in the game.
  * Perhaps a building should have an "action" method. Note that if this is

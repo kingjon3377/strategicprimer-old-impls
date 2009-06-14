@@ -15,7 +15,12 @@ import java.util.HashSet;
 
 public abstract class Player extends Module {
 	// TODO: Should we extend Module, or not?
-
+	/**
+	 * A constructor to make this compile.
+	 */
+	protected Player() {
+		super(null);
+	}
 	/**
 	 * 
 	 */

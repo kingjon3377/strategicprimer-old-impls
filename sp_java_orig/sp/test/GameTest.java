@@ -13,6 +13,7 @@ import sp.model.Game;
 import sp.model.Module;
 import sp.model.SPMap;
 import sp.model.SimpleUnit;
+import sp.model.Weapon;
 import sp.model.astar.Tile;
 
 // ESCA-JAVA0137:
@@ -82,19 +83,19 @@ public final class GameTest extends TestCase implements Serializable { // NOPMD
 	@Test
 	public void testEndTurn() {
 		final int modulesCount = game.getModules().size();
-		final Module module = game.getModules().get(0); 
-		final Module moduleTwo = game.getModules().get(1);
+		final Module module = ((Module) game.getModules().get(0)); 
+		final Module moduleTwo = ((Module) game.getModules().get(1));
 		module.setHasAttacked(true);
 		module.setHasMoved(true);
 		moduleTwo.setHitPoints(0);
-		moduleTwo.takeAttack(game.getModules().get(0));
+		moduleTwo.takeAttack((Weapon)module);
 		game.setMode(Game.Mode.BUILD_MODE);
 		game.endTurn();
 		assertEquals("Current player increments",2, game.getPlayer());
 		assertEquals("Starts in no mode",Game.Mode.NO_MODE, game.getMode());
 		assertEquals("Deleted modules are pruned",modulesCount - 1, game.getModules().size());
-		assertFalse("hasAttacked is reset",game.getModules().get(0).isHasAttacked());
-		assertFalse("hasMoved is reset",game.getModules().get(0).isHasMoved());
+		assertFalse("hasAttacked is reset",((Module)game.getModules().get(0)).isHasAttacked());
+		assertFalse("hasMoved is reset",((Module)game.getModules().get(0)).isHasMoved());
 		game.endTurn();
 		assertEquals("resources increment",4, game.getPlayerResources(1));
 	}

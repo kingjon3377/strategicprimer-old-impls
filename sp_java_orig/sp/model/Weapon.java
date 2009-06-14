@@ -18,7 +18,7 @@ public interface Weapon extends Serializable {
 	 * @param target
 	 *            The target module.
 	 */
-	void attack(Module target);
+	void attack(final IModule target);
 
 	/**
 	 * Checks whether it is possible to attack the specified module. Subclasses
@@ -30,7 +30,7 @@ public interface Weapon extends Serializable {
 	 *            The potential target
 	 * @return whether the attack is possible.
 	 */
-	boolean checkAttack(Module target);
+	boolean checkAttack(final IModule target);
 
 	/**
 	 * Check whether it is possible to make a ranged attack against the
@@ -41,7 +41,7 @@ public interface Weapon extends Serializable {
 	 *            The potential target
 	 * @return whether a ranged attack against the target is possible.
 	 */
-	boolean checkRangedAttack(Module target);
+	boolean checkRangedAttack(final IModule target);
 
 	/**
 	 * @return whether the module has attacked this turn
@@ -59,12 +59,25 @@ public interface Weapon extends Serializable {
 	 * @param target
 	 *            The target module
 	 */
-	void rangedAttack(Module target);
+	void rangedAttack(final IModule target);
 
 	/**
 	 * @param hasAttacked
 	 *            whether the module has attacked this turn
 	 */
-	void setHasAttacked(boolean hasAttacked);
+	void setHasAttacked(final boolean hasAttacked);
 
+	/**
+	 * @param module
+	 *            A module to perhaps attack
+	 * @return How much damage an attack on it would do
+	 * @bug FIXME: This should probably return a class similar to Statistics,
+	 *      since not all modules are defined by hit points, attacks can have
+	 *      other effects, and an attack on a very important, very durable
+	 *      module that did only 5 points of damage but destroyed it should
+	 *      probably be preferred to an attack on a very fragile but resilient
+	 *      not very important module that did over a hundred but left it
+	 *      standing.
+	 */
+	int predictAttackResult(final IModule module);
 }

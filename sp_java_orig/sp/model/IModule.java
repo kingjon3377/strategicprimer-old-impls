@@ -2,7 +2,6 @@ package sp.model;
 
 import java.io.Serializable;
 
-import sp.model.astar.Tile;
 
 /**
  * An extracted interface for a module.
@@ -15,7 +14,7 @@ public interface IModule extends Serializable {
 	/**
 	 * @return the tile the module is on
 	 */
-	Tile getLocation();
+	MoveTarget getLocation();
 
 	/**
 	 * @return the module's name
@@ -43,40 +42,27 @@ public interface IModule extends Serializable {
 	boolean isDeleted();
 
 	/**
-	 * TODO: Make a time-based system, like in the original.
-	 * 
-	 * @return whether the module has moved.
-	 */
-	boolean isHasMoved();
-
-	/**
 	 * @return whether the module can move
 	 */
 	boolean mobile();
 
 	/**
-	 * @param hasMoved
-	 *            whether the module has moved this turn
-	 */
-	void setHasMoved(boolean hasMoved);
-
-	/**
 	 * @param location
 	 *            the module's new location
 	 */
-	void setLocation(Tile location);
+	void setLocation(MoveTarget location);
 
-	/**
-	 * @param mobile
-	 *            whether the module can move
-	 */
-	void setMobile(boolean mobile);
+//	/**
+//	 * @param mobile
+//	 *            whether the module can move
+//	 */
+//	void setMobile(boolean mobile);
 
-	/**
-	 * @param name
-	 *            the module's "name"
-	 */
-	void setName(String name);
+//	/**
+//	 * @param name
+//	 *            the module's "name"
+//	 */
+//	void setName(String name);
 
 	/**
 	 * @param owner
@@ -88,7 +74,7 @@ public interface IModule extends Serializable {
 	 * @param parent
 	 *            the module's parent in the tree
 	 */
-	void setParent(Module parent);
+	void setParent(IModule parent);
 
 	/**
 	 * @param uuid
@@ -105,6 +91,6 @@ public interface IModule extends Serializable {
 	 * @param attacker
 	 *            The attacking module (most likely a unit)
 	 */
-	void takeAttack(Module attacker);
+	void takeAttack(Weapon attacker);
 
 }

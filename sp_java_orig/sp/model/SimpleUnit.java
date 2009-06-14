@@ -16,7 +16,7 @@ import sp.model.astar.Tile;
  * @semester FA06
  * 
  */
-public class SimpleUnit extends Unit {
+public class SimpleUnit extends Module implements Unit, Weapon {
 	/**
 	 * Version UID for serialization.
 	 */
@@ -42,16 +42,16 @@ public class SimpleUnit extends Unit {
 	protected double accuracy;
 
 	/**
-	 * Constructor: All stats should be initialized by the
-	 * caller. (Maybe I'll write a more full-featured constructor that takes
-	 * them as arguments later, but likely not, since this game is a prototype
-	 * of sorts for the game I hope to finish someday, and it will likely have
-	 * most units in separate classes, each of which would have to implement a
-	 * constructor with the same signature.
+	 * Constructor: All stats should be initialized by the caller. (Maybe I'll
+	 * write a more full-featured constructor that takes them as arguments
+	 * later, but likely not, since this game is a prototype of sorts for the
+	 * game I hope to finish someday, and it will likely have most units in
+	 * separate classes, each of which would have to implement a constructor
+	 * with the same signature.
 	 * 
 	 */
 	public SimpleUnit() {
-		super();
+		super(null);
 		parent = null; // NOPMD by kingjon on 5/18/08 8:20 PM
 	}
 
@@ -64,16 +64,19 @@ public class SimpleUnit extends Unit {
 	 *            The target module.
 	 */
 	@Override
-	public final void attack(final Module target) {
-		int dmg = meleeAttack
-				- target.getDefense()
-				- ((target.getLocation() == null ? 0 : target.getLocation()
-						.getTerrainDefenseBonus()));
-		if (dmg < 0) {
-			dmg = 0;
-		} // FIXME: This is badly designed
-		target.setHitPoints(target.getHitPoints() - dmg);
-		target.takeAttack(this);
+	public final void attack(final IModule target) {
+		if (target instanceof Module) {
+			int dmg = meleeAttack
+					- ((Module) target).getDefense()
+					- ((target.getLocation() == null ? 0 : target.getLocation()
+							.defenseBonus(target)));
+			if (dmg < 0) {
+				dmg = 0;
+			} // FIXME: This is badly designed
+			((Module) target).setHitPoints(((Module) target).getHitPoints()
+					- dmg);
+			target.takeAttack(this);
+		}
 	}
 
 	/**
@@ -86,18 +89,23 @@ public class SimpleUnit extends Unit {
 	 * @return whether it is possible to attack that module
 	 */
 	@Override
-	public final boolean checkAttack(final Module target) {
+	public final boolean checkAttack(final IModule target) {
 		return (target != null && (target.getLocation() != null || target
 				.getParent() != null))
 				&& (hasAttacked ? false
-						: target.getParent() == null ? (target.getLocation()
-								.getLocation().getRow() < (location.getLocation().getRow() - 1))
-								|| (target.getLocation().getLocation().getRow() > (location
+						: target.getParent() == null ? (((Tile) target
+								.getLocation()).getLocation().getRow() < (((Tile) location)
+								.getLocation().getRow() - 1))
+								|| (((Tile) target.getLocation()).getLocation()
+										.getRow() > (((Tile) location)
 										.getLocation().getRow() + 1))
-								|| (target.getLocation().getLocation().getCol() < (location
+								|| (((Tile) target.getLocation()).getLocation()
+										.getCol() < (((Tile) location)
 										.getLocation().getCol() - 1))
-								|| (target.getLocation().getLocation().getCol() > (location
-										.getLocation().getCol() + 1)) ? false : true
+								|| (((Tile) target.getLocation()).getLocation()
+										.getCol() > (((Tile) location)
+										.getLocation().getCol() + 1)) ? false
+								: true
 								: checkAttack(target.getParent()));
 	}
 
@@ -114,8 +122,12 @@ public class SimpleUnit extends Unit {
 	 * @return whether that tile is a valid destination
 	 */
 	@Override
-	public final boolean checkMove(final Tile tile, final SPMap map) {
-		return (!(getLocation() == null) && tile.getModuleOnTile() == null
+	public final boolean checkMove(final MoveTarget tile, final SPMap map) {
+		if (!(tile instanceof Tile)) {
+			throw new IllegalStateException(
+					"Movement to non-Tile locations is not supported yet");
+		}
+		return (!(getLocation() == null) && ((Tile)tile).getModuleOnTile() == null
 				&& !hasMoved && map.checkPath(getLocation(), tile, speed, this));
 	}
 
@@ -132,7 +144,7 @@ public class SimpleUnit extends Unit {
 	 *         module
 	 */
 	@Override
-	public final boolean checkRangedAttack(final Module target) {
+	public final boolean checkRangedAttack(final IModule target) {
 		return hasAttacked || target == null ? false
 				: target.getLocation() == null ? target.getParent() == null ? false
 						: checkRangedAttack(target.getParent())
@@ -169,14 +181,19 @@ public class SimpleUnit extends Unit {
 	 *            The target module.
 	 */
 	@Override
-	public final void rangedAttack(final Module target) {
+	public final void rangedAttack(final IModule target) {
+		if (!(target instanceof Module)) {
+			throw new IllegalStateException(
+					"Ranged attacks on non-Modules isn't implemented yet");
+		}
 		if ((Math.random() + accuracy) > (1 + ((target.getLocation() == null ? 0
-				: target.getLocation().getCoverBonus())))) {
-			int dmg = ranged - target.getDefense();
+				: (target.getLocation().coverBonus(target)))))) {
+			int dmg = ranged - ((Module) target).getDefense();
 			if (dmg < 0) {
 				dmg = 0;
 			} // FIXME: This is somewhat badly designed
-			target.setHitPoints(target.getHitPoints() - dmg);
+			((Module) target).setHitPoints(((Module) target).getHitPoints()
+					- dmg);
 		}
 		target.takeAttack(this);
 	}
@@ -241,6 +258,7 @@ public class SimpleUnit extends Unit {
 	public boolean isDeleted() {
 		return myDelete;
 	}
+
 	/**
 	 * Should the unit be removed from collections when they prune?
 	 */
@@ -266,5 +284,73 @@ public class SimpleUnit extends Unit {
 	@Override
 	public void setName(final String _name) {
 		myName = _name;
+	}
+
+	/**
+	 * @param module
+	 *            A module to perhaps attack
+	 * @return How much damage an attack on it would do
+	 * @bug FIXME: This should probably return a class similar to Statistics,
+	 *      since not all modules are defined by hit points, attacks can have
+	 *      other effects, and an attack on a very important, very durable
+	 *      module that did only 5 points of damage but destroyed it should
+	 *      probably be preferred to an attack on a very fragile but resilient
+	 *      not very important module that did over a hundred but left it
+	 *      standing.
+	 */
+	@Override
+	public int predictAttackResult(final IModule module) {
+		throw new IllegalStateException("Not implemented yet");
+	}
+
+	/**
+	 * Move to the specified tile. This is checked to prevent impossible
+	 * movement (at present by a descendant-supplied function; TODO: make that a
+	 * server-side check). If impossible movement is detected, this fails
+	 * silently. Checking beforehand (via the descendant-supplied checkMove())
+	 * is recommended. TODO: Check for a target too far and move partway.
+	 * 
+	 * TODO: limiting a module to one attack and one move per turn is a hack.
+	 * Implement it properly via a number-of-actions-per-turn stat, where each
+	 * tile move decrements it somewhat and each other action decrements it
+	 * somewhat.
+	 * 
+	 * @param tile
+	 *            The destination tile.
+	 * @param map
+	 *            The map
+	 */
+	public final void move(final MoveTarget tile, final SPMap map) {
+		if (checkMove(tile, map)) {
+			getLocation().remove(this);
+			setLocation(tile);
+			tile.add(this);
+			hasMoved = true;
+		}
+	}
+
+	/**
+	 * All units are, by definition, mobile. If it also needs rotational speed,
+	 * it should have a module containing that information -- which is part of
+	 * why the module system was designed. (Not implemented yet, and likely
+	 * won't be in this prototype.)
+	 * 
+	 * @return that a unit is mobile.
+	 */
+	@Override
+	public final boolean mobile() { // NOPMD
+		return true;
+	}
+
+	/**
+	 * Move to a new location FIXME: We need a way of getting the map without
+	 * passing it around, so the function this delegates to can move to this
+	 * one.
+	 * 
+	 * @param newLoc
+	 *            The new location
+	 */
+	public void move(final MoveTarget newLoc) {
+		move(newLoc, null);
 	}
 }

@@ -102,10 +102,10 @@ public class TileTest extends TestCase {
 	 */
 	@Test
 	public void testGetDefenseBonus() {
-		assertEquals("A forest tile has a defense bonus", 5, tile.getTerrainDefenseBonus());
-		assertEquals("An ocean tile has no defense bonus", 0, tile2.getTerrainDefenseBonus());
-		assertEquals("A plains tile has no defense bonus", 0, tile3.getTerrainDefenseBonus());
-		assertEquals("A coastal tile has no defense bonus", 0, tile4.getTerrainDefenseBonus());
+		assertEquals("A forest tile has a defense bonus", 5, tile.defenseBonus());
+		assertEquals("An ocean tile has no defense bonus", 0, tile2.defenseBonus());
+		assertEquals("A plains tile has no defense bonus", 0, tile3.defenseBonus());
+		assertEquals("A coastal tile has no defense bonus", 0, tile4.defenseBonus());
 	}
 	/**
 	 * Test the movement cost of various terrains
@@ -122,10 +122,10 @@ public class TileTest extends TestCase {
 	 */
 	@Test
 	public void testGetCoverBonus() {
-		assertEquals("A forest tile has cover", 0.2, tile.getCoverBonus(), NEGLIGIBLE);
-		assertEquals("An ocean tile has no cover", 0.0, tile2.getCoverBonus(), NEGLIGIBLE);
-		assertEquals("A plains tile has no cover", 0.0, tile3.getCoverBonus(), NEGLIGIBLE);
-		assertEquals("A coastal tile has no cover", 0.0, tile4.getCoverBonus(), NEGLIGIBLE);
+		assertEquals("A forest tile has cover", 0.2, tile.coverBonus(), NEGLIGIBLE);
+		assertEquals("An ocean tile has no cover", 0.0, tile2.coverBonus(), NEGLIGIBLE);
+		assertEquals("A plains tile has no cover", 0.0, tile3.coverBonus(), NEGLIGIBLE);
+		assertEquals("A coastal tile has no cover", 0.0, tile4.coverBonus(), NEGLIGIBLE);
 	}
 	/**
 	 * Test setting the resources on a tile: negative resource value

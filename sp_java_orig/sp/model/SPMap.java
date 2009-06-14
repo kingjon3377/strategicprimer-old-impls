@@ -12,7 +12,6 @@ import sp.model.astar.Location;
 import sp.model.astar.SimpleHeuristicCalculator;
 import sp.model.astar.Tile;
 
-
 /**
  * The Map class models a map; it holds an array of tiles and (statically) the
  * constants that define how big that array must be and how many terrain types
@@ -127,7 +126,7 @@ public final class SPMap implements Serializable {
 	 * @return whether a suitable path exists
 	 */
 	public boolean checkPath(final Tile start, final Tile dest, // NOPMD
-			final int spd, final Module mover) {
+			final int spd, final IModule mover) {
 		// If the destination is occupied, return false.
 		// If the start is occupied by someone other than the moving module,
 		// return false. (For recursion.)
@@ -145,6 +144,28 @@ public final class SPMap implements Serializable {
 	}
 
 	/**
+	 * A delegate to satisfy callers
+	 * 
+	 * @param start
+	 *            The starting location
+	 * @param dest
+	 *            The ending location
+	 * @param spd
+	 *            How far the mover can move
+	 * @param mover
+	 *            The moving module
+	 * @return Whether a suitable path exists
+	 */
+	public boolean checkPath(final MoveTarget start, final MoveTarget dest, // NOPMD
+			final int spd, final IModule mover) {
+		if (start instanceof Tile && dest instanceof Tile) {
+			return checkPath((Tile) start, (Tile) dest, spd, mover);
+		}
+		throw new IllegalStateException(
+				"checkPath() for non-Tile start and dest is not implemented yet");
+	}
+
+	/**
 	 * Check preconditions for movement.
 	 * 
 	 * @param start
@@ -158,7 +179,7 @@ public final class SPMap implements Serializable {
 	 * @return If preconditions are met
 	 */
 	private boolean movePreconditions(final Tile start, final Tile dest,
-			final int speed, final Module mover) {
+			final int speed, final IModule mover) {
 		return (dest.getModuleOnTile() == null
 				&& start.getModuleOnTile() != null
 				&& start.getModuleOnTile().equals(mover)
