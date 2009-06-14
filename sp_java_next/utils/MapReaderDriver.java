@@ -94,9 +94,10 @@ public class MapReaderDriver implements Serializable{
 			for (Pixel pix : list) {
 				if (!map.containsKey(pix)) {
 					if (pix.equals(Pixel.BLACK_PIXEL)) {
-						map.put(pix, 'a');
+						map.put(pix, A_CHARACTER);
 					} else {
-						map.put(pix, Integer.toString(currentTerrain++).charAt(0));
+						map.put(pix, Integer.toString(currentTerrain).charAt(0));
+						++currentTerrain;
 					}
 				}
 				if (!map.get(pix).equals(A_CHARACTER)) {
