@@ -12,8 +12,10 @@
 
 #define	PORT		31313
 
-#define WIDTH		800
-#define HEIGHT		600
+/* #define WIDTH	800
+ * #define HEIGHT	600 */
+#define WIDTH		400
+#define HEIGHT		300
 #define GRID_SIZE	25
 
 typedef	unsigned int unitid_t;

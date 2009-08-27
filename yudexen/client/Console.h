@@ -30,6 +30,7 @@ public:
 	void	draw();
 	void	write(const char *msg);
 	void	type(int chr);
+	void	parse(const char *msg);
 };
 
 #endif
