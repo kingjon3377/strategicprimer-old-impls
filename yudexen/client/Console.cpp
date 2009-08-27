@@ -89,6 +89,7 @@ void	Console::type(int chr)
 	else if (chr == '\n' || chr == '\r')
 	{
 		write(myBuffer + 1);
+		parse(myBuffer + 1);
 		myInputPosition = 1;
 		myBuffer[myInputPosition] = 0;
 	}
@@ -99,4 +100,12 @@ void	Console::type(int chr)
 		myBuffer[myInputPosition++] = chr;
 		myBuffer[myInputPosition] = 0;
 	}
+}
+
+void	Console::parse(const char *msg)
+{
+	if (strncmp(msg, "new ", 4)) {
+		// Create a new unit, parsing parameters
+	}
+	return;
 }
