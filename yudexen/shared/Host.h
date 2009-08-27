@@ -1,3 +1,15 @@
+/* Host.h
+ * Purpose: Represents a host on a network.
+ * Authors and Date: Created by the CSX Gamedev SIG, Spring 2006.
+ * Major contributors include Josh Holtrop, Tim Brum, and John van Enck.
+ * Input and output: Direct via << to output stream.
+ * How to use: Set IP and port information via constructor, then query
+ * via the accessor functions or in an output stream.
+ * Assumptions: The IP and port information are valid and describe an
+ * actual host.
+ * Exceptions: None.
+ * Major algorithms and data structures: Output stream.
+ * Key variables: myIP, myPort . */
 
 #ifndef _HOST_H_
 #define _HOST_H_

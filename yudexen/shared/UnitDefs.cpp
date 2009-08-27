@@ -1,9 +1,28 @@
-
+/* UnitDefs.cpp
+ * Purpose: Implements the UnitDefs object, which holds information on
+ * initial stats and construction costs of every unit in the game.
+ * Authors and Date: Created by the CSX Gamedev SIG, Spring 2006.
+ * Major contributors include Josh Holtrop, Tim Brum, and John van Enck.
+ * Input and output: Only internal.
+ * How to use: See UnitDefs.h
+ * Assumptions: See UnitDefs.h
+ * Exceptions: See UnitDefs.h
+ * Major algorithms and data structures: See UnitDefs.h; load()
+ * Key variables: See UnitDefs.h
+ */
 #include <iostream>
 #include <fstream>
 #include "UnitDefs.h"
 using namespace std;
 
+/* UnitDefs::UnitDefs()
+ * Purpose: Initialize the array of unit definitions to factory
+ * settings (it will be loaded from a file later) by marking every
+ * unit definition in the array as disabled.
+ * Precondition: None
+ * Postcondition: Every unit definition in the array has its enabled
+ * field flagged false.
+ */
 UnitDefs::UnitDefs()
 {
 	for (int i = 0; i < UNITS_MAX; i++)
@@ -13,6 +32,15 @@ UnitDefs::UnitDefs()
 	}
 }
 
+/* void UnitDefs::load()
+ * Purpose: Initialize the array of unit definitions with the data in
+ * the file whose name is in the parameter.
+ * Preconditions: filename is a valid array of characters containing
+ * the name of a file containing unit definitions. (The ability to
+ * open the file is checked, but neither pointer validity nor anything
+ * else is checked.)
+ * Postconditions: The data from the file is in the array (REWORD)
+ */
 void	UnitDefs::load(char *filename)
 {
 	ifstream in(filename);
@@ -67,6 +95,12 @@ void	UnitDefs::load(char *filename)
 	in.close();
 }
 
+/* vector<string> split_string()
+ * Purpose: Split a string into substrings.
+ * Precondition: None.
+ * Postcondition: Returns a vector of substrings of s broken at every
+ * occurrence of delim.
+ */
 vector<string> split_string(const string & s, char delim)
 {
 	vector<string> res;

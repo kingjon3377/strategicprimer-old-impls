@@ -1,4 +1,17 @@
-
+/* UnitDefs.h
+ * Purpose: An object to hold information on the initial stats and
+ * construction costs of every unit in the game.
+ * Authors and Date: Created by the CSX Gamedev SIG, Spring 2006.
+ * Major contributors include Josh Holtrop, Tim Brum, and John van Enck.
+ * Input and output: Only internal.
+ * How to use: The Game object has one of these, which it loads from
+ * disk.
+ * Assumptions: (Need something here)
+ * Exceptions: (Need something here)
+ * Major algorithms and data structures: struct unit_def_t, the
+ * string-splitting algorithm.
+ * Key variables: myUnitDefs
+ */
 #ifndef _UNITDEFS_H_
 #define _UNITDEFS_H_ _UNITDEFS_H_
 

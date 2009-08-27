@@ -1,4 +1,17 @@
-//Unit.h
+/* Unit.h
+ * Purpose: Represents a unit in the game.
+ * Authors and Date: Created by the CSX Gamedev SIG, Spring 2006.
+ * Major contributors include Josh Holtrop, Tim Brom, Job Vranish and
+ * John van Enck.
+ * Input and output: Only internal.
+ * How to use: The Game object includes a vector of all the units in
+ * the game; it can be instructed to create a new unit according to
+ * an instance of the UnitDef class. [Need more here]
+ * Assumptions: (need something here)
+ * Exceptions: (need something here)
+ * Major algorithms and data structures: (need something here)
+ * Key variables: myPosition, myWaypoints
+ */
 #ifndef T_UNIT
 #define T_UNIT T_UNIT
 

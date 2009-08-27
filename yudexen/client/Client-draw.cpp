@@ -1,3 +1,15 @@
+/* Client-draw.cpp
+ * Purpose: Contains drawing functions of the Client object [Client.h]
+ * Authors and Date: Created by the CSX Gamedev SIG, Spring 2006.
+ * Major contributors include Josh Holtrop, John Van Enk, Job Vranish, 
+ * Input and output: Only internal (?)
+ * How to use: See each function (Need a more general here)
+ * Assumptions: (need something here)
+ * Exceptions: (need something here)
+ * Major algorithms and data structures: (need something here)
+ * Key variables: See Client.h; the global Graphics and global game
+ * font.
+ */
 
 #include <sstream>
 #include <SDL/SDL.h>
@@ -10,12 +22,32 @@ using namespace std;
 extern Graphics *graphics;
 extern TTF_Font *gameFont;
 
+/* void Client::loadDrawables()
+ * Purpose: Load all Drawable objects for the Client object.
+ * Preconditions: 
+ * 1. myTerrainDrawables, myResourceDrawables, and myUnitDrawables do
+ * not contain addresses of memory in use.
+ * 2. All images used by this function are stored in the data/images/
+ * directory in PNG format, of set dimensions (determined earlier by
+ * consensus). These dimensions ought to be named constants, but
+ * aren't.
+ * 3. TILES_MAX contains the number of tile images plus one.
+ * 4. RES_MAX contains the number of resource images plus one.
+ * 5. UNITS_MAX contains the number of unit images, plus one.
+ * 6. Tile images are named by their tiletype number.
+ * 7. Resource images are named by their resource number, prefixed
+ * with "r".
+ * 8. Unit images are named by their unit type number, prefixed with "u".
+ * Postconditions:
+ * 1. myTerrainDrawables, myResourceDrawables, and myUnitDrawables
+ * contain arrays of Drawable objects from the images.
+ */
 void	Client::loadDrawables()
 {
 	/* Load terrain drawables */
 	myTerrainDrawables = new Drawable*[TILES_MAX];
 	for (int t = 1; t < TILES_MAX; t++)
-	{
+	{ // Produce a filename from a number
 		stringstream ss;
 		ss << "data/images/";
 		ss << (t < 10 ? "0" : "") << t;
@@ -73,6 +105,23 @@ void	Client::loadDrawables()
 	}
 }
 
+/* void Client::updateWorld()
+ * Purpose: Load all Drawable objects for the Client object.
+ * Preconditions: 
+ * 1. myTerrainDrawables, myResourceDrawables, and myUnitDrawables do
+ * not contain addresses of memory in use.
+ * 2. All images used by this function are stored in the data/images/
+ * directory in PNG format, of set dimensions (determined earlier by
+ * consensus). These dimensions ought to be named constants, but
+ * aren't.
+ * 3. TILES_MAX contains the number of tile images plus one.
+ * 4. RES_MAX contains the number of resource images plus one.
+ * 5. UNITS_MAX contains the number of unit images, plus one.
+ * 6. Tile images are named by their tiletype number.
+ * 7. Resource images are named by their resource number, prefixed
+ * with "r".
+ * 8. Unit images are named by their unit type number, prefixed with "u".
+ */
 void	Client::updateWorld()
 {
 	SDL_FillRect(myWorld.surf(), NULL, 0);
