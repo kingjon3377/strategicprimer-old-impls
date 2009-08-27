@@ -14,10 +14,10 @@
 #include <vector>
 #include <queue>
 #include <math.h>
-#include "shared/Unit.h"
-#include "shared/ResourceArray.h"
-#include "shared/Position.h"
-#include "shared/game_defs.h"
+#include "shared/Unit.hpp"
+#include "shared/ResourceArray.hpp"
+#include "shared/Position.hpp"
+#include "shared/game_defs.hpp"
 using namespace std;
 
 /* Unit::Unit()

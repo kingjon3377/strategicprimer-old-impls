@@ -3,7 +3,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 #include <iostream>	// NULL, of all things
-#include "World.h"
+#include "World.hpp"
 using namespace std;
 
 World::World()

@@ -3,7 +3,7 @@
 #define _CONSOLE_H_ _CONSOLE_H_
 
 #include <SDL/SDL_ttf.h>
-#include "Drawable.h"
+#include "Drawable.hpp"
 using namespace std;
 
 #define CONSOLE_BORDER 2

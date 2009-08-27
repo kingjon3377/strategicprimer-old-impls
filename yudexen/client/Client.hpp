@@ -4,11 +4,11 @@
 
 #include <vector>
 #include <SDL/SDL.h>
-#include "Console.h"
-#include "Drawable.h"
-#include "MiniMap.h"
-#include "Graphics.h"
-#include "shared/Game.h"
+#include "Console.hpp"
+#include "Drawable.hpp"
+#include "MiniMap.hpp"
+#include "Graphics.hpp"
+#include "shared/Game.hpp"
 using namespace std;
 
 #define WORLD_SCROLL_SPEED	1

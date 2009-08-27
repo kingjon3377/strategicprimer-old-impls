@@ -29,9 +29,9 @@
 #define MSG_NEW_UNIT_BC		6
 #define MSG_DEPART_BC		7
 
-#include "shared/Host.h"
-#include "shared/game_defs.h"
-#include "shared/ResourceArray.h"
+#include "shared/Host.hpp"
+#include "shared/game_defs.hpp"
+#include "shared/ResourceArray.hpp"
 using namespace std;
 
 typedef struct

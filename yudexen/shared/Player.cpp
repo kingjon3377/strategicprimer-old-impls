@@ -6,7 +6,7 @@
  * Input and output: Only internal.
  * How to use: See Player.h
  */
-#include "shared/Player.h"
+#include "shared/Player.hpp"
 using namespace std;
 
 /* Player::Player()

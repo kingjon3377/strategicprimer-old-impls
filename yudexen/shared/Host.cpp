@@ -11,7 +11,7 @@
  */
 
 #include <iostream>
-#include "shared/Host.h"
+#include "shared/Host.hpp"
 using namespace std;
 
 /* Host::Host()

@@ -2,9 +2,9 @@
 #include <iostream>
 #include <sys/time.h>		// setitimer
 #include <signal.h>		// signal
-#include "shared/Game.h"
-#include "shared/game_defs.h"
-#include "server/Server.h"
+#include "shared/Game.hpp"
+#include "shared/game_defs.hpp"
+#include "server/Server.hpp"
 using namespace std;
 
 void	usage()

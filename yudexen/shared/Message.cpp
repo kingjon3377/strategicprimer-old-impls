@@ -9,7 +9,7 @@
  * Major algorithms and data structures: (need something here)
  * Key variables: See Message.h */
 
-#include "shared/Message.h"
+#include "shared/Message.hpp"
 using namespace std;
 
 /* Message::Message()

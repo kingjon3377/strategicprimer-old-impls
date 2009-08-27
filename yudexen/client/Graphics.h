@@ -3,8 +3,8 @@
 #define _GRAPHICS_H_ _GRAPHICS_H_
 
 #include <SDL/SDL.h>
-#include "Drawable.h"
-#include "shared/game_defs.h"
+#include "Drawable.hpp"
+#include "shared/game_defs.hpp"
 using namespace std;
 
 #define DEPTH 32

@@ -6,7 +6,7 @@
  * See Position.h
  */
 //#include <iostream>
-#include "Position.h"
+#include "Position.hpp"
 using namespace std;
 
 /* Position::Position()

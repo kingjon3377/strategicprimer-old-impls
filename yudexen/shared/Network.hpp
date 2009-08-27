@@ -21,7 +21,7 @@
 #include <sys/socket.h>
 #include <netinet/ip.h>
 #include <netdb.h>
-#include "shared/game_defs.h"
+#include "shared/game_defs.hpp"
 using namespace std;
 
 typedef unsigned int ip_t;

@@ -2,7 +2,7 @@
 #ifndef _SERVER_H_
 #define _SERVER_H_ _SERVER_H_
 
-#include "shared/Game.h"
+#include "shared/Game.hpp"
 using namespace std;
 
 typedef struct

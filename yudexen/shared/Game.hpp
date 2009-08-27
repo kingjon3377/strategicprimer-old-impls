@@ -25,11 +25,11 @@ class Game;
 
 #include <vector>
 #include <queue>
-#include "shared/Unit.h"
-#include "shared/Player.h"
-#include "shared/Connection.h"
-#include "shared/World.h"
-#include "shared/UnitDefs.h"
+#include "shared/Unit.hpp"
+#include "shared/Player.hpp"
+#include "shared/Connection.hpp"
+#include "shared/World.hpp"
+#include "shared/UnitDefs.hpp"
 using namespace std;
 
 class Game

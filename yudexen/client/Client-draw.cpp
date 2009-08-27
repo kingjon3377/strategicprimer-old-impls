@@ -14,9 +14,9 @@
 #include <sstream>
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
-#include "Client.h"
-#include "Graphics.h"
-#include "shared/ResourceArray.h"
+#include "Client.hpp"
+#include "Graphics.hpp"
+#include "shared/ResourceArray.hpp"
 using namespace std;
 
 extern Graphics *graphics;

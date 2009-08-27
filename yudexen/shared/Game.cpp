@@ -13,9 +13,9 @@
 
 #include <vector>
 #include <queue>
-#include "Game.h"
-#include "shared/Unit.h"
-#include "shared/Message.h"
+#include "Game.hpp"
+#include "shared/Unit.hpp"
+#include "shared/Message.hpp"
 using namespace std;
 
 /* Game::Game()

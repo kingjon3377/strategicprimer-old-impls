@@ -11,7 +11,7 @@
 #define _PLAYER_H_ _PLAYER_H_
 
 #include <string>
-#include "shared/ResourceArray.h"
+#include "shared/ResourceArray.hpp"
 using namespace std;
 
 class Player

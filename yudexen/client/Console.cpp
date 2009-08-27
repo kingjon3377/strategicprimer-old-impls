@@ -2,10 +2,10 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
 #include <iostream>
-#include "Console.h"
-#include "Graphics.h"
-#include "Drawable.h"
-#include "shared/game_defs.h"
+#include "Console.hpp"
+#include "Graphics.hpp"
+#include "Drawable.hpp"
+#include "shared/game_defs.hpp"
 using namespace std;
 
 extern Graphics *graphics;

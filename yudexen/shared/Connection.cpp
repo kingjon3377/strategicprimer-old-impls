@@ -15,7 +15,7 @@
 #include <signal.h>
 #include <pthread.h>
 #include <queue>
-#include "Connection.h"
+#include "Connection.hpp"
 using namespace std;
 
 void	Connection_SigHandler(int signal);
