@@ -1,8 +1,22 @@
-/*
-Contributors:
-
-John Van Enk
-*/
+/* Game.h
+ * Purpose: The primary object in the backend of the game.
+ * Authors and Date: Created by the CSX Gamedev SIG, Spring 2006.
+ * Major contributors include Josh Holtrop, Tim Brum, and John van Enck.
+ * Input and output: Only internal.
+ * How to use: Each instance of the program has one instance of this
+ * object, with the myMaster flag showing whether this is a client or
+ * server. (The flag is set by the constructor, depending on which
+ * version of it is called.) This object is the access point to the
+ * network (via the Connection object), all the units, the movement
+ * queue, all the unit definitions, all the players, and the
+ * game-world.
+ * Assumptions: (need something here)
+ * Exceptions: (need something here)
+ * Major algorithms and data structures: Client-server implementation;
+ * data hiding; Unit class; Player class; Connection class; World
+ * class
+ * Key variables: *world,  myMovingUnits, *myConnection
+ */
 
 #ifndef _GAME_H_
 #define _GAME_H_ _GAME_H_
@@ -24,7 +38,7 @@ protected:
 	vector<Unit *>	myUnits;
 	queue<unitid_t>	myMovingUnits;
 	Connection	*myConnection;
-	int		myMaster;
+	int		myMaster; // Is this the server?
 	vector<Player *> myPlayers;
 	UnitDefs	myUnitDefs;
 
@@ -37,7 +51,8 @@ public:
 	Game(char *server);
 	~Game();
 
-	void	action();
+	void	action(); /* perform game actions, move units, etc... 
+			   * (currently empty) */	
 	int	login(string name);	/* create new Player */
 	int	validName(const string & name);
 	int	logout(int id);

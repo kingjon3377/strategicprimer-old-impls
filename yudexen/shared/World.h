@@ -1,3 +1,24 @@
+/* World.h
+ * Purpose: Represents the map, with its terrain data and fixed
+ * elements (not yet implemented). Since for speed purposes the map is
+ * just an int *, this object keeps track of its dimensions.
+ * Authors and Date: Created by the CSX Gamedev SIG, Spring 2006.
+ * Major contributors include Josh Holtrop, Tim Brum, and John Van Enck.
+ * Input and output: Loads the map from disk in loadMap(). 
+ * How to use: Only one of these should exist; one is created by the
+ * Game object, and any other users should refer to it by pointer if
+ * not going through the Game object's interface to it.
+ * Assumptions: (need something here)
+ * Exceptions: (need something here)
+ * Major algorithms and data structures: map_head_ent_t,
+ * map_head_tile_t, the map-loading code.
+ * Key variables: myMap .
+ * Analysis of this class will be spotty, since this wasn't my code,
+ * it is entirely lacking in documentation, and it has been more than
+ * a year since it was written.
+ * Note symbolic constants -- they're used in the loading code, but
+ * beyond that -- huh?
+ */
 
 #ifndef _WORLD_H_
 #define _WORLD_H_ _WORLD_H_

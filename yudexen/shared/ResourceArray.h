@@ -1,4 +1,16 @@
-
+/* ResourceArray.h
+ * Purpose: Represents a (possibly zero) quantity of each resource in
+ * the game.
+ * Authors and Date: Created by the CSX Gamedev SIG, Spring 2006.
+ * Major contributors include Josh Holtrop, Tim Brom, Job Vranish and
+ * John van Enck.
+ * Input and output: Only internal.
+ * How to use: Supports basic arithmetic (like vectors). Should
+ * probably be replaced with vectors of a "Resource" struct
+ * (containing the resource ID and quantity).
+ * Major algorithms and data structures: Operator overloading.
+ * Note symbolic constants defining the resources.
+ */
 #ifndef _RESOURCEARRAY_H_
 #define _RESOURCEARRAY_H_ _RESOURCEARRAY_H_
 

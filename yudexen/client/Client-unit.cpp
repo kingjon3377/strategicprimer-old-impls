@@ -1,3 +1,14 @@
+/* Client-unit.cpp
+ * Purpose: Contains unit-related functions of the Client object [Client.h]
+ * Authors and Date: Created by the CSX Gamedev SIG, Spring 2006.
+ * Major contributors include Josh Holtrop and John Van Enk.
+ * Input and output: Only internal (?)
+ * How to use: See each function (Need a more general here)
+ * Assumptions: (need something here)
+ * Exceptions: (need something here)
+ * Major algorithms and data structures: (need something here)
+ * Key variables: See Client.h; the global Graphics.
+ */
 
 #include <vector>
 #include "shared/Unit.h"

@@ -1,3 +1,21 @@
+/* Message.h
+ * Purpose: Represents a message sent on the game's network.
+ * Authors and Date: Created by the CSX Gamedev SIG, Spring 2006.
+ * Major contributors include Josh Holtrop, Tim Brum, and John van Enck.
+ * Input and output: Only internal.
+ * How to use: Create message to send as a message_t, then create a
+ * Message object, passing the message_t and its size as the buffer
+ * and length parameters, with the intended recipient as the ip and
+ * port parameters.
+ * Assumptions: The buffer passed in is valid and contains a message_t
+ * not reserved for something else; it is not checked in any way. I
+ * (Jonathan Lovelace) feel certain that this is a security hole (not
+ * a large one since the game won't be run as root) but I don't know
+ * what should be done to fix it.
+ * Exceptions: None?
+ * Major algorithms and data structures: message_t (represents any of
+ * the various types of message in the same memory space)
+ * Key variables: myBuffer */
 
 #ifndef _MESSAGE_H_
 #define _MESSAGE_H_ _MESSAGE_H_
