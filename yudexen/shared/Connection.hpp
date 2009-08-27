@@ -17,8 +17,8 @@
 #define _CONNECTION_H_ _CONNECTION_H_
 
 #include <queue>
-#include "shared/Network.h"
-#include "shared/Message.h"
+#include "shared/Network.hpp"
+#include "shared/Message.hpp"
 using namespace std;
 
 #define BUFFER_LENGTH 1010

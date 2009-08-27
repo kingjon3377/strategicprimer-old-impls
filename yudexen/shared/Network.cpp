@@ -9,16 +9,16 @@
  * Major algorithms and data structures: (need something here)
  * Key variables: See Network.h */
 
-#include "unistd.h"		// close
-#include "stdio.h"		// perror
-#include "stdlib.h"
-#include "string.h"		// memcpy
+#include <unistd.h>		// close
+#include <cstdio>		// perror
+#include <cstdlib>
+#include <cstring>		// memcpy
 #include <sys/types.h>
 #include <sys/socket.h>		// socket, bind
 #include <netinet/ip.h>		// sockaddr_in
 #include <netdb.h>
-#include "shared/game_defs.h"	// PORT
-#include "Network.h"		// Network
+#include "shared/game_defs.hpp"	// PORT
+#include "Network.hpp"		// Network
 using namespace std;
 
 /* Network::Network()

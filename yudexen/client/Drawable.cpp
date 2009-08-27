@@ -1,8 +1,8 @@
 
 #include <iostream>
 #include <SDL/SDL.h>
-#include "Drawable.h"
-#include "Graphics.h"
+#include "Drawable.hpp"
+#include "Graphics.hpp"
 using namespace std;
 
 extern Graphics *graphics;

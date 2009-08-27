@@ -2,8 +2,8 @@
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
 #include <iostream>
-#include "Graphics.h"
-#include "Drawable.h"
+#include "Graphics.hpp"
+#include "Drawable.hpp"
 using namespace std;
 
 TTF_Font *gameFont;

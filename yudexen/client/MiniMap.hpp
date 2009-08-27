@@ -5,9 +5,9 @@ using namespace std;
 
 #include <SDL/SDL.h>
 #include <SDL/SDL_image.h>
-#include "Drawable.h"
-#include "Graphics.h"
-#include "shared/World.h"
+#include "Drawable.hpp"
+#include "Graphics.hpp"
+#include "shared/World.hpp"
 #include <iostream>
 #include <math.h>
 #include <string.h>

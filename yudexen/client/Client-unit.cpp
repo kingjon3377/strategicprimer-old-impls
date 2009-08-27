@@ -11,8 +11,8 @@
  */
 
 #include <vector>
-#include "shared/Unit.h"
-#include "Client.h"
+#include "shared/Unit.hpp"
+#include "Client.hpp"
 using namespace std;
 
 extern Graphics *graphics;

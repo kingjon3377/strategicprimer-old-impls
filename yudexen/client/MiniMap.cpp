@@ -1,4 +1,4 @@
-#include "MiniMap.h"
+#include "MiniMap.hpp"
 
 extern Graphics *graphics;
 

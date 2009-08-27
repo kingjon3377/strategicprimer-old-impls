@@ -14,11 +14,11 @@
 #include <iostream>
 #include <SDL/SDL.h>
 #include <SDL/SDL_ttf.h>
-#include "Client.h"
-#include "Graphics.h"
-#include "Console.h"
-#include "shared/game_defs.h"
-#include "shared/Game.h"
+#include "Client.hpp"
+#include "Graphics.hpp"
+#include "Console.hpp"
+#include "shared/game_defs.hpp"
+#include "shared/Game.hpp"
 using namespace std;
 
 Graphics *graphics;

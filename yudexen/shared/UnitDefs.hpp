@@ -17,8 +17,8 @@
 
 #include <string>
 #include <vector>
-#include "shared/Unit.h"
-#include "shared/ResourceArray.h"
+#include "shared/Unit.hpp"
+#include "shared/ResourceArray.hpp"
 using namespace std;
 
 #define UNITS_MAX 2

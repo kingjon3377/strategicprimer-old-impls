@@ -7,7 +7,7 @@
  * See ResourceArray.h
  */
 #include <string.h>		// memset
-#include "ResourceArray.h"
+#include "ResourceArray.hpp"
 using namespace std;
 
 /* ResourceArray::ResourceArray()

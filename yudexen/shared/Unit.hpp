@@ -17,9 +17,9 @@
 
 #include <iostream>
 #include <queue>
-#include "shared/ResourceArray.h"
-#include "shared/Position.h"
-#include "shared/game_defs.h"
+#include "shared/ResourceArray.hpp"
+#include "shared/Position.hpp"
+#include "shared/game_defs.hpp"
 using namespace std;
 
 class Unit
