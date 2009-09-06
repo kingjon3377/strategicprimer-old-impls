@@ -1,4 +1,5 @@
 package proj_sp2;
+import java.util.List;
 class IndivUnit implements Instance {
 	String name;
 	int movement;
@@ -8,8 +9,8 @@ class IndivUnit implements Instance {
 	int meleeAC;
 	int rangedAC;
 	int flags;
-	int maxHP[5] /** Each man on the crew has his own HP score. */
-	int currHP[5] /** This assumes a crew of no more than 5. */
+	final int[] maxHP = new int[5]; /** Each man on the crew has his own HP score. */
+	final int[] currHP = new int[5]; /** This assumes a crew of no more than 5. */
 	/** This, as with most things in this version, needs
 	 * reworking. */
 //	IndivImprovement firstImprovement;
@@ -25,14 +26,14 @@ class IndivUnit implements Instance {
 	}
 	public boolean imprTakeDamage(final int damage) {
 		return (damage >= 0 && (improvements.size() == 0 
-				|| improvements.get(0).takeDamage(damage)); 
+				|| improvements.get(0).takeDamage(damage))); 
 	}
 	boolean attack(final IndivUnit target, boolean ranged) {
 		if (improvements.size() > 0) {
 			IndivImprovement weapon = null;
 			for (IndivImprovement impr : improvements) {
-				if ((ranged && impr.rangedDmgDice > 0) ||
-					(!ranged && impr.meleeDmgDice > 0)) {
+				if ((ranged && impr.rangedDamageDice > 0) ||
+					(!ranged && impr.meleeDamageDice > 0)) {
 					weapon = impr;
 					break;
 				}
@@ -41,7 +42,7 @@ class IndivUnit implements Instance {
 				int attackRoll = weapon.attackRoll(!ranged, 0);
 				int targetAC = (ranged ? target.rangedAC : target.meleeAC);
 				if (attackRoll > targetAC) {
-					int damage = weapon.rollDamage(attackRoll > targetAC + 10, !ranged);
+					int damage = weapon.damageRoll(attackRoll > targetAC + 10, !ranged);
 					return target.takeDamage(damage / 2) &&
 						target.imprTakeDamage(damage / 2);
 				} else {

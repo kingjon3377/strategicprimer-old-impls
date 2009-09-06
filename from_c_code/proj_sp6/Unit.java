@@ -1,8 +1,20 @@
 package proj_sp6;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.util.List;
+import java.util.Random;
+
+import proj_sp6.Debug.Relations;
+import proj_sp6.Debug.ReturnValues;
+import proj_sp6.Globals.Direction;
+
 class Unit {
 	void gatherResources() {
-		puts("Stubbed-out function gatherResources() called.");
+		Globals.puts("Stubbed-out function gatherResources() called.");
 	}
+
 	static final int NUM_UNIT_TYPES = 5;
 	String name;
 	int maxHitPoints; // unsigned
@@ -28,21 +40,22 @@ class Unit {
 	int currentMovement; // unsigned
 	int elevation;
 	int range; // unsigned
+	final Random random = new Random();
+
 	/**
 	 * Attack another unit. Military must be set, or this will return
-	 * ILLEGAL_USE. Each round of battle costs the attacker 1 MP (unless it
-	 * has none left), but battle is to continue to the end.
+	 * ILLEGAL_USE. Each round of battle costs the attacker 1 MP (unless it has
+	 * none left), but battle is to continue to the end.
 	 */
-	int attack(final Unit target) {
-		if (!military || !checkAttack(target)) {
-			return ILLEGAL_USE;
+	ReturnValues attack(final Unit target) {
+		if (!military || (checkAttack(target) != ReturnValues.OK)) {
+			return ReturnValues.ILLEGAL_USE;
 		} else if (currentMovement == 0) {
-			return OUT_OF_MP;
-		} else if ((Math.rand() % 20) + meleeBonus >= target.meleeAC) {
+			return ReturnValues.OUT_OF_MP;
+		} else if (random.nextInt(20) + 1 + meleeBonus >= target.meleeAC) {
 			int dmg = 0;
 			for (int i = 0; i < meleeDice; i++) {
-				dmg += (Math.rand() % damageDie) + 
-						meleeDmgBonus;
+				dmg += random.nextInt(damageDie) + 1 + meleeDmgBonus;
 			}
 			if (dmg > target.currentHitPoints) {
 				target.currentHitPoints = 0;
@@ -53,52 +66,51 @@ class Unit {
 		currentMovement--;
 		if (target.currentHitPoints == 0) {
 			target.delete = true;
-			currentExperience += Globals.
-				XP_Level[currentLevel][target.currentLevel];
+			currentExperience += Globals.XP_Level[currentLevel][target.currentLevel];
 		}
-		return OK;
+		return ReturnValues.OK;
 	}
+
 	/**
-	 * Bombard another unit. This must have Military set, or this will
-	 * return ILLEGAL_USE. This method subtracts 1 MP.
+	 * Bombard another unit. This must have Military set, or this will return
+	 * ILLEGAL_USE. This method subtracts 1 MP.
 	 */
-	int bombard(final Unit target) {
-		if (!military || !checkBombard(target)) {
-			return ILLEGAL_USE;
+	ReturnValues bombard(final Unit target) {
+		if (!military || (checkBombard(target)!=ReturnValues.OK)) {
+			return ReturnValues.ILLEGAL_USE;
 		} else if (currentMovement == 0) {
-			return OUT_OF_MP;
-		} else if ((Math.rand() % 20) + rangedBonus >= target.rangedAC){
-			int dmg;
+			return ReturnValues.OUT_OF_MP;
+		} else if (random.nextInt(20)+1 + rangedBonus >= target.rangedAC) {
+			int dmg = 0;
 			for (int i = 0; i < rangedDice; i++) {
-				dmg += (Math.rand() % damageDie) +
-						rangedDmgBonus;
+				dmg += random.nextInt(damageDie) + 1 + rangedDmgBonus;
 			}
 			if (target.currentHitPoints <= dmg) {
 				target.currentHitPoints = 0;
 				target.delete = true;
-				currentExperience += Globals.XP_Level
-					[currentLevel][target.currentLevel];
+				currentExperience += Globals.XP_Level[currentLevel][target.currentLevel];
 			} else {
 				target.currentHitPoints -= dmg;
 			}
 		}
 		currentMovement--;
-		return OK;
+		return ReturnValues.OK;
 	}
+
 	/**
 	 * Attack a Structure. This must have Military set, or this will return
-	 * ILLEGAL_USE. Each round of attacking costs 1 MP. This should return
-	 * when the unit has no MP left or the structure reaches 0 HP.
+	 * ILLEGAL_USE. Each round of attacking costs 1 MP. This should return when
+	 * the unit has no MP left or the structure reaches 0 HP.
 	 */
-	int attackStructure(final Structure target) {
-		if (!military || !checkAttackS(target)) {
-			return ILLEGAL_USE;
+	ReturnValues attackStructure(final Structure target) {
+		if (!military || (checkAttackS(target)!=ReturnValues.OK)) {
+			return ReturnValues.ILLEGAL_USE;
 		} else if (currentMovement == 0) {
-			return OUT_OF_MP;
-		} else if ((Math.rand() % 20) + meleeBonus >= target.meleeAC) {
+			return ReturnValues.OUT_OF_MP;
+		} else if (random.nextInt(20)+1 + meleeBonus >= target.meleeAC) {
 			int dmg = 0;
 			for (int i = 0; i < meleeDice; i++) {
-				dmg += (Math.rand() % dmgDie) + meleeDmgBonus;
+				dmg += random.nextInt(damageDie)+1+ + meleeDmgBonus;
 			}
 			if (dmg > target.currentHitPoints) {
 				target.currentHitPoints = 0;
@@ -110,20 +122,22 @@ class Unit {
 		if (target.currentHitPoints == 0) {
 			target.delete = true;
 		}
-		return OK;
+		return ReturnValues.OK;
 	}
+
 	/**
-	 * Bombard a Structure. This must have Military set, or this will
-	 * return ILLEGAL_USE. This function subtracts 1 MP. */
-	int bombardStructure(final Structure target) {
-		if (!military|| !checkBombardS(target)) {
-			return ILLEGAL_USE;
+	 * Bombard a Structure. This must have Military set, or this will return
+	 * ILLEGAL_USE. This function subtracts 1 MP.
+	 */
+	ReturnValues bombardStructure(final Structure target) {
+		if (!military || (checkBombardS(target)!=ReturnValues.OK)) {
+			return ReturnValues.ILLEGAL_USE;
 		} else if (currentMovement == 0) {
-			return OUT_OF_MP;
-		} else if ((Math.rand() % 20) + rangedBonus >= target.rangedAC){
+			return ReturnValues.OUT_OF_MP;
+		} else if (random.nextInt(20)+1 + rangedBonus >= target.rangedAC) {
 			int dmg = 0;
 			for (int i = 0; i < rangedDice; i++) {
-				dmg += (Math.rand() % dmgDie) + rangedDmgBonus;
+				dmg += random.nextInt(damageDie) +1+ rangedDmgBonus;
 			}
 			if (dmg >= target.currentHitPoints) {
 				target.currentHitPoints = 0;
@@ -133,9 +147,10 @@ class Unit {
 			}
 		}
 		currentMovement--;
-		return OK;
+		return ReturnValues.OK;
 	}
-	int move(final Direction dir) {
+
+	ReturnValues move(final Direction dir) {
 		Tile temp;
 		int mpReq;
 		Point p;
@@ -145,7 +160,7 @@ class Unit {
 			p = new Point(position.X + 1, position.Y);
 			break;
 		case NORTHEAST:
-			temp = Globals.Level[position.X + 1][position.Y -1];
+			temp = Globals.Level[position.X + 1][position.Y - 1];
 			p = new Point(position.X + 1, position.Y - 1);
 			break;
 		case EAST:
@@ -172,10 +187,12 @@ class Unit {
 			temp = Globals.Level[position.X + 1][position.Y + 1];
 			p = new Point(position.X + 1, position.Y + 1);
 			break;
+		default:
+			throw new IllegalStateException("Unknown direction");
 		}
 		Tile curr = Globals.Level[position.X][position.Y];
-		mpReq = Globals.MPRequired[temp.type] + abs(curr.elevation - 
-				temp.elevation) / 2;
+		mpReq = Globals.movementRequired[temp.type]
+				+ Math.abs(curr.elevation - temp.elevation) / 2;
 		switch (checkMove(p)) {
 		case OK:
 			position = p;
@@ -198,7 +215,7 @@ class Unit {
 			}
 			break;
 		case ENEMY_HELD:
-			Structure tempS = getStructure(p);
+			Structure tempS = Globals.getStructure(p);
 			attackStructure(tempS);
 			if (tempS.delete) {
 				position = p;
@@ -210,252 +227,257 @@ class Unit {
 			}
 			break;
 		default:
-			return ILLEGAL_MOVE;
+			return ReturnValues.ILLEGAL_MOVE;
 		}
-		return OK;
+		return ReturnValues.OK;
 	}
-	int checkMove(final Point p) {
-		for (Structure s : allStructures) {
+
+	ReturnValues checkMove(final Point p) {
+		for (Structure s : Globals.allStructures) {
 			if (s.position.equals(p)) {
 				// Assuming each player is friendly to himself.
-				switch (Globals.
-					PlayerRelations[playerid][s.playerid]) {
+				switch (Globals.PlayerRelations[(int) playerid][(int) s.playerid]) {
 				case FRIENDLY:
 					if (s.friendlyOccupancy) {
 						continue;
 					} else {
-						return FRIENDLY_HELD;
+						return ReturnValues.FRIENDLY_HELD;
 					}
 				case UNFRIENDLY:
-					return UNFRIENDLY_HELD;
+					return ReturnValues.UNFRIENDLY_HELD;
 				case ENMITY:
-					return ENEMY_HELD;
+					return ReturnValues.ENEMY_HELD;
 				}
 			}
 		}
-		for (Unit u : allUnits) {
+		for (Unit u : Globals.allUnits) {
 			if (u.position.equals(p)) {
 				// Assuming each player is friendly to himself.
-				switch (Globals.
-					PlayerRelations[playerid][u.playerid]) {
+				switch (Globals.PlayerRelations[(int) playerid][(int) u.playerid]) {
 				case FRIENDLY:
-					return FRIENDLY_OCCUPIED;
+					return ReturnValues.FRIENDLY_OCCUPIED;
 				case UNFRIENDLY:
-					return UNFRIENDLY_OCCUPIED;
+					return ReturnValues.UNFRIENDLY_OCCUPIED;
 				case ENMITY:
-					return ENEMY_OCCUPIED;
+					return ReturnValues.ENEMY_OCCUPIED;
 				}
 			}
 		}
-		return OK;
+		return ReturnValues.OK;
 	}
-	static Unit readUnitFromFile(final InputStream in) {
-		readStringFromFile(in, "STRATEGIC_PRIMER_UNIT");
-		return createUnit(readStringFromFile(in), readUIntFromFile(in),
-			readIntFromFile(in), readIntFromFile(in),
-			readUIntFromFile(in), readUIntFromFile(in),
-			readULongFromFile(in), readPointFromFile(in),
-			readULongFromFile(in), readULongFromFile(in),
-			readULongFromFile(in), readBooleanFromFile(in),
-			readBooleanFromFile(in), readIntFromFile(in),
-			readIntFromFile(in), readUIntFromFile(in),
-			readUIntFromFile(in), readUIntFromFile(in),
-			readIntFromFile(in), readIntFromFile(in),
-			readUIntFromFile(in), readUIntFromFile(in),
-			readIntFromFile(in), readUIntFromFile(in))
+
+	static Unit readUnitFromFile(final InputStream in) throws IOException {
+		Globals.getStringFromFile(in, "STRATEGIC_PRIMER_UNIT");
+		return createUnit(Globals.getStringFromFile(in), Globals.getUIntFromFile(in),
+				Globals.getIntFromFile(in), Globals.getIntFromFile(in),
+				Globals.getUIntFromFile(in), Globals.getUIntFromFile(in),
+				Globals.getULongFromFile(in), Point.getPointFromFile(in),
+				Globals.getULongFromFile(in), Globals.getULongFromFile(in),
+				Globals.getULongFromFile(in), Globals.getBooleanFromFile(in),
+				Globals.getBooleanFromFile(in), Globals.getIntFromFile(in),
+				Globals.getIntFromFile(in), Globals.getUIntFromFile(in),
+				Globals.getUIntFromFile(in), Globals.getUIntFromFile(in),
+				Globals.getIntFromFile(in), Globals.getIntFromFile(in),
+				Globals.getUIntFromFile(in), Globals.getUIntFromFile(in),
+				Globals.getIntFromFile(in), Globals.getUIntFromFile(in));
 	}
-	static void writeUnitToFile(final OutputStream out, final Unit u) {
-		writeStringToFile(out, "STRATEGIC_PRIMER_UNIT");
-		writeStringToFile(out, u.name);
-		writeUIntToFile(out, u.maxHitPoints);
-		writeIntToFile(out, u.meleeAC);
-		writeIntToFile(out, u.rangedAC);
-		writeUIntToFile(out, u.currentHitPoints);
-		writeUIntToFile(out, u.currentLevel);
-		writeULongToFile(out, u.currentExperience);
-		writePointToFile(out, u.position);
-		writeULongToFile(out, u.typeid);
-		writeULongToFile(out, u.uid);
-		writeULongToFile(out, u.playerid);
-		writeBooleanToFile(out, u.delete);
-		writeBooleanToFile(out, u.military);
-		writeIntToFile(out, u.meleeBonus);
-		writeIntToFile(out, u.rangedBonus);
-		writeUIntToFile(out, u.damageDie);
-		writeUIntToFile(out, u.meleeDice);
-		writeUIntToFile(out, u.rangedDice);
-		writeIntToFile(out, u.meleeDmgBonus);
-		writeIntToFile(out, u.rangedDmgBonus);
-		writeUIntToFile(out, u.maxMovement);
-		writeUIntToFile(out, u.currentMovement);
-		writeIntToFile(out, u.elevation);
-		writeUIntToFile(out, u.range);
+
+	static void writeUnitToFile(final PrintStream out, final Unit u) {
+		Globals.writeStringToFile(out, "STRATEGIC_PRIMER_UNIT");
+		Globals.writeStringToFile(out, u.name);
+		Globals.writeUIntToFile(out, u.maxHitPoints);
+		Globals.writeIntegerToFile(out, u.meleeAC);
+		Globals.writeIntegerToFile(out, u.rangedAC);
+		Globals.writeUIntToFile(out, u.currentHitPoints);
+		Globals.writeUIntToFile(out, u.currentLevel);
+		Globals.writeULongToFile(out, u.currentExperience);
+		Point.writePointToFile(out, u.position);
+		Globals.writeULongToFile(out, u.typeid);
+		Globals.writeULongToFile(out, u.uid);
+		Globals.writeULongToFile(out, u.playerid);
+		Globals.writeBooleanToFile(out, u.delete);
+		Globals.writeBooleanToFile(out, u.military);
+		Globals.writeIntegerToFile(out, u.meleeBonus);
+		Globals.writeIntegerToFile(out, u.rangedBonus);
+		Globals.writeUIntToFile(out, u.damageDie);
+		Globals.writeUIntToFile(out, u.meleeDice);
+		Globals.writeUIntToFile(out, u.rangedDice);
+		Globals.writeIntegerToFile(out, u.meleeDmgBonus);
+		Globals.writeIntegerToFile(out, u.rangedDmgBonus);
+		Globals.writeUIntToFile(out, u.maxMovement);
+		Globals.writeUIntToFile(out, u.currentMovement);
+		Globals.writeIntegerToFile(out, u.elevation);
+		Globals.writeUIntToFile(out, u.range);
 	}
+
 	static Unit getUnitFromUser() {
-		Unit u;
-		puts("Please enter data for a Unit.");
-		puts("Name:");
-		u.name = getStringFromUser();
-		puts("Maximum HP:");
-		u.maxHitPoints = getUIntFromUser();
-		puts("Melee Armor Class:");
-		u.meleeAC = getIntFromUser();
-		puts("Ranged Armor Class:");
-		u.rangedAC = getIntFromUser();
-		puts("Current HP:");
-		u.currentHitPoints = getUIntFromUser();
-		puts("Current Level:");
-		u.currentLevel = getUIntFromUser();
-		puts("Current Experience:");
-		u.currentExperience = getULongFromUser();
-		puts("Current Position:");
-		u.position = getPointFromUser();
-		puts("Type ID:");
-		u.typeid = getULongFromUser();
-		puts("Unique ID:");
-		u.uid = getULongFromUser();
-		puts("Player ID:");
-		u.playerid = getULongFromUser();
-		puts("Delete?");
-		u.delete = getBooleanFromUser();
-		puts("Military?");
-		u.military = getBooleanFromUser();
-		puts("Melee Bonus:");
-		u.meleeBonus = getIntFromUser();
-		puts("Ranged Bonus:");
-		u.rangedBonus = getIntFromUser();
-		puts("Damage die:");
-		u.dmgDie = getUIntFromUser();
-		puts("Melee dice:");
-		u.meleeDice = getUIntFromUser();
-		puts("Ranged dice:");
-		u.rangedDice = getUIntFromUser();
-		puts("Melee damage bonus:");
-		u.meleeDmgBonus = getIntFromUser();
-		puts("Ranged damage bonus:");
-		u.rangedDmgBonus = getIntFromUser();
-		puts("Maximum movement:");
-		u.maxMovement = getUIntFromUser();
-		puts("Current movement:");
-		u.currentMovement = getUIntFromUser();
-		puts("Vision range:");
-		u.vision = getUIntFromUser();
-		puts("Elevation:");
-		u.elevation = getIntFromUser();
-		puts("Bombardment range:");
-		u.range = getUIntFromUser();
+		Unit u = new Unit();
+		Globals.puts("Please enter data for a Unit.");
+		Globals.puts("Name:");
+		u.name = User.getStringFromUser();
+		Globals.puts("Maximum HP:");
+		u.maxHitPoints = User.getUIntFromUser();
+		Globals.puts("Melee Armor Class:");
+		u.meleeAC = User.getIntegerFromUser();
+		Globals.puts("Ranged Armor Class:");
+		u.rangedAC = User.getIntegerFromUser();
+		Globals.puts("Current HP:");
+		u.currentHitPoints = User.getUIntFromUser();
+		Globals.puts("Current Level:");
+		u.currentLevel = User.getUIntFromUser();
+		Globals.puts("Current Experience:");
+		u.currentExperience = User.getULongFromUser();
+		Globals.puts("Current Position:");
+		u.position = Point.getPointFromUser();
+		Globals.puts("Type ID:");
+		u.typeid = User.getULongFromUser();
+		Globals.puts("Unique ID:");
+		u.uid = User.getULongFromUser();
+		Globals.puts("Player ID:");
+		u.playerid = User.getULongFromUser();
+		Globals.puts("Delete?");
+		u.delete = User.getBooleanFromUser();
+		Globals.puts("Military?");
+		u.military = User.getBooleanFromUser();
+		Globals.puts("Melee Bonus:");
+		u.meleeBonus = User.getIntegerFromUser();
+		Globals.puts("Ranged Bonus:");
+		u.rangedBonus = User.getIntegerFromUser();
+		Globals.puts("Damage die:");
+		u.damageDie = User.getUIntFromUser();
+		Globals.puts("Melee dice:");
+		u.meleeDice = User.getUIntFromUser();
+		Globals.puts("Ranged dice:");
+		u.rangedDice = User.getUIntFromUser();
+		Globals.puts("Melee damage bonus:");
+		u.meleeDmgBonus = User.getIntegerFromUser();
+		Globals.puts("Ranged damage bonus:");
+		u.rangedDmgBonus = User.getIntegerFromUser();
+		Globals.puts("Maximum movement:");
+		u.maxMovement = User.getUIntFromUser();
+		Globals.puts("Current movement:");
+		u.currentMovement = User.getUIntFromUser();
+		Globals.puts("Vision range:");
+//		u.vision = User.getUIntFromUser();
+		Globals.puts("Elevation:");
+		u.elevation = User.getIntegerFromUser();
+		Globals.puts("Bombardment range:");
+		u.range = User.getUIntFromUser();
 		return u;
 	}
+
 	static void showUnitToUser(final Unit u) {
-		puts("Data of a Unit.");
-		puts("Name:");
-		puts(u.name);
-		puts("Maximum HP:");
-		puts(u.maxHitPoints);
-		puts("Melee Armor Class:");
-		puts(u.meleeAC);
-		puts("Ranged Armor Class:");
-		puts(u.rangedAC);
-		puts("Current HP:");
-		puts(u.currentHitPoints);
-		puts("Current Level:");
-		puts(u.currentLevel);
-		puts("Current Experience:");
-		puts(u.currentExperience);
-		puts("Current Position:");
-		puts(u.position);
-		puts("Type ID:");
-		puts(u.typeid);
-		puts("Unique ID:");
-		puts(u.uid);
-		puts("Player ID:");
-		puts(u.playerid);
-		puts("Delete?");
-		puts(u.delete);
-		puts("Military?");
-		puts(u.military);
-		puts("Melee Bonus:");
-		puts(u.meleeBonus);
-		puts("Ranged Bonus:");
-		puts(u.rangedBonus);
-		puts("Damage die:");
-		puts(u.dmgDie);
-		puts("Melee dice:");
-		puts(u.meleeDice);
-		puts("Ranged dice:");
-		puts(u.rangedDice);
-		puts("Melee damage bonus:");
-		puts(u.meleeDmgBonus);
-		puts("Ranged damage bonus:");
-		puts(u.rangedDmgBonus);
-		puts("Maximum movement:");
-		puts(u.maxMovement);
-		puts("Current movement:");
-		puts(u.currentMovement);
-		puts("Vision range:");
-		puts(u.vision);
-		puts("Elevation:");
-		puts(u.elevation);
-		puts("Bombardment range:");
-		puts(u.range);
+		Globals.puts("Data of a Unit.");
+		Globals.puts("Name:");
+		Globals.puts(u.name);
+		Globals.puts("Maximum HP:");
+		Globals.puts(Integer.toString(u.maxHitPoints));
+		Globals.puts("Melee Armor Class:");
+		Globals.puts(Integer.toString(u.meleeAC));
+		Globals.puts("Ranged Armor Class:");
+		Globals.puts(Integer.toString(u.rangedAC));
+		Globals.puts("Current HP:");
+		Globals.puts(Integer.toString(u.currentHitPoints));
+		Globals.puts("Current Level:");
+		Globals.puts(Integer.toString(u.currentLevel));
+		Globals.puts("Current Experience:");
+		Globals.puts(Long.toString(u.currentExperience));
+		Globals.puts("Current Position:");
+		Point.showPointToUser(u.position);
+		Globals.puts("Type ID:");
+		Globals.puts(Long.toString(u.typeid));
+		Globals.puts("Unique ID:");
+		Globals.puts(Long.toString(u.uid));
+		Globals.puts("Player ID:");
+		Globals.puts(Long.toString(u.playerid));
+		Globals.puts("Delete?");
+		Globals.puts(Boolean.toString(u.delete));
+		Globals.puts("Military?");
+		Globals.puts(Boolean.toString(u.military));
+		Globals.puts("Melee Bonus:");
+		Globals.puts(Integer.toString(u.meleeBonus));
+		Globals.puts("Ranged Bonus:");
+		Globals.puts(Integer.toString(u.rangedBonus));
+		Globals.puts("Damage die:");
+		Globals.puts(Integer.toString(u.damageDie));
+		Globals.puts("Melee dice:");
+		Globals.puts(Integer.toString(u.meleeDice));
+		Globals.puts("Ranged dice:");
+		Globals.puts(Integer.toString(u.rangedDice));
+		Globals.puts("Melee damage bonus:");
+		Globals.puts(Integer.toString(u.meleeDmgBonus));
+		Globals.puts("Ranged damage bonus:");
+		Globals.puts(Integer.toString(u.rangedDmgBonus));
+		Globals.puts("Maximum movement:");
+		Globals.puts(Integer.toString(u.maxMovement));
+		Globals.puts("Current movement:");
+		Globals.puts(Integer.toString(u.currentMovement));
+		Globals.puts("Vision range:");
+//		Globals.puts(Integer.toString(u.vision));
+		Globals.puts("Elevation:");
+		Globals.puts(Integer.toString(u.elevation));
+		Globals.puts("Bombardment range:");
+		Globals.puts(Integer.toString(u.range));
 	}
+
 	static Unit getUnit(final Point p) {
-		for (Unit u : allUnits) {
+		for (Unit u : Globals.allUnits) {
 			if (u.position.equals(p)) {
 				return u;
 			}
 		}
 		return null;
 	}
-	int checkAttack(final Unit target) {
-		if (Globals.PlayerRelations[playerid][target.playerid] !=
-				ENMITY) {
-			return ILLEGAL_USE;
-		} else if (Math.abs(position.X - target.position.X) > 1 || 
-				Math.abs(position.Y - target.position.Y) > 1) {
-			return TOO_FAR;
+
+	ReturnValues checkAttack(final Unit target) {
+		if (Globals.PlayerRelations[(int) playerid][(int) target.playerid] != Relations.ENMITY) {
+			return ReturnValues.ILLEGAL_USE;
+		} else if (Math.abs(position.X - target.position.X) > 1
+				|| Math.abs(position.Y - target.position.Y) > 1) {
+			return ReturnValues.TOO_FAR;
 		} else {
-			return OK;
+			return ReturnValues.OK;
 		}
 	}
-	int checkAttackS(final Structure target) {
-		if (Globals.PlayerRelations[playerid][target.playerid] !=
-				ENMITY) {
-			return ILLEGAL_USE;
-		} else if (Math.abs(position.X - target.position.X) > 1 || 
-				Math.abs(position.Y - target.position.Y) > 1) {
-			return TOO_FAR;
+
+	ReturnValues checkAttackS(final Structure target) {
+		if (Globals.PlayerRelations[(int) playerid][(int) target.playerid] != Relations.ENMITY) {
+			return ReturnValues.ILLEGAL_USE;
+		} else if (Math.abs(position.X - target.position.X) > 1
+				|| Math.abs(position.Y - target.position.Y) > 1) {
+			return ReturnValues.TOO_FAR;
 		} else {
-			return OK;
+			return ReturnValues.OK;
 		}
 	}
-	int checkBombard(final Unit target) {
-		if (Globals.PlayerRelations[playerid][target.playerid] !=
-				ENMITY) {
-			return ILLEGAL_USE;
-		} else if (Math.abs(position.X - target.position.X) > range || 
-			Math.abs(position.Y - target.position.Y) > range) {
-			return TOO_FAR;
+
+	ReturnValues checkBombard(final Unit target) {
+		if (Globals.PlayerRelations[(int) playerid][(int) target.playerid] != Relations.ENMITY) {
+			return ReturnValues.ILLEGAL_USE;
+		} else if (Math.abs(position.X - target.position.X) > range
+				|| Math.abs(position.Y - target.position.Y) > range) {
+			return ReturnValues.TOO_FAR;
 		} else {
-			return OK;
+			return ReturnValues.OK;
 		}
 	}
-	int checkBombardS(final Structure target) {
-		if (Globals.PlayerRelations[playerid][target.playerid] !=
-				ENMITY) {
-			return ILLEGAL_USE;
-		} else if (Math.abs(position.X - target.position.X) > range || 
-			Math.abs(position.Y - target.position.Y) > range) {
-			return TOO_FAR;
+
+	ReturnValues checkBombardS(final Structure target) {
+		if (Globals.PlayerRelations[(int) playerid][(int) target.playerid] != Relations.ENMITY) {
+			return ReturnValues.ILLEGAL_USE;
+		} else if (Math.abs(position.X - target.position.X) > range
+				|| Math.abs(position.Y - target.position.Y) > range) {
+			return ReturnValues.TOO_FAR;
 		} else {
-			return OK;
+			return ReturnValues.OK;
 		}
 	}
-	static Unit createUnit(String name,int maxHP,int mac,int rac,int currHP,
-			int currLvl,long currXP,Point p,long typeid,long uid,
-			long playerid,boolean delete,boolean mil,int mbonus,
-			int rbonus,int dmgdie,int mdice,int rdice,int mdbonus,
-			int rdbonus,int maxMv,int currMv,int vis,int elev) {
+
+	static Unit createUnit(String name, int maxHP, int mac, int rac,
+			int currHP, int currLvl, long currXP, Point p, long typeid,
+			long uid, long playerid, boolean delete, boolean mil, int mbonus,
+			int rbonus, int dmgdie, int mdice, int rdice, int mdbonus,
+			int rdbonus, int maxMv, int currMv, int vis, int elev) {
 		Unit u = new Unit();
 		u.name = name;
 		u.maxHitPoints = maxHP;
@@ -479,20 +501,28 @@ class Unit {
 		u.rangedDmgBonus = rdbonus;
 		u.maxMovement = maxMv;
 		u.currentMovement = currMv;
-		u.vision = vis;
+//		u.vision = vis;
 		u.elevation = elev;
 		return u;
 	}
+
 	static Unit produceUnit() {
-		puts("Stubbed-out function produceUnit() called.");
+		Globals.puts("Stubbed-out function produceUnit() called.");
 		return null;
 	}
+
 	static Unit selectUnit(List<Unit> units) {
 		// Ask the user to select a unit from the list.
 		return null;
 	}
+
 	static Direction selectDirection() {
 		// Ask the user to select a direction.
-		return NORTH;
+		return Direction.NORTH;
+	}
+
+	public void move(Tile tile) {
+		// TODO Auto-generated method stub
+
 	}
 }

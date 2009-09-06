@@ -1,4 +1,7 @@
 package proj_sp7;
+
+import proj_sp7.Advance.AdvanceId;
+
 class Weapon {
 	AdvanceId weaponid;
 	/* How much damage the weapon would do in melee if the target had no

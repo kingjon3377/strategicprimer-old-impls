@@ -6,12 +6,12 @@ class Debug {
 		MEDIUM,
 		HIGH
 	}
-	public static final Level DEBUGLEVEL = HIGH;
-	public void assert(final String desc, final int line, final String file,
+	public static final Level DEBUGLEVEL = Level.HIGH;
+	public void spAssert(final String desc, final int line, final String file,
 			final boolean x) {
 		// Note that properly implementing ASSERT(x) is
 		// impossible without a C-like preprocessor
-		if (DEBUGLEVEL == NONE) {
+		if (DEBUGLEVEL == Level.NONE) {
 			return;
 		}
 		if (!x) {
@@ -25,8 +25,8 @@ class Debug {
 	}
 	// There is no way to implement EVAL(x) without a C-like macro
 	// system, so I'm not going to try.
-	void print(final Object x) {
-		if (DEBUGLEVEL == HIGH) {
+	static void print(final Object x) {
+		if (DEBUGLEVEL == Level.HIGH) {
 			System.out.println(x);
 		}
 	}

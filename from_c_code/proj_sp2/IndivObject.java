@@ -1,5 +1,5 @@
 package proj_sp2;
-class IndivObject implements Instance extends SPObject {
+class IndivObject extends SPObject implements Instance {
 	String name;
 	int meleeBonusAdd;
 	int rangedBonusAdd;
@@ -18,7 +18,7 @@ class IndivObject implements Instance extends SPObject {
 	int currHP;
 	public boolean takeDamage(final int damage) {
 		if (damage >= 0) {
-			currentHP -= damage;
+			currHP -= damage;
 			return true;
 		} else {
 			return false;

@@ -23,4 +23,5 @@ class Debug {
 		UNFRIENDLY,
 		ENMITY
 	}
+	static boolean enabled;
 }

@@ -46,7 +46,7 @@ public class IndivImprovement extends Improvement implements Instance {
 				rangedBonus) + unitBonus;
 	}
 	int attackRoll(boolean melee) {
-		attackRoll(melee, 0);
+		return attackRoll(melee, 0);
 	}
 	int damageRoll(boolean critical, boolean melee) {
 		int dice = (melee ? meleeDamageDice : rangedDamageDice) 

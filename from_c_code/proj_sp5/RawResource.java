@@ -1,4 +1,9 @@
 package proj_sp5;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintStream;
+
 class RawResource {
 	Point location;
 	int resourceNumber; // unsigned
@@ -11,33 +16,33 @@ class RawResource {
 		temp.amount = amount;
 		return temp;
 	}
-	static RawResource getResourceFromFile(final InputStream in) {
-		getStringFromFile(in, "STRATEGIC PRIMER RAW RESOURCE");
-		return createRawResource(getPointFromFile(), getIntFromFile(),
-				getDoubleFromFile());
+	static RawResource getResourceFromFile(final InputStream in) throws IOException {
+		Globals.getStringFromFile(in, "STRATEGIC PRIMER RAW RESOURCE");
+		return createRawResource(Point.getPointFromFile(in), Globals.getIntFromFile(in),
+				Globals.getLongIntFromFile(in));
 	}
-	static void writeResourceToFile(final OutputStream out, 
-			final Resource res) {
+	static void writeResourceToFile(final PrintStream out, 
+			final RawResource res) {
 		out.print("STRATEGIC PRIMER RAW RESOURCE");
 		out.print(res.location);
 		out.print(res.resourceNumber);
 		out.print(res.amount);
 	}
-	static Resource getResourceFromUser() {
-		puts("Please enter data for a Raw Resource.");
-		puts("Location");
-		double location = getPoint();
-		puts("Resource Number");
-		int number = getInteger();
-		puts("Amount");
-		double amount = getDouble();
+	static RawResource getResourceFromUser() {
+		Globals.puts("Please enter data for a Raw Resource.");
+		Globals.puts("Location");
+		Point location = Point.getPointFromUser();
+		Globals.puts("Resource Number");
+		int number = User.getIntegerFromUser();
+		Globals.puts("Amount");
+		long amount = User.getLongIntegerFromUser();
 		return createRawResource(location, number, amount);
 	}
 	static void showRawResourceToUser(final RawResource res) {
 		// This should be changed to do this graphically
-		puts("Data of a raw resource:");
-		puts("Location: " + res.location);
-		puts("Resource Number: " + res.resourceNumber);
-		puts("Amount: " + res.amount);
+		Globals.puts("Data of a raw resource:");
+		Globals.puts("Location: " + res.location);
+		Globals.puts("Resource Number: " + res.resourceNumber);
+		Globals.puts("Amount: " + res.amount);
 	}
 }
