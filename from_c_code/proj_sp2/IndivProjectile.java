@@ -37,4 +37,5 @@ class IndivProjectile extends Projectile implements Instance {
 				(blast ? blastDamageAdd : hitDamageAdd);
 		}
 		return accumulator;
+	}
 }

@@ -1,4 +1,8 @@
 package proj_sp7;
+
+import java.util.Collection;
+import java.util.HashSet;
+
 class Advance {
 	class AdvanceId {
 		int major; // unsigned
@@ -26,7 +30,7 @@ class Advance {
 		if (proposed.overrideDefinite) {
 			return 1;
 		}
-		Collection<AdvanceId> existingIds = new Set<AdvanceId>();
+		Collection<AdvanceId> existingIds = new HashSet<AdvanceId>();
 		for (Advance a : existing) {
 			existingIds.add(a.number);
 		}

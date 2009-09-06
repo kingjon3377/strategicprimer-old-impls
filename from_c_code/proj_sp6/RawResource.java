@@ -1,4 +1,9 @@
 package proj_sp6;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintStream;
+
 class RawResource {
 	Point location;
 	int resourceNumber; // unsigned
@@ -9,36 +14,37 @@ class RawResource {
 		r.location = location;
 		r.resourceNumber = resourceNumber;
 		r.amount = amount;
+		return r;
 	}
-	static RawResource readRawResourceFromFile(final InputStream in) {
-		readStringFromFile(in, "STRATEGIC PRIMER RAW RESOURCE");
-		return createRawResource(readPointFromFile(), 
-				readUIntFromFile(), readULongFromFile());
+	static RawResource readRawResourceFromFile(final InputStream in) throws IOException {
+		Globals.getStringFromFile(in, "STRATEGIC PRIMER RAW RESOURCE");
+		return createRawResource(Point.getPointFromFile(in), 
+				Globals.getUIntFromFile(in), Globals.getULongFromFile(in));
 	}
-	static void writeRawResourceToFile(final OutputStream out,
+	static void writeRawResourceToFile(final PrintStream out,
 			final RawResource r) {
-		writeStringToFile(out, "STRATEGIC PRIMER RAW RESOURCE");
-		writePointToFile(out, r.location);
-		writeUIntToFile(out, r.resourceNumber);
-		writeULongToFile(out, r.amount);
+		Globals.writeStringToFile(out, "STRATEGIC PRIMER RAW RESOURCE");
+		Point.writePointToFile(out, r.location);
+		Globals.writeUIntToFile(out, r.resourceNumber);
+		Globals.writeULongToFile(out, r.amount);
 	}
 	static RawResource getRawResourceFromUser() {
-		puts("Please enter data for a Raw Resource");
-		puts("Position:");
-		Point location = getPointFromUser();
-		puts("Resource Number:");
-		int resourceNumber = getUIntFromUser();
-		puts("Amount:");
-		long amount = getULongFromUser();
+		Globals.puts("Please enter data for a Raw Resource");
+		Globals.puts("Position:");
+		Point location = Point.getPointFromUser();
+		Globals.puts("Resource Number:");
+		int resourceNumber = User.getUIntFromUser();
+		Globals.puts("Amount:");
+		long amount = User.getULongFromUser();
 		return createRawResource(location, resourceNumber, amount);
 	}
 	static void showRawResourceToUser(final RawResource r) {
-		puts("Data of a Raw Resource:");
-		puts("Location:");
-		puts(r.location);
-		puts("Resource Number:");
-		puts(r.resourceNumber);
-		puts("Amount:");
-		puts(r.amount);
+		Globals.puts("Data of a Raw Resource:");
+		Globals.puts("Location:");
+		Point.showPointToUser(r.location);
+		Globals.puts("Resource Number:");
+		Globals.puts(Integer.toString(r.resourceNumber));
+		Globals.puts("Amount:");
+		Globals.puts(Long.toString(r.amount));
 	}
 }

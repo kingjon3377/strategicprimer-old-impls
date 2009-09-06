@@ -1,4 +1,6 @@
 package proj_sp5;
+import java.util.ArrayList;
+import java.util.List;
 class Player {
 	long id; // unsigned
 	double money;
@@ -13,11 +15,11 @@ class Player {
 		Player temp = new Player();
 		temp.id = id;
 		temp.money = money;
-		temp.hq = new Point(hq);
-		temp.visible = new Boolean[Global.maxX][Global.maxY];
-		for (int i = 0; i < Global.maxX; i++) {
-			for (int j = 0;j < Global.maxY; j++) {
-				if (distance(i, j, hq) > vision) {
+		temp.headquartersLocation = new Point(hq);
+		temp.visible = new Boolean[Globals.maxX][Globals.maxY];
+		for (int i = 0; i < Globals.maxX; i++) {
+			for (int j = 0;j < Globals.maxY; j++) {
+				if (Trig.distance(i, j, hq) > vision) {
 					temp.visible[i][j] = Boolean.TRUE;
 				} else {
 					temp.visible[i][j] = Boolean.FALSE;
@@ -26,7 +28,7 @@ class Player {
 		}
 		temp.resources = new ArrayList<Resource>();
 		temp.units = new ArrayList<Unit>();
-		temp.structures = new ArrayList<Unit>();
+		temp.structures = new ArrayList<Structure>();
 		return temp;
 	}
 }

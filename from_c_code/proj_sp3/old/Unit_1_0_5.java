@@ -1,4 +1,7 @@
 package proj_sp3.old;
+import java.util.Collections;
+import java.util.List;
+import java.util.ArrayList;
 abstract class Unit_1_0_5 {
 	public Unit_1_0_5() {
 		name = "New Unit_1_0_5";
@@ -7,7 +10,7 @@ abstract class Unit_1_0_5 {
 		rangedAC = 10;
 		military = true;
 		meleeBonus = 0;
-		rangedBonus = 0
+		rangedBonus = 0;
 		damageDie = 6;
 		meleeDice = 0;
 		rangedDice = 0;
@@ -174,7 +177,7 @@ abstract class Unit_1_0_5 {
 		return true;
 	}
 	public List<Resource_1_0_5> getResourcesRequired() {
-		return Collections.immutableList(resourcesRequired);
+		return Collections.unmodifiableList(resourcesRequired);
 	}
 	public boolean setResourcesRequired(final List<Resource_1_0_5> rsr) {
 		resourcesRequired = new ArrayList<Resource_1_0_5>(rsr);
@@ -186,7 +189,7 @@ abstract class Unit_1_0_5 {
 	public boolean setCurrentHitPoints(final int hp) {
 		if (hp >= 0) {
 			currentHitPoints = 
-					(hp > maxHitPoints ? maxHitPoints : hp)
+					(hp > maxHitPoints ? maxHitPoints : hp);
 			return true;
 		} else {
 			return false;

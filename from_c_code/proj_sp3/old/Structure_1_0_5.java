@@ -1,4 +1,7 @@
 package proj_sp3.old;
+import java.util.Collections;
+import java.util.List;
+import java.util.ArrayList;
 abstract class Structure_1_0_5 {
 	public Structure_1_0_5() {
 		name = "New Structure";
@@ -72,7 +75,7 @@ abstract class Structure_1_0_5 {
 		return true;
 	}
 	public List<Resource_1_0_5> getResourcesRequired() {
-		return Collections.immutableList(resourcesRequired);
+		return Collections.unmodifiableList(resourcesRequired);
 	}
 	public boolean setResourcesRequired(final List<Resource_1_0_5> res) {
 		resourcesRequired = new ArrayList<Resource_1_0_5>(res);
@@ -107,7 +110,7 @@ abstract class Structure_1_0_5 {
 	}
 	public boolean setCurrentLevel(final int level) {
 		if (level >= 0) {
-			currentLevel = true;
+			currentLevel = level;
 			return true;
 		} else {
 			return false;

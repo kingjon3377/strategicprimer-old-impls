@@ -1,4 +1,7 @@
 package proj_sp7;
+
+import proj_sp7.Advance.AdvanceId;
+
 class Unit {
 	AdvanceId number;
 	boolean human; // Is the unit one person?

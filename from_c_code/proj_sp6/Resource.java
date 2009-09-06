@@ -1,32 +1,46 @@
 package proj_sp6;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintStream;
+
 class Resource {
 	long amount; // unsigned
 	int resourceNumber; // unsigned
-	static Resource createResource(final long amount, 
-			final int resourceNumber);
-	static Resource readResourceFromFile(final InputStream in) {
-		readStringFromFile(in, "STRATEGIC PRIMER RESOURCE");
-		return createResource(readULongFromFile(), readUIntFromFile());
+
+	static Resource createResource(final long amount, final int resourceNumber) {
+		Resource r = new Resource();
+		r.amount = amount;
+		r.resourceNumber = resourceNumber;
+		return r;
 	}
-	static void writeResourceToFile(final OutputStream out,
-			final Resource r) {
-		writeStringToFile(out, "STRATEGIC PRIMER RESOURCE");
-		writeStringToFile(out, r.amount);
-		writeStringToFile(out, r.resourceNumber);
+
+	static Resource readResourceFromFile(final InputStream in) throws IOException {
+		Globals.getStringFromFile(in, "STRATEGIC PRIMER RESOURCE");
+		return createResource(Globals.getULongFromFile(in), Globals
+				.getUIntFromFile(in));
 	}
+
+	static void writeResourceToFile(final PrintStream out, final Resource r) {
+		Globals.writeStringToFile(out, "STRATEGIC PRIMER RESOURCE");
+		Globals.writeULongToFile(out, r.amount);
+		Globals.writeUIntToFile(out, r.resourceNumber);
+	}
+
 	static Resource getResourceFromUser() {
-		puts("Please enter data for a Resource.");
-		puts("Amount:");
-		double amount = getDoubleFromUser();
-		puts("Resource Number:");
-		int resourceNumber = getUIntFromUser();
+		Globals.puts("Please enter data for a Resource.");
+		Globals.puts("Amount:");
+		long amount = User.getULongFromUser();
+		Globals.puts("Resource Number:");
+		int resourceNumber = User.getUIntFromUser();
 		return createResource(amount, resourceNumber);
 	}
+
 	static void showResourceToUser(final Resource r) {
-		puts("Data of a Resource:");
-		puts("Amount:");
-		puts(r.amount);
-		puts("Resource Number:");
-		puts(r.resourceNumber);
+		Globals.puts("Data of a Resource:");
+		Globals.puts("Amount:");
+		Globals.puts(Long.toString(r.amount));
+		Globals.puts("Resource Number:");
+		Globals.puts(Integer.toString(r.resourceNumber));
 	}
 }

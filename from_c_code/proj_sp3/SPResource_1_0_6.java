@@ -48,6 +48,7 @@ class SPResource_1_0_6 {
 	int compareTo(final SPResource_1_0_6 rhs) {
 		return Integer.valueOf(resourceNumber).compareTo(
 				Integer.valueOf(rhs.getResourceNumber()));
+	}
 	void show() { Debug.print(resourceNumber); }
 	private long amount; // unsigned
 	private int resourceNumber; // unsigned
