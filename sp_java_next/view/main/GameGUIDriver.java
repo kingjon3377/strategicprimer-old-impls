@@ -74,8 +74,7 @@ public class GameGUIDriver extends JFrame {
 //		mainPanel = new JPanel();
 //		mainPanel.setLayout(new BorderLayout());
 		setLayout(new BorderLayout());
-		map = new GUIMap(Game.getGame().getMap().getSizeRows(), Game.getGame()
-				.getMap().getSizeCols());
+		map = new GUIMap(Game.getGame().getMap());
 		add(map, BorderLayout.CENTER);
 		menu = new JMenuBar();
 		add(menu, BorderLayout.NORTH);

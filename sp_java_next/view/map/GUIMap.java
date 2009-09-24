@@ -3,12 +3,14 @@
  */
 package view.map;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.awt.Point;
+import java.util.HashMap;
+import java.util.Map;
 
-import javax.activity.InvalidActivityException;
 import javax.swing.JPanel;
+
+import model.location.SPMap;
+import model.location.Tile;
 
 /**
  * @author Jonathan Lovelace
@@ -20,56 +22,24 @@ public class GUIMap extends JPanel {
 	 */
 	private static final long serialVersionUID = -8873153191640697473L;
 	/**
-	 * The tiles on the map. TODO: Should this be a Collection?
+	 * The tiles on the map
 	 */
-	private transient GUITile[][] tiles;
-	/**
-	 * The number of rows of tiles
-	 */
-	private int rows;
-	/**
-	 * The number of columns of tiles
-	 */
-	private int cols;
+	private final transient Map<Point, GUITile> tiles;
 
 	/**
 	 * Constructor
 	 * 
-	 * @param _rows the number of rows
-	 * @param _cols the number of columns
+	 * @param map
+	 *            the map this class is displaying
 	 */
-	public GUIMap(final int _rows, final int _cols) {
+	public GUIMap(final SPMap map) {
 		super();
-		constructor(_rows, _cols);
-	}
-
-	/**
-	 * @param _rows the number of rows
-	 * @param _cols the number of columns
-	 */
-	private void constructor(final int _rows, final int _cols) {
-		rows = _rows;
-		cols = _cols;
-		tiles = new GUITile[rows][cols];
-		for (int i = 0; i < rows; i++) {
-			for (int j = 0; j < cols; j++) {
-				initializeTile(i, j);
+		tiles = new HashMap<Point, GUITile>();
+		for (int i = 0; i < map.getSizeRows(); i++) {
+			for (int j = 0; j < map.getSizeCols(); j++) {
+				initializeTile(i, j, map.getTileAt(i, j));
 			}
 		}
-	}
-
-	/**
-	 * @return the cols
-	 */
-	public int getCols() {
-		return cols;
-	}
-
-	/**
-	 * @return the rows
-	 */
-	public int getRows() {
-		return rows;
 	}
 
 	/**
@@ -77,53 +47,23 @@ public class GUIMap extends JPanel {
 	 *            the row number
 	 * @param col
 	 *            the column number
+	 * @param tile
+	 *            The tile at those coordinates that needs a GUI
 	 */
-	private void initializeTile(final int row, final int col) {
-		tiles[row][col] = new GUITile();
+	private void initializeTile(final int row, final int col, final Tile tile) {
+		initializeTile(new Point(row, col),tile);
 	}
-
 	/**
-	 * @param inStream
-	 *            The stream
-	 * @throws IOException
-	 *             When caught
-	 * @throws ClassNotFoundException
-	 *             When caught
+	 * @param point The coordinates of a tile
+	 * @param tile The tile at those coordinates that needs a GUI
 	 */
-	private void readObject(final ObjectInputStream inStream)
-			throws IOException, ClassNotFoundException {
-		inStream.defaultReadObject();
-		constructor(rows, cols);
+	private void initializeTile(final Point point, final Tile tile) {
+		if (tiles.containsKey(point)) {
+			tiles.get(point).setTile(tile);
+		} else {
+			tiles.put(point, new GUITile(tile));
+		}
 	}
-
-	// ESCA-JAVA0173:
-	/**
-	 * To make the static analysis plugins happy despite cols being final in all
-	 * but name.
-	 * 
-	 * @param _cols The new size of the map in columns
-	 * @throws InvalidActivityException Always
-	 */
-	public void setCols(@SuppressWarnings("unused")
-	final int _cols) throws InvalidActivityException {
-		throw new InvalidActivityException(
-				"Size of a map cannot be changed at runtime");
-	}
-
-	// ESCA-JAVA0173:
-	/**
-	 * To make static analysis plugins happy despite rows being final in all but
-	 * name
-	 * 
-	 * @param _rows The new size of the map in rows
-	 * @throws InvalidActivityException Always
-	 */
-	public void setRows(@SuppressWarnings("unused")
-	final int _rows) throws InvalidActivityException {
-		throw new InvalidActivityException(
-				"Size of a map cannot be changed at runtime");
-	}
-
 	/**
 	 * TODO: Is this really needed?
 	 * 
@@ -134,16 +74,13 @@ public class GUIMap extends JPanel {
 	 * @return The tile at that position
 	 */
 	public GUITile tileAt(final int row, final int col) {
-		return tiles[row][col];
+		return tileAt(new Point(row,col));
 	}
-
 	/**
-	 * @param out
-	 *            the stream
-	 * @throws IOException
+	 * @param point A set of coordinates
+	 * @return The tile at those coordinates
 	 */
-	private void writeObject(final ObjectOutputStream out) throws IOException {
-		out.defaultWriteObject();
+	public GUITile tileAt(final Point point) {
+		return tiles.get(point);
 	}
-
 }
