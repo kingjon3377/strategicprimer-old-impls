@@ -110,6 +110,6 @@ public class Tile extends Point implements Location {
 	public void setModuleOnTile(final Module _moduleOnTile) {
 		this.moduleOnTile = _moduleOnTile;
 	}
-	private TileType terrain;
+	private TerrainType terrain;
 	
 }
