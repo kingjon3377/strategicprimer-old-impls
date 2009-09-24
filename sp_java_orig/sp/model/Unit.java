@@ -16,11 +16,9 @@ public interface Unit {
 	 * 
 	 * @param tile
 	 *            The location to which the unit would move
-	 * @param map
-	 *            The map
 	 * @return whether that location is a valid destination
 	 */
-	boolean checkMove(final MoveTarget tile, final SPMap map);
+	boolean checkMove(final MoveTarget tile);
 
 	/**
 	 * A unit is defined as something that can move.

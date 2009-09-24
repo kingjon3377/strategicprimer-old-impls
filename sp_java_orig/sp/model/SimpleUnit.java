@@ -117,18 +117,16 @@ public class SimpleUnit extends Module implements Unit, Weapon {
 	 * 
 	 * @param tile
 	 *            The tile to which the unit would move
-	 * @param map
-	 *            the map (TODO: why?)
 	 * @return whether that tile is a valid destination
 	 */
 	@Override
-	public final boolean checkMove(final MoveTarget tile, final SPMap map) {
+	public final boolean checkMove(final MoveTarget tile) {
 		if (!(tile instanceof Tile)) {
 			throw new IllegalStateException(
 					"Movement to non-Tile locations is not supported yet");
 		}
 		return (!(getLocation() == null) && ((Tile)tile).getModuleOnTile() == null
-				&& !hasMoved && map.checkPath(getLocation(), tile, speed, this));
+				&& !hasMoved && Game.getGame().getMap().checkPath(getLocation(), tile, speed, this));
 	}
 
 	/**
@@ -252,41 +250,6 @@ public class SimpleUnit extends Module implements Unit, Weapon {
 	}
 
 	/**
-	 * @return Should this unit be deleted the next time collections are pruned?
-	 */
-	@Override
-	public boolean isDeleted() {
-		return myDelete;
-	}
-
-	/**
-	 * Should the unit be removed from collections when they prune?
-	 */
-	protected boolean myDelete;
-
-	/**
-	 * The unit's name
-	 */
-	private String myName;
-
-	/**
-	 * @return the unit's name
-	 */
-	@Override
-	public String getName() {
-		return myName;
-	}
-
-	/**
-	 * @param _name
-	 *            the unit's name
-	 */
-	@Override
-	public void setName(final String _name) {
-		myName = _name;
-	}
-
-	/**
 	 * @param module
 	 *            A module to perhaps attack
 	 * @return How much damage an attack on it would do
@@ -317,11 +280,9 @@ public class SimpleUnit extends Module implements Unit, Weapon {
 	 * 
 	 * @param tile
 	 *            The destination tile.
-	 * @param map
-	 *            The map
 	 */
-	public final void move(final MoveTarget tile, final SPMap map) {
-		if (checkMove(tile, map)) {
+	public final void move(final MoveTarget tile) {
+		if (checkMove(tile)) {
 			getLocation().remove(this);
 			setLocation(tile);
 			tile.add(this);
@@ -340,17 +301,5 @@ public class SimpleUnit extends Module implements Unit, Weapon {
 	@Override
 	public final boolean mobile() { // NOPMD
 		return true;
-	}
-
-	/**
-	 * Move to a new location FIXME: We need a way of getting the map without
-	 * passing it around, so the function this delegates to can move to this
-	 * one.
-	 * 
-	 * @param newLoc
-	 *            The new location
-	 */
-	public void move(final MoveTarget newLoc) {
-		move(newLoc, null);
 	}
 }

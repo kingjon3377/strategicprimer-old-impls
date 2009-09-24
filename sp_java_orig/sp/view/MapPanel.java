@@ -42,7 +42,8 @@ public final class MapPanel extends JPanel {
 	 */
 	private final int numCols;
 	/**
-	 * How many rows of tiles are visible? FIXME: Should somehow vary with window size.
+	 * How many rows of tiles are visible? FIXME: Should somehow vary with
+	 * window size.
 	 */
 	private final transient int visibleRows;
 	/**
@@ -362,10 +363,10 @@ public final class MapPanel extends JPanel {
 						.getGame().getPlayer()) {
 					if (((SimpleUnit) Game.getGame().getTile1()
 							.getModuleOnTile()).checkMove(Game.getGame()
-							.getTile2(), Game.getGame().getMap())) {
+							.getTile2())) {
 						((SimpleUnit) Game.getGame().getTile1()
 								.getModuleOnTile()).move(Game.getGame()
-								.getTile2(), Game.getGame().getMap());
+								.getTile2());
 						Game.getGame().setMode(Game.Mode.NO_MODE);
 					} else {
 						Game.getGame().setMode(Game.Mode.NO_MODE);
