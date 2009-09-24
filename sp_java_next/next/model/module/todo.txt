@@ -41,3 +41,5 @@ by Unit, renewable Resources, and depreciating Implements?
 What about Statistics? (Beyond the obvious, there's things like
 remaining power for a laser. Though that could possibly be a
 Resource.)
+
+How to handle inter-unit communication?
