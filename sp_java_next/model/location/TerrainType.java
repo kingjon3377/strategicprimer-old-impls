@@ -8,7 +8,7 @@ import java.util.HashMap;
  * @author Jonathan Lovelace
  * 
  */
-public enum TileType {
+public enum TerrainType {
 	/**
 	 * Tundra.
 	 */
@@ -49,17 +49,17 @@ public enum TileType {
 	 * The mapping from descriptive strings to tile types. Used to make
 	 * multiple-return-points warnings go away.
 	 */
-	private static final HashMap<String, TileType> TILE_TYPE_MAP = new HashMap<String, TileType>();// NOPMD
+	private static final HashMap<String, TerrainType> TILE_TYPE_MAP = new HashMap<String, TerrainType>();// NOPMD
 
 	static {
-		TILE_TYPE_MAP.put("tundra", TileType.Tundra);
-		TILE_TYPE_MAP.put("temperate_forest", TileType.TemperateForest);
-		TILE_TYPE_MAP.put("boreal_forest", TileType.BorealForest);
-		TILE_TYPE_MAP.put("ocean", TileType.Ocean);
-		TILE_TYPE_MAP.put("desert", TileType.Desert);
-		TILE_TYPE_MAP.put("plains", TileType.Plains);
-		TILE_TYPE_MAP.put("jungle", TileType.Jungle);
-		TILE_TYPE_MAP.put("mountain", TileType.Mountain);
+		TILE_TYPE_MAP.put("tundra", TerrainType.Tundra);
+		TILE_TYPE_MAP.put("temperate_forest", TerrainType.TemperateForest);
+		TILE_TYPE_MAP.put("boreal_forest", TerrainType.BorealForest);
+		TILE_TYPE_MAP.put("ocean", TerrainType.Ocean);
+		TILE_TYPE_MAP.put("desert", TerrainType.Desert);
+		TILE_TYPE_MAP.put("plains", TerrainType.Plains);
+		TILE_TYPE_MAP.put("jungle", TerrainType.Jungle);
+		TILE_TYPE_MAP.put("mountain", TerrainType.Mountain);
 	}
 
 	/**
@@ -69,7 +69,7 @@ public enum TileType {
 	 *            A string describing the terrain
 	 * @return the terrain type
 	 */
-	public static TileType getTileType(final String string) {
+	public static TerrainType getTileType(final String string) {
 		if (TILE_TYPE_MAP.containsKey(string)) {
 			return TILE_TYPE_MAP.get(string);
 		} // else
