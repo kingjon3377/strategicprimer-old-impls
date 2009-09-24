@@ -1,0 +1,5 @@
+*.class
+bin/next/model/module/todo.txt
+bin/.bzrignore
+bin/.pmd
+bin/.pmd
