@@ -52,18 +52,6 @@ public interface IModule extends Serializable {
 	 */
 	void setLocation(MoveTarget location);
 
-//	/**
-//	 * @param mobile
-//	 *            whether the module can move
-//	 */
-//	void setMobile(boolean mobile);
-
-//	/**
-//	 * @param name
-//	 *            the module's "name"
-//	 */
-//	void setName(String name);
-
 	/**
 	 * @param owner
 	 *            which player owns the module

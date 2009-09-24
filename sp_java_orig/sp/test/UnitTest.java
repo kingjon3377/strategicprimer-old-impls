@@ -54,7 +54,7 @@ public class UnitTest extends TestCase { // NOPMD
 		super.setUp();
 		unit = new SimpleUnit();
 		unit.setSpeed(5);
-		final List<List<Tile>> tiles = SPMap.createArray(5, TESTMAP_2D_DIM,3);
+		final List<List<Tile>> tiles = SPMap.createArray(5, TESTMAP_2D_DIM, 3);
 		tiles.get(0).get(0).setModuleOnTile(unit);
 		unit.setLocation(tiles.get(0).get(0));
 		unit2 = new SimpleUnit();
@@ -65,9 +65,10 @@ public class UnitTest extends TestCase { // NOPMD
 		unit2.setLocation(tiles.get(0).get(1));
 		map = new SPMap(5, TESTMAP_2D_DIM, tiles);
 		for (int i = 0; i < TESTMAP_2D_DIM; i++) {
-			tiles.get(2).get(i).setModuleOnTile(new SimpleUnit());//NOPMD
+			tiles.get(2).get(i).setModuleOnTile(new SimpleUnit());// NOPMD
 		}
 	}
+
 	/**
 	 * Tests setAccuracy(): don't accept negative input
 	 */
@@ -76,6 +77,7 @@ public class UnitTest extends TestCase { // NOPMD
 		unit.setAccuracy(-0.1);
 		fail("setAccuracy() accepted negative accuracy");
 	}
+
 	/**
 	 * Tests setAccuracy(): don't accept input > 1
 	 */
@@ -84,6 +86,7 @@ public class UnitTest extends TestCase { // NOPMD
 		unit.setAccuracy(1.1);
 		fail("setAccuracy() accepted accuracy > 1");
 	}
+
 	/**
 	 * Tests SimpleUnit.setAccuracy()
 	 */
@@ -101,11 +104,11 @@ public class UnitTest extends TestCase { // NOPMD
 	 */
 	@Test
 	public void testMove() {
-		unit.move(map.getTile(new Location(4, 4)), map);
+		unit.move(map.getTile(new Location(4, 4)));
 		if (unit.getLocation() == map.getTile(new Location(4, 4))) {
 			fail("Unit moved to unreachable location");
 		}
-		unit.move(map.getTile(new Location(1, 1)), map);
+		unit.move(map.getTile(new Location(1, 1)));
 		if (map.getTile(new Location(1, 1)).getModuleOnTile() != unit) {
 			fail("Unit failed to move to reachable location (tile.moduleOnTile)");
 		}
@@ -177,32 +180,37 @@ public class UnitTest extends TestCase { // NOPMD
 	@Test
 	public void testCheckMove() {
 		assertFalse("FIXME: Can't recall why this is false", ((SimpleUnit) map
-				.getTile(new Location(2, 0)).getModuleOnTile()).checkMove(map.getTile(new Location(3, 0)),
-				map));
-		assertFalse("Can't move to occupied tile", unit.checkMove(map.getTile(new Location(
-				2, 0)), map));
+				.getTile(new Location(2, 0)).getModuleOnTile()).checkMove(map
+				.getTile(new Location(3, 0))));
+		assertFalse("Can't move to occupied tile", unit.checkMove(map
+				.getTile(new Location(2, 0))));
 		unit2.setHasMoved(true);
-		assertFalse("Can't move twice", unit2.checkMove(map.getTile(new Location(1, 1)), map));
+		assertFalse("Can't move twice", unit2.checkMove(map
+				.getTile(new Location(1, 1))));
 		assertFalse("FIXME: Can't recall why this is false", unit.checkMove(map
-				.getTile(new Location(3, 3)), map));
-		assertTrue("A legal move", unit.checkMove(map.getTile(new Location(1, 1)), map));
+				.getTile(new Location(3, 3))));
+		assertTrue("A legal move", unit.checkMove(map
+				.getTile(new Location(1, 1))));
 	}
+
 	/**
 	 * Tests the checkAttack() method's handling of a null argument
 	 */
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void testCheckAttackNull() {
 		unit.checkAttack(null);
 		fail("checkAttack() didn't catch null argument");
 	}
+
 	/**
 	 * Tests the checkAttack() method's handling of an argument not on the map
 	 */
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void testCheckAttackDisconnected() {
 		unit.checkAttack(map.getTile(new Location(2, 2)).getModuleOnTile());
 		fail("checkAttack() didn't catch target with no location or parent");
 	}
+
 	/**
 	 * Tests the checkAttack() method
 	 */
@@ -210,27 +218,33 @@ public class UnitTest extends TestCase { // NOPMD
 	public void testCheckAttack() {
 		unit2.setHasAttacked(true);
 		assertFalse("Can't attack twice", unit2.checkAttack(unit));
-		map.getTile(new Location(2, 2)).getModuleOnTile().setLocation(map.getTile(new Location(2, 2)));
-		assertFalse("Non-adjacent unit", unit.checkAttack(map.getTile(new Location(2, 2))
-				.getModuleOnTile()));
+		map.getTile(new Location(2, 2)).getModuleOnTile().setLocation(
+				map.getTile(new Location(2, 2)));
+		assertFalse("Non-adjacent unit", unit.checkAttack(map.getTile(
+				new Location(2, 2)).getModuleOnTile()));
 		assertTrue("Adjacent unit", unit.checkAttack(unit2));
 	}
+
 	/**
 	 * Tests the checkRangedAttack() method's handling of a null argument
 	 */
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void testCheckRangedAttackNull() {
 		unit.checkRangedAttack(null);
 		fail("checkRangedAttack() didn't catch null argument");
 	}
+
 	/**
-	 * Tests the checkRangedAttack() method's handling of an argument not on the map
+	 * Tests the checkRangedAttack() method's handling of an argument not on the
+	 * map
 	 */
-	@Test(expected=IllegalArgumentException.class)
+	@Test(expected = IllegalArgumentException.class)
 	public void testCheckRangedAttackDisconnected() {
-		unit.checkRangedAttack(map.getTile(new Location(2, 2)).getModuleOnTile());
+		unit.checkRangedAttack(map.getTile(new Location(2, 2))
+				.getModuleOnTile());
 		fail("checkRangedAttack() didn't catch target with no location or parent");
 	}
+
 	/**
 	 * Tests checkRangedAttack()
 	 */
@@ -239,12 +253,14 @@ public class UnitTest extends TestCase { // NOPMD
 		unit2.setHasAttacked(true);
 		assertFalse("Can't ranged-attack if already attacked", unit2
 				.checkRangedAttack(unit));
-		map.getTile(new Location(2, 2)).getModuleOnTile().setLocation(map.getTile(new Location(2, 2)));
+		map.getTile(new Location(2, 2)).getModuleOnTile().setLocation(
+				map.getTile(new Location(2, 2)));
 		assertTrue("One successful possible attack", unit.checkRangedAttack(map
 				.getTile(new Location(2, 2)).getModuleOnTile()));
 		assertTrue("Another true possible attack", unit
 				.checkRangedAttack(unit2));
 	}
+
 	/**
 	 * Tests the takeAttack() method.
 	 */
@@ -253,7 +269,7 @@ public class UnitTest extends TestCase { // NOPMD
 		unit.setMaxHP(BuildConstants.PHALANX_DEFENSE);
 		unit.setHitPoints(BuildConstants.PHALANX_DEFENSE);
 		unit2.attack(unit);
-		assertTrue("Killed units get deleted",unit.isDeleted());
+		assertTrue("Killed units get deleted", unit.isDeleted());
 	}
 
 }
