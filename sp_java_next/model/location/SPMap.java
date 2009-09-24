@@ -13,7 +13,7 @@ import javax.activity.InvalidActivityException;
  * @author kingjon
  * 
  */
-public class Map implements Serializable {
+public class SPMap implements Serializable {
 	/**
 	 * 
 	 */
@@ -42,7 +42,7 @@ public class Map implements Serializable {
 	/**
 	 * Constructor, making the map be of the default size.
 	 */
-	public Map() {
+	public SPMap() {
 		constructor(DEFAULT_SIZE_ROWS, DEFAULT_SIZE_COLS);
 	}
 
@@ -52,7 +52,7 @@ public class Map implements Serializable {
 	 * @param _cols
 	 *            How wide this map is
 	 */
-	public Map(final int _rows, final int _cols) {
+	public SPMap(final int _rows, final int _cols) {
 		constructor(_rows, _cols);
 	}
 

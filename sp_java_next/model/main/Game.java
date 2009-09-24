@@ -5,7 +5,7 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
-import model.location.Map;
+import model.location.SPMap;
 import model.module.RootModule;
 import model.player.Side;
 
@@ -52,13 +52,13 @@ public final class Game implements Serializable {
 	 * The main map the game takes place on. Long-range TODO: Is this really the
 	 * best way to do this (given that various levels needed)?
 	 */
-	private final Map map; // NOPMD by kingjon on 5/19/08 4:29 PM
+	private final SPMap map; // NOPMD by kingjon on 5/19/08 4:29 PM
 	/**
 	 * Constructor
 	 */
 	private Game() {
 		sides = new HashSet<Side>();
-		map = new Map();
+		map = new SPMap();
 		RootModule.getRootModule();
 	}
 
@@ -75,7 +75,7 @@ public final class Game implements Serializable {
 	/**
 	 * @return the map
 	 */
-	public Map getMap() {
+	public SPMap getMap() {
 		return map;
 	}
 
