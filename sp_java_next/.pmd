@@ -720,10 +720,6 @@
             <ruleset>Design Rules</ruleset>
         </rule>
         <rule>
-            <name>SystemPrintln</name>
-            <ruleset>Java Logging Rules</ruleset>
-        </rule>
-        <rule>
             <name>TestClassWithoutTestCases</name>
             <ruleset>JUnit Rules</ruleset>
         </rule>
