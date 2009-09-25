@@ -4,3 +4,6 @@ bin/.bzrignore
 bin/.pmd
 bin/.pmd
 *.class
+bin/.classpath
+hs_err_pid*.log
+bin/res.jar
