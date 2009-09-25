@@ -1,11 +1,10 @@
 package model.location;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.awt.Point;
 import java.io.Serializable;
-
-import javax.activity.InvalidActivityException;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * The map on which the game takes place.
@@ -29,21 +28,22 @@ public class SPMap implements Serializable {
 	/**
 	 * The size of the map in rows
 	 */
-	private int sizeRows;
+	private final int sizeRows;
 	/**
 	 * The size of the map in columns
 	 */
-	private int sizeCols;
+	private final int sizeCols;
 	/**
-	 * The tiles on the map. TODO: Should this be a Collection?
+	 * The tiles on the map
 	 */
-	private Tile[][] tiles;
+	private final Map<Point, Tile> tiles = new HashMap<Point, Tile>();
 
 	/**
 	 * Constructor, making the map be of the default size.
 	 */
 	public SPMap() {
-		constructor(DEFAULT_SIZE_ROWS, DEFAULT_SIZE_COLS);
+		sizeRows = DEFAULT_SIZE_ROWS;
+		sizeCols = DEFAULT_SIZE_COLS;
 	}
 
 	/**
@@ -53,17 +53,14 @@ public class SPMap implements Serializable {
 	 *            How wide this map is
 	 */
 	public SPMap(final int _rows, final int _cols) {
-		constructor(_rows, _cols);
+		sizeRows = _rows;
+		sizeCols = _cols;
 	}
 
 	/**
-	 * @param _rows
-	 * @param _cols
+	 * Set up all uninitialized tiles as blank ones.
 	 */
-	private void constructor(final int _rows, final int _cols) {
-		sizeRows = _rows;
-		sizeCols = _cols;
-		tiles = new Tile[sizeRows][sizeCols];
+	public void setUpEmptyTiles() {
 		for (int i = 0; i < sizeRows; i++) {
 			for (int j = 0; j < sizeCols; j++) {
 				initializeTile(i, j);
@@ -93,7 +90,16 @@ public class SPMap implements Serializable {
 	 * @return the tile at that location
 	 */
 	public Tile getTileAt(final int row, final int col) {
-		return tiles[row][col];
+		return getTileAt(new Point(row, col));
+	}
+
+	/**
+	 * @param point
+	 *            A set of coordinates
+	 * @return The tile at those coordinates
+	 */
+	public Tile getTileAt(final Point point) {
+		return tiles.get(point);
 	}
 
 	/**
@@ -101,76 +107,34 @@ public class SPMap implements Serializable {
 	 * 
 	 * @return the array of tiles
 	 */
-	protected Tile[][] getTiles() {
-		return tiles.clone();
+	protected Map<Point, Tile> getTiles() {
+		return Collections.unmodifiableMap(tiles);
 	}
 
 	/**
 	 * @param row
+	 *            The row to put the new tile
 	 * @param col
+	 *            The column to put the new tile
 	 */
 	private void initializeTile(final int row, final int col) {
-		tiles[row][col] = new Tile(row, col);
+		initializeTile(new Point(row, col));
 	}
 
 	/**
-	 * @param inStream
-	 *            The stream
-	 * @throws IOException
-	 *             When caught
-	 * @throws ClassNotFoundException
-	 *             When caught
+	 * @param point
+	 *            The location to put the new tile.
 	 */
-	private void readObject(final ObjectInputStream inStream)
-			throws IOException, ClassNotFoundException {
-		inStream.defaultReadObject();
-		constructor(sizeRows, sizeCols);
+	private void initializeTile(final Point point) {
+		if (!tiles.containsKey(point)) {
+			tiles.put(point, new Tile(point.y, point.x));
+		}
 	}
-
-	// ESCA-JAVA0173:
 	/**
-	 * To make the static analysis plugins happy despite cols being final in all
-	 * but name.
-	 * 
-	 * @param _cols
-	 * @throws InvalidActivityException
+	 * Add tiles to the map.
+	 * @param map a Map containing the tiles.
 	 */
-	public void setSizeCols(@SuppressWarnings("unused")
-	final int _cols) throws InvalidActivityException {
-		throw new InvalidActivityException(
-				"Size of a map cannot be changed at runtime");
-	}
-
-	// ESCA-JAVA0173:
-	/**
-	 * To make static analysis plugins happy despite rows being final in all but
-	 * name
-	 * 
-	 * @param _rows
-	 * @throws InvalidActivityException
-	 */
-	public void setSizeRows(@SuppressWarnings("unused")
-	final int _rows) throws InvalidActivityException {
-		throw new InvalidActivityException(
-				"Size of a map cannot be changed at runtime");
-	}
-
-	/**
-	 * To make static analysis plugins happy despite tiles[][] being final in
-	 * all but name.
-	 * 
-	 * @param _tiles
-	 */
-	protected void setTiles(final Tile[][] _tiles) {
-		tiles = _tiles.clone();
-	}
-
-	/**
-	 * @param out
-	 *            the stream
-	 * @throws IOException
-	 */
-	private void writeObject(final ObjectOutputStream out) throws IOException {
-		out.defaultWriteObject();
+	public void addTiles(final Map<Point,Tile> map) {
+		tiles.putAll(map);
 	}
 }

@@ -1,0 +1,37 @@
+<map rows="5" columns="5">
+	<row index="0">
+		<tile row="0" column="0" type="tundra"></tile>
+		<tile row="0" column="1" type="tundra"></tile>
+		<tile row="0" column="2" type="temperate_forest"></tile>
+		<tile row="0" column="3" type="temperate_forest"></tile>
+		<tile row="0" column="4" type="boreal_forest"></tile>
+	</row>
+	<row index="1">
+		<tile row="1" column="0" type="ocean"></tile>
+		<tile row="1" column="1" type="desert"></tile>
+		<tile row="1" column="2" type="plains"></tile>
+		<tile row="1" column="3" type="plains"></tile>
+		<tile row="1" column="4" type="mountain"></tile>
+	</row>
+	<row index="2">
+		<tile row="2" column="0" type="jungle"></tile>
+		<tile row="2" column="1" type="plains"></tile>
+		<tile row="2" column="2" type="plains"></tile>
+		<tile row="2" column="3" type="plains"></tile>
+		<tile row="2" column="4" type="plains"></tile>
+	</row>
+	<row index="3">
+		<tile row="3" column="0" type="plains"></tile>
+		<tile row="3" column="1" type="plains"></tile>
+		<tile row="3" column="2" type="plains"></tile>
+		<tile row="3" column="3" type="plains"></tile>
+		<tile row="3" column="4" type="plains"></tile>
+	</row>
+	<row index="4">
+		<tile row="4" column="0" type="plains"></tile>
+		<tile row="4" column="1" type="plains"></tile>
+		<tile row="4" column="2" type="plains"></tile>
+		<tile row="4" column="3" type="plains"></tile>
+		<tile row="4" column="4" type="plains"></tile>
+	</row>
+</map>
