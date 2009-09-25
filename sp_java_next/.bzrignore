@@ -7,3 +7,4 @@ bin/.pmd
 bin/.classpath
 hs_err_pid*.log
 bin/res.jar
+bin/testMap.xml
