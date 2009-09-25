@@ -1,9 +1,14 @@
 package model.main;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+import org.xml.sax.SAXException;
 
 import model.location.SPMap;
 import model.module.RootModule;
@@ -30,6 +35,10 @@ public final class Game implements Serializable {
 	 */
 	private static final long serialVersionUID = -3912749657208931450L;
 	/**
+	 * Logger
+	 */
+	private static final Logger LOGGER = Logger.getLogger(Game.class.getName());
+	/**
 	 * The game object
 	 */
 	private static Game theGame;
@@ -52,7 +61,7 @@ public final class Game implements Serializable {
 	 * The main map the game takes place on. Long-range TODO: Is this really the
 	 * best way to do this (given that various levels needed)?
 	 */
-	private final SPMap map; // NOPMD by kingjon on 5/19/08 4:29 PM
+	private SPMap map; // NOPMD by kingjon on 5/19/08 4:29 PM
 	/**
 	 * Constructor
 	 */
@@ -86,5 +95,18 @@ public final class Game implements Serializable {
 	 */
 	public Set<Side> getSides() {
 		return Collections.unmodifiableSet(sides);
+	}
+	/**
+	 * Get the map from file
+	 * @param filename The filename of the XML map
+	 */
+	public void createMap(final String filename) {
+		try {
+			map = new MapXMLReader(filename).getMap();
+		} catch (SAXException e) {
+			LOGGER.log(Level.SEVERE,"Parsing problem",e);
+		} catch (IOException e) {
+			LOGGER.log(Level.SEVERE,"Parsing I/O problem",e);
+		}
 	}
 }

@@ -2,6 +2,7 @@ package view.main;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.util.logging.Logger;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -23,6 +24,10 @@ public class GameGUIDriver extends JFrame {
 	 */
 	private static final long serialVersionUID = 7140529521567754564L;
 	/**
+	 * Logger
+	 */
+	private static final Logger LOGGER = Logger.getLogger(GameGUIDriver.class.getName());
+	/**
 	 * The main window
 	 */
 	private static GameGUIDriver gui;
@@ -31,6 +36,9 @@ public class GameGUIDriver extends JFrame {
 	 * @param args
 	 */
 	public static void main(final String[] args) {
+		if (args.length > 0) {
+			parseArgs(args);
+		}
 		gui = new GameGUIDriver();
 		gui.run();
 	}
@@ -65,13 +73,6 @@ public class GameGUIDriver extends JFrame {
 	 */
 	public GameGUIDriver() {
 		super();
-		constructor();
-	}
-
-	/**
-	 * 
-	 */
-	private void constructor() {
 		setLayout(new BorderLayout());
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setIgnoreRepaint(false);
@@ -87,11 +88,9 @@ public class GameGUIDriver extends JFrame {
 		add(modulePanel, BorderLayout.EAST);
 		miniMap = new MiniMap();
 		add(miniMap, BorderLayout.SOUTH);
-		validate();
 		pack();
 		repaint();
 	}
-
 
 	/**
 	 * The main loop.
@@ -99,5 +98,15 @@ public class GameGUIDriver extends JFrame {
 	private void run() {
 		// TODO Auto-generated method stub
 		setVisible(true);
+	}
+	/**
+	 * Parse CLI arguments
+	 * @param args The arguments
+	 */
+	private static void parseArgs(final String[] args) {
+		if (args.length > 1) {
+			LOGGER.severe("Can't handle more than one argument yet");
+		}
+		Game.getGame().createMap(args[0]);
 	}
 }
