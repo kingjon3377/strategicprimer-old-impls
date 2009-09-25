@@ -33,6 +33,7 @@ public class Tile extends Point implements Location {
 	public Tile(final int row, final int col) {
 		super(row, col);
 		moduleOnTile = RootModule.getRootModule();
+		terrain = TerrainType.NotVisible;
 	}
 
 	/**
@@ -110,6 +111,22 @@ public class Tile extends Point implements Location {
 	public void setModuleOnTile(final Module _moduleOnTile) {
 		this.moduleOnTile = _moduleOnTile;
 	}
+
+	/**
+	 * The (most common) terrain type in this tile.
+	 */
 	private TerrainType terrain;
-	
+
+	/**
+	 * @return The (most common) terrain type in this tile.
+	 */
+	public TerrainType getTerrain() {
+		return terrain;
+	}
+	/**
+	 * @param terr The new terrain type of the tile
+	 */
+	public void setTerrain(final TerrainType terr) {
+		terrain = terr;
+	}
 }

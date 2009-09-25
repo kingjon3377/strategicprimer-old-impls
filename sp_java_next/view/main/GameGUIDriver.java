@@ -1,6 +1,7 @@
 package view.main;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -71,9 +72,11 @@ public class GameGUIDriver extends JFrame {
 	 * 
 	 */
 	private void constructor() {
-//		mainPanel = new JPanel();
-//		mainPanel.setLayout(new BorderLayout());
 		setLayout(new BorderLayout());
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+		this.setIgnoreRepaint(false);
+		this.setPreferredSize(new Dimension(640,480));
+		this.setMaximumSize(new Dimension(800,600));
 		map = new GUIMap(Game.getGame().getMap());
 		add(map, BorderLayout.CENTER);
 		menu = new JMenuBar();
@@ -84,40 +87,17 @@ public class GameGUIDriver extends JFrame {
 		add(modulePanel, BorderLayout.EAST);
 		miniMap = new MiniMap();
 		add(miniMap, BorderLayout.SOUTH);
+		validate();
+		pack();
+		repaint();
 	}
 
-//	/**
-//	 * @param inStream
-//	 *            The stream
-//	 * @throws IOException
-//	 *             When caught
-//	 * @throws ClassNotFoundException
-//	 *             When caught
-//	 */
-//	private void readObject(final ObjectInputStream inStream)
-//			throws IOException, ClassNotFoundException {
-//		inStream.defaultReadObject();
-//		constructor();
-//	}
 
 	/**
 	 * The main loop.
 	 */
 	private void run() {
 		// TODO Auto-generated method stub
-		menu.getAutoscrolls();
-		map.getActionMap();
-		modulePanel.getActionMap();
-		miniMap.getActionMap();
-		initQueue.getActionMap();
+		setVisible(true);
 	}
-
-//	/**
-//	 * @param out
-//	 *            the stream
-//	 * @throws IOException
-//	 */
-//	private void writeObject(final ObjectOutputStream out) throws IOException {
-//		out.defaultWriteObject();
-//	}
 }

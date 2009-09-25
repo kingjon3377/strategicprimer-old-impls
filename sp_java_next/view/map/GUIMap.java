@@ -3,6 +3,7 @@
  */
 package view.map;
 
+import java.awt.GridLayout;
 import java.awt.Point;
 import java.util.HashMap;
 import java.util.Map;
@@ -33,13 +34,15 @@ public class GUIMap extends JPanel {
 	 *            the map this class is displaying
 	 */
 	public GUIMap(final SPMap map) {
-		super();
+		super(new GridLayout(map.getSizeRows(),map.getSizeCols()));
 		tiles = new HashMap<Point, GUITile>();
 		for (int i = 0; i < map.getSizeRows(); i++) {
 			for (int j = 0; j < map.getSizeCols(); j++) {
 				initializeTile(i, j, map.getTileAt(i, j));
 			}
 		}
+		validate();
+		repaint();
 	}
 
 	/**
@@ -63,6 +66,7 @@ public class GUIMap extends JPanel {
 		} else {
 			tiles.put(point, new GUITile(tile));
 		}
+		add(tiles.get(point));
 	}
 	/**
 	 * TODO: Is this really needed?
