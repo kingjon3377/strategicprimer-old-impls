@@ -26,7 +26,14 @@ public class GUIMap extends JPanel {
 	 * The tiles on the map
 	 */
 	private final transient Map<Point, GUITile> tiles;
-
+	/**
+	 * The currently selected tile
+	 */
+	private transient GUITile selected;
+	/**
+	 * The listener to handle selection changes
+	 */
+	private final transient SelectionListener slist = new SelectionListener(this);
 	/**
 	 * Constructor
 	 * 
@@ -66,6 +73,7 @@ public class GUIMap extends JPanel {
 			tiles.put(point, new GUITile(tile));
 		}
 		add(tiles.get(point));
+		tiles.get(point).addMouseListener(slist);
 	}
 	/**
 	 * TODO: Is this really needed?
@@ -85,5 +93,19 @@ public class GUIMap extends JPanel {
 	 */
 	public GUITile tileAt(final Point point) {
 		return tiles.get(point);
+	}
+	/**
+	 * Select a new tile.
+	 * @param selection the new selected tile
+	 */
+	public void select(final GUITile selection) {
+		if (selected != null) {
+			selected.setSelected(false);
+		}
+		if (selection != null) {
+			selection.setSelected(true);
+		}
+		selected = selection;
+		repaint();
 	}
 }

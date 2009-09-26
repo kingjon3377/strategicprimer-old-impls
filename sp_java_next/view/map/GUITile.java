@@ -23,6 +23,10 @@ import model.location.Tile;
  */
 public class GUITile extends JPanel {
 	/**
+	 * Minimum size for a GUI tile.
+	 */
+	private static final int GUI_TILE_MIN_SIZE = 50;
+	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -189052820681357406L;
@@ -31,6 +35,10 @@ public class GUITile extends JPanel {
 	 */
 	private static final Logger LOGGER = Logger.getLogger(GUITile.class
 			.getName());
+	/**
+	 * Is this tile currently selected?
+	 */
+	private boolean selected = false;
 
 	/**
 	 * Constructor, to make warnings go away.
@@ -40,7 +48,7 @@ public class GUITile extends JPanel {
 	 */
 	public GUITile(final Tile _tile) {
 		super(new BorderLayout());
-		setMinimumSize(new Dimension(50,50));
+		setMinimumSize(new Dimension(GUI_TILE_MIN_SIZE, GUI_TILE_MIN_SIZE));
 		setPreferredSize(getMinimumSize());
 		setTile(_tile);
 	}
@@ -104,5 +112,26 @@ public class GUITile extends JPanel {
 		super.paintComponent(pen);
 		pen.drawImage(terrainImage, 0, 0, getWidth(), getHeight(), Color.white,
 				this);
+		if (selected) {
+			pen.setXORMode(getBackground());
+			pen.drawRect(0, 0, getWidth(), getHeight());
+			pen.drawRect(1, 1, getWidth() - 2, getHeight() - 2);
+			pen.drawRect(2, 2, getWidth() - 4, getHeight() - 4);
+		}
+	}
+
+	/**
+	 * @param _selected
+	 *            Whether this tile is now selected
+	 */
+	public void setSelected(final boolean _selected) {
+		selected = _selected;
+	}
+
+	/**
+	 * @return whether this tile is selected
+	 */
+	public boolean isSelected() {
+		return selected;
 	}
 }
