@@ -6,6 +6,7 @@ import java.util.logging.Logger;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
+import javax.swing.JScrollPane;
 
 import model.main.Game;
 import view.map.GUIMap;
@@ -50,11 +51,6 @@ public class GameGUIDriver extends JFrame {
 	private transient JMenuBar menu;
 
 	/**
-	 * The main map
-	 */
-	private transient GUIMap map;
-
-	/**
 	 * The panel showing the initiative queue.
 	 */
 	private transient InitiativeQueue initQueue;
@@ -74,12 +70,14 @@ public class GameGUIDriver extends JFrame {
 	public GameGUIDriver() {
 		super();
 		setLayout(new BorderLayout());
-		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
-		this.setIgnoreRepaint(false);
-		this.setPreferredSize(new Dimension(640,480));
-		this.setMaximumSize(new Dimension(800,600));
-		map = new GUIMap(Game.getGame().getMap());
-		add(map, BorderLayout.CENTER);
+		setDefaultCloseOperation(EXIT_ON_CLOSE);
+		setIgnoreRepaint(false);
+		setPreferredSize(new Dimension(640,480));
+		setMaximumSize(new Dimension(800,600));
+		/**
+		 * The main map
+		 */
+		add(new JScrollPane(new GUIMap(Game.getGame().getMap())), BorderLayout.CENTER);
 		menu = new JMenuBar();
 		add(menu, BorderLayout.NORTH);
 		initQueue = new InitiativeQueue();

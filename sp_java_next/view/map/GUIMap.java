@@ -41,7 +41,6 @@ public class GUIMap extends JPanel {
 				initializeTile(i, j, map.getTileAt(i, j));
 			}
 		}
-		validate();
 		repaint();
 	}
 
