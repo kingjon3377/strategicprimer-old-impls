@@ -2,6 +2,7 @@ package view.map;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.image.ImageProducer;
@@ -39,6 +40,8 @@ public class GUITile extends JPanel {
 	 */
 	public GUITile(final Tile _tile) {
 		super(new BorderLayout());
+		setMinimumSize(new Dimension(50,50));
+		setPreferredSize(getMinimumSize());
 		setTile(_tile);
 	}
 
