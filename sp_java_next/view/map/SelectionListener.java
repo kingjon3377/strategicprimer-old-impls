@@ -2,23 +2,29 @@ package view.map;
 
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+
 /**
  * A listener to handle mouse clicks to change the selection.
+ * 
  * @author Jonathan Lovelace
- *
+ * 
  */
 public class SelectionListener implements MouseListener {
 	/**
 	 * Constructor
-	 * @param _map The GUIMap that should be told about selection changes.
+	 * 
+	 * @param _map
+	 *            The GUIMap that should be told about selection changes.
 	 */
 	public SelectionListener(final GUIMap _map) {
 		map = _map;
 	}
+
 	/**
 	 * The GUIMap that should be told about selection changes
 	 */
 	private final GUIMap map;
+
 	/**
 	 * Change the selected tile when a tile is clicked.
 	 */
@@ -28,36 +34,54 @@ public class SelectionListener implements MouseListener {
 			map.select((GUITile) event.getSource());
 		}
 	}
+
 	/**
 	 * Required by interface
-	 * @param event ignored
+	 * 
+	 * @param event
+	 *            ignored
 	 */
 	@Override
 	public void mouseEntered(final MouseEvent event) {
 		// Do nothing for now
 	}
+
 	/**
 	 * Required by interface
-	 * @param event ignored
+	 * 
+	 * @param event
+	 *            ignored
 	 */
 	@Override
 	public void mouseExited(final MouseEvent event) {
 		// Do nothing for now
 	}
+
 	/**
 	 * Required by interface
-	 * @param event ignored
+	 * 
+	 * @param event
+	 *            ignored
 	 */
 	@Override
 	public void mousePressed(final MouseEvent event) {
-		// Do nothing for now
+		if (event.isPopupTrigger() && map.isAdmin()) {
+			TerrainTypeMenu.MENU.show(event.getComponent(), event.getX(), event
+					.getY());
+		}
 	}
+
 	/**
 	 * Required by interface
-	 * @param event ignored
+	 * 
+	 * @param event
+	 *            ignored
 	 */
 	@Override
 	public void mouseReleased(final MouseEvent event) {
-		// Do nothing for now
+		if (event.isPopupTrigger() && map.isAdmin()) {
+			TerrainTypeMenu.MENU.show(event.getComponent(), event.getX(), event
+					.getY());
+		}
 	}
 }

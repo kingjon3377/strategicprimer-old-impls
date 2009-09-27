@@ -5,7 +5,9 @@ import java.awt.Dimension;
 import java.util.logging.Logger;
 
 import javax.swing.JFrame;
+import javax.swing.JMenu;
 import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 
 import model.main.Game;
@@ -45,12 +47,6 @@ public class GameGUIDriver extends JFrame {
 	}
 
 	/**
-	 * The window's menu. TODO: Should this be made its own class, hiding the
-	 * initialization details?
-	 */
-	private transient JMenuBar menu;
-
-	/**
 	 * The panel showing the initiative queue.
 	 */
 	private transient InitiativeQueue initQueue;
@@ -78,7 +74,12 @@ public class GameGUIDriver extends JFrame {
 		 * The main map
 		 */
 		add(new JScrollPane(new GUIMap(Game.getGame().getMap())), BorderLayout.CENTER);
-		menu = new JMenuBar();
+		/**
+		 * The window's menu. TODO: Should this be made its own class, hiding the
+		 * initialization details?
+		 */
+		final JMenuBar menu = new JMenuBar();
+		menu.add(createFileMenu());
 		add(menu, BorderLayout.NORTH);
 		initQueue = new InitiativeQueue();
 		add(initQueue, BorderLayout.WEST);
@@ -106,5 +107,19 @@ public class GameGUIDriver extends JFrame {
 			LOGGER.severe("Can't handle more than one argument yet");
 		}
 		Game.getGame().createMap(args[0]);
+	}
+	/**
+	 * @return The File menu to add to the menu bar.
+	 */
+	private JMenu createFileMenu() {
+		MenuListener.MENU_LISTENER.setDriver(this);
+		final JMenu fileMenu = new JMenu("File");
+		final JMenuItem openItem = new JMenuItem("Open");
+		openItem.addActionListener(MenuListener.MENU_LISTENER);
+		fileMenu.add(openItem);
+		final JMenuItem saveItem = new JMenuItem("Save");
+		saveItem.addActionListener(MenuListener.MENU_LISTENER);
+		fileMenu.add(saveItem);
+		return fileMenu;
 	}
 }

@@ -108,4 +108,12 @@ public class GUIMap extends JPanel {
 		selected = selection;
 		repaint();
 	}
+	/**
+	 * Is this map an admin view of the map?
+	 * FIXME: We need a way to switch between the two; this is a hack.
+	 * @return whether this is showing an admin view of the map
+	 */
+	public boolean isAdmin() {
+		return true;
+	}
 }

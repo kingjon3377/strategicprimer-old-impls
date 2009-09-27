@@ -1,4 +1,4 @@
-<map rows="10" columns="10">
+<map rows="10" columns="10" version="0">
 	<row index="0">
 		<tile row="0" column="0" type="tundra"></tile>
 		<tile row="0" column="1" type="tundra"></tile>
