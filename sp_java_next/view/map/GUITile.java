@@ -134,4 +134,19 @@ public class GUITile extends JPanel {
 	public boolean isSelected() {
 		return selected;
 	}
+	/**
+	 * Change the terrain image if the tile's terrain has changed
+	 */
+	public void refreshTerrainImage() {
+		final URL url = getClass().getResource(getTerrainTypeString(tile));
+		if (url == null) {
+			LOGGER.severe("Couldn't find image for " + tile.getTerrain());
+			return;
+		}
+		try {
+			terrainImage = createImage((ImageProducer) url.getContent());
+		} catch (IOException e) {
+			LOGGER.log(Level.SEVERE, "I/O exception while refreshing terrain image",e);
+		}
+	}
 }
