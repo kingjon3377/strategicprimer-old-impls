@@ -9,12 +9,16 @@ import java.util.Map;
 import model.location.SPMap;
 import model.location.TerrainType;
 import model.location.Tile;
+import model.module.Module;
+import model.module.ModuleFactory;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.helpers.XMLReaderFactory;
+
+import view.map.ModuleGUIManager;
 
 /**
  * A SAX parser for an XML map
@@ -40,6 +44,14 @@ public class MapXMLReader extends DefaultHandler implements Serializable {
 	 * The tiles that will go in the map
 	 */
 	private final transient Map<Point, Tile> tiles = new HashMap<Point, Tile>();
+	/**
+	 * The module we're currently parsing
+	 */
+	private transient Module currentModule;
+	/**
+	 * Module factory
+	 */
+	private static final ModuleFactory FACTORY = new ModuleFactory();
 	/**
 	 * The map
 	 */
@@ -119,7 +131,10 @@ public class MapXMLReader extends DefaultHandler implements Serializable {
 	@Override
 	public void endElement(final String namespaceURI, final String localName,
 			final String qualifiedName) throws SAXException {
-		if ("tile".equals(localName)) {
+		if ("module".equals(localName)) {
+			currentTile.setModuleOnTile(currentModule);
+			currentModule = null; // NOPMD
+		} else if ("tile".equals(localName)) {
 			tiles.put(currentTile.getLocation(), currentTile);
 			currentTile = null; // NOPMD
 		} else if ("map".equals(localName)) {
@@ -159,6 +174,8 @@ public class MapXMLReader extends DefaultHandler implements Serializable {
 						"Shouldn't have multiple map tags"));
 			} else if ("tile".equals(localName)) {
 				parseTile(atts);
+			} else if ("module".equals(localName)) {
+				parseModule(atts);
 			}
 		}
 	}
@@ -180,6 +197,32 @@ public class MapXMLReader extends DefaultHandler implements Serializable {
 		} else {
 			throw new SAXException(new IllegalStateException(
 					"Cannot (at present) have one tile inside another"));
+		}
+	}
+
+	/**
+	 * Parse a module
+	 * 
+	 * @param atts
+	 *            The XML tag's attributes.
+	 * @throws SAXException
+	 *             when one module is inside another or not inside a tile (wraps
+	 *             IllegalStateException)
+	 */
+	private void parseModule(final Attributes atts) throws SAXException {
+		if (currentTile == null) {
+			throw new SAXException(new IllegalStateException(
+					"Cannot (at present) have a module outside a tile"));
+		} else if (currentModule == null) {
+			currentModule = FACTORY.createModule(Integer.parseInt(atts
+					.getValue("mid")));
+			if (atts.getValue("image") != null) {
+				ModuleGUIManager
+						.addImage(currentModule, atts.getValue("image"));
+			}
+		} else {
+			throw new SAXException(new IllegalStateException(
+					"Cannot (at present) have one module inside another"));
 		}
 	}
 }

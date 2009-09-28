@@ -26,7 +26,9 @@
 	<row index="2">
 		<tile row="2" column="0" type="jungle"></tile>
 		<tile row="2" column="1" type="plains"></tile>
-		<tile row="2" column="2" type="plains"></tile>
+		<tile row="2" column="2" type="plains">
+			<module mid="2" image="/sprite.png"></module>
+		</tile>
 		<tile row="2" column="3" type="plains"></tile>
 		<tile row="2" column="4" type="plains"></tile>
 		<tile row="2" column="5" type="jungle"></tile>

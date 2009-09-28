@@ -140,7 +140,7 @@ public final class RootModule implements Module, Serializable {
 	 * @return the module's UUID
 	 */
 	@Override
-	public int getUuid() {
+	public long getUuid() {
 		return 0;
 	}
 }
