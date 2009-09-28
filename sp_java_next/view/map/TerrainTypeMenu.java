@@ -7,7 +7,6 @@ import java.awt.event.ActionListener;
 import javax.swing.JPopupMenu;
 
 import model.location.TerrainType;
-import model.location.Tile;
 /**
  * A popup menu to allow an admin to change a tile's terrain type
  * @author Jonathan Lovelace
