@@ -1,9 +1,11 @@
-package view.map;
+package view.main;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JMenu;
+
+import view.map.GUITile;
 
 import model.location.TerrainType;
 /**

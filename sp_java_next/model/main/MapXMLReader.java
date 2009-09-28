@@ -18,7 +18,7 @@ import org.xml.sax.XMLReader;
 import org.xml.sax.helpers.DefaultHandler;
 import org.xml.sax.helpers.XMLReaderFactory;
 
-import view.map.ModuleGUIManager;
+import view.module.ModuleGUIManager;
 
 /**
  * A SAX parser for an XML map
@@ -132,7 +132,8 @@ public class MapXMLReader extends DefaultHandler implements Serializable {
 	public void endElement(final String namespaceURI, final String localName,
 			final String qualifiedName) throws SAXException {
 		if ("module".equals(localName)) {
-			currentTile.setModuleOnTile(currentModule);
+			currentTile.add(currentModule);
+			currentModule.setLocation(currentTile);
 			currentModule = null; // NOPMD
 		} else if ("tile".equals(localName)) {
 			tiles.put(currentTile.getLocation(), currentTile);

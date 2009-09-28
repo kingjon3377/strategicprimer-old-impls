@@ -13,7 +13,6 @@ import javax.swing.JScrollPane;
 import model.main.Game;
 import view.map.GUIMap;
 import view.map.MiniMap;
-import view.map.TerrainTypeMenu;
 import view.module.CurrentModulePanel;
 import view.module.InitiativeQueue;
 

@@ -1,8 +1,10 @@
-package view.map;
+package view.module;
 
 import java.awt.Image;
 import java.util.HashMap;
 import java.util.Map;
+
+import utils.StringImage;
 
 import model.module.Module;
 import model.module.RootModule;
@@ -53,7 +55,10 @@ public final class ModuleGUIManager {
 	 *            the image filename
 	 */
 	public static void addImage(final Module module, final String filename) {
-		if (MODULE_ID_MAP.containsKey(Integer.valueOf(module.getModuleID()))) {
+		if (module == null) {
+			return;
+		} else if (MODULE_ID_MAP.containsKey(Integer.valueOf(module
+				.getModuleID()))) {
 			if (MODULE_ID_MAP.get(Integer.valueOf(module.getModuleID()))
 					.getString().equals(filename)
 					|| UUID_MAP.containsKey(Long.valueOf(module.getUuid()))) {

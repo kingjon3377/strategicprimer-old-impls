@@ -9,7 +9,7 @@ import model.location.SPMap;
 import model.location.Tile;
 import model.module.Module;
 import model.module.RootModule;
-import view.map.ModuleGUIManager;
+import view.module.ModuleGUIManager;
 
 /**
  * A class to write a map to XML.

@@ -16,6 +16,8 @@ import java.util.logging.Logger;
 
 import javax.swing.JPanel;
 
+import view.module.ModuleGUIManager;
+
 import model.location.TerrainType;
 import model.location.Tile;
 import model.module.RootModule;

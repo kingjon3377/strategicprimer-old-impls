@@ -129,4 +129,10 @@ public class GUIMap extends JPanel {
 	public boolean isAdmin() {
 		return true;
 	}
+	/**
+	 * @return the currently selected tile
+	 */
+	public GUITile getSelection() {
+		return selected;
+	}
 }
