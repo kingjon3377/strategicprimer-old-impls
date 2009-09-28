@@ -139,7 +139,7 @@ public class ExampleUnit implements Module, Serializable {
 		statistics.getStats().put(
 				Statistics.Stats.HP,
 				statistics.getStats().get(Statistics.Stats.HP).intValue()
-						- attacker.projectedDamage(this));
+						- attacker.predictDamage(this));
 	}
 
 	/**
@@ -153,5 +153,18 @@ public class ExampleUnit implements Module, Serializable {
 		}
 		// TODO: Finish implementing.
 	}
-
+	/**
+	 * @return the unit's moduleID
+	 */
+	@Override
+	public int getModuleID() {
+		throw new IllegalStateException("Unimplemented");
+	}
+	/**
+	 * @return the unit's UUID
+	 */
+	@Override
+	public int getUuid() {
+		throw new IllegalStateException("Unimplemented");
+	}
 }

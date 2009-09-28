@@ -1,4 +1,4 @@
-package next.model.module;
+package model.module;
 
 /**
  * A piece of equipment in the game.

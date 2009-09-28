@@ -114,16 +114,6 @@ public final class RootModule implements Module, Serializable {
 		throw new IllegalStateException(
 				"The root of the module tree doesn't really exist.");
 	}
-
-	/**
-	 * Have our children take upkeep.
-	 * @param interval how long it's been since the last upkeep
-	 */
-	public void upkeep(final long interval) {
-		for (final Module mod : children) {
-			mod.upkeep(interval);
-		}
-	}
 	
 	/**
 	 * @return a <i>read-only copy</i> of the set of children.
@@ -138,5 +128,19 @@ public final class RootModule implements Module, Serializable {
 	 */
 	public void setChildren(final Set<Module> _children) {
 		children.addAll(_children);
+	}
+	/**
+	 * @return the module's moduleID.
+	 */
+	@Override
+	public int getModuleID() {
+		return 0;
+	}
+	/**
+	 * @return the module's UUID
+	 */
+	@Override
+	public int getUuid() {
+		return 0;
 	}
 }

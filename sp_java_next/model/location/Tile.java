@@ -2,6 +2,7 @@ package model.location;
 
 import java.awt.Point;
 
+import model.module.MobileModule;
 import model.module.Module;
 import model.module.RootModule;
 
@@ -76,7 +77,7 @@ public class Tile extends Point implements Location {
 	 * @return whether the tile contains the given module
 	 */
 	public boolean contains(final Module module) {
-		return (module.isMobile() ? module.getLocation().equals(this)
+		return (module instanceof MobileModule ? module.getLocation().equals(this)
 				: contains(module.getParent()));
 	}
 
