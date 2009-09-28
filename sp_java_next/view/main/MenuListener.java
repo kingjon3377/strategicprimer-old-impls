@@ -67,6 +67,8 @@ public final class MenuListener implements ActionListener, Serializable {
 					LOGGER.log(Level.SEVERE,"I/O error when trying to write map to XML file",e);
 				}
 			}
+		} else if (event.getActionCommand().equals("Quit")) {
+			driver.quit();
 		}
 	}
 

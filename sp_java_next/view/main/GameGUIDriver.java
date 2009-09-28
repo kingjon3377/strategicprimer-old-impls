@@ -120,6 +120,15 @@ public class GameGUIDriver extends JFrame {
 		final JMenuItem saveItem = new JMenuItem("Save");
 		saveItem.addActionListener(MenuListener.MENU_LISTENER);
 		fileMenu.add(saveItem);
+		final JMenuItem quitItem = new JMenuItem("Quit");
+		quitItem.addActionListener(MenuListener.MENU_LISTENER);
+		fileMenu.add(quitItem);
 		return fileMenu;
+	}
+	/**
+	 * Quits the program.
+	 */
+	public void quit() {
+		dispose();
 	}
 }
