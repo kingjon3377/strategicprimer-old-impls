@@ -31,24 +31,17 @@ public final class ModuleGUIManager {
 	private static final Map<Long, StringImage> UUID_MAP = new HashMap<Long, StringImage>();
 
 	/**
-	 * Get an Image for a Module
+	 * Get an Image for a Module. (The last part of the ternary operator returns
+	 * null if the module isn't in either Map.)
 	 * 
 	 * @param module
 	 *            the module to get an image for
 	 * @return an image for that module
 	 */
 	public static Image getImage(final Module module) {
-		if (UUID_MAP.containsKey(Long.valueOf(module.getUuid()))) {
-			return UUID_MAP.get(Long.valueOf(module.getUuid())).getImage();
-		} else if (MODULE_ID_MAP.containsKey(Integer.valueOf(module
-				.getModuleID()))) {
-			return MODULE_ID_MAP.get(Integer.valueOf(module.getModuleID()))
-					.getImage();
-		} else {
-			return null;
-			// throw new
-			// IllegalStateException("Default case not implemented yet");
-		}
+		return UUID_MAP.containsKey(Long.valueOf(module.getUuid())) ? UUID_MAP
+				.get(Long.valueOf(module.getUuid())).getImage() : MODULE_ID_MAP
+				.get(Integer.valueOf(module.getModuleID())).getImage();
 	}
 
 	/**
@@ -85,19 +78,11 @@ public final class ModuleGUIManager {
 	 * @return the filename of its image. (For serialization purposes.)
 	 */
 	public static String getFilename(final Module module) {
-		if (UUID_MAP.containsKey(Long.valueOf(module.getUuid()))) {
-			System.out.println("Returning GUI by moduleID");
-			return UUID_MAP.get(Long.valueOf(module.getUuid())).getString();
-		} else if (MODULE_ID_MAP.containsKey(Integer.valueOf(module
-				.getModuleID()))) {
-			System.out.println("Returning GUI by UUID");
-			return MODULE_ID_MAP.get(Integer.valueOf(module.getModuleID()))
-					.getString();
-		} else {
-			return "";
-			// throw new
-			// IllegalStateException("Default case not implemented yet");
-		}
+		return UUID_MAP.containsKey(Long.valueOf(module.getUuid())) ? UUID_MAP
+				.get(Long.valueOf(module.getUuid())).getString()
+				: MODULE_ID_MAP.containsKey(Integer.valueOf(module
+						.getModuleID())) ? MODULE_ID_MAP.get(
+						Integer.valueOf(module.getModuleID())).getString() : "";
 	}
 
 	static {
