@@ -102,7 +102,7 @@ public class ExampleUnit implements Module, Serializable {
 	 * @param loc
 	 *            my new location
 	 */
-	protected void setLocation(final Location loc) {
+	public void setLocation(final Location loc) {
 		location = loc;
 	}
 

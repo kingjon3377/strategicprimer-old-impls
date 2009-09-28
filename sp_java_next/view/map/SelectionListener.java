@@ -3,6 +3,9 @@ package view.map;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 
+import view.main.ActionsMenu;
+import view.main.TerrainTypeMenu;
+
 /**
  * A listener to handle mouse clicks to change the selection.
  * 
@@ -66,13 +69,10 @@ public class SelectionListener implements MouseListener {
 	 */
 	@Override
 	public void mousePressed(final MouseEvent event) {
-		if (event.isPopupTrigger() && map.isAdmin()) {
-//			TerrainTypeMenu.MENU.show(event.getComponent(), event.getX(), event
-//					.getY());
-		}
-		if (event.getSource() instanceof GUITile) {
-			map.select((GUITile) event.getSource());
-			TerrainTypeMenu.MENU.setTile((GUITile) event.getSource());
+		if ((event.getSource() instanceof GUITile) && event.isPopupTrigger()) {
+			ActionsMenu.ACTIONS_MENU.setSelectedTile(map.getSelection());
+			ActionsMenu.ACTIONS_MENU.show(event.getComponent(), event.getX(), event
+					.getY());
 		}
 	}
 
@@ -84,11 +84,12 @@ public class SelectionListener implements MouseListener {
 	 */
 	@Override
 	public void mouseReleased(final MouseEvent event) {
-		if (event.isPopupTrigger() && map.isAdmin()) {
-//			TerrainTypeMenu.MENU.show(event.getComponent(), event.getX(), event
-//					.getY());
-		}
 		if (event.getSource() instanceof GUITile) {
+			if (event.isPopupTrigger()) {
+				ActionsMenu.ACTIONS_MENU.setSelectedTile(map.getSelection());
+				ActionsMenu.ACTIONS_MENU.show(event.getComponent(), event.getX(), event
+						.getY());
+			}
 			map.select((GUITile) event.getSource());
 			TerrainTypeMenu.MENU.setTile((GUITile) event.getSource());
 		}

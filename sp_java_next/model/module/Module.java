@@ -4,8 +4,9 @@ import model.location.Location;
 
 /**
  * A component in a unit, building, etc. (Need better description.)
+ * 
  * @author Jonathan Lovelace
- *
+ * 
  */
 public interface Module {
 	/**
@@ -13,13 +14,17 @@ public interface Module {
 	 *         its kind.
 	 */
 	long getUuid();
+
 	/**
 	 * @return what kind of module I am
 	 */
 	int getModuleID();
+
 	/**
 	 * Any kind of Module can be attacked.
-	 * @param attacker The weapon attacking or being used to attack me.
+	 * 
+	 * @param attacker
+	 *            The weapon attacking or being used to attack me.
 	 */
 	void takeAttack(Weapon attacker);
 
@@ -32,5 +37,11 @@ public interface Module {
 	 * @return the module's parent in the tree
 	 */
 	Module getParent();
+	/**
+	 * Set the module's location. For non-top-level modules this might
+	 * conceivably do nothing.
+	 * @param location the new location
+	 */
+	void setLocation(final Location location);
 
 }

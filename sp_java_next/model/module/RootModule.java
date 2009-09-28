@@ -114,21 +114,24 @@ public final class RootModule implements Module, Serializable {
 		throw new IllegalStateException(
 				"The root of the module tree doesn't really exist.");
 	}
-	
+
 	/**
 	 * @return a <i>read-only copy</i> of the set of children.
 	 */
 	public Set<Module> getChildren() {
 		return Collections.unmodifiableSet(children);
 	}
-	
+
 	/**
 	 * Misleadingly named to mislead static-analysis plugins.
-	 * @param _children The new set to join to the old set of children.
+	 * 
+	 * @param _children
+	 *            The new set to join to the old set of children.
 	 */
 	public void setChildren(final Set<Module> _children) {
 		children.addAll(_children);
 	}
+
 	/**
 	 * @return the module's moduleID.
 	 */
@@ -136,11 +139,21 @@ public final class RootModule implements Module, Serializable {
 	public int getModuleID() {
 		return 0;
 	}
+
 	/**
 	 * @return the module's UUID
 	 */
 	@Override
 	public long getUuid() {
 		return 0;
+	}
+
+	/**
+	 * This method is required by the Module interface (since every other module
+	 * needs it) but is meaningless here.
+	 */
+	@Override
+	public void setLocation(final Location location) {
+		// Do nothing.
 	}
 }
