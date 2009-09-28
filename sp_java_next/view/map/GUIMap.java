@@ -12,7 +12,6 @@ import javax.swing.JPanel;
 
 import model.location.SPMap;
 import model.location.Tile;
-import model.module.SimpleUnit;
 
 /**
  * @author Jonathan Lovelace
@@ -51,9 +50,6 @@ public class GUIMap extends JPanel {
 				initializeTile(i, j, map.getTileAt(i, j));
 			}
 		}
-//		SimpleUnit unit = new SimpleUnit();
-//		ModuleGUIManager.addImage(unit, "/sprite.png");
-//		tiles.get(new Point(2, 2)).getTile().setModuleOnTile(unit);
 		repaint();
 	}
 
