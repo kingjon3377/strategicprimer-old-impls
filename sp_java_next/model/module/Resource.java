@@ -1,38 +1,30 @@
 package model.module;
 
 /**
- * A resource in the game.
+ * A resource in the game. This is something that is used up (at least usually),
+ * which is quantifiable, and which (generally) isn't a unit, implement, or any
+ * other kind of module. (Unfortunately there's no way to specify that ...)
  * 
- * @author Jonathan Lovelace
+ * @author kingjon
  * 
  */
-public interface Resource {
+public interface Resource extends Module {
 	/**
-	 * @return how much of the resource there is
+	 * @return how much of this resource there is in this collection of it.
 	 */
-	double getAmount();
+	double getQuantity();
 
 	/**
-	 * Which resource is this?
+	 * Remove the specified quantity of the resource and return it in a new
+	 * object.
 	 * 
-	 * @return the resource ID.
-	 */
-	long getResourceID();
-
-	/**
-	 * Split the resource.
+	 * What to do when there isn't enough is unspecified; some resources will
+	 * throw an exception, while others will let the user go into debt. There
+	 * ought to be a way to have some resources let the user specify what to do.
 	 * 
-	 * @param amount
-	 *            The amount to put into the split-off resource
-	 * @return A split-off resource
+	 * @param _quantity
+	 *            How much to remove
+	 * @return The removed collection of the resource.
 	 */
-	Resource split(double amount);
-
-	/**
-	 * Remove the specified amount from the resource
-	 * 
-	 * @param amount
-	 *            The amount of the resource to remove.
-	 */
-	void tap(double amount);
+	Resource tap(double _quantity);
 }

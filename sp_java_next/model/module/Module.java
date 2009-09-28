@@ -1,16 +1,27 @@
 package model.module;
 
-import java.io.Serializable;
-
 import model.location.Location;
 
 /**
- * A module [unit, building, weapon, tool, wonder, resource, or
- * other object] in the game.
- * 
+ * A component in a unit, building, etc. (Need better description.)
  * @author Jonathan Lovelace
+ *
  */
-public interface Module extends Serializable {
+public interface Module {
+	/**
+	 * @return my universally unique ID -- *this* module rather than another of
+	 *         its kind.
+	 */
+	int getUuid();
+	/**
+	 * @return what kind of module I am
+	 */
+	int getModuleID();
+	/**
+	 * Any kind of Module can be attacked.
+	 * @param attacker The weapon attacking or being used to attack me.
+	 */
+	void takeAttack(Weapon attacker);
 
 	/**
 	 * @return The module's location
@@ -22,39 +33,4 @@ public interface Module extends Serializable {
 	 */
 	Module getParent();
 
-	/**
-	 * @return whether the module is able to move
-	 */
-	boolean isMobile();
-
-	/**
-	 * Since all modules on each side form a tree, we can't rely on the parent
-	 * field to tell us whether a Module should be able to move or not, and
-	 * since all Modules should have locations (for FPS interface if nothing
-	 * else) we can't rely on that either ...
-	 * 
-	 * TODO: Should this be folded into "mobile"?
-	 * 
-	 * @return whether the module is "top-level".
-	 */
-	boolean isTopLevel();
-
-	/**
-	 * Take an attack from a specified module.
-	 * 
-	 * @see Weapon#attack(Module)
-	 * @param attacker
-	 *            The attacker
-	 */
-	void takeAttack(Weapon attacker);
-
-	/**
-	 * Execute upkeep functions. Should pass this on to submodules.
-	 * 
-	 * @param interval
-	 *            How long it's been since the last time upkeep was executed.
-	 */
-	void upkeep(long interval);
-
 }
-
