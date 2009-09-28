@@ -32,6 +32,7 @@ public class SelectionListener implements MouseListener {
 	public void mouseClicked(final MouseEvent event) {
 		if (event.getSource() instanceof GUITile) {
 			map.select((GUITile) event.getSource());
+			TerrainTypeMenu.MENU.setTile((GUITile) event.getSource());
 		}
 	}
 
@@ -58,7 +59,7 @@ public class SelectionListener implements MouseListener {
 	}
 
 	/**
-	 * Required by interface
+	 * Change the selected tile when a tile is clicked.
 	 * 
 	 * @param event
 	 *            ignored
@@ -66,13 +67,17 @@ public class SelectionListener implements MouseListener {
 	@Override
 	public void mousePressed(final MouseEvent event) {
 		if (event.isPopupTrigger() && map.isAdmin()) {
-			TerrainTypeMenu.MENU.show(event.getComponent(), event.getX(), event
-					.getY());
+//			TerrainTypeMenu.MENU.show(event.getComponent(), event.getX(), event
+//					.getY());
+		}
+		if (event.getSource() instanceof GUITile) {
+			map.select((GUITile) event.getSource());
+			TerrainTypeMenu.MENU.setTile((GUITile) event.getSource());
 		}
 	}
 
 	/**
-	 * Required by interface
+	 * Change the selected tile when a tile is clicked.
 	 * 
 	 * @param event
 	 *            ignored
@@ -80,8 +85,12 @@ public class SelectionListener implements MouseListener {
 	@Override
 	public void mouseReleased(final MouseEvent event) {
 		if (event.isPopupTrigger() && map.isAdmin()) {
-			TerrainTypeMenu.MENU.show(event.getComponent(), event.getX(), event
-					.getY());
+//			TerrainTypeMenu.MENU.show(event.getComponent(), event.getX(), event
+//					.getY());
+		}
+		if (event.getSource() instanceof GUITile) {
+			map.select((GUITile) event.getSource());
+			TerrainTypeMenu.MENU.setTile((GUITile) event.getSource());
 		}
 	}
 }

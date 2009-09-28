@@ -13,6 +13,7 @@ import javax.swing.JScrollPane;
 import model.main.Game;
 import view.map.GUIMap;
 import view.map.MiniMap;
+import view.map.TerrainTypeMenu;
 import view.module.CurrentModulePanel;
 import view.module.InitiativeQueue;
 
@@ -73,13 +74,17 @@ public class GameGUIDriver extends JFrame {
 		/**
 		 * The main map
 		 */
-		add(new JScrollPane(new GUIMap(Game.getGame().getMap())), BorderLayout.CENTER);
+		final GUIMap map = new GUIMap(Game.getGame().getMap());
+		add(new JScrollPane(map), BorderLayout.CENTER);
 		/**
 		 * The window's menu. TODO: Should this be made its own class, hiding the
 		 * initialization details?
 		 */
 		final JMenuBar menu = new JMenuBar();
 		menu.add(createFileMenu());
+		if (map.isAdmin()) {
+			menu.add(TerrainTypeMenu.MENU);
+		}
 		add(menu, BorderLayout.NORTH);
 		initQueue = new InitiativeQueue();
 		add(initQueue, BorderLayout.WEST);
