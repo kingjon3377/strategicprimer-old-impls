@@ -5,14 +5,18 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
+import java.awt.Toolkit;
 import java.awt.image.ImageProducer;
 import java.io.IOException;
 import java.net.URL;
+import java.util.EnumMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.JPanel;
 
+import model.location.TerrainType;
 import model.location.Tile;
 import model.module.RootModule;
 
@@ -73,12 +77,7 @@ public class GUITile extends JPanel {
 	public final void setTile(final Tile _tile) {
 		tile = _tile;
 		try {
-			final URL url = getClass().getResource(getTerrainTypeString(_tile));
-			if (url == null) {
-				LOGGER.severe("Couldn't find image for " + _tile.getTerrain());
-				return;
-			}
-			terrainImage = createImage((ImageProducer) url.getContent());
+			terrainImage = getImage(_tile.getTerrain());
 		} catch (IOException e) {
 			LOGGER.log(Level.SEVERE,
 					"I/O exception trying to set up image representing tile "
@@ -93,13 +92,12 @@ public class GUITile extends JPanel {
 	private transient Image terrainImage;
 
 	/**
-	 * @param _tile
-	 *            A tile
-	 * @return The resource filename for an image representing the tile's
-	 *         terrain
+	 * @param terr
+	 *            A terrain type
+	 * @return The resource filename for an image representing that terrain
 	 */
-	private static String getTerrainTypeString(final Tile _tile) {
-		return "/" + _tile.getTerrain().toString() + ".png";
+	private static String getTerrainTypeString(final TerrainType terr) {
+		return "/" + terr.toString() + ".png";
 	}
 
 	/**
@@ -113,7 +111,8 @@ public class GUITile extends JPanel {
 		super.paintComponent(pen);
 		pen.drawImage(terrainImage, 0, 0, getWidth(), getHeight(), Color.white,
 				this);
-		if (tile.getModuleOnTile() != null && !tile.getModuleOnTile().equals(RootModule.getRootModule())) {
+		if (tile.getModuleOnTile() != null
+				&& !tile.getModuleOnTile().equals(RootModule.getRootModule())) {
 			pen.drawImage(ModuleGUIManager.getImage(tile.getModuleOnTile()), 0,
 					0, getWidth(), getHeight(), this);
 		}
@@ -144,16 +143,37 @@ public class GUITile extends JPanel {
 	 * Change the terrain image if the tile's terrain has changed
 	 */
 	public void refreshTerrainImage() {
-		final URL url = getClass().getResource(getTerrainTypeString(tile));
-		if (url == null) {
-			LOGGER.severe("Couldn't find image for " + tile.getTerrain());
-			return;
-		}
 		try {
-			terrainImage = createImage((ImageProducer) url.getContent());
+			terrainImage = getImage(tile.getTerrain());
 		} catch (IOException e) {
 			LOGGER.log(Level.SEVERE,
 					"I/O exception while refreshing terrain image", e);
 		}
+		repaint();
 	}
+
+	/**
+	 * @param terr
+	 *            a terrain type
+	 * @return an image representing that terrain
+	 * @throws IOException Thrown by a method used in producing the image
+	 */
+	private static Image getImage(final TerrainType terr) throws IOException {
+		if (imageMap.containsKey(terr)) {
+			return imageMap.get(terr); // NOPMD
+		} else {
+			final URL url = GUITile.class
+					.getResource(getTerrainTypeString(terr));
+			if (url == null) {
+				LOGGER.severe("Couldn't find image for " + terr);
+			}
+			return url == null ? null : Toolkit.getDefaultToolkit().createImage(
+					(ImageProducer) url.getContent());
+		}
+	}
+	/**
+	 * A cache of terrain type images
+	 */
+	private static Map<TerrainType, Image> imageMap = new EnumMap<TerrainType, Image>(
+			TerrainType.class);
 }

@@ -1,10 +1,9 @@
 package view.map;
 
-import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JPopupMenu;
+import javax.swing.JMenu;
 
 import model.location.TerrainType;
 /**
@@ -12,7 +11,7 @@ import model.location.TerrainType;
  * @author Jonathan Lovelace
  *
  */
-public final class TerrainTypeMenu extends JPopupMenu implements ActionListener {
+public final class TerrainTypeMenu extends JMenu implements ActionListener {
 	/**
 	 * Version UID for serialization
 	 */
@@ -29,20 +28,10 @@ public final class TerrainTypeMenu extends JPopupMenu implements ActionListener 
 	 * Constructor
 	 */
 	private TerrainTypeMenu() {
-		super();
+		super("Change Terrain Type");
 		for (TerrainType type : TerrainType.values()) {
 			add(type.toString()).addActionListener(this);
 		}
-	}
-	/**
-	 * Show the menu in a component
-	 */
-	@Override
-	public void show(final Component invoker, final int xCoord, final int yCoord) {
-		if (invoker instanceof GUITile) {
-			tile = (GUITile) invoker;
-		}
-		super.show(invoker, xCoord, yCoord);
 	}
 	/**
 	 * Handle menu item clicks
@@ -54,5 +43,12 @@ public final class TerrainTypeMenu extends JPopupMenu implements ActionListener 
 			tile.getTile().setTerrain(TerrainType.getTileType(event.getActionCommand()));
 			tile.refreshTerrainImage();
 		}
+	}
+	/**
+	 * Set the tile we're referring to
+	 * @param _tile the tile we're to refer to
+	 */
+	public void setTile(final GUITile _tile) {
+		tile = _tile;
 	}
 }

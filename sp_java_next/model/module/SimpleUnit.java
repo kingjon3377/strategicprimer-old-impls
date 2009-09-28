@@ -92,6 +92,5 @@ public class SimpleUnit implements Module, MobileModule {
 		location.remove(this);
 		loc.add(this);
 		setLocation(loc);
-		
 	}
 }
