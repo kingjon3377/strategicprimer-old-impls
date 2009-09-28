@@ -12,7 +12,7 @@ public interface Module {
 	 * @return my universally unique ID -- *this* module rather than another of
 	 *         its kind.
 	 */
-	int getUuid();
+	long getUuid();
 	/**
 	 * @return what kind of module I am
 	 */

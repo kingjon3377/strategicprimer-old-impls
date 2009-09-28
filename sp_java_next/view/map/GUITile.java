@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import javax.swing.JPanel;
 
 import model.location.Tile;
+import model.module.RootModule;
 
 /**
  * The graphical representation of a tile.
@@ -112,6 +113,10 @@ public class GUITile extends JPanel {
 		super.paintComponent(pen);
 		pen.drawImage(terrainImage, 0, 0, getWidth(), getHeight(), Color.white,
 				this);
+		if (tile.getModuleOnTile() != null && !tile.getModuleOnTile().equals(RootModule.getRootModule())) {
+			pen.drawImage(ModuleGUIManager.getImage(tile.getModuleOnTile()), 0,
+					0, getWidth(), getHeight(), this);
+		}
 		if (selected) {
 			pen.setXORMode(getBackground());
 			pen.drawRect(0, 0, getWidth(), getHeight());
@@ -134,6 +139,7 @@ public class GUITile extends JPanel {
 	public boolean isSelected() {
 		return selected;
 	}
+
 	/**
 	 * Change the terrain image if the tile's terrain has changed
 	 */
@@ -146,7 +152,8 @@ public class GUITile extends JPanel {
 		try {
 			terrainImage = createImage((ImageProducer) url.getContent());
 		} catch (IOException e) {
-			LOGGER.log(Level.SEVERE, "I/O exception while refreshing terrain image",e);
+			LOGGER.log(Level.SEVERE,
+					"I/O exception while refreshing terrain image", e);
 		}
 	}
 }

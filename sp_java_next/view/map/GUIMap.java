@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 
 import model.location.SPMap;
 import model.location.Tile;
+import model.module.SimpleUnit;
 
 /**
  * @author Jonathan Lovelace
@@ -33,7 +34,9 @@ public class GUIMap extends JPanel {
 	/**
 	 * The listener to handle selection changes
 	 */
-	private final transient SelectionListener slist = new SelectionListener(this);
+	private final transient SelectionListener slist = new SelectionListener(
+			this);
+
 	/**
 	 * Constructor
 	 * 
@@ -41,13 +44,16 @@ public class GUIMap extends JPanel {
 	 *            the map this class is displaying
 	 */
 	public GUIMap(final SPMap map) {
-		super(new GridLayout(map.getSizeRows(),map.getSizeCols()));
+		super(new GridLayout(map.getSizeRows(), map.getSizeCols()));
 		tiles = new HashMap<Point, GUITile>();
 		for (int i = 0; i < map.getSizeRows(); i++) {
 			for (int j = 0; j < map.getSizeCols(); j++) {
 				initializeTile(i, j, map.getTileAt(i, j));
 			}
 		}
+//		SimpleUnit unit = new SimpleUnit();
+//		ModuleGUIManager.addImage(unit, "/sprite.png");
+//		tiles.get(new Point(2, 2)).getTile().setModuleOnTile(unit);
 		repaint();
 	}
 
@@ -60,11 +66,14 @@ public class GUIMap extends JPanel {
 	 *            The tile at those coordinates that needs a GUI
 	 */
 	private void initializeTile(final int row, final int col, final Tile tile) {
-		initializeTile(new Point(row, col),tile);
+		initializeTile(new Point(row, col), tile);
 	}
+
 	/**
-	 * @param point The coordinates of a tile
-	 * @param tile The tile at those coordinates that needs a GUI
+	 * @param point
+	 *            The coordinates of a tile
+	 * @param tile
+	 *            The tile at those coordinates that needs a GUI
 	 */
 	private void initializeTile(final Point point, final Tile tile) {
 		if (tiles.containsKey(point)) {
@@ -75,6 +84,7 @@ public class GUIMap extends JPanel {
 		add(tiles.get(point));
 		tiles.get(point).addMouseListener(slist);
 	}
+
 	/**
 	 * TODO: Is this really needed?
 	 * 
@@ -85,18 +95,23 @@ public class GUIMap extends JPanel {
 	 * @return The tile at that position
 	 */
 	public GUITile tileAt(final int row, final int col) {
-		return tileAt(new Point(row,col));
+		return tileAt(new Point(row, col));
 	}
+
 	/**
-	 * @param point A set of coordinates
+	 * @param point
+	 *            A set of coordinates
 	 * @return The tile at those coordinates
 	 */
 	public GUITile tileAt(final Point point) {
 		return tiles.get(point);
 	}
+
 	/**
 	 * Select a new tile.
-	 * @param selection the new selected tile
+	 * 
+	 * @param selection
+	 *            the new selected tile
 	 */
 	public void select(final GUITile selection) {
 		if (selected != null) {
@@ -108,9 +123,11 @@ public class GUIMap extends JPanel {
 		selected = selection;
 		repaint();
 	}
+
 	/**
-	 * Is this map an admin view of the map?
-	 * FIXME: We need a way to switch between the two; this is a hack.
+	 * Is this map an admin view of the map? FIXME: We need a way to switch
+	 * between the two; this is a hack.
+	 * 
 	 * @return whether this is showing an admin view of the map
 	 */
 	public boolean isAdmin() {

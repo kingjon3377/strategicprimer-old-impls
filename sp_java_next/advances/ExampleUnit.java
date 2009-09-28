@@ -164,7 +164,7 @@ public class ExampleUnit implements Module, Serializable {
 	 * @return the unit's UUID
 	 */
 	@Override
-	public int getUuid() {
+	public long getUuid() {
 		throw new IllegalStateException("Unimplemented");
 	}
 }

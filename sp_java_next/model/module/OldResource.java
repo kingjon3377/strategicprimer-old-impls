@@ -28,12 +28,4 @@ public interface OldResource extends Resource {
 	 * @return A split-off resource
 	 */
 	Resource split(double amount);
-
-	/**
-	 * Remove the specified amount from the resource
-	 * 
-	 * @param amount
-	 *            The amount of the resource to remove.
-	 */
-	void tap(double amount);
 }

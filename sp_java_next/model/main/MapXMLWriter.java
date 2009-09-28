@@ -7,6 +7,9 @@ import java.io.PrintWriter;
 
 import model.location.SPMap;
 import model.location.Tile;
+import model.module.Module;
+import model.module.RootModule;
+import view.map.ModuleGUIManager;
 
 /**
  * A class to write a map to XML.
@@ -20,6 +23,7 @@ public final class MapXMLWriter {
 	private MapXMLWriter() {
 		// Don't instantiate
 	}
+
 	/**
 	 * Write the map to an XML file
 	 * 
@@ -79,7 +83,38 @@ public final class MapXMLWriter {
 	 *            the Writer to write to
 	 */
 	private static void writeTile(final Tile tile, final PrintWriter writer) {
-		writer.println("		<tile row=\"" + tile.x + "\" column=\"" + tile.y
-				+ "\" type=\"" + tile.getTerrain().toString() + "\"></tile>");
+		if (tile.getModuleOnTile() == null
+				|| tile.getModuleOnTile().equals(RootModule.getRootModule())) {
+			writer.println("		<tile row=\"" + tile.x + "\" column=\"" + tile.y
+					+ "\" type=\"" + tile.getTerrain().toString()
+					+ "\"></tile>");
+		} else {
+			writer.println("		<tile row=\"" + tile.x + "\" column=\"" + tile.y
+					+ "\" type=\"" + tile.getTerrain().toString() + "\">");
+			writeModule(tile.getModuleOnTile(), writer, 3);
+			writer.println("		</tile>");
+		}
+	}
+
+	/**
+	 * Write a module to XML
+	 * 
+	 * @param module
+	 *            the module to write
+	 * @param writer
+	 *            the Writer to write to
+	 * @param indent
+	 *            how many tabs to indent
+	 */
+	private static void writeModule(final Module module,
+			final PrintWriter writer, final int indent) {
+		for (int i = 0; i < indent; i++) {
+			writer.append('\t');
+		}
+		writer.println("<module mid=\""
+				+ module.getModuleID()
+				+ ("".equals(ModuleGUIManager.getFilename(module)) ? ""
+						: "\" image=\"" + ModuleGUIManager.getFilename(module))
+				+ "\"></module>");
 	}
 }
