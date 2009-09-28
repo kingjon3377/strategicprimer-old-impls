@@ -2,6 +2,7 @@ package model.module;
 
 import model.location.Location;
 import model.location.NullLocation;
+import model.location.Tile;
 import model.main.UuidManager;
 
 /**
@@ -11,7 +12,7 @@ import model.main.UuidManager;
  * @author Jonathan Lovelace
  * 
  */
-public class SimpleUnit implements Module {
+public class SimpleUnit implements Module, MobileModule {
 	/**
 	 * The module's UUID
 	 */
@@ -20,6 +21,7 @@ public class SimpleUnit implements Module {
 	 * The module's location
 	 */
 	private Location location = NullLocation.getNullLocation();
+
 	/**
 	 * @return the unit's locationn
 	 */
@@ -45,6 +47,7 @@ public class SimpleUnit implements Module {
 	public Module getParent() {
 		return null;
 	}
+
 	/**
 	 * @return the unit's UUID
 	 */
@@ -52,18 +55,43 @@ public class SimpleUnit implements Module {
 	public long getUuid() {
 		return uuid;
 	}
+
 	/**
 	 * Take an attack.
+	 * 
 	 * @bug FIXME: Implement.
 	 */
 	@Override
 	public void takeAttack(final Weapon attacker) {
 		// FIXME: Implement
 	}
+
 	/**
-	 * @param loc the module's new location.
+	 * @param loc
+	 *            the module's new location.
 	 */
 	public void setLocation(final Location loc) {
 		location = loc;
+	}
+
+	/**
+	 * Move to a new location, which (FIXME: this shouldn't last) at present
+	 * must be a tile
+	 * 
+	 * @param loc
+	 *            the new location
+	 * @throws UnableToMoveException
+	 *             when the location isn't a tile
+	 */
+	@Override
+	public void move(final Location loc) throws UnableToMoveException {
+		if (!(loc instanceof Tile)) {
+			throw new UnableToMoveException(
+					"Don't know how to move to anything except a Tile");
+		}
+		location.remove(this);
+		loc.add(this);
+		setLocation(loc);
+		
 	}
 }
