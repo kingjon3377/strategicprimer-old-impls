@@ -8,7 +8,7 @@ package model.module;
  * 
  * @author Jonathan Lovelace
  */
-public interface Building {
+public interface FunctionalModule {
 	/**
 	 * Perform the action, perhaps dispatching this to other methods.
 	 * 
