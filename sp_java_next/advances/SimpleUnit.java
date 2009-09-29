@@ -1,9 +1,13 @@
-package model.module;
+package advances;
 
 import model.location.Location;
 import model.location.NullLocation;
 import model.location.Tile;
 import model.main.UuidManager;
+import model.module.MobileModule;
+import model.module.Module;
+import model.module.UnableToMoveException;
+import model.module.Weapon;
 
 /**
  * A simple unit, for prototype purposes where we don't want the full Unit
@@ -12,7 +16,7 @@ import model.main.UuidManager;
  * @author Jonathan Lovelace
  * 
  */
-public class SimpleUnit implements Module, MobileModule {
+public class SimpleUnit implements Module, MobileModule, Weapon {
 	/**
 	 * The module's UUID
 	 */
@@ -63,7 +67,7 @@ public class SimpleUnit implements Module, MobileModule {
 	 */
 	@Override
 	public void takeAttack(final Weapon attacker) {
-		// FIXME: Implement
+		die();
 	}
 
 	/**
@@ -92,5 +96,29 @@ public class SimpleUnit implements Module, MobileModule {
 		location.remove(this);
 		loc.add(this);
 		setLocation(loc);
+	}
+	/**
+	 * Die.
+	 */
+	@Override
+	public void die() {
+		location.remove(this);
+	}
+	/**
+	 * Attack another module
+	 * @param defender the module beng attacked
+	 */
+	@Override
+	public void attack(final Module defender) {
+		defender.takeAttack(this);
+	}
+	/**
+	 * Predict the results of an attack on another module
+	 * @param defender the module beng attacked
+	 * @return the expected damage dealt
+	 */
+	@Override
+	public int predictDamage(final Module defender) {
+		return 15;
 	}
 }
