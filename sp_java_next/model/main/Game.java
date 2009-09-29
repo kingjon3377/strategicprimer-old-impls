@@ -8,11 +8,11 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.xml.sax.SAXException;
-
 import model.location.SPMap;
 import model.module.RootModule;
 import model.player.Side;
+
+import org.xml.sax.SAXException;
 
 /**
  * The main object of the model (or is it the controller?) For now, just a place
