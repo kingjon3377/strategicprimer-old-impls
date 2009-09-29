@@ -145,7 +145,12 @@ public class ExampleUnit implements Module, Serializable, MobileModule {
 	@Override
 	public void move(final Location loc) throws UnableToMoveException {
 		location.remove(this);
-		loc.add(this);
+		try {
+			loc.add(this);
+		} catch (IllegalStateException except) {
+			location.add(this);
+			throw new UnableToMoveException("Location already occupied"); // NOPMD
+		}
 		setLocation(loc);
 	}
 	/**

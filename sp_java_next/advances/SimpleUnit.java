@@ -97,7 +97,8 @@ public class SimpleUnit implements Module, MobileModule, Weapon {
 		try {
 			loc.add(this);
 		} catch (IllegalStateException except) {
-			throw new UnableToMoveException("Tile already occupied");
+			location.add(this);
+			throw new UnableToMoveException("Tile already occupied"); // NOPMD
 		}
 		setLocation(loc);
 	}

@@ -55,26 +55,45 @@ public final class ModuleGUIManager {
 	 *            the image filename
 	 */
 	public static void addImage(final Module module, final String filename) {
-		if (module == null) {
-			return;
-		} else if (MODULE_ID_MAP.containsKey(Integer.valueOf(module
-				.getModuleID()))) {
-			if (MODULE_ID_MAP.get(Integer.valueOf(module.getModuleID()))
-					.getString().equals(filename)
-					|| UUID_MAP.containsKey(Long.valueOf(module.getUuid()))) {
-				if (!UUID_MAP.get(Long.valueOf(module.getUuid())).getString()
-						.equals(filename)) {
-					throw new IllegalStateException(
-							"Already had an image for that module");
-				}
-			} else {
+		if (checkAddImageInput(module, filename)) {
+			if (UUID_MAP.containsKey(Long.valueOf(module.getUuid()))
+					&& !UUID_MAP.get(Long.valueOf(module.getUuid()))
+							.getString().equals(filename)) {
+				throw new IllegalStateException(
+						"Already had an image for that module");
+			} else if (MODULE_ID_MAP.containsKey(Integer.valueOf(module
+					.getModuleID()))
+					&& !UUID_MAP.containsKey(Long.valueOf(module.getUuid()))) {
 				UUID_MAP.put(Long.valueOf(module.getUuid()), new StringImage(
 						filename));
+			} else if (!MODULE_ID_MAP.containsKey(Integer.valueOf(module
+					.getModuleID()))) {
+				MODULE_ID_MAP.put(Integer.valueOf(module.getModuleID()),
+						new StringImage(filename));
 			}
-		} else {
-			MODULE_ID_MAP.put(Integer.valueOf(module.getModuleID()),
-					new StringImage(filename));
 		}
+	}
+
+	/**
+	 * Checks whether addImage() should go ahead
+	 * 
+	 * @param module
+	 *            The module
+	 * @param filename
+	 *            The image filename
+	 * @return True if the module is non-null and the image isn't already
+	 *         associated with this module
+	 */
+	private static boolean checkAddImageInput(final Module module,
+			final String filename) {
+		return module != null
+				&& (!MODULE_ID_MAP.containsKey(Integer.valueOf(module
+						.getModuleID())) || !MODULE_ID_MAP.get(
+						Integer.valueOf(module.getModuleID())).getString()
+						.equals(filename))
+				&& ((!UUID_MAP.containsKey(Long.valueOf(module.getUuid()))) || !UUID_MAP
+						.get(Long.valueOf(module.getUuid())).getString()
+						.equals(filename));
 	}
 
 	/**
