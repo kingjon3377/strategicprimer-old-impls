@@ -37,7 +37,9 @@
 		<tile row="2" column="6" type="plains"></tile>
 		<tile row="2" column="7" type="plains"></tile>
 		<tile row="2" column="8" type="plains"></tile>
-		<tile row="2" column="9" type="plains"></tile>
+		<tile row="2" column="9" type="plains">
+			<module mid="4" image="/square.png"></module>
+		</tile>
 	</row>
 	<row index="3">
 		<tile row="3" column="0" type="plains"></tile>

@@ -3,6 +3,7 @@ package model.module;
 import java.util.logging.Logger;
 
 import advances.ExampleUnit;
+import advances.SimpleBuilding;
 import advances.SimpleUnit;
 
 /**
@@ -33,7 +34,9 @@ public class ModuleFactory {
 		case 2:
 			return new SimpleUnit(); // NOPMD
 		case 3:
-			return new ExampleUnit();
+			return new ExampleUnit(); // NOPMD
+		case 4:
+			return new SimpleBuilding();
 		default:
 			throw new IllegalArgumentException("Unknown module type");
 		}

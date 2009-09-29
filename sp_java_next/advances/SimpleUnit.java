@@ -94,9 +94,14 @@ public class SimpleUnit implements Module, MobileModule, Weapon {
 					"Don't know how to move to anything except a Tile");
 		}
 		location.remove(this);
-		loc.add(this);
+		try {
+			loc.add(this);
+		} catch (IllegalStateException except) {
+			throw new UnableToMoveException("Tile already occupied");
+		}
 		setLocation(loc);
 	}
+
 	/**
 	 * Die.
 	 */
@@ -104,17 +109,23 @@ public class SimpleUnit implements Module, MobileModule, Weapon {
 	public void die() {
 		location.remove(this);
 	}
+
 	/**
 	 * Attack another module
-	 * @param defender the module beng attacked
+	 * 
+	 * @param defender
+	 *            the module beng attacked
 	 */
 	@Override
 	public void attack(final Module defender) {
 		defender.takeAttack(this);
 	}
+
 	/**
 	 * Predict the results of an attack on another module
-	 * @param defender the module beng attacked
+	 * 
+	 * @param defender
+	 *            the module beng attacked
 	 * @return the expected damage dealt
 	 */
 	@Override
