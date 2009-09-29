@@ -19,6 +19,10 @@ import model.module.Statistics.Stats;
  * @author kingjon
  */
 public class ExampleUnit implements Module, Serializable, MobileModule {
+	/**
+	 * An ExampleUnit's starting hit points
+	 */
+	private static final int EXAMPLE_UNIT_HP = 20;
 
 	/**
 	 */
@@ -48,8 +52,8 @@ public class ExampleUnit implements Module, Serializable, MobileModule {
 	 */
 	public ExampleUnit() {
 		statistics = new Statistics();
-		statistics.getStats().put(Stats.MAX_HP, 20);
-		statistics.getStats().put(Stats.HP, 20);
+		statistics.getStats().put(Stats.MAX_HP, EXAMPLE_UNIT_HP);
+		statistics.getStats().put(Stats.HP, EXAMPLE_UNIT_HP);
 		location = NullLocation.getNullLocation();
 		parent = RootModule.getRootModule();
 	}

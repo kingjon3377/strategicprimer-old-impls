@@ -57,7 +57,7 @@ public class GameGUIDriver extends JFrame {
 	/**
 	 * The main map
 	 */
-	final GUIMap map;
+	private final transient GUIMap map;
 	/**
 	 * The mini-map
 	 */
