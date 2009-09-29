@@ -110,11 +110,13 @@ public final class ActionsMenu extends JPopupMenu implements ActionListener {
 		if (invoker instanceof GUITile) {
 			secondTile = (GUITile) invoker;
 		}
-		moveItem
-				.setEnabled(selectedTile.getTile().getModuleOnTile() instanceof MobileModule);
-		attackItem
-				.setEnabled(selectedTile.getTile().getModuleOnTile() instanceof Weapon
-						&& !(secondTile.getTile().getModuleOnTile() instanceof RootModule));
-		super.show(invoker, xCoord, yCoord);
+		if (!selectedTile.equals(secondTile)) {
+			moveItem
+					.setEnabled(selectedTile.getTile().getModuleOnTile() instanceof MobileModule);
+			attackItem
+					.setEnabled(selectedTile.getTile().getModuleOnTile() instanceof Weapon
+							&& !(secondTile.getTile().getModuleOnTile() instanceof RootModule));
+			super.show(invoker, xCoord, yCoord);
+		}
 	}
 }
