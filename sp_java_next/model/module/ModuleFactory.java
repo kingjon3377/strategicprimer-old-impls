@@ -2,6 +2,9 @@ package model.module;
 
 import java.util.logging.Logger;
 
+import advances.ExampleUnit;
+import advances.SimpleUnit;
+
 /**
  * A class to create modules when from their moduleIDs.
  * @author Jonathan Lovelace
@@ -28,7 +31,9 @@ public class ModuleFactory {
 		case 0:
 			return RootModule.getRootModule(); // NOPMD
 		case 2:
-			return new SimpleUnit();
+			return new SimpleUnit(); // NOPMD
+		case 3:
+			return new ExampleUnit();
 		default:
 			throw new IllegalArgumentException("Unknown module type");
 		}

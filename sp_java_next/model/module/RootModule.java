@@ -76,25 +76,6 @@ public final class RootModule implements Module, Serializable {
 	}
 
 	/**
-	 * Since the root module doesn't exist, it can't move, and so
-	 * 
-	 * @return false
-	 */
-	public boolean isMobile() {
-		return false;
-	}
-
-	/**
-	 * The root module isn't "top level", i.e. can't move, attack, take orders,
-	 * etc. on its own, and so
-	 * 
-	 * @return false
-	 */
-	public boolean isTopLevel() {
-		return false;
-	}
-
-	/**
 	 * Remove a module as a child.
 	 * 
 	 * @param child
@@ -155,5 +136,11 @@ public final class RootModule implements Module, Serializable {
 	@Override
 	public void setLocation(final Location location) {
 		// Do nothing.
+	}
+	/**
+	 * Like setting the location, this is meaningless.
+	 */
+	public void die() {
+		throw new IllegalStateException("Asked the root module to die");
 	}
 }

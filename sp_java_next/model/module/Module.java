@@ -37,11 +37,19 @@ public interface Module {
 	 * @return the module's parent in the tree
 	 */
 	Module getParent();
+
 	/**
 	 * Set the module's location. For non-top-level modules this might
 	 * conceivably do nothing.
-	 * @param location the new location
+	 * 
+	 * @param location
+	 *            the new location
 	 */
 	void setLocation(final Location location);
+	/**
+	 * Die, cleaning up after yourself. This method could concievably leave
+	 * equipment or some Resource behind.
+	 */
+	void die();
 
 }
