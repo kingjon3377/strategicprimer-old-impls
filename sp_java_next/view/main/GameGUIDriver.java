@@ -54,7 +54,10 @@ public class GameGUIDriver extends JFrame {
 	 * The panel showing the current module.
 	 */
 	private transient CurrentModulePanel modulePanel;
-
+	/**
+	 * The main map
+	 */
+	final GUIMap map;
 	/**
 	 * The mini-map
 	 */
@@ -70,10 +73,7 @@ public class GameGUIDriver extends JFrame {
 		setIgnoreRepaint(false);
 		setPreferredSize(new Dimension(640,480));
 		setMaximumSize(new Dimension(800,600));
-		/**
-		 * The main map
-		 */
-		final GUIMap map = new GUIMap(Game.getGame().getMap());
+		map = new GUIMap(Game.getGame().getMap());
 		add(new JScrollPane(map), BorderLayout.CENTER);
 		/**
 		 * The window's menu. TODO: Should this be made its own class, hiding the
@@ -134,5 +134,13 @@ public class GameGUIDriver extends JFrame {
 	 */
 	public void quit() {
 		dispose();
+	}
+	/**
+	 * Reload all views of the map
+	 */
+	public void reloadMap() {
+		map.reloadMap(Game.getGame().getMap());
+		repaint();
+		pack();
 	}
 }
