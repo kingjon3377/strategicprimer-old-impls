@@ -9,7 +9,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
 import model.module.MobileModule;
+import model.module.RootModule;
 import model.module.UnableToMoveException;
+import model.module.Weapon;
 import view.map.GUITile;
 
 /**
@@ -27,7 +29,8 @@ public final class ActionsMenu extends JPopupMenu implements ActionListener {
 	/**
 	 * Logger
 	 */
-	private static final Logger LOGGER = Logger.getLogger(ActionsMenu.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(ActionsMenu.class
+			.getName());
 	/**
 	 * Singleton
 	 */
@@ -36,6 +39,10 @@ public final class ActionsMenu extends JPopupMenu implements ActionListener {
 	 * "Move" item
 	 */
 	private final JMenuItem moveItem;
+	/**
+	 * "Attack" item
+	 */
+	private final JMenuItem attackItem;
 
 	/**
 	 * The currently selected tile, which shouldn't be the one from which this
@@ -55,6 +62,9 @@ public final class ActionsMenu extends JPopupMenu implements ActionListener {
 		moveItem = new JMenuItem("Move");
 		add(moveItem);
 		moveItem.addActionListener(this);
+		attackItem = new JMenuItem("Attack");
+		add(attackItem);
+		attackItem.addActionListener(this);
 	}
 
 	/**
@@ -64,13 +74,17 @@ public final class ActionsMenu extends JPopupMenu implements ActionListener {
 	public void actionPerformed(final ActionEvent event) {
 		if ("Move".equals(event.getActionCommand())) {
 			try {
-				((MobileModule) selectedTile.getTile().getModuleOnTile()).move(secondTile.getTile());
-				selectedTile.repaint();
-				secondTile.repaint();
+				((MobileModule) selectedTile.getTile().getModuleOnTile())
+						.move(secondTile.getTile());
 			} catch (UnableToMoveException e) {
 				LOGGER.info("Movement failed");
 			}
+		} else if ("Attack".equals(event.getActionCommand())) {
+			((Weapon) selectedTile.getTile().getModuleOnTile())
+					.attack(secondTile.getTile().getModuleOnTile());
 		}
+		selectedTile.repaint();
+		secondTile.repaint();
 	}
 
 	/**
@@ -98,6 +112,9 @@ public final class ActionsMenu extends JPopupMenu implements ActionListener {
 		}
 		moveItem
 				.setEnabled(selectedTile.getTile().getModuleOnTile() instanceof MobileModule);
+		attackItem
+				.setEnabled(selectedTile.getTile().getModuleOnTile() instanceof Weapon
+						&& !(secondTile.getTile().getModuleOnTile() instanceof RootModule));
 		super.show(invoker, xCoord, yCoord);
 	}
 }

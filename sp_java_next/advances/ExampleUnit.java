@@ -4,28 +4,26 @@ import java.io.Serializable;
 
 import model.location.Location;
 import model.location.NullLocation;
+import model.main.UuidManager;
+import model.module.MobileModule;
 import model.module.Module;
 import model.module.RootModule;
 import model.module.Statistics;
+import model.module.UnableToMoveException;
 import model.module.Weapon;
+import model.module.Statistics.Stats;
 
 /**
  * A sample unit.
  * 
  * @author kingjon
  */
-public class ExampleUnit implements Module, Serializable {
+public class ExampleUnit implements Module, Serializable, MobileModule {
 
 	/**
 	 */
 	private static final long serialVersionUID = -1201325245093673269L;
 
-	/**
-	 * Whether the unit is a member (direct or indirect) of a top-level unit
-	 * (false if it is, true if this is this is the uppermost
-	 * possibly-"top-level" module in this branch of the tree).
-	 */
-	private boolean topLevel;
 	/**
 	 * Where I am.
 	 */
@@ -40,15 +38,20 @@ public class ExampleUnit implements Module, Serializable {
 	 * My set of statistics.
 	 */
 	private Statistics statistics;
-
+	/**
+	 * UUID
+	 */
+	protected final long uuid = UuidManager.UUID_MANAGER.getNewUuid();
+	
 	/**
 	 * Constructor.
 	 */
 	public ExampleUnit() {
 		statistics = new Statistics();
+		statistics.getStats().put(Stats.MAX_HP, 20);
+		statistics.getStats().put(Stats.HP, 20);
 		location = NullLocation.getNullLocation();
 		parent = RootModule.getRootModule();
-		topLevel = true;
 	}
 
 	/**
@@ -56,6 +59,7 @@ public class ExampleUnit implements Module, Serializable {
 	 * 
 	 * @return my location
 	 */
+	@Override
 	public Location getLocation() {
 		return location;
 	}
@@ -65,6 +69,7 @@ public class ExampleUnit implements Module, Serializable {
 	 * 
 	 * @return the module that contains me
 	 */
+	@Override
 	public Module getParent() {
 		return parent;
 	}
@@ -74,25 +79,6 @@ public class ExampleUnit implements Module, Serializable {
 	 */
 	public Statistics getStatistics() {
 		return statistics;
-	}
-
-	/**
-	 * This sample unit can move, so
-	 * 
-	 * @return true
-	 */
-	public boolean isMobile() {
-		return true;
-	}
-
-	/**
-	 * @return Whether the unit is a member (direct or indirect) of a top-level
-	 *         unit (false if it is, true if this is this is the uppermost
-	 *         possibly-"top-level" module in this branch of the tree).
-	 * 
-	 */
-	public boolean isTopLevel() {
-		return topLevel;
 	}
 
 	/**
@@ -123,48 +109,50 @@ public class ExampleUnit implements Module, Serializable {
 	}
 
 	/**
-	 * @param _topLevel
-	 *            whether there is not a possibly-"top-level" module above me in
-	 *            the tree
-	 */
-	protected void setTopLevel(final boolean _topLevel) {
-		topLevel = _topLevel;
-	}
-
-	/**
 	 * Take an attack from the given module.
 	 * @param attacker a module attacking the unit
 	 */
+	@Override
 	public void takeAttack(final Weapon attacker) {
 		statistics.getStats().put(
 				Statistics.Stats.HP,
 				statistics.getStats().get(Statistics.Stats.HP).intValue()
 						- attacker.predictDamage(this));
+		if (statistics.getStats().get(Statistics.Stats.HP).intValue() <= 0) {
+			die();
+		}
 	}
 
 	/**
-	 * Do upkeep-related things
-	 * @param interval how long it's been since the last upkeep
-	 */
-	public void upkeep(final long interval) {
-		if (interval < 0) {
-			throw new IllegalArgumentException(
-					"Negative time elapsed doesn't make sense");
-		}
-		// TODO: Finish implementing.
-	}
-	/**
-	 * @return the unit's moduleID
+	 * @return the unit's moduleID. Should be overridden by subclasses
 	 */
 	@Override
 	public int getModuleID() {
-		throw new IllegalStateException("Unimplemented");
+		return 3;
 	}
 	/**
 	 * @return the unit's UUID
 	 */
 	@Override
-	public long getUuid() {
-		throw new IllegalStateException("Unimplemented");
+	public final long getUuid() {
+		return uuid; 
+	}
+	/**
+	 * Move to a new location
+	 * @param loc the new location
+	 * @throws UnableToMoveException when unable to move
+	 */
+	@Override
+	public void move(final Location loc) throws UnableToMoveException {
+		location.remove(this);
+		loc.add(this);
+		setLocation(loc);
+	}
+	/**
+	 * Die.
+	 */
+	@Override
+	public void die() {
+		location.remove(this);
 	}
 }
