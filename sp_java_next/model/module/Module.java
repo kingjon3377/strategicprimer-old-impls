@@ -1,6 +1,7 @@
 package model.module;
 
 import model.location.Location;
+import model.module.kinds.Weapon;
 
 /**
  * A component in a unit, building, etc. (Need better description.)

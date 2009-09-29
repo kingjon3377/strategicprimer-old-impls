@@ -9,7 +9,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import model.location.SPMap;
-import model.module.RootModule;
+import model.module.kinds.RootModule;
 import model.player.Side;
 
 import org.xml.sax.SAXException;

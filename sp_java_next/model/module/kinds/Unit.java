@@ -1,7 +1,10 @@
-package model.module;
+package model.module.kinds;
 
 import java.util.Collection;
 import java.util.Set;
+
+import model.module.Module;
+import model.module.Vault;
 
 
 /**

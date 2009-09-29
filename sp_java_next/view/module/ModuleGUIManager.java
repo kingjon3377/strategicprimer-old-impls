@@ -7,7 +7,7 @@ import java.util.Map;
 import utils.StringImage;
 
 import model.module.Module;
-import model.module.RootModule;
+import model.module.kinds.RootModule;
 
 /**
  * Manages GUIs for particular modules

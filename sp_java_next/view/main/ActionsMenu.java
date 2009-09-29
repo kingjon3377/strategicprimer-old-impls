@@ -8,10 +8,10 @@ import java.util.logging.Logger;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
-import model.module.MobileModule;
-import model.module.RootModule;
 import model.module.UnableToMoveException;
-import model.module.Weapon;
+import model.module.kinds.MobileModule;
+import model.module.kinds.RootModule;
+import model.module.kinds.Weapon;
 import view.map.GUITile;
 
 /**

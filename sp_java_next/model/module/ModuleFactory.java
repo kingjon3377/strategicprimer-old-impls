@@ -2,6 +2,8 @@ package model.module;
 
 import java.util.logging.Logger;
 
+import model.module.kinds.RootModule;
+
 import advances.ExampleUnit;
 import advances.SimpleBuilding;
 import advances.SimpleUnit;

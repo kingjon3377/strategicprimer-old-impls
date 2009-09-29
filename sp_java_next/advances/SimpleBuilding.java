@@ -4,8 +4,8 @@ import model.location.Location;
 import model.location.NullLocation;
 import model.main.UuidManager;
 import model.module.Module;
-import model.module.RootModule;
-import model.module.Weapon;
+import model.module.kinds.RootModule;
+import model.module.kinds.Weapon;
 /**
  * A simple building
  * @author Jonathan Lovelace.

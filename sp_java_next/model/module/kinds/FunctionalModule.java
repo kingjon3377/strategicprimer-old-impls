@@ -1,4 +1,6 @@
-package model.module;
+package model.module.kinds;
+
+import model.module.Module;
 
 /**
  * A module that can perform an action (or more than one).

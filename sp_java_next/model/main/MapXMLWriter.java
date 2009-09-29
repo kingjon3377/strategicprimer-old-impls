@@ -8,7 +8,7 @@ import java.io.PrintWriter;
 import model.location.SPMap;
 import model.location.Tile;
 import model.module.Module;
-import model.module.RootModule;
+import model.module.kinds.RootModule;
 import view.module.ModuleGUIManager;
 
 /**

@@ -4,10 +4,10 @@ import model.location.Location;
 import model.location.NullLocation;
 import model.location.Tile;
 import model.main.UuidManager;
-import model.module.MobileModule;
 import model.module.Module;
 import model.module.UnableToMoveException;
-import model.module.Weapon;
+import model.module.kinds.MobileModule;
+import model.module.kinds.Weapon;
 
 /**
  * A simple unit, for prototype purposes where we don't want the full Unit
