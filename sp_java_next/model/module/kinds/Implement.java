@@ -1,4 +1,6 @@
-package model.module;
+package model.module.kinds;
+
+import model.module.Module;
 
 /**
  * A piece of equipment in the game.

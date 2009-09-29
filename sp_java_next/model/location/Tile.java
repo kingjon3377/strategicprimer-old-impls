@@ -2,9 +2,9 @@ package model.location;
 
 import java.awt.Point;
 
-import model.module.MobileModule;
 import model.module.Module;
-import model.module.RootModule;
+import model.module.kinds.MobileModule;
+import model.module.kinds.RootModule;
 
 /**
  * In a discrete 2D world, this is the most basic type of location possible.

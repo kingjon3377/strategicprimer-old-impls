@@ -20,7 +20,7 @@ import view.module.ModuleGUIManager;
 
 import model.location.TerrainType;
 import model.location.Tile;
-import model.module.RootModule;
+import model.module.kinds.RootModule;
 
 /**
  * The graphical representation of a tile.

@@ -1,4 +1,6 @@
-package model.module;
+package model.module.kinds;
+
+import model.module.Module;
 
 /**
  * A weapon is a module that can be used to attack another module, whether

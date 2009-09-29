@@ -1,4 +1,4 @@
-package model.module;
+package model.module.kinds;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 import model.location.Location;
+import model.module.Module;
 
 /**
  * The root of the module tree. A Singleton class.

@@ -1,6 +1,8 @@
-package model.module;
+package model.module.kinds;
 
 import model.location.Location;
+import model.module.Module;
+import model.module.UnableToMoveException;
 
 /**
  * A module that can move.

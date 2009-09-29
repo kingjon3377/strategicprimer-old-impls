@@ -5,13 +5,13 @@ import java.io.Serializable;
 import model.location.Location;
 import model.location.NullLocation;
 import model.main.UuidManager;
-import model.module.MobileModule;
 import model.module.Module;
-import model.module.RootModule;
 import model.module.Statistics;
 import model.module.UnableToMoveException;
-import model.module.Weapon;
 import model.module.Statistics.Stats;
+import model.module.kinds.MobileModule;
+import model.module.kinds.RootModule;
+import model.module.kinds.Weapon;
 
 /**
  * A sample unit.

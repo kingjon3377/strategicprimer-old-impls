@@ -1,4 +1,6 @@
-package model.module;
+package model.module.kinds;
+
+import model.module.Module;
 
 /**
  * A resource in the game. This is something that is used up (at least usually),
