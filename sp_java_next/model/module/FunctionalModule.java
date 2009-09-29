@@ -8,7 +8,7 @@ package model.module;
  * 
  * @author Jonathan Lovelace
  */
-public interface FunctionalModule {
+public interface FunctionalModule extends Module {
 	/**
 	 * Perform the action, perhaps dispatching this to other methods.
 	 * 
@@ -19,6 +19,4 @@ public interface FunctionalModule {
 	 *            results to be returned in)
 	 */
 	void action(long action, Module... args);
-	// args[] should be the "any number of arguments" construct, but the
-	// compiler doesn't like what I remember that as.
 }

@@ -7,7 +7,7 @@ import model.location.Location;
  * 
  * @author Jonathan Lovelace
  */
-public interface MobileModule {
+public interface MobileModule extends Module {
 	/**
 	 * Move to the given location
 	 * 
