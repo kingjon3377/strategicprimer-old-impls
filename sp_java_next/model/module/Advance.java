@@ -21,7 +21,7 @@ package model.module;
  * 
  * TODO: Should this be an interface or an abstract class?
  * 
- * TODO: This should be a singleton, however that's implemented in Java.
+ * Each advance should be a singleton.
  * 
  * @author Jonathan Lovelace
  * 
