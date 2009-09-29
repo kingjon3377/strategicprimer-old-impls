@@ -58,6 +58,7 @@ public final class MenuListener implements ActionListener, Serializable {
 		if (event.getActionCommand().equals("Open")) {
 			if (FILE_CHOOSER.showOpenDialog(driver) == JFileChooser.APPROVE_OPTION) {
 				Game.getGame().createMap(FILE_CHOOSER.getSelectedFile().getPath());
+				driver.reloadMap();
 	        }
 		} else if (event.getActionCommand().equals("Save")) {
 			if (FILE_CHOOSER.showSaveDialog(driver) == JFileChooser.APPROVE_OPTION) {

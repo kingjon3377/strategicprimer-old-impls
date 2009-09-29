@@ -45,11 +45,7 @@ public class GUIMap extends JPanel {
 	public GUIMap(final SPMap map) {
 		super(new GridLayout(map.getSizeRows(), map.getSizeCols()));
 		tiles = new HashMap<Point, GUITile>();
-		for (int i = 0; i < map.getSizeRows(); i++) {
-			for (int j = 0; j < map.getSizeCols(); j++) {
-				initializeTile(i, j, map.getTileAt(i, j));
-			}
-		}
+		reloadMap(map);
 		repaint();
 	}
 
@@ -134,5 +130,20 @@ public class GUIMap extends JPanel {
 	 */
 	public GUITile getSelection() {
 		return selected;
+	}
+	/**
+	 * Refresh the view after a change to the map model
+	 * @param map The map model we're a view of
+	 */
+	public final void reloadMap(final SPMap map) {
+		removeAll();
+		tiles.clear();
+		for (int i = 0; i < map.getSizeRows(); i++) {
+			for (int j = 0; j < map.getSizeCols(); j++) {
+				initializeTile(i, j, map.getTileAt(i, j));
+			}
+		}
+		repaint();
+		System.out.println("Reloaded map in GUIMap");
 	}
 }
