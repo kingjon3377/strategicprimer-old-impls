@@ -144,4 +144,11 @@ public final class RootModule implements Module, Serializable {
 	public void die() {
 		throw new IllegalStateException("Asked the root module to die");
 	}
+	/**
+	 * @return the name of the RootModule
+	 */
+	@Override
+	public String getName() {
+		return "RootModule";
+	}
 }

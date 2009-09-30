@@ -1,8 +1,6 @@
 package view.module;
 
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
+import java.awt.GridLayout;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -23,15 +21,27 @@ public class CurrentModulePanel extends JPanel {
 	/**
 	 * The label describing the current module.
 	 */
-	private transient JLabel label;
+	private final transient JLabel label = new JLabel();
+	/**
+	 * Administrative version of this panel
+	 */
+	private final transient AdminModuleEditPanel adminPanel;
 
 	/**
 	 * Constructor
+	 * 
+	 * @param admin
+	 *            Should we show the administrative panel?
 	 */
-	public CurrentModulePanel() {
-		super();
-		label = new JLabel();
-		this.add(label);
+	public CurrentModulePanel(final boolean admin) {
+		super(new GridLayout(0,1));
+		add(label);
+		if (admin) {
+			adminPanel = new AdminModuleEditPanel();
+			add(adminPanel);
+		} else {
+			adminPanel = null;
+		}
 	}
 
 	/**
@@ -41,30 +51,14 @@ public class CurrentModulePanel extends JPanel {
 	 *            The module to describe
 	 */
 	public void changeCurrentModule(final Module mod) {
-		label.setText(mod.toString());
-	}
-
-	/**
-	 * @param inStream
-	 *            The serialized object stream
-	 * @throws IOException
-	 *             Required by the spec
-	 * @throws ClassNotFoundException
-	 *             Required by the spec
-	 */
-	private void readObject(final ObjectInputStream inStream)
-			throws IOException, ClassNotFoundException {
-		inStream.defaultReadObject();
-		label = new JLabel();
-	}
-
-	/**
-	 * @param out
-	 *            the stream
-	 * @throws IOException
-	 */
-	private void writeObject(final ObjectOutputStream out) throws IOException {
-		out.defaultWriteObject();
+		if (adminPanel != null) {
+			adminPanel.setModule(mod);
+		}
+		if (mod == null) {
+			label.setText("none");
+		} else {
+			label.setText(mod.getName());
+		}
 	}
 
 }

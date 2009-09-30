@@ -11,6 +11,7 @@ import model.location.TerrainType;
 import model.location.Tile;
 import model.module.Module;
 import model.module.ModuleFactory;
+import model.module.kinds.RenameableModule;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -220,6 +221,8 @@ public class MapXMLReader extends DefaultHandler implements Serializable {
 			if (atts.getValue("image") != null) {
 				ModuleGUIManager
 						.addImage(currentModule, atts.getValue("image"));
+			} if (currentModule instanceof RenameableModule && atts.getValue("name") != null) {
+				((RenameableModule) currentModule).setName(atts.getValue("name"));
 			}
 		} else {
 			throw new SAXException(new IllegalStateException(

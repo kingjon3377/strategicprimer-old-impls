@@ -3,6 +3,7 @@
  */
 package view.map;
 
+import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Point;
 import java.util.HashMap;
@@ -33,8 +34,20 @@ public class GUIMap extends JPanel {
 	/**
 	 * The listener to handle selection changes
 	 */
-	private final transient SelectionListener slist = new SelectionListener(
-			this);
+	private transient SelectionListener slist;
+
+	/**
+	 * Set the SelectionListener
+	 * 
+	 * @param list
+	 *            the new SelectionListener
+	 */
+	public void setSelectionListener(final SelectionListener list) {
+		slist = list;
+		for (GUITile tile : tiles.values()) {
+			tile.addMouseListener(slist);
+		}
+	}
 
 	/**
 	 * Constructor
@@ -47,6 +60,9 @@ public class GUIMap extends JPanel {
 		tiles = new HashMap<Point, GUITile>();
 		reloadMap(map);
 		repaint();
+		this.setPreferredSize(new Dimension(map.getSizeCols()
+				* tiles.get(new Point(0, 0)).getWidth(), map.getSizeRows()
+				* tiles.get(new Point(0, 0)).getHeight()));
 	}
 
 	/**
@@ -74,7 +90,9 @@ public class GUIMap extends JPanel {
 			tiles.put(point, new GUITile(tile));
 		}
 		add(tiles.get(point));
-		tiles.get(point).addMouseListener(slist);
+		if (slist != null) {
+			tiles.get(point).addMouseListener(slist);
+		}
 	}
 
 	/**

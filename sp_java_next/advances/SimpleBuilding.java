@@ -4,6 +4,7 @@ import model.location.Location;
 import model.location.NullLocation;
 import model.main.UuidManager;
 import model.module.Module;
+import model.module.kinds.RenameableModule;
 import model.module.kinds.RootModule;
 import model.module.kinds.Weapon;
 /**
@@ -11,7 +12,7 @@ import model.module.kinds.Weapon;
  * @author Jonathan Lovelace.
  *
  */
-public class SimpleBuilding implements Module {
+public class SimpleBuilding implements Module, RenameableModule {
 	/**
 	 * Constructor
 	 */
@@ -22,6 +23,10 @@ public class SimpleBuilding implements Module {
 	 * The module's location
 	 */
 	private Location location;
+	/**
+	 * The module's name
+	 */
+	private String name;
 	/**
 	 * UUID
 	 */
@@ -74,5 +79,18 @@ public class SimpleBuilding implements Module {
 	@Override
 	public void takeAttack(final Weapon attacker) {
 		die();
+	}
+	/**
+	 * @return the SimpleBuilding's name
+	 */
+	@Override
+	public String getName() {
+		return name;
+	}
+	/**
+	 * @param _name the ExampleUnit's new name
+	 */
+	public void setName(final String _name) {
+		name = _name;
 	}
 }

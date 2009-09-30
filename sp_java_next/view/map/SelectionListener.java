@@ -5,6 +5,7 @@ import java.awt.event.MouseListener;
 
 import view.main.ActionsMenu;
 import view.main.TerrainTypeMenu;
+import view.module.CurrentModulePanel;
 
 /**
  * A listener to handle mouse clicks to change the selection.
@@ -18,22 +19,28 @@ public class SelectionListener implements MouseListener {
 	 * 
 	 * @param _map
 	 *            The GUIMap that should be told about selection changes.
+	 * @param _panel The module panel that should be told about selection changes 
 	 */
-	public SelectionListener(final GUIMap _map) {
+	public SelectionListener(final GUIMap _map, final CurrentModulePanel _panel) {
 		map = _map;
+		panel = _panel;
 	}
 
 	/**
 	 * The GUIMap that should be told about selection changes
 	 */
 	private final GUIMap map;
-
+	/**
+	 * The ModulePanel that should be told about selection changes
+	 */
+	private final CurrentModulePanel panel;
 	/**
 	 * Change the selected tile when a tile is clicked.
 	 */
 	@Override
 	public void mouseClicked(final MouseEvent event) {
 		if (event.getSource() instanceof GUITile) {
+			panel.changeCurrentModule(((GUITile) event.getSource()).getTile().getModuleOnTile());
 			map.select((GUITile) event.getSource());
 			TerrainTypeMenu.MENU.setTile((GUITile) event.getSource());
 		}
@@ -90,6 +97,7 @@ public class SelectionListener implements MouseListener {
 				ActionsMenu.ACTIONS_MENU.show(event.getComponent(), event.getX(), event
 						.getY());
 			}
+			panel.changeCurrentModule(((GUITile) event.getSource()).getTile().getModuleOnTile());
 			map.select((GUITile) event.getSource());
 			TerrainTypeMenu.MENU.setTile((GUITile) event.getSource());
 		}

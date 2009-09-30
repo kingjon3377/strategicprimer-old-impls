@@ -115,6 +115,6 @@ public final class MapXMLWriter {
 				+ module.getModuleID()
 				+ ("".equals(ModuleGUIManager.getFilename(module)) ? ""
 						: "\" image=\"" + ModuleGUIManager.getFilename(module))
-				+ "\"></module>");
+				+ "\" name=\"" + module.getName() + "\"></module>");
 	}
 }
