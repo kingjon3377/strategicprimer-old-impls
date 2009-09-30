@@ -24,6 +24,8 @@ public interface Module {
 	/**
 	 * Any kind of Module can be attacked.
 	 * 
+	 * @see model.module.kinds.Weapon#attack(Module)
+	 * 
 	 * @param attacker
 	 *            The weapon attacking or being used to attack me.
 	 */
