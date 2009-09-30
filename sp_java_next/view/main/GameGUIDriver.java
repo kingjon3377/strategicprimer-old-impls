@@ -13,6 +13,7 @@ import javax.swing.JScrollPane;
 import model.main.Game;
 import view.map.GUIMap;
 import view.map.MiniMap;
+import view.map.SelectionListener;
 import view.module.CurrentModulePanel;
 import view.module.InitiativeQueue;
 
@@ -87,8 +88,9 @@ public class GameGUIDriver extends JFrame {
 		add(menu, BorderLayout.NORTH);
 		initQueue = new InitiativeQueue();
 		add(initQueue, BorderLayout.WEST);
-		modulePanel = new CurrentModulePanel();
+		modulePanel = new CurrentModulePanel(map.isAdmin());
 		add(modulePanel, BorderLayout.EAST);
+		map.setSelectionListener(new SelectionListener(map,modulePanel));
 		miniMap = new MiniMap();
 		add(miniMap, BorderLayout.SOUTH);
 		pack();

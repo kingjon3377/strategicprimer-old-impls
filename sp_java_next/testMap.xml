@@ -27,10 +27,10 @@
 		<tile row="2" column="0" type="jungle"></tile>
 		<tile row="2" column="1" type="plains"></tile>
 		<tile row="2" column="2" type="plains">
-			<module mid="2" image="/sprite.png"></module>
+			<module mid="2" image="/sprite.png" name="SimpleUnit"></module>
 		</tile>
 		<tile row="2" column="3" type="plains">
-			<module mid="3" image="/sprite_2.png"></module>
+			<module mid="3" image="/sprite_2.png" name="ExampleUnit"></module>
 		</tile>
 		<tile row="2" column="4" type="plains"></tile>
 		<tile row="2" column="5" type="jungle"></tile>
@@ -38,7 +38,7 @@
 		<tile row="2" column="7" type="plains"></tile>
 		<tile row="2" column="8" type="plains"></tile>
 		<tile row="2" column="9" type="plains">
-			<module mid="4" image="/square.png"></module>
+			<module mid="4" image="/square.png" name="SimpleBuilding"></module>
 		</tile>
 	</row>
 	<row index="3">

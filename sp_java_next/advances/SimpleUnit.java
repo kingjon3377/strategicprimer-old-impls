@@ -7,6 +7,7 @@ import model.main.UuidManager;
 import model.module.Module;
 import model.module.UnableToMoveException;
 import model.module.kinds.MobileModule;
+import model.module.kinds.RenameableModule;
 import model.module.kinds.Weapon;
 
 /**
@@ -16,7 +17,14 @@ import model.module.kinds.Weapon;
  * @author Jonathan Lovelace
  * 
  */
-public class SimpleUnit implements Module, MobileModule, Weapon {
+public class SimpleUnit implements Module, MobileModule, Weapon, RenameableModule {
+	/**
+	 * Constructor
+	 */
+	public SimpleUnit() {
+		super();
+		setName("SimpleUnit");
+	}
 	/**
 	 * The module's UUID
 	 */
@@ -25,7 +33,10 @@ public class SimpleUnit implements Module, MobileModule, Weapon {
 	 * The module's location
 	 */
 	private Location location = NullLocation.getNullLocation();
-
+	/**
+	 * The module's name
+	 */
+	private String name;
 	/**
 	 * @return the unit's locationn
 	 */
@@ -132,5 +143,18 @@ public class SimpleUnit implements Module, MobileModule, Weapon {
 	@Override
 	public int predictDamage(final Module defender) {
 		return 15;
+	}
+	/**
+	 * @return the SimpleUnit's name
+	 */
+	@Override
+	public String getName() {
+		return name;
+	}
+	/**
+	 * @param _name the ExampleUnit's new name
+	 */
+	public final void setName(final String _name) {
+		name = _name;
 	}
 }

@@ -53,4 +53,9 @@ public interface Module {
 	 */
 	void die();
 
+	/**
+	 * @return The Module's name, which should be displayed by the GUI when the
+	 *         module is selected.
+	 */
+	String getName();
 }

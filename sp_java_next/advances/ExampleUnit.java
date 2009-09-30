@@ -10,6 +10,7 @@ import model.module.Statistics;
 import model.module.UnableToMoveException;
 import model.module.Statistics.Stats;
 import model.module.kinds.MobileModule;
+import model.module.kinds.RenameableModule;
 import model.module.kinds.RootModule;
 import model.module.kinds.Weapon;
 
@@ -18,7 +19,7 @@ import model.module.kinds.Weapon;
  * 
  * @author kingjon
  */
-public class ExampleUnit implements Module, Serializable, MobileModule {
+public class ExampleUnit implements Module, Serializable, MobileModule, RenameableModule {
 	/**
 	 * An ExampleUnit's starting hit points
 	 */
@@ -32,7 +33,10 @@ public class ExampleUnit implements Module, Serializable, MobileModule {
 	 * Where I am.
 	 */
 	private Location location;
-
+	/**
+	 * The module's name
+	 */
+	private String name;
 	/**
 	 * My parent in the tree.
 	 */
@@ -163,5 +167,18 @@ public class ExampleUnit implements Module, Serializable, MobileModule {
 	@Override
 	public void die() {
 		location.remove(this);
+	}
+	/**
+	 * @return the ExampleUnit's name
+	 */
+	@Override
+	public String getName() {
+		return name;
+	}
+	/**
+	 * @param _name the ExampleUnit's new name
+	 */
+	public void setName(final String _name) {
+		name = _name;
 	}
 }
