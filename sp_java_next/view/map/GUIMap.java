@@ -162,6 +162,5 @@ public class GUIMap extends JPanel {
 			}
 		}
 		repaint();
-		System.out.println("Reloaded map in GUIMap");
 	}
 }
