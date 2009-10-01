@@ -53,4 +53,10 @@ public interface Location extends Serializable {
 	 *            The module to be removed.
 	 */
 	void remove(Module module);
+	/**
+	 * Is it possible to add the given modue to this locaton?
+	 * @param module a module to pretend to add
+	 * @return whether it is possible to add the module
+	 */
+	boolean checkAdd(Module module);
 }

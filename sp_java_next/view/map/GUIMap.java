@@ -5,12 +5,13 @@ package view.map;
 
 import java.awt.Dimension;
 import java.awt.GridLayout;
-import java.awt.Point;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JPanel;
 
+import model.location.IPoint;
+import model.location.Point;
 import model.location.SPMap;
 import model.location.Tile;
 
@@ -113,7 +114,7 @@ public class GUIMap extends JPanel {
 	 *            A set of coordinates
 	 * @return The tile at those coordinates
 	 */
-	public GUITile tileAt(final Point point) {
+	public GUITile tileAt(final IPoint point) {
 		return tiles.get(point);
 	}
 

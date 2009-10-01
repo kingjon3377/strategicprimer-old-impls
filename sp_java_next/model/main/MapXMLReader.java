@@ -1,11 +1,11 @@
 package model.main;
 
-import java.awt.Point;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+import model.location.Point;
 import model.location.SPMap;
 import model.location.TerrainType;
 import model.location.Tile;

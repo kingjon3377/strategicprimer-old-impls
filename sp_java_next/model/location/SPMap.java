@@ -1,6 +1,5 @@
 package model.location;
 
-import java.awt.Point;
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.HashMap;
@@ -98,7 +97,7 @@ public class SPMap implements Serializable {
 	 *            A set of coordinates
 	 * @return The tile at those coordinates
 	 */
-	public Tile getTileAt(final Point point) {
+	public Tile getTileAt(final IPoint point) {
 		return tiles.get(point);
 	}
 
@@ -127,7 +126,7 @@ public class SPMap implements Serializable {
 	 */
 	private void initializeTile(final Point point) {
 		if (!tiles.containsKey(point)) {
-			tiles.put(point, new Tile(point.y, point.x));
+			tiles.put(point, new Tile(point));
 		}
 	}
 	/**

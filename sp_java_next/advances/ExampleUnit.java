@@ -4,6 +4,8 @@ import java.io.Serializable;
 
 import model.location.Location;
 import model.location.NullLocation;
+import model.location.Tile;
+import model.main.Game;
 import model.main.UuidManager;
 import model.module.Module;
 import model.module.Statistics;
@@ -13,13 +15,21 @@ import model.module.kinds.MobileModule;
 import model.module.kinds.RenameableModule;
 import model.module.kinds.RootModule;
 import model.module.kinds.Weapon;
+import pathfinding.AStarPathFinder;
+import pathfinding.Path;
 
 /**
  * A sample unit.
  * 
  * @author kingjon
  */
-public class ExampleUnit implements Module, Serializable, MobileModule, RenameableModule {
+public class ExampleUnit implements Module, Serializable, MobileModule,
+		RenameableModule {
+	/**
+	 * An ExampleUnit's starting movement points
+	 */
+	private static final int EXAMPLE_UNIT_MP = 5;
+
 	/**
 	 * An ExampleUnit's starting hit points
 	 */
@@ -58,6 +68,8 @@ public class ExampleUnit implements Module, Serializable, MobileModule, Renameab
 		statistics = new Statistics();
 		statistics.getStats().put(Stats.MAX_HP, EXAMPLE_UNIT_HP);
 		statistics.getStats().put(Stats.HP, EXAMPLE_UNIT_HP);
+		statistics.getStats().put(Stats.MAX_MP, EXAMPLE_UNIT_MP);
+		statistics.getStats().put(Stats.MP, EXAMPLE_UNIT_MP);
 		location = NullLocation.getNullLocation();
 		parent = RootModule.getRootModule();
 	}
@@ -160,7 +172,9 @@ public class ExampleUnit implements Module, Serializable, MobileModule, Renameab
 			throw new UnableToMoveException("Location already occupied"); // NOPMD
 		}
 		setLocation(loc);
+		// FIXME: Should subtract an appropriate cost from MP.
 	}
+
 	/**
 	 * Die.
 	 */
@@ -175,10 +189,45 @@ public class ExampleUnit implements Module, Serializable, MobileModule, Renameab
 	public String getName() {
 		return name;
 	}
+
 	/**
-	 * @param _name the ExampleUnit's new name
+	 * @param _name
+	 *            the ExampleUnit's new name
 	 */
 	public void setName(final String _name) {
 		name = _name;
+	}
+
+	/**
+	 * FIXME: Implement using MP.
+	 * 
+	 * @param loc
+	 *            a location to pretend to move to
+	 * @return whether it's possible to move there
+	 */
+	@Override
+	public boolean checkMove(final Location loc) {
+		return loc.checkAdd(this)
+				&& location instanceof Tile
+				&& loc instanceof Tile
+				&& (!new AStarPathFinder(Game.getGame().getMap(), statistics
+						.getStats().get(Stats.MP).intValue(), true).findPath(
+						this, ((Tile) location).getLocation().getX(),
+						((Tile) location).getLocation().getY(),
+						((Tile) loc).getLocation().getX(),
+						((Tile) loc).getLocation().getY()).equals(new Path()));
+	}
+
+	/**
+	 * FIXME: Implement!
+	 * 
+	 * @param loc
+	 *            a location
+	 * @return the cost of visiting that location
+	 */
+	@Override
+	public double getCost(final Location loc) {
+		// TODO Auto-generated method stub
+		return 1;
 	}
 }
