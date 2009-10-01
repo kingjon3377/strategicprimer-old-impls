@@ -24,6 +24,7 @@ public class Tile implements Location {
 	 * The location of this tile on the grid
 	 */
 	private Point location;
+
 	/**
 	 * Constructor, to make warnings go away
 	 * 
@@ -35,15 +36,19 @@ public class Tile implements Location {
 	public Tile(final int row, final int col) {
 		this(new Point(row, col));
 	}
+
 	/**
 	 * Constructor taking a preconstructed Point
-	 * @param point The point on the grid that this tile goes
+	 * 
+	 * @param point
+	 *            The point on the grid that this tile goes
 	 */
 	public Tile(final Point point) {
 		location = point;
 		moduleOnTile = RootModule.getRootModule();
 		terrain = TerrainType.NotVisible;
 	}
+
 	/**
 	 * The interface-defined way of setting the module on the tile. TODO: Should
 	 * a tile be able to hold more than one?

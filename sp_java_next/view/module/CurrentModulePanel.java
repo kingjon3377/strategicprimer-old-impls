@@ -35,7 +35,7 @@ public class CurrentModulePanel extends JPanel {
 	 *            Should we show the administrative panel?
 	 */
 	public CurrentModulePanel(final boolean admin) {
-		super(new GridLayout(0,1));
+		super(new GridLayout(0, 1));
 		add(label);
 		if (admin) {
 			adminPanel = new AdminModuleEditPanel();
