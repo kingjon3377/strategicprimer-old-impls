@@ -28,6 +28,7 @@ public class SimpleUnit implements Module, MobileModule, Weapon, Renameable,
 		super();
 		setName("SimpleUnit");
 	}
+
 	/**
 	 * The module's UUID
 	 */
@@ -40,6 +41,7 @@ public class SimpleUnit implements Module, MobileModule, Weapon, Renameable,
 	 * The module's name
 	 */
 	private String name;
+
 	/**
 	 * @return the unit's locationn
 	 */
@@ -147,6 +149,7 @@ public class SimpleUnit implements Module, MobileModule, Weapon, Renameable,
 	public int predictDamage(final Module defender) {
 		return 15;
 	}
+
 	/**
 	 * @return the SimpleUnit's name
 	 */
@@ -154,24 +157,32 @@ public class SimpleUnit implements Module, MobileModule, Weapon, Renameable,
 	public String getName() {
 		return name;
 	}
+
 	/**
-	 * @param _name the ExampleUnit's new name
+	 * @param _name
+	 *            the ExampleUnit's new name
 	 */
 	public final void setName(final String _name) {
 		name = _name;
 	}
+
 	/**
 	 * Check whether a move is possible
-	 * @param loc the location to pretend to move to
+	 * 
+	 * @param loc
+	 *            the location to pretend to move to
 	 * @return whether this unit can move there
 	 */
 	@Override
 	public boolean checkMove(final Location loc) {
 		return loc.checkAdd(this);
 	}
+
 	/**
 	 * FIXME: Implement!
-	 * @param loc a location
+	 * 
+	 * @param loc
+	 *            a location
 	 * @return the cost of visiting that location
 	 */
 	@Override

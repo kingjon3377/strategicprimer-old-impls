@@ -36,6 +36,7 @@ public class SimpleBuilding implements Module, Renameable, TransferableModule {
 	 * UUID
 	 */
 	private final long uuid = UuidManager.UUID_MANAGER.getNewUuid();
+
 	/**
 	 * Die.
 	 */
@@ -43,6 +44,7 @@ public class SimpleBuilding implements Module, Renameable, TransferableModule {
 	public void die() {
 		location.remove(this);
 	}
+
 	/**
 	 * @return the module's location
 	 */
@@ -50,6 +52,7 @@ public class SimpleBuilding implements Module, Renameable, TransferableModule {
 	public Location getLocation() {
 		return location;
 	}
+
 	/**
 	 * @return the moduleID
 	 */
@@ -57,6 +60,7 @@ public class SimpleBuilding implements Module, Renameable, TransferableModule {
 	public int getModuleID() {
 		return 4;
 	}
+
 	/**
 	 * @return the module's parent in the tree
 	 */
@@ -64,6 +68,7 @@ public class SimpleBuilding implements Module, Renameable, TransferableModule {
 	public Module getParent() {
 		return RootModule.getRootModule();
 	}
+
 	/**
 	 * @return the module's UUID
 	 */
@@ -71,6 +76,7 @@ public class SimpleBuilding implements Module, Renameable, TransferableModule {
 	public long getUuid() {
 		return uuid;
 	}
+
 	/**
 	 * Set the building's location
 	 */
@@ -78,6 +84,7 @@ public class SimpleBuilding implements Module, Renameable, TransferableModule {
 	public void setLocation(final Location loc) {
 		this.location = loc;
 	}
+
 	/**
 	 * Take an attack
 	 */
@@ -85,6 +92,7 @@ public class SimpleBuilding implements Module, Renameable, TransferableModule {
 	public void takeAttack(final Weapon attacker) {
 		die();
 	}
+
 	/**
 	 * @return the SimpleBuilding's name
 	 */
