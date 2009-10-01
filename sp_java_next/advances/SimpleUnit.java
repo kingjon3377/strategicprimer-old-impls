@@ -157,4 +157,23 @@ public class SimpleUnit implements Module, MobileModule, Weapon, RenameableModul
 	public final void setName(final String _name) {
 		name = _name;
 	}
+	/**
+	 * Check whether a move is possible
+	 * @param loc the location to pretend to move to
+	 * @return whether this unit can move there
+	 */
+	@Override
+	public boolean checkMove(final Location loc) {
+		return loc.checkAdd(this);
+	}
+	/**
+	 * FIXME: Implement!
+	 * @param loc a location
+	 * @return the cost of visiting that location
+	 */
+	@Override
+	public double getCost(final Location loc) {
+		// TODO Auto-generated method stub
+		return 1;
+	}
 }

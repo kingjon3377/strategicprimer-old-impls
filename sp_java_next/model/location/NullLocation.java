@@ -103,4 +103,12 @@ public final class NullLocation implements Location {
 	public void setMembers(final Set<Module> _members) {
 		members.addAll(_members);
 	}
+	/**
+	 * @param module a module to pretend to add
+	 * @return that it's possible to add it to this location.
+	 */
+	@Override
+	public boolean checkAdd(final Module module) {
+		return true;
+	}
 }

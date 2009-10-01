@@ -74,8 +74,11 @@ public final class ActionsMenu extends JPopupMenu implements ActionListener {
 	public void actionPerformed(final ActionEvent event) {
 		if ("Move".equals(event.getActionCommand())) {
 			try {
-				((MobileModule) selectedTile.getTile().getModuleOnTile())
-						.move(secondTile.getTile());
+				if (((MobileModule) selectedTile.getTile().getModuleOnTile())
+						.checkMove(secondTile.getTile())) {
+					((MobileModule) selectedTile.getTile().getModuleOnTile())
+							.move(secondTile.getTile());
+				}
 			} catch (UnableToMoveException e) {
 				LOGGER.info("Movement failed");
 			}

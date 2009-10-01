@@ -1,7 +1,5 @@
 package model.location;
 
-import java.awt.Point;
-
 import model.module.Module;
 import model.module.kinds.MobileModule;
 import model.module.kinds.RootModule;
@@ -11,7 +9,7 @@ import model.module.kinds.RootModule;
  * 
  * @author Jonathan Lovelace
  */
-public class Tile extends Point implements Location {
+public class Tile implements Location {
 
 	/**
 	 * Version UID.
@@ -22,7 +20,10 @@ public class Tile extends Point implements Location {
 	 * The top-level module on the tile.
 	 */
 	private Module moduleOnTile;
-
+	/**
+	 * The location of this tile on the grid
+	 */
+	private Point location;
 	/**
 	 * Constructor, to make warnings go away
 	 * 
@@ -32,11 +33,17 @@ public class Tile extends Point implements Location {
 	 *            The column the tile is in
 	 */
 	public Tile(final int row, final int col) {
-		super(row, col);
+		this(new Point(row, col));
+	}
+	/**
+	 * Constructor taking a preconstructed Point
+	 * @param point The point on the grid that this tile goes
+	 */
+	public Tile(final Point point) {
+		location = point;
 		moduleOnTile = RootModule.getRootModule();
 		terrain = TerrainType.NotVisible;
 	}
-
 	/**
 	 * The interface-defined way of setting the module on the tile. TODO: Should
 	 * a tile be able to hold more than one?
@@ -59,7 +66,7 @@ public class Tile extends Point implements Location {
 	 * @see model.location.Location#contains(model.location.Location)
 	 * @return false -- a Tile cannot contain another location.
 	 */
-	public boolean contains(final Location location) {
+	public boolean contains(final Location loc) {
 		return false;
 	}
 
@@ -129,5 +136,19 @@ public class Tile extends Point implements Location {
 	 */
 	public void setTerrain(final TerrainType terr) {
 		terrain = terr;
+	}
+	/**
+	 * @param module a module
+	 * @return whether it's possible to add that module to the tile now.
+	 */
+	@Override
+	public boolean checkAdd(final Module module) {
+		return moduleOnTile.equals(RootModule.getRootModule());
+	}
+	/**
+	 * @return this tile's location on the grid
+	 */
+	public Point getLocation() {
+		return location;
 	}
 }

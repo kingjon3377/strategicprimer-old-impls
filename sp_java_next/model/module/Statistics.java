@@ -30,7 +30,15 @@ public class Statistics implements Serializable {
 		/**
 		 * Maximum hit points
 		 */
-		MAX_HP
+		MAX_HP,
+		/**
+		 * Movement points
+		 */
+		MP,
+		/**
+		 * Maximum movement points
+		 */
+		MAX_MP
 	}
 
 	/**

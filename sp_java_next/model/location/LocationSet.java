@@ -67,4 +67,12 @@ public class LocationSet extends HashSet<Location> implements Location {
 			}
 		}
 	}
+	/**
+	 * @param module a module
+	 * @return that it's not possible to directly add it to a LocationSet./
+	 */
+	@Override
+	public boolean checkAdd(final Module module) {
+		return false;
+	}
 }

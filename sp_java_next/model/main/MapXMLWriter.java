@@ -85,12 +85,13 @@ public final class MapXMLWriter {
 	private static void writeTile(final Tile tile, final PrintWriter writer) {
 		if (tile.getModuleOnTile() == null
 				|| tile.getModuleOnTile().equals(RootModule.getRootModule())) {
-			writer.println("		<tile row=\"" + tile.x + "\" column=\"" + tile.y
-					+ "\" type=\"" + tile.getTerrain().toString()
-					+ "\"></tile>");
+			writer.println("		<tile row=\"" + tile.getLocation().getX()
+					+ "\" column=\"" + tile.getLocation().getY() + "\" type=\""
+					+ tile.getTerrain().toString() + "\"></tile>");
 		} else {
-			writer.println("		<tile row=\"" + tile.x + "\" column=\"" + tile.y
-					+ "\" type=\"" + tile.getTerrain().toString() + "\">");
+			writer.println("		<tile row=\"" + tile.getLocation().getX()
+					+ "\" column=\"" + tile.getLocation().getY() + "\" type=\""
+					+ tile.getTerrain().toString() + "\">");
 			writeModule(tile.getModuleOnTile(), writer, 3);
 			writer.println("		</tile>");
 		}
