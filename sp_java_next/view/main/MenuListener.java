@@ -63,7 +63,7 @@ public final class MenuListener implements ActionListener, Serializable {
 		} else if (event.getActionCommand().equals("Save")) {
 			if (FILE_CHOOSER.showSaveDialog(driver) == JFileChooser.APPROVE_OPTION) {
 				try {
-					MapXMLWriter.writeMapToXML(FILE_CHOOSER.getSelectedFile().getPath());
+					MapXMLWriter.writeGameToXML(FILE_CHOOSER.getSelectedFile().getPath());
 				} catch (IOException e) {
 					LOGGER.log(Level.SEVERE,"I/O error when trying to write map to XML file",e);
 				}

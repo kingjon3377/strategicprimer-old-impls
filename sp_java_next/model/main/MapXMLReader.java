@@ -11,7 +11,9 @@ import model.location.TerrainType;
 import model.location.Tile;
 import model.module.Module;
 import model.module.ModuleFactory;
-import model.module.kinds.RenameableModule;
+import model.module.kinds.Renameable;
+import model.module.kinds.TransferableModule;
+import model.player.SimplePlayer;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -166,6 +168,7 @@ public class MapXMLReader extends DefaultHandler implements Serializable {
 			if ("map".equals(localName)) {
 				map = new SPMap(Integer.parseInt(atts.getValue("rows")),
 						Integer.parseInt(atts.getValue("columns")));
+				Game.getGame().clearPlayers();
 			} else {
 				throw new SAXException(new IllegalStateException(
 						"Must start with a map tag!"));
@@ -178,6 +181,8 @@ public class MapXMLReader extends DefaultHandler implements Serializable {
 				parseTile(atts);
 			} else if ("module".equals(localName)) {
 				parseModule(atts);
+			} else if ("player".equals(localName)) {
+				parsePlayer(atts);
 			}
 		}
 	}
@@ -221,12 +226,31 @@ public class MapXMLReader extends DefaultHandler implements Serializable {
 			if (atts.getValue("image") != null) {
 				ModuleGUIManager
 						.addImage(currentModule, atts.getValue("image"));
-			} if (currentModule instanceof RenameableModule && atts.getValue("name") != null) {
-				((RenameableModule) currentModule).setName(atts.getValue("name"));
+			}
+			if (currentModule instanceof Renameable
+					&& atts.getValue("name") != null) {
+				((Renameable) currentModule).setName(atts.getValue("name"));
+			}
+			if (currentModule instanceof TransferableModule
+					&& atts.getValue("owner") != null) {
+				((TransferableModule) currentModule).setOwner(Game.getGame()
+						.getPlayer(Integer.valueOf(atts.getValue("owner"))));
 			}
 		} else {
 			throw new SAXException(new IllegalStateException(
 					"Cannot (at present) have one module inside another"));
 		}
+	}
+
+	/**
+	 * Parse a player.
+	 * 
+	 * @param atts
+	 *            The XML tag's attributes.
+	 */
+	private static void parsePlayer(final Attributes atts) {
+		Game.getGame().addPlayer(
+				new SimplePlayer(atts.getValue("code_name"), Integer
+						.parseInt(atts.getValue("number"))));
 	}
 }
