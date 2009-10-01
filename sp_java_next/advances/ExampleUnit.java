@@ -60,7 +60,7 @@ public class ExampleUnit implements Module, Serializable, MobileModule,
 	 * UUID
 	 */
 	protected final long uuid = UuidManager.UUID_MANAGER.getNewUuid();
-	
+
 	/**
 	 * Constructor.
 	 */
@@ -130,7 +130,9 @@ public class ExampleUnit implements Module, Serializable, MobileModule,
 
 	/**
 	 * Take an attack from the given module.
-	 * @param attacker a module attacking the unit
+	 * 
+	 * @param attacker
+	 *            a module attacking the unit
 	 */
 	@Override
 	public void takeAttack(final Weapon attacker) {
@@ -150,17 +152,22 @@ public class ExampleUnit implements Module, Serializable, MobileModule,
 	public int getModuleID() {
 		return 3;
 	}
+
 	/**
 	 * @return the unit's UUID
 	 */
 	@Override
 	public final long getUuid() {
-		return uuid; 
+		return uuid;
 	}
+
 	/**
 	 * Move to a new location
-	 * @param loc the new location
-	 * @throws UnableToMoveException when unable to move
+	 * 
+	 * @param loc
+	 *            the new location
+	 * @throws UnableToMoveException
+	 *             when unable to move
 	 */
 	@Override
 	public void move(final Location loc) throws UnableToMoveException {
@@ -182,6 +189,7 @@ public class ExampleUnit implements Module, Serializable, MobileModule,
 	public void die() {
 		location.remove(this);
 	}
+
 	/**
 	 * @return the ExampleUnit's name
 	 */
