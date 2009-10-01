@@ -34,7 +34,9 @@
 		<tile row="2" column="0" type="jungle"></tile>
 		<tile row="2" column="1" type="plains"></tile>
 		<tile row="2" column="2" type="plains">
-			<module mid="2" image="/sprite.png" name="SimpleUnit" owner="0"></module>
+			<fortress name="HQ" owner="0">
+				<module mid="2" image="/sprite.png" name="SimpleUnit" owner="0"></module>
+			</fortress>
 		</tile>
 		<tile row="2" column="3" type="plains">
 			<module mid="3" image="/sprite_2.png" name="ExampleUnit" owner="1"></module>

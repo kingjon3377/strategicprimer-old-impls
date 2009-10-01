@@ -6,6 +6,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import model.module.Module;
+import model.module.kinds.Fortress;
 
 /**
  * A panel to describe the current module
@@ -56,6 +57,9 @@ public class CurrentModulePanel extends JPanel {
 		}
 		if (mod == null) {
 			label.setText("none");
+		} else if (mod instanceof Fortress
+				&& ((Fortress) mod).getModule() != null) {
+			changeCurrentModule(((Fortress) mod).getModule());
 		} else {
 			label.setText(mod.getName());
 		}

@@ -11,6 +11,7 @@ import model.location.TerrainType;
 import model.location.Tile;
 import model.module.Module;
 import model.module.ModuleFactory;
+import model.module.kinds.Fortress;
 import model.module.kinds.Renameable;
 import model.module.kinds.TransferableModule;
 import model.player.SimplePlayer;
@@ -43,6 +44,10 @@ public class MapXMLReader extends DefaultHandler implements Serializable {
 	 * The tile we're currently parsing
 	 */
 	private transient Tile currentTile;
+	/**
+	 * The fortress we're currently parsing
+	 */
+	private transient Fortress currentFort;
 	/**
 	 * The tiles that will go in the map
 	 */
@@ -135,14 +140,23 @@ public class MapXMLReader extends DefaultHandler implements Serializable {
 	public void endElement(final String namespaceURI, final String localName,
 			final String qualifiedName) throws SAXException {
 		if ("module".equals(localName)) {
-			currentTile.add(currentModule);
-			currentModule.setLocation(currentTile);
+			if (currentFort == null) {
+				currentTile.add(currentModule);
+				currentModule.setLocation(currentTile);
+			} else {
+				currentFort.add(currentModule);
+				currentModule.setLocation(currentFort);
+			}
 			currentModule = null; // NOPMD
 		} else if ("tile".equals(localName)) {
 			tiles.put(currentTile.getLocation(), currentTile);
 			currentTile = null; // NOPMD
+			currentFort = null; // NOPMD
 		} else if ("map".equals(localName)) {
 			map.addTiles(tiles);
+		} else if ("fortress".equals(localName)) {
+			currentTile.setModuleOnTile(currentFort);
+			currentFort.setLocation(currentTile);
 		}
 	}
 
@@ -183,7 +197,33 @@ public class MapXMLReader extends DefaultHandler implements Serializable {
 				parseModule(atts);
 			} else if ("player".equals(localName)) {
 				parsePlayer(atts);
+			} else if ("fortress".equals(localName)) {
+				parseFortress(atts);
 			}
+		}
+	}
+
+	/**
+	 * Parse a fortress.
+	 * 
+	 * @param atts
+	 *            The XML tag's attributes
+	 * @throws SAXException
+	 *             on various illegal constructs in the XML
+	 */
+	private void parseFortress(final Attributes atts) throws SAXException {
+		if (currentFort == null) {
+			if (currentTile == null) {
+				throw new SAXException(new IllegalStateException(
+						"Can't have a fort outside a tile"));
+			} else {
+				currentFort = new Fortress(currentTile, Game.getGame()
+						.getPlayer(Integer.parseInt(atts.getValue("owner"))),
+						atts.getValue("name"));
+			}
+		} else {
+			throw new SAXException(new IllegalStateException(
+					"Can't have nested forts"));
 		}
 	}
 
