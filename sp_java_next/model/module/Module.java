@@ -2,6 +2,7 @@ package model.module;
 
 import model.location.Location;
 import model.module.kinds.Weapon;
+import model.player.IPlayer;
 
 /**
  * A component in a unit, building, etc. (Need better description.)
@@ -60,4 +61,8 @@ public interface Module {
 	 *         module is selected.
 	 */
 	String getName();
+	/**
+	 * @return the player that owns this module
+	 */
+	IPlayer getOwner();
 }

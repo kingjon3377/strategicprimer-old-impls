@@ -12,19 +12,21 @@ import model.module.Statistics;
 import model.module.UnableToMoveException;
 import model.module.Statistics.Stats;
 import model.module.kinds.MobileModule;
-import model.module.kinds.RenameableModule;
+import model.module.kinds.Renameable;
 import model.module.kinds.RootModule;
+import model.module.kinds.TransferableModule;
 import model.module.kinds.Weapon;
+import model.player.IPlayer;
 import pathfinding.AStarPathFinder;
 import pathfinding.Path;
 
 /**
  * A sample unit.
  * 
- * @author kingjon
+ * @author Jonathan Lovelace
  */
 public class ExampleUnit implements Module, Serializable, MobileModule,
-		RenameableModule {
+		Renameable, TransferableModule {
 	/**
 	 * An ExampleUnit's starting movement points
 	 */
@@ -237,5 +239,23 @@ public class ExampleUnit implements Module, Serializable, MobileModule,
 	public double getCost(final Location loc) {
 		// TODO Auto-generated method stub
 		return 1;
+	}
+	/**
+	 * The unit's owner
+	 */
+	private IPlayer owner;
+	/**
+	 * @return the unit's owner
+	 */
+	@Override
+	public IPlayer getOwner() {
+		return owner;
+	}
+	/**
+	 * @param _owner the unit's new owner
+	 */
+	@Override
+	public void setOwner(final IPlayer _owner) {
+		owner = _owner;
 	}
 }

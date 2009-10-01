@@ -3,13 +3,12 @@
  */
 package model.module.kinds;
 
-import model.module.Module;
 
 /**
- * A Module that can be renamed at runtime
+ * Something that can be renamed at runtime
  * @author Jonathan Lovelace
  */
-public interface RenameableModule extends Module {
+public interface Renameable {
 	/**
 	 * @param name the module's new name
 	 */

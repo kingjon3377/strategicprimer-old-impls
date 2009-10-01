@@ -7,6 +7,7 @@ import java.util.Set;
 
 import model.location.Location;
 import model.module.Module;
+import model.player.IPlayer;
 
 /**
  * The root of the module tree. A Singleton class.
@@ -150,5 +151,13 @@ public final class RootModule implements Module, Serializable {
 	@Override
 	public String getName() {
 		return "RootModule";
+	}
+	/**
+	 * This is meaningless for THE root module, though if this weren't singleton it would be meaningful for EACH root module
+	 * @return null
+	 */
+	@Override
+	public IPlayer getOwner() {
+		return null;
 	}
 }

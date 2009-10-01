@@ -7,8 +7,10 @@ import model.main.UuidManager;
 import model.module.Module;
 import model.module.UnableToMoveException;
 import model.module.kinds.MobileModule;
-import model.module.kinds.RenameableModule;
+import model.module.kinds.Renameable;
+import model.module.kinds.TransferableModule;
 import model.module.kinds.Weapon;
+import model.player.IPlayer;
 
 /**
  * A simple unit, for prototype purposes where we don't want the full Unit
@@ -17,7 +19,8 @@ import model.module.kinds.Weapon;
  * @author Jonathan Lovelace
  * 
  */
-public class SimpleUnit implements Module, MobileModule, Weapon, RenameableModule {
+public class SimpleUnit implements Module, MobileModule, Weapon, Renameable,
+		TransferableModule {
 	/**
 	 * Constructor
 	 */
@@ -175,5 +178,23 @@ public class SimpleUnit implements Module, MobileModule, Weapon, RenameableModul
 	public double getCost(final Location loc) {
 		// TODO Auto-generated method stub
 		return 1;
+	}
+	/**
+	 * The unit's owner
+	 */
+	private IPlayer owner;
+	/**
+	 * @return the unit's owner
+	 */
+	@Override
+	public IPlayer getOwner() {
+		return owner;
+	}
+	/**
+	 * @param _owner the unit's new owner
+	 */
+	@Override
+	public void setOwner(final IPlayer _owner) {
+		owner = _owner;
 	}
 }

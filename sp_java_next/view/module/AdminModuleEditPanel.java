@@ -11,7 +11,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import model.module.Module;
-import model.module.kinds.RenameableModule;
+import model.module.kinds.Renameable;
 /**
  * 
  * @author Jonathan Lovelace
@@ -29,8 +29,8 @@ public class AdminModuleEditPanel extends JPanel implements ActionListener {
 	@Override
 	public void actionPerformed(final ActionEvent event) {
 		if ("Apply".equals(event.getActionCommand())) {
-			if (module instanceof RenameableModule) { // NOPMD
-				((RenameableModule) module).setName(nameField.getText());
+			if (module instanceof Renameable) { // NOPMD
+				((Renameable) module).setName(nameField.getText());
 			}
 		}
 	}
@@ -65,7 +65,7 @@ public class AdminModuleEditPanel extends JPanel implements ActionListener {
 	public void setModule(final Module mod) {
 		module = mod;
 		nameField.setText(module.getName());
-		nameField.setEnabled(module instanceof RenameableModule);
+		nameField.setEnabled(module instanceof Renameable);
 		button.setEnabled(module != null);
 	}
 }

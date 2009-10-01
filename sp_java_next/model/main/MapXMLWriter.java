@@ -4,11 +4,13 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.Map;
 
 import model.location.SPMap;
 import model.location.Tile;
 import model.module.Module;
 import model.module.kinds.RootModule;
+import model.player.IPlayer;
 import view.module.ModuleGUIManager;
 
 /**
@@ -32,8 +34,8 @@ public final class MapXMLWriter {
 	 * @throws IOException
 	 *             on I/O error
 	 */
-	public static void writeMapToXML(final String filename) throws IOException {
-		writeMapToXML(filename, Game.getGame().getMap());
+	public static void writeGameToXML(final String filename) throws IOException {
+		writeGameToXML(filename, Game.getGame());
 	}
 
 	/**
@@ -41,15 +43,61 @@ public final class MapXMLWriter {
 	 * 
 	 * @param filename
 	 *            The name of the file to write to
-	 * @param map
-	 *            The map to write
+	 * @param game
+	 *            The game to write
 	 * @throws IOException
 	 *             on I/O error
 	 */
-	public static void writeMapToXML(final String filename, final SPMap map)
+	public static void writeGameToXML(final String filename, final Game game)
 			throws IOException {
-		writeMap(map, new PrintWriter(new BufferedWriter(new FileWriter(
+		writeGame(game, new PrintWriter(new BufferedWriter(new FileWriter(
 				filename))));
+	}
+
+	/**
+	 * Write a game to XML
+	 * 
+	 * @param game
+	 *            The game to write
+	 * @param writer
+	 *            The Writer to write to
+	 */
+	private static void writeGame(final Game game, final PrintWriter writer) {
+		writeInitialElement(game.getMap(), writer);
+		writePlayers(game.getPlayers(), writer);
+		writeMap(game.getMap(), writer);
+		writer.println("</map>");
+		writer.close();
+	}
+
+	/**
+	 * Write the initial element of the XML
+	 * 
+	 * @param map
+	 *            The map we'll be writing
+	 * @param writer
+	 *            the Writer to write to
+	 */
+	private static void writeInitialElement(final SPMap map,
+			final PrintWriter writer) {
+		writer.println("<map rows=\"" + map.getSizeRows() + "\" columns=\""
+				+ map.getSizeCols() + "\" version=\"0\">");
+	}
+
+	/**
+	 * Write players to XML
+	 * 
+	 * @param players
+	 *            The set of players to write
+	 * @param writer
+	 *            the Writer to write to
+	 */
+	public static void writePlayers(final Map<Integer, IPlayer> players,
+			final PrintWriter writer) {
+		for (IPlayer player : players.values()) {
+			writer.println("\t<player number=\"" + player.getNumber()
+					+ "\" code_name=\"" + player.getName() + "\" />");
+		}
 	}
 
 	/**
@@ -61,17 +109,13 @@ public final class MapXMLWriter {
 	 *            The Writer to write to
 	 */
 	private static void writeMap(final SPMap map, final PrintWriter writer) {
-		writer.println("<map rows=\"" + map.getSizeRows() + "\" columns=\""
-				+ map.getSizeCols() + "\" version=\"0\">");
 		for (int i = 0; i < map.getSizeRows(); i++) {
-			writer.println("	<row index=\"" + i + "\">");
+			writer.println("\t<row index=\"" + i + "\">");
 			for (int j = 0; j < map.getSizeCols(); j++) {
 				writeTile(map.getTileAt(i, j), writer);
 			}
-			writer.println("	</row>");
+			writer.println("\t</row>");
 		}
-		writer.println("</map>");
-		writer.close();
 	}
 
 	/**
@@ -85,11 +129,11 @@ public final class MapXMLWriter {
 	private static void writeTile(final Tile tile, final PrintWriter writer) {
 		if (tile.getModuleOnTile() == null
 				|| tile.getModuleOnTile().equals(RootModule.getRootModule())) {
-			writer.println("		<tile row=\"" + tile.getLocation().getX()
+			writer.println("\t\t<tile row=\"" + tile.getLocation().getX()
 					+ "\" column=\"" + tile.getLocation().getY() + "\" type=\""
 					+ tile.getTerrain().toString() + "\"></tile>");
 		} else {
-			writer.println("		<tile row=\"" + tile.getLocation().getX()
+			writer.println("\t\t<tile row=\"" + tile.getLocation().getX()
 					+ "\" column=\"" + tile.getLocation().getY() + "\" type=\""
 					+ tile.getTerrain().toString() + "\">");
 			writeModule(tile.getModuleOnTile(), writer, 3);
@@ -116,6 +160,9 @@ public final class MapXMLWriter {
 				+ module.getModuleID()
 				+ ("".equals(ModuleGUIManager.getFilename(module)) ? ""
 						: "\" image=\"" + ModuleGUIManager.getFilename(module))
-				+ "\" name=\"" + module.getName() + "\"></module>");
+				+ "\" name=\""
+				+ module.getName()
+				+ (module.getOwner() == null ? "" : "\" owner=\""
+						+ module.getOwner().getNumber()) + "\"></module>");
 	}
 }
