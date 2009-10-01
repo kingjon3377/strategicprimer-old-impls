@@ -9,6 +9,7 @@ import java.util.Map;
 import model.location.SPMap;
 import model.location.Tile;
 import model.module.Module;
+import model.module.kinds.Fortress;
 import model.module.kinds.RootModule;
 import model.player.IPlayer;
 import view.module.ModuleGUIManager;
@@ -19,6 +20,12 @@ import view.module.ModuleGUIManager;
  * @author Jonathan Lovelace
  */
 public final class MapXMLWriter {
+	/**
+	 * The closing quote of an XML attribute plus the closing bracket of the XML
+	 * tag.
+	 */
+	private static final String CLOSE_XML_ATT_TAG = "\">";
+
 	/**
 	 * Don't instantiate
 	 */
@@ -110,7 +117,7 @@ public final class MapXMLWriter {
 	 */
 	private static void writeMap(final SPMap map, final PrintWriter writer) {
 		for (int i = 0; i < map.getSizeRows(); i++) {
-			writer.println("\t<row index=\"" + i + "\">");
+			writer.println("\t<row index=\"" + i + CLOSE_XML_ATT_TAG);
 			for (int j = 0; j < map.getSizeCols(); j++) {
 				writeTile(map.getTileAt(i, j), writer);
 			}
@@ -132,12 +139,50 @@ public final class MapXMLWriter {
 			writer.println("\t\t<tile row=\"" + tile.getLocation().getX()
 					+ "\" column=\"" + tile.getLocation().getY() + "\" type=\""
 					+ tile.getTerrain().toString() + "\"></tile>");
+		} else if (tile.getModuleOnTile() instanceof Fortress) {
+			writer.println("\t\t<tile row=\"" + tile.getLocation().getX()
+					+ "\" column=\"" + tile.getLocation().getY() + "\" type=\""
+					+ tile.getTerrain().toString() + CLOSE_XML_ATT_TAG);
+			writeFortress((Fortress) tile.getModuleOnTile(), writer, 3);
+			writer.println("		</tile>");
 		} else {
 			writer.println("\t\t<tile row=\"" + tile.getLocation().getX()
 					+ "\" column=\"" + tile.getLocation().getY() + "\" type=\""
-					+ tile.getTerrain().toString() + "\">");
+					+ tile.getTerrain().toString() + CLOSE_XML_ATT_TAG);
 			writeModule(tile.getModuleOnTile(), writer, 3);
 			writer.println("		</tile>");
+		}
+	}
+
+	/**
+	 * Write a fortress to XML
+	 * 
+	 * @param fortress
+	 *            the module to write
+	 * @param writer
+	 *            the Writer to write to
+	 * @param indent
+	 *            how many tabs to indent
+	 */
+	private static void writeFortress(final Fortress fortress,
+			final PrintWriter writer, final int indent) {
+		for (int i = 0; i < indent; i++) {
+			writer.append('\t');
+		}
+		if (fortress.getModule() == null
+				|| fortress.getModule() instanceof RootModule) {
+			writer.println("<fortress name=\"" + fortress.getName()
+					+ "\" owner=\"" + fortress.getOwner().getNumber()
+					+ "\"></fortress>");
+		} else {
+			writer.println("<fortress name=\"" + fortress.getName()
+					+ "\" owner=\"" + fortress.getOwner().getNumber()
+					+ CLOSE_XML_ATT_TAG);
+			writeModule(fortress.getModule(), writer, indent + 1);
+			for (int i = 0; i < indent; i++) {
+				writer.append('\t');
+			}
+			writer.println("</fortress>");
 		}
 	}
 

@@ -1,7 +1,7 @@
 package model.location;
 
 import model.module.Module;
-import model.module.kinds.MobileModule;
+import model.module.kinds.Fortress;
 import model.module.kinds.RootModule;
 
 /**
@@ -54,6 +54,8 @@ public class Tile implements Location {
 	public void add(final Module module) {
 		if (moduleOnTile.equals(RootModule.getRootModule())) {
 			setModuleOnTile(module);
+		} else if (moduleOnTile instanceof Fortress) {
+			((Fortress) moduleOnTile).add(module);
 		} else {
 			throw new IllegalStateException(
 					"There's already a module on this tile");
@@ -67,25 +69,28 @@ public class Tile implements Location {
 	 * @return false -- a Tile cannot contain another location.
 	 */
 	public boolean contains(final Location loc) {
-		return false;
+		return (moduleOnTile instanceof Location && moduleOnTile.equals(loc));
 	}
 
 	/**
-	 * @see model.location.Location#contains(model.module.Module)
-	 * 
-	 * Since this is the most basic level of location, and Modules are supposed
-	 * to set their location property to the lowest level possible, a Module is
-	 * contained in this tile only if it (or its parent if it isn't capable of
-	 * moving itself -- TODO: make some way of checking "is top-level for our
-	 * purposes" that doesn't exclude Buildings) has this tile as its Location.
+	 * @see model.location.Location#contains(model.module.Module) Since this is
+	 *      the most basic level of location, and Modules are supposed to set
+	 *      their location property to the lowest level possible, a Module is
+	 *      contained in this tile only if it (or its parent if it isn't capable
+	 *      of moving itself -- TODO: make some way of checking "is top-level
+	 *      for our purposes" that doesn't exclude Buildings) has this tile as
+	 *      its Location.
 	 * 
 	 * @param module
 	 *            the module to search for.
 	 * @return whether the tile contains the given module
 	 */
 	public boolean contains(final Module module) {
-		return (module instanceof MobileModule ? module.getLocation().equals(this)
-				: contains(module.getParent()));
+		return module != null
+				&& (module.getLocation().equals(this)
+						|| (moduleOnTile instanceof Fortress ? module
+								.getLocation().equals(moduleOnTile) : false) || contains(module
+						.getParent()));
 	}
 
 	/**
@@ -101,11 +106,14 @@ public class Tile implements Location {
 	 * @param module
 	 *            the module to remove
 	 * 
-	 * is the top-level module on the tile, remove it. Otherwise, object.
+	 *            is the top-level module on the tile, remove it. Otherwise,
+	 *            object.
 	 */
 	public void remove(final Module module) {
 		if (moduleOnTile.equals(module)) {
 			moduleOnTile = RootModule.getRootModule();
+		} else if (moduleOnTile instanceof Fortress) {
+			((Fortress) moduleOnTile).remove(module);
 		} else {
 			throw new IllegalArgumentException(
 					"That isn't the top-level module on the tile!");
@@ -131,20 +139,27 @@ public class Tile implements Location {
 	public TerrainType getTerrain() {
 		return terrain;
 	}
+
 	/**
-	 * @param terr The new terrain type of the tile
+	 * @param terr
+	 *            The new terrain type of the tile
 	 */
 	public void setTerrain(final TerrainType terr) {
 		terrain = terr;
 	}
+
 	/**
-	 * @param module a module
+	 * @param module
+	 *            a module
 	 * @return whether it's possible to add that module to the tile now.
 	 */
 	@Override
 	public boolean checkAdd(final Module module) {
-		return moduleOnTile.equals(RootModule.getRootModule());
+		return moduleOnTile.equals(RootModule.getRootModule())
+				|| (moduleOnTile instanceof Fortress && ((Fortress) moduleOnTile)
+						.checkAdd(module));
 	}
+
 	/**
 	 * @return this tile's location on the grid
 	 */

@@ -16,11 +16,12 @@ import java.util.logging.Logger;
 
 import javax.swing.JPanel;
 
-import view.module.ModuleGUIManager;
-
 import model.location.TerrainType;
 import model.location.Tile;
+import model.module.Module;
+import model.module.kinds.Fortress;
 import model.module.kinds.RootModule;
+import view.module.ModuleGUIManager;
 
 /**
  * The graphical representation of a tile.
@@ -110,19 +111,37 @@ public class GUITile extends JPanel {
 	 */
 	@Override
 	public void paint(final Graphics pen) {
-		super.paintComponent(pen);
+		super.paint(pen);
 		pen.drawImage(terrainImage, 0, 0, getWidth(), getHeight(), Color.white,
 				this);
-		if (tile.getModuleOnTile() != null
-				&& !tile.getModuleOnTile().equals(RootModule.getRootModule())) {
-			pen.drawImage(ModuleGUIManager.getImage(tile.getModuleOnTile()), 0,
-					0, getWidth(), getHeight(), this);
+		if (tile.getModuleOnTile() instanceof Fortress) {
+			drawModule(((Fortress) tile.getModuleOnTile()).getModule(), pen);
+			pen.drawImage(ModuleGUIManager.getImage(tile.getModuleOnTile()),
+					getWidth() / 5, getHeight() / 5, getWidth() / 5,
+					getHeight() / 5, this);
+		} else {
+			drawModule(tile.getModuleOnTile(), pen);
 		}
 		if (selected) {
 			pen.setXORMode(getBackground());
 			pen.drawRect(0, 0, getWidth(), getHeight());
 			pen.drawRect(1, 1, getWidth() - 2, getHeight() - 2);
 			pen.drawRect(2, 2, getWidth() - 4, getHeight() - 4);
+		}
+	}
+
+	/**
+	 * Draw a module
+	 * 
+	 * @param mod
+	 *            the module to draw
+	 * @param pen
+	 *            the graphics context
+	 */
+	private void drawModule(final Module mod, final Graphics pen) {
+		if (mod != null && !(mod instanceof RootModule)) {
+			pen.drawImage(ModuleGUIManager.getImage(mod), 0, 0, getWidth(),
+					getHeight(), this);
 		}
 	}
 

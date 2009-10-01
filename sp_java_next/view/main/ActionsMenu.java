@@ -8,7 +8,9 @@ import java.util.logging.Logger;
 import javax.swing.JMenuItem;
 import javax.swing.JPopupMenu;
 
+import model.module.Module;
 import model.module.UnableToMoveException;
+import model.module.kinds.Fortress;
 import model.module.kinds.MobileModule;
 import model.module.kinds.RootModule;
 import model.module.kinds.Weapon;
@@ -74,17 +76,17 @@ public final class ActionsMenu extends JPopupMenu implements ActionListener {
 	public void actionPerformed(final ActionEvent event) {
 		if ("Move".equals(event.getActionCommand())) {
 			try {
-				if (((MobileModule) selectedTile.getTile().getModuleOnTile())
+				if (((MobileModule) getModuleOnTile(selectedTile))
 						.checkMove(secondTile.getTile())) {
-					((MobileModule) selectedTile.getTile().getModuleOnTile())
+					((MobileModule) getModuleOnTile(selectedTile))
 							.move(secondTile.getTile());
 				}
 			} catch (UnableToMoveException e) {
 				LOGGER.info("Movement failed");
 			}
 		} else if ("Attack".equals(event.getActionCommand())) {
-			((Weapon) selectedTile.getTile().getModuleOnTile())
-					.attack(secondTile.getTile().getModuleOnTile());
+			((Weapon) getModuleOnTile(selectedTile))
+					.attack(getModuleOnTile(secondTile));
 		}
 		selectedTile.repaint();
 		secondTile.repaint();
@@ -115,11 +117,25 @@ public final class ActionsMenu extends JPopupMenu implements ActionListener {
 		}
 		if (!selectedTile.equals(secondTile)) {
 			moveItem
-					.setEnabled(selectedTile.getTile().getModuleOnTile() instanceof MobileModule);
+					.setEnabled(getModuleOnTile(selectedTile) instanceof MobileModule);
 			attackItem
-					.setEnabled(selectedTile.getTile().getModuleOnTile() instanceof Weapon
-							&& !(secondTile.getTile().getModuleOnTile() instanceof RootModule));
+					.setEnabled(getModuleOnTile(selectedTile) instanceof Weapon
+							&& !(getModuleOnTile(secondTile) instanceof RootModule));
 			super.show(invoker, xCoord, yCoord);
 		}
+	}
+
+	/**
+	 * @param tile
+	 *            a GUI tile
+	 * @return The module on that tile's model, or its module if it is a
+	 *         Fortress.
+	 */
+	private static Module getModuleOnTile(final GUITile tile) {
+		return tile.getTile().getModuleOnTile() instanceof Fortress
+				&& (((Fortress) tile.getTile().getModuleOnTile()).getModule() != null)
+				&& !(((Fortress) tile.getTile().getModuleOnTile()).getModule() instanceof RootModule) ? ((Fortress) tile
+				.getTile().getModuleOnTile()).getModule()
+				: tile.getTile().getModuleOnTile();
 	}
 }

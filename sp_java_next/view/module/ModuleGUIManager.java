@@ -4,10 +4,10 @@ import java.awt.Image;
 import java.util.HashMap;
 import java.util.Map;
 
-import utils.StringImage;
-
 import model.module.Module;
+import model.module.kinds.Fortress;
 import model.module.kinds.RootModule;
+import utils.StringImage;
 
 /**
  * Manages GUIs for particular modules
@@ -111,5 +111,6 @@ public final class ModuleGUIManager {
 
 	static {
 		addImage(RootModule.getRootModule(), "/clear.png");
+		addImage(new Fortress(null,null,""), "/fortress.png");
 	}
 }
