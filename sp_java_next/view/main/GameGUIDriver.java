@@ -52,10 +52,6 @@ public class GameGUIDriver extends JFrame {
 	 */
 	private transient InitiativeQueue initQueue;
 	/**
-	 * The panel showing the current module.
-	 */
-	private transient CurrentModulePanel modulePanel;
-	/**
 	 * The main map
 	 */
 	private final transient GUIMap map;
@@ -88,7 +84,10 @@ public class GameGUIDriver extends JFrame {
 		add(menu, BorderLayout.NORTH);
 		initQueue = new InitiativeQueue();
 		add(initQueue, BorderLayout.WEST);
-		modulePanel = new CurrentModulePanel(map.isAdmin());
+		/**
+		 * The panel showing the current module.
+		 */
+		final CurrentModulePanel modulePanel = new CurrentModulePanel(map.isAdmin());
 		add(modulePanel, BorderLayout.EAST);
 		map.setSelectionListener(new SelectionListener(map,modulePanel));
 		miniMap = new MiniMap();

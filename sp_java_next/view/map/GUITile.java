@@ -177,7 +177,8 @@ public class GUITile extends JPanel {
 	 * @param terr
 	 *            a terrain type
 	 * @return an image representing that terrain
-	 * @throws IOException Thrown by a method used in producing the image
+	 * @throws IOException
+	 *             Thrown by a method used in producing the image
 	 */
 	private static Image getImage(final TerrainType terr) throws IOException {
 		if (imageMap.containsKey(terr)) {
@@ -188,10 +189,11 @@ public class GUITile extends JPanel {
 			if (url == null) {
 				LOGGER.severe("Couldn't find image for " + terr);
 			}
-			return url == null ? null : Toolkit.getDefaultToolkit().createImage(
-					(ImageProducer) url.getContent());
+			return url == null ? null : Toolkit.getDefaultToolkit()
+					.createImage((ImageProducer) url.getContent());
 		}
 	}
+
 	/**
 	 * A cache of terrain type images
 	 */
