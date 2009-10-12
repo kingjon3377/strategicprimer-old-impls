@@ -5,6 +5,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+import model.location.LocationEvent;
 import model.location.Point;
 import model.location.SPMap;
 import model.location.TerrainType;
@@ -241,6 +242,10 @@ public class MapXMLReader extends DefaultHandler implements Serializable {
 					Integer.parseInt(atts.getValue("column")));
 			currentTile.setTerrain(TerrainType.getTileType(atts
 					.getValue("type")));
+			if (atts.getValue("event") != null) {
+				currentTile.setEvent(new LocationEvent(Integer.parseInt(atts
+						.getValue("event"))));
+			}
 		} else {
 			throw new SAXException(new IllegalStateException(
 					"Cannot (at present) have one tile inside another"));
