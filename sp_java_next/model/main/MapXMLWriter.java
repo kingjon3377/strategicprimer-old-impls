@@ -134,24 +134,28 @@ public final class MapXMLWriter {
 	 *            the Writer to write to
 	 */
 	private static void writeTile(final Tile tile, final PrintWriter writer) {
-		if (tile.getModuleOnTile() == null
-				|| tile.getModuleOnTile().equals(RootModule.getRootModule())) {
-			writer.println("\t\t<tile row=\"" + tile.getLocation().getX()
-					+ "\" column=\"" + tile.getLocation().getY() + "\" type=\""
-					+ tile.getTerrain().toString() + "\"></tile>");
-		} else if (tile.getModuleOnTile() instanceof Fortress) {
-			writer.println("\t\t<tile row=\"" + tile.getLocation().getX()
-					+ "\" column=\"" + tile.getLocation().getY() + "\" type=\""
-					+ tile.getTerrain().toString() + CLOSE_XML_ATT_TAG);
-			writeFortress((Fortress) tile.getModuleOnTile(), writer, 3);
-			writer.println("		</tile>");
-		} else {
-			writer.println("\t\t<tile row=\"" + tile.getLocation().getX()
-					+ "\" column=\"" + tile.getLocation().getY() + "\" type=\""
-					+ tile.getTerrain().toString() + CLOSE_XML_ATT_TAG);
-			writeModule(tile.getModuleOnTile(), writer, 3);
-			writer.println("		</tile>");
+		writer.print("\t\t<tile row=\"");
+		writer.print(tile.getLocation().getX());
+		writer.print("\" column=\"");
+		writer.print(tile.getLocation().getY());
+		writer.print("\" type=\"");
+		writer.print(tile.getTerrain().toString());
+		if (tile.getEvent() != null) {
+			writer.print("\" event=\"");
+			writer.print(tile.getEvent().getNumber());
 		}
+		writer.print(CLOSE_XML_ATT_TAG);
+		if (tile.getModuleOnTile() != null
+				&& !tile.getModuleOnTile().equals(RootModule.getRootModule())) {
+			writer.println();
+			if (tile.getModuleOnTile() instanceof Fortress) {
+				writeFortress((Fortress) tile.getModuleOnTile(), writer, 3);
+			} else {
+				writeModule(tile.getModuleOnTile(), writer, 3);
+			}
+			writer.print("		");
+		}
+		writer.println("</tile>");
 	}
 
 	/**
@@ -166,23 +170,28 @@ public final class MapXMLWriter {
 	 */
 	private static void writeFortress(final Fortress fortress,
 			final PrintWriter writer, final int indent) {
-		for (int i = 0; i < indent; i++) {
-			writer.append('\t');
-		}
-		if (fortress.getModule() == null
-				|| fortress.getModule() instanceof RootModule) {
-			writer.println("<fortress name=\"" + fortress.getName()
-					+ "\" owner=\"" + fortress.getOwner().getNumber()
-					+ "\"></fortress>");
-		} else {
-			writer.println("<fortress name=\"" + fortress.getName()
-					+ "\" owner=\"" + fortress.getOwner().getNumber()
-					+ CLOSE_XML_ATT_TAG);
+		appendTabs(writer, indent);
+		writer.print("<fortress name=\"");
+		writer.print(fortress.getName());
+		writer.print("\" owner=\"");
+		writer.print(fortress.getOwner().getNumber());
+		writer.print(CLOSE_XML_ATT_TAG);
+		if (fortress.getModule() != null && !(fortress.getModule() instanceof RootModule)) {
+			writer.println();
 			writeModule(fortress.getModule(), writer, indent + 1);
-			for (int i = 0; i < indent; i++) {
-				writer.append('\t');
-			}
-			writer.println("</fortress>");
+			appendTabs(writer, indent);
+		}
+		writer.println("</fortress>");
+	}
+
+	/**
+	 * Append a specified  number of tabs to the writer
+	 * @param writer The writer to write to to
+	 * @param indent The number of tabs to write
+	 */
+	private static void appendTabs(final PrintWriter writer, final int indent) {
+		for (int i = 0; i < indent; i++) {
+			writer.print('\t');
 		}
 	}
 

@@ -7,42 +7,42 @@
 	<player number="5" code_name="Saladin" />
 	<player number="6" code_name="Richard Lionhearted" />
 	<row index="0">
-		<tile row="0" column="0" type="tundra"></tile>
-		<tile row="0" column="1" type="tundra"></tile>
-		<tile row="0" column="2" type="temperate_forest"></tile>
-		<tile row="0" column="3" type="temperate_forest"></tile>
-		<tile row="0" column="4" type="boreal_forest"></tile>
-		<tile row="0" column="5" type="tundra"></tile>
-		<tile row="0" column="6" type="tundra"></tile>
-		<tile row="0" column="7" type="temperate_forest"></tile>
-		<tile row="0" column="8" type="temperate_forest"></tile>
-		<tile row="0" column="9" type="boreal_forest"></tile>
+		<tile row="0" column="0" type="tundra" event="0"></tile>
+		<tile row="0" column="1" type="tundra" event="1"></tile>
+		<tile row="0" column="2" type="temperate_forest" event="3"></tile>
+		<tile row="0" column="3" type="temperate_forest" event="3"></tile>
+		<tile row="0" column="4" type="boreal_forest" event="5"></tile>
+		<tile row="0" column="5" type="tundra" event="5"></tile>
+		<tile row="0" column="6" type="tundra" event="5"></tile>
+		<tile row="0" column="7" type="temperate_forest" event="5"></tile>
+		<tile row="0" column="8" type="temperate_forest" event="5"></tile>
+		<tile row="0" column="9" type="boreal_forest" event="5"></tile>
 	</row>
 	<row index="1">
-		<tile row="1" column="0" type="ocean"></tile>
-		<tile row="1" column="1" type="desert"></tile>
-		<tile row="1" column="2" type="plains"></tile>
-		<tile row="1" column="3" type="plains"></tile>
-		<tile row="1" column="4" type="mountain"></tile>
-		<tile row="1" column="5" type="ocean"></tile>
-		<tile row="1" column="6" type="desert"></tile>
-		<tile row="1" column="7" type="plains"></tile>
-		<tile row="1" column="8" type="plains"></tile>
+		<tile row="1" column="0" type="ocean" event="5"></tile>
+		<tile row="1" column="1" type="desert" event="5"></tile>
+		<tile row="1" column="2" type="plains" event="5"></tile>
+		<tile row="1" column="3" type="plains" event="5"></tile>
+		<tile row="1" column="4" type="mountain" event="5"></tile>
+		<tile row="1" column="5" type="ocean" event="5"></tile>
+		<tile row="1" column="6" type="desert" event="5"></tile>
+		<tile row="1" column="7" type="plains" event="5"></tile>
+		<tile row="1" column="8" type="plains" event="5"></tile>
 		<tile row="1" column="9" type="mountain"></tile>
 	</row>
 	<row index="2">
-		<tile row="2" column="0" type="jungle"></tile>
-		<tile row="2" column="1" type="plains"></tile>
-		<tile row="2" column="2" type="plains">
+		<tile row="2" column="0" type="jungle" event="5"></tile>
+		<tile row="2" column="1" type="plains" event="5"></tile>
+		<tile row="2" column="2" type="plains" event="5">
 			<fortress name="HQ" owner="0">
 				<module mid="2" image="/sprite.png" name="SimpleUnit" owner="0"></module>
 			</fortress>
 		</tile>
-		<tile row="2" column="3" type="plains">
+		<tile row="2" column="3" type="plains" event="5">
 			<module mid="3" image="/sprite_2.png" name="ExampleUnit" owner="1"></module>
 		</tile>
-		<tile row="2" column="4" type="plains"></tile>
-		<tile row="2" column="5" type="jungle"></tile>
+		<tile row="2" column="4" type="plains" event="5"></tile>
+		<tile row="2" column="5" type="jungle" event="5"></tile>
 		<tile row="2" column="6" type="plains"></tile>
 		<tile row="2" column="7" type="plains"></tile>
 		<tile row="2" column="8" type="plains"></tile>

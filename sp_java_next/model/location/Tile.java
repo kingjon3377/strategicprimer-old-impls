@@ -24,7 +24,10 @@ public class Tile implements Location {
 	 * The location of this tile on the grid
 	 */
 	private Point location;
-
+	/**
+	 * The event, if any, on the tile
+	 */
+	private LocationEvent event;
 	/**
 	 * Constructor, to make warnings go away
 	 * 
@@ -170,5 +173,17 @@ public class Tile implements Location {
 	 */
 	public Point getLocation() {
 		return location;
+	}
+	/**
+	 * @return the event, if any, on the tile
+	 */
+	public LocationEvent getEvent() {
+		return event;
+	}
+	/**
+	 * @param _event the event to go on the tile
+	 */
+	public void setEvent(final LocationEvent _event) {
+		event = _event;
 	}
 }
