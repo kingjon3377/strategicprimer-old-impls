@@ -1,6 +1,9 @@
 package advances;
 
 import java.io.Serializable;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 import model.location.Location;
 import model.location.NullLocation;
@@ -11,6 +14,8 @@ import model.module.Module;
 import model.module.Statistics;
 import model.module.UnableToMoveException;
 import model.module.Statistics.Stats;
+import model.module.actions.Action;
+import model.module.kinds.FunctionalModule;
 import model.module.kinds.MobileModule;
 import model.module.kinds.Renameable;
 import model.module.kinds.RootModule;
@@ -26,7 +31,7 @@ import pathfinding.Path;
  * @author Jonathan Lovelace
  */
 public class ExampleUnit implements Module, Serializable, MobileModule,
-		Renameable, TransferableModule {
+		Renameable, TransferableModule, FunctionalModule {
 	/**
 	 * An ExampleUnit's starting movement points
 	 */
@@ -257,5 +262,32 @@ public class ExampleUnit implements Module, Serializable, MobileModule,
 	@Override
 	public void setOwner(final IPlayer _owner) {
 		owner = _owner;
+	}
+	/**
+	 * The set of supported actions
+	 */
+	private static final Set<Action> ACTIONS = new HashSet<Action>();
+	static {
+		ACTIONS.add(new Action(2,"Heal", 0));
+	}
+	/**
+	 * Do an action
+	 * @param action the action to do
+	 * @param args the arguments the action takes
+	 */
+	@Override
+	public void action(final long action, final Module... args) {
+		if (action == 2) {
+			statistics.getStats().put(Stats.HP, EXAMPLE_UNIT_HP);
+		} else {
+			throw new IllegalStateException("Unsupported action");
+		}
+	}
+	/**
+	 * @return the actions this unit can do
+	 */
+	@Override
+	public Set<Action> supportedActions() {
+		return Collections.unmodifiableSet(ACTIONS);
 	}
 }

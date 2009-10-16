@@ -1,6 +1,9 @@
 package model.module.kinds;
 
+import java.util.Set;
+
 import model.module.Module;
+import model.module.actions.Action;
 
 /**
  * A module that can perform an action (or more than one).
@@ -18,4 +21,8 @@ public interface FunctionalModule extends Module {
 	 *            results to be returned in)
 	 */
 	void action(long action, Module... args);
+	/**
+	 * @return The actions this module supports
+	 */
+	Set<Action> supportedActions();
 }
