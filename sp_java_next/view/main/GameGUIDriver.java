@@ -81,6 +81,7 @@ public class GameGUIDriver extends JFrame {
 		if (map.isAdmin()) {
 			menu.add(TerrainTypeMenu.MENU);
 		}
+		menu.add(ActionsMenu.ACTIONS_MENU);
 		add(menu, BorderLayout.NORTH);
 		initQueue = new InitiativeQueue();
 		add(initQueue, BorderLayout.WEST);

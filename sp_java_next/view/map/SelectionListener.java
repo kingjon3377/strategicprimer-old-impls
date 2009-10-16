@@ -19,7 +19,8 @@ public class SelectionListener implements MouseListener {
 	 * 
 	 * @param _map
 	 *            The GUIMap that should be told about selection changes.
-	 * @param _panel The module panel that should be told about selection changes 
+	 * @param _panel
+	 *            The module panel that should be told about selection changes
 	 */
 	public SelectionListener(final GUIMap _map, final CurrentModulePanel _panel) {
 		map = _map;
@@ -34,16 +35,13 @@ public class SelectionListener implements MouseListener {
 	 * The ModulePanel that should be told about selection changes
 	 */
 	private final CurrentModulePanel panel;
+
 	/**
-	 * Change the selected tile when a tile is clicked.
+	 * Ignored
 	 */
 	@Override
 	public void mouseClicked(final MouseEvent event) {
-		if (event.getSource() instanceof GUITile) {
-			panel.changeCurrentModule(((GUITile) event.getSource()).getTile().getModuleOnTile());
-			map.select((GUITile) event.getSource());
-			TerrainTypeMenu.MENU.setTile((GUITile) event.getSource());
-		}
+		// Do nothing
 	}
 
 	/**
@@ -69,18 +67,14 @@ public class SelectionListener implements MouseListener {
 	}
 
 	/**
-	 * Change the selected tile when a tile is clicked.
+	 * Ignored.
 	 * 
 	 * @param event
 	 *            ignored
 	 */
 	@Override
 	public void mousePressed(final MouseEvent event) {
-		if ((event.getSource() instanceof GUITile) && event.isPopupTrigger()) {
-			ActionsMenu.ACTIONS_MENU.setSelectedTile(map.getSelection());
-			ActionsMenu.ACTIONS_MENU.show(event.getComponent(), event.getX(), event
-					.getY());
-		}
+		// Do nothing
 	}
 
 	/**
@@ -92,14 +86,21 @@ public class SelectionListener implements MouseListener {
 	@Override
 	public void mouseReleased(final MouseEvent event) {
 		if (event.getSource() instanceof GUITile) {
-			if (event.isPopupTrigger()) {
+			if (ActionsMenu.ACTIONS_MENU.isActionSelected()) {
+				ActionsMenu.ACTIONS_MENU.setSecondTile((GUITile) event
+						.getComponent());
+				panel.changeCurrentModule(((GUITile) event.getSource()).getTile()
+						.getModuleOnTile());
+				map.select((GUITile) event.getSource());
+				TerrainTypeMenu.MENU.setTile((GUITile) event.getSource());
 				ActionsMenu.ACTIONS_MENU.setSelectedTile(map.getSelection());
-				ActionsMenu.ACTIONS_MENU.show(event.getComponent(), event.getX(), event
-						.getY());
+			} else {
+				panel.changeCurrentModule(((GUITile) event.getSource()).getTile()
+						.getModuleOnTile());
+				map.select((GUITile) event.getSource());
+				TerrainTypeMenu.MENU.setTile((GUITile) event.getSource());
+				ActionsMenu.ACTIONS_MENU.setSelectedTile(map.getSelection());
 			}
-			panel.changeCurrentModule(((GUITile) event.getSource()).getTile().getModuleOnTile());
-			map.select((GUITile) event.getSource());
-			TerrainTypeMenu.MENU.setTile((GUITile) event.getSource());
 		}
 	}
 }
