@@ -98,7 +98,11 @@ public class SPMap implements Serializable {
 	 * @return The tile at those coordinates
 	 */
 	public Tile getTileAt(final IPoint point) {
-		return tiles.get(point);
+		if (tiles.containsKey(point)) {
+			return tiles.get(point);
+		} else {
+			throw new IllegalArgumentException("Point " + point + " not in map");
+		}
 	}
 
 	/**
