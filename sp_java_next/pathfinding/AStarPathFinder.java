@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.location.IPoint;
+import model.location.Point;
 import model.location.SPMap;
 import model.module.kinds.MobileModule;
 
@@ -359,7 +360,7 @@ public class AStarPathFinder implements PathFinder {
 	 */
 	public double getMovementCost(final MobileModule mover, final IPoint start,
 			@SuppressWarnings("unused") final IPoint dest) {
-		return mover.getCost(map.getTileAt(start));
+		return mover.getCost(map.getTileAt(new Point(start)));
 	}
 
 	/**

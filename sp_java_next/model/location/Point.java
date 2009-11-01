@@ -68,4 +68,11 @@ public class Point implements IPoint {
 	public String toString() {
 		return "(" + xCoord + "," + yCoord + ")";
 	}
+	/**
+	 * Copy constructor
+	 * @param point The IPoint to copy
+	 */
+	public Point(final IPoint point) {
+		this(point.getX(),point.getY());
+	}
 }
