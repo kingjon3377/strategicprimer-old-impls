@@ -11,12 +11,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
 /**
  * A class to convert a map from an image to a matrix of chars.
+ * 
  * @author Jonathan Lovelace
- *
+ * 
  */
-public class MapReaderDriver implements Serializable{
+public class MapReaderDriver implements Serializable {
 	/**
 	 * Version UID for serialization
 	 */
@@ -24,7 +26,8 @@ public class MapReaderDriver implements Serializable{
 	/**
 	 * A logger to replace printStackTrace() calls.
 	 */
-	private static final Logger LOGGER = Logger.getLogger(MapReaderDriver.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(MapReaderDriver.class
+			.getName());
 	/**
 	 * The image we're converting
 	 */
@@ -37,6 +40,7 @@ public class MapReaderDriver implements Serializable{
 	 * To avoid instantiating in a loop.
 	 */
 	private static final Character A_CHARACTER = new Character('a');
+
 	/**
 	 * @param args
 	 */
@@ -89,6 +93,7 @@ public class MapReaderDriver implements Serializable{
 		}
 		writer.close();
 	}
+
 	/**
 	 * @return a matrix of characters representing the map.
 	 */
@@ -97,13 +102,15 @@ public class MapReaderDriver implements Serializable{
 		final Map<Pixel, Character> map = new HashMap<Pixel, Character>();
 		int currentTerrain = 0;
 		for (List<Pixel> list : reduce()) {
-			final List<Character >row = newList();
+			final List<Character> row = newList();
 			for (Pixel pix : list) {
 				if (!map.containsKey(pix)) {
 					if (pix.equals(Pixel.BLACK_PIXEL)) {
 						map.put(pix, A_CHARACTER);
 					} else {
-						map.put(pix, Integer.toString(currentTerrain).charAt(0));
+						map
+								.put(pix, Integer.toString(currentTerrain)
+										.charAt(0));
 						++currentTerrain;
 					}
 				}
@@ -117,13 +124,14 @@ public class MapReaderDriver implements Serializable{
 		}
 		return retval;
 	}
+
 	/**
 	 * @return a new List of Characters
 	 */
 	private static List<Character> newList() {
 		return new ArrayList<Character>();
 	}
-	
+
 	/**
 	 * @return a reduced (all consecutive duplicate rows removed, and all
 	 *         consecutive duplicate pixels in each row removed) matrix of
@@ -139,7 +147,8 @@ public class MapReaderDriver implements Serializable{
 			pixels.add(list);
 		}
 		for (int i = 0; i < pixels.size(); i++) {
-			while (i + 1 < pixels.size() && pixels.get(i).equals(pixels.get(i + 1))) {
+			while (i + 1 < pixels.size()
+					&& pixels.get(i).equals(pixels.get(i + 1))) {
 				pixels.remove(i + 1);
 			}
 		}
@@ -148,9 +157,12 @@ public class MapReaderDriver implements Serializable{
 		}
 		return pixels;
 	}
+
 	/**
 	 * Remove duplicate pixels from a list of pixels
-	 * @param list The list to reduce
+	 * 
+	 * @param list
+	 *            The list to reduce
 	 */
 	private static void removeDuplicatePixels(final List<Pixel> list) {
 		for (int i = 0; i < list.size(); i++) {
@@ -159,6 +171,7 @@ public class MapReaderDriver implements Serializable{
 			}
 		}
 	}
+
 	/**
 	 * @return a new List of Pixels
 	 */

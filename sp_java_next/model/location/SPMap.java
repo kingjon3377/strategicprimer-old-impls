@@ -133,11 +133,14 @@ public class SPMap implements Serializable {
 			tiles.put(point, new Tile(point));
 		}
 	}
+
 	/**
 	 * Add tiles to the map.
-	 * @param map a Map containing the tiles.
+	 * 
+	 * @param map
+	 *            a Map containing the tiles.
 	 */
-	public void addTiles(final Map<Point,Tile> map) {
+	public void addTiles(final Map<Point, Tile> map) {
 		tiles.putAll(map);
 	}
 }
