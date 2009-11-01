@@ -2,11 +2,14 @@ package advances;
 
 import java.io.Serializable;
 import java.util.Collections;
+import java.util.EnumMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import model.location.Location;
 import model.location.NullLocation;
+import model.location.TerrainType;
 import model.location.Tile;
 import model.main.Game;
 import model.main.UuidManager;
@@ -186,6 +189,17 @@ public class ExampleUnit implements Module, Serializable, MobileModule,
 			throw new UnableToMoveException("Location already occupied"); // NOPMD
 		}
 		setLocation(loc);
+		getStatistics().getStats().put(
+				Stats.MP,
+				getStatistics().getStats().get(Stats.MP).doubleValue()
+						- pathCost(new AStarPathFinder(Game.getGame().getMap(),
+								statistics.getStats().get(Stats.MP).intValue(),
+								true).findPath(this, ((Tile) location)
+								.getLocation().getX(), ((Tile) location)
+								.getLocation().getY(), ((Tile) loc)
+								.getLocation().getX(), ((Tile) loc)
+								.getLocation().getY())));
+		System.out.println(getStatistics().getStats().get(Stats.MP) + " MP left");
 		// FIXME: Should subtract an appropriate cost from MP.
 	}
 
@@ -225,16 +239,42 @@ public class ExampleUnit implements Module, Serializable, MobileModule,
 		return loc.checkAdd(this)
 				&& location instanceof Tile
 				&& loc instanceof Tile
-				&& (!new AStarPathFinder(Game.getGame().getMap(), statistics
-						.getStats().get(Stats.MP).intValue(), true).findPath(
-						this, ((Tile) location).getLocation().getX(),
-						((Tile) location).getLocation().getY(),
-						((Tile) loc).getLocation().getX(),
-						((Tile) loc).getLocation().getY()).equals(new Path()));
+				&& checkPath(new AStarPathFinder(Game.getGame().getMap(),
+						statistics.getStats().get(Stats.MP).intValue(), true)
+						.findPath(this, ((Tile) location).getLocation().getX(),
+								((Tile) location).getLocation().getY(),
+								((Tile) loc).getLocation().getX(), ((Tile) loc)
+										.getLocation().getY()));
 	}
 
 	/**
-	 * FIXME: Implement!
+	 * Is a path passable within our MP budget?
+	 * 
+	 * @param path
+	 *            a path
+	 * @return whether that path is passable within our budget
+	 */
+	private boolean checkPath(final Path path) {
+		return !path.equals(new Path())
+				&& pathCost(path) <= statistics.getStats().get(Stats.MP)
+						.doubleValue();
+	}
+
+	/**
+	 * @param path
+	 *            a path
+	 * @return the cost in MP for us to take that path
+	 */
+	private double pathCost(final Path path) {
+		double cost = 0;
+		for (int i = 1; i < path.getLength(); i++) {
+			cost += getCost(Game.getGame().getMap().getTileAt(path.getStep(i)));
+		}
+		return cost;
+	}
+
+	/**
+	 * TODO: Should take roads, etc., into account.
 	 * 
 	 * @param loc
 	 *            a location
@@ -242,13 +282,21 @@ public class ExampleUnit implements Module, Serializable, MobileModule,
 	 */
 	@Override
 	public double getCost(final Location loc) {
-		// TODO Auto-generated method stub
-		return 1;
+		if (loc == null) {
+			throw new IllegalStateException("Called getCost(null)");
+		} else if (loc instanceof Tile) {
+			return MOVE_COST_MAP.get(((Tile) loc).getTerrain());
+		} else {
+			throw new IllegalStateException(
+					"Called getCost() on a non-Tile Location");
+		}
 	}
+
 	/**
 	 * The unit's owner
 	 */
 	private IPlayer owner;
+
 	/**
 	 * @return the unit's owner
 	 */
@@ -297,5 +345,22 @@ public class ExampleUnit implements Module, Serializable, MobileModule,
 	@Override
 	public Set<Action> supportedActions() {
 		return Collections.unmodifiableSet(ACTIONS);
+	}
+
+	/**
+	 * A mapping from terrain types to the cost to enter tiles of that type.
+	 */
+	private static final Map<TerrainType, Double> MOVE_COST_MAP = new EnumMap<TerrainType, Double>(
+			TerrainType.class);
+	static {
+		MOVE_COST_MAP.put(TerrainType.Plains, 1.0);
+		MOVE_COST_MAP.put(TerrainType.Desert, 2.0);
+		MOVE_COST_MAP.put(TerrainType.Tundra, 2.0);
+		MOVE_COST_MAP.put(TerrainType.TemperateForest, 4.0);
+		MOVE_COST_MAP.put(TerrainType.BorealForest, 4.0);
+		MOVE_COST_MAP.put(TerrainType.Jungle, 5.0);
+		MOVE_COST_MAP.put(TerrainType.Mountain, 5.0);
+		MOVE_COST_MAP.put(TerrainType.Ocean, Double.MAX_VALUE);
+		MOVE_COST_MAP.put(TerrainType.NotVisible, Double.MAX_VALUE);
 	}
 }
