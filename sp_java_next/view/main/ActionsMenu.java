@@ -52,16 +52,16 @@ public final class ActionsMenu extends JMenu implements ActionListener {
 	 * "Attack" item
 	 */
 	private final JMenuItem attackItem;
+	/**
+	 * "Cancel" item (cancel pending action
+	 */
+	private final JMenuItem cancelItem;
 
 	/**
-	 * The currently selected tile, which shouldn't be the one from which this
-	 * popup springs
+	 * The currently selected tile, i.e. the one holding the module that will do
+	 * the action
 	 */
 	private GUITile selectedTile;
-	/**
-	 * The destination/target/etc. tile
-	 */
-	private GUITile secondTile;
 	/**
 	 * The currently selected action.
 	 */
@@ -82,6 +82,9 @@ public final class ActionsMenu extends JMenu implements ActionListener {
 		attackItem = new JMenuItem("Attack");
 		add(attackItem);
 		attackItem.addActionListener(this);
+		cancelItem = new JMenuItem("Cancel");
+		add(cancelItem);
+		cancelItem.addActionListener(this);
 		actionSelected = false;
 	}
 
@@ -91,6 +94,8 @@ public final class ActionsMenu extends JMenu implements ActionListener {
 	private void refreshMenu() {
 		this.removeAll();
 		actionMap.clear();
+		add(cancelItem);
+		actionMap.put("Cancel", 0L);
 		if (getModuleOnTile(selectedTile) instanceof MobileModule) {
 			add(moveItem);
 			actionMap.put("Move", -2L);
@@ -122,9 +127,9 @@ public final class ActionsMenu extends JMenu implements ActionListener {
 	public void actionPerformed(final ActionEvent event) {
 		if (actionMap.containsKey(event.getActionCommand())) {
 			action = actionMap.get(event.getActionCommand());
-			actionSelected = true;
+			actionSelected = action != 0;
 		} else {
-			System.err.println("Unknown action " + event.getActionCommand());
+			LOGGER.severe("Unknown action " + event.getActionCommand());
 		}
 	}
 
@@ -141,33 +146,32 @@ public final class ActionsMenu extends JMenu implements ActionListener {
 	 * @param tile
 	 *            the tile the action should be done to
 	 */
-	public void setSecondTile(final GUITile tile) {
-		secondTile = tile;
-		if (action == 0) {
-			return;
-		} else if (action == -2) {
-			try {
-				if (((MobileModule) getModuleOnTile(selectedTile))
-						.checkMove(secondTile.getTile())) {
-					((MobileModule) getModuleOnTile(selectedTile))
-							.move(secondTile.getTile());
+	public void applyAction(final GUITile tile) {
+		if (action != 0) {
+			if (action == -2) {
+				try {
+					if (((MobileModule) getModuleOnTile(selectedTile))
+							.checkMove(tile.getTile())) {
+						((MobileModule) getModuleOnTile(selectedTile)).move(tile
+								.getTile());
+					}
+				} catch (UnableToMoveException e) {
+					LOGGER.info("Movement failed");
 				}
-			} catch (UnableToMoveException e) {
-				LOGGER.info("Movement failed");
+			} else if (action == -1) {
+				((Weapon) getModuleOnTile(selectedTile))
+						.attack(getModuleOnTile(tile));
+			} else {
+				((FunctionalModule) getModuleOnTile(selectedTile)).action(action,
+						getModuleOnTile(tile));
 			}
-		} else if (action == -1) {
-			((Weapon) getModuleOnTile(selectedTile))
-					.attack(getModuleOnTile(secondTile));
-		} else {
-			((FunctionalModule) getModuleOnTile(selectedTile)).action(action,
-					getModuleOnTile(secondTile));
 		}
 		cancelSelectedAction();
 		if (selectedTile != null) {
 			selectedTile.repaint();
 		}
-		if (secondTile != null) {
-			secondTile.repaint();
+		if (tile != null) {
+			tile.repaint();
 		}
 	}
 

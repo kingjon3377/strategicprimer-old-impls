@@ -87,7 +87,7 @@ public class SelectionListener implements MouseListener {
 	public void mouseReleased(final MouseEvent event) {
 		if (event.getSource() instanceof GUITile) {
 			if (ActionsMenu.ACTIONS_MENU.isActionSelected()) {
-				ActionsMenu.ACTIONS_MENU.setSecondTile((GUITile) event
+				ActionsMenu.ACTIONS_MENU.applyAction((GUITile) event
 						.getComponent());
 				panel.changeCurrentModule(((GUITile) event.getSource()).getTile()
 						.getModuleOnTile());
