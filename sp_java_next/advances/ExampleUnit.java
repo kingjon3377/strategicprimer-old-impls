@@ -256,24 +256,31 @@ public class ExampleUnit implements Module, Serializable, MobileModule,
 	public IPlayer getOwner() {
 		return owner;
 	}
+
 	/**
-	 * @param _owner the unit's new owner
+	 * @param _owner
+	 *            the unit's new owner
 	 */
 	@Override
 	public void setOwner(final IPlayer _owner) {
 		owner = _owner;
 	}
+
 	/**
 	 * The set of supported actions
 	 */
 	private static final Set<Action> ACTIONS = new HashSet<Action>();
 	static {
-		ACTIONS.add(new Action(2,"Heal", 0));
+		ACTIONS.add(new Action(2, "Heal", 0));
 	}
+
 	/**
 	 * Do an action
-	 * @param action the action to do
-	 * @param args the arguments the action takes
+	 * 
+	 * @param action
+	 *            the action to do
+	 * @param args
+	 *            the arguments the action takes
 	 */
 	@Override
 	public void action(final long action, final Module... args) {
@@ -283,6 +290,7 @@ public class ExampleUnit implements Module, Serializable, MobileModule,
 			throw new IllegalStateException("Unsupported action");
 		}
 	}
+
 	/**
 	 * @return the actions this unit can do
 	 */

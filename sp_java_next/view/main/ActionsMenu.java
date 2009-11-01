@@ -107,19 +107,23 @@ public final class ActionsMenu extends JMenu implements ActionListener {
 		if (getModuleOnTile(selectedTile) instanceof FunctionalModule) {
 			for (Action act : ((FunctionalModule) getModuleOnTile(selectedTile))
 					.supportedActions()) {
-				addMenuItem(new JMenuItem(act.getDescription()));
+				addMenuItem(new JMenuItem(act.getDescription())); // NOPMD
 				actionMap.put(act.getDescription(), act.getNumber());
 			}
 		}
 	}
+
 	/**
 	 * Add a menu item and set this as its listener.
-	 * @param item the item to add
+	 * 
+	 * @param item
+	 *            the item to add
 	 */
 	private void addMenuItem(final JMenuItem item) {
 		add(item);
 		item.addActionListener(this);
 	}
+
 	/**
 	 * Handle menu item selections.
 	 */
