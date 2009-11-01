@@ -20,7 +20,7 @@ public class ClosestHeuristic implements AStarHeuristic {
 	 * @param start The starting coordinates
 	 * @param dest The destination coordinates
 	 * @return An estimate of the cost of the route
-	 * @see AStarHeuristic#getCost(TileBasedMap, Mover, int, int, int, int)
+	 * @see AStarHeuristic#getCost(SPMap, MobileModule, IPoint, IPoint)
 	 */
 	@Override
 	public double getCost(final SPMap map, final MobileModule mover,

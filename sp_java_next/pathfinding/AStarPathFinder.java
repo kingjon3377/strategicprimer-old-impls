@@ -75,7 +75,7 @@ public class AStarPathFinder implements PathFinder {
 	}
 
 	/**
-	 * @see PathFinder#findPath(Mover, int, int, int, int)
+	 * @see PathFinder#findPath(MobileModule, int, int, int, int)
 	 * @return the shortest path for this mover from the start to the
 	 *         destination. Returns an *empty* Path, rather than null, if no
 	 *         path exists.
