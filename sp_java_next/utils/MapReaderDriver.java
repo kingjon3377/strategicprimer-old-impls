@@ -49,32 +49,39 @@ public class MapReaderDriver implements Serializable{
 			LOGGER.log(Level.SEVERE, "I/O error", e);
 		}
 	}
+
 	/**
 	 * Constructor
-	 * @param filename The filename of the image
-	 * @throws FileNotFoundException if the file doesn't exist
+	 * 
+	 * @param filename
+	 *            The filename of the image
+	 * @throws FileNotFoundException
+	 *             if the file doesn't exist
 	 */
 	public MapReaderDriver(final String filename) throws FileNotFoundException {
 		pict = new Picture(filename);
 		pixMap = new HashMap<Pixel, String>();
 	}
+
 	/**
 	 * 
-	 * @param filename The filename to write the matrix to
-	 * @throws IOException on input error
+	 * @param filename
+	 *            The filename to write the matrix to
+	 * @throws IOException
+	 *             on input error
 	 */
 	public void run(final String filename) throws IOException {
 		pixMap.clear();
-		final BufferedWriter writer = new BufferedWriter(new FileWriter(filename));
-		int currentTerrain = 0;
+		final BufferedWriter writer = new BufferedWriter(new FileWriter(
+				filename));
+		final Incrementor currentTerrain = new Incrementor(); // NOPMD
 		for (List<Pixel> list : reduce()) {
 			for (Pixel pix : list) {
 				if (!pixMap.containsKey(pix)) {
-					if (pix.equals(Pixel.BLACK_PIXEL)) {
-						pixMap.put(pix, "Separator ");
-					} else {
-						pixMap.put(pix, "Terrain" + currentTerrain++ + " ");
-					}
+					pixMap.put(pix,
+							(pix.equals(Pixel.BLACK_PIXEL) ? "Separator"
+									: "Terrain" + currentTerrain.getNextValue()
+											+ " "));
 				}
 				writer.append(pixMap.get(pix));
 			}
