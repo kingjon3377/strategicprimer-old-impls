@@ -10,6 +10,8 @@ import java.util.Map;
 
 import javax.swing.JPanel;
 
+import view.main.ActionsMenu;
+
 import model.location.IPoint;
 import model.location.Point;
 import model.location.SPMap;
@@ -61,9 +63,10 @@ public class GUIMap extends JPanel {
 		tiles = new HashMap<Point, GUITile>();
 		reloadMap(map);
 		repaint();
-		this.setPreferredSize(new Dimension(map.getSizeCols()
+		setPreferredSize(new Dimension(map.getSizeCols()
 				* tiles.get(new Point(0, 0)).getWidth(), map.getSizeRows()
 				* tiles.get(new Point(0, 0)).getHeight()));
+		ActionsMenu.ACTIONS_MENU.setMap(this);
 	}
 
 	/**
@@ -163,5 +166,13 @@ public class GUIMap extends JPanel {
 			}
 		}
 		repaint();
+	}
+	/**
+	 * Set all tiles to not being part of a path.
+	 */
+	public final void clearPaths() {
+		for (GUITile tile : tiles.values()) {
+			tile.setPartOfAPath(false);
+		}
 	}
 }
