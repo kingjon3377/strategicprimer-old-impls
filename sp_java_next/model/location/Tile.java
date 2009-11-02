@@ -49,7 +49,7 @@ public class Tile implements Location {
 	 */
 	public Tile(final Point point) {
 		location = point;
-		moduleOnTile = RootModule.getRootModule();
+		moduleOnTile = RootModule.ROOT_MODULE;
 		terrain = TerrainType.NotVisible;
 	}
 
@@ -61,7 +61,7 @@ public class Tile implements Location {
 	 *            the module to put on the tile
 	 */
 	public void add(final Module module) {
-		if (moduleOnTile.equals(RootModule.getRootModule())) {
+		if (moduleOnTile.equals(RootModule.ROOT_MODULE)) {
 			setModuleOnTile(module);
 		} else if (moduleOnTile instanceof Fortress) {
 			((Fortress) moduleOnTile).add(module);
@@ -116,7 +116,7 @@ public class Tile implements Location {
 	 */
 	public void remove(final Module module) {
 		if (moduleOnTile.equals(module)) {
-			moduleOnTile = RootModule.getRootModule();
+			moduleOnTile = RootModule.ROOT_MODULE;
 		} else if (moduleOnTile instanceof Fortress) {
 			((Fortress) moduleOnTile).remove(module);
 		} else {
@@ -160,7 +160,7 @@ public class Tile implements Location {
 	 */
 	@Override
 	public boolean checkAdd(final Module module) {
-		return moduleOnTile.equals(RootModule.getRootModule())
+		return moduleOnTile.equals(RootModule.ROOT_MODULE)
 				|| (moduleOnTile instanceof Fortress && ((Fortress) moduleOnTile)
 						.checkAdd(module));
 	}

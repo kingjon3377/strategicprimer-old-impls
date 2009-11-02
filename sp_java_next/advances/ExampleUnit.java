@@ -82,7 +82,7 @@ public class ExampleUnit implements Module, Serializable, MobileModule,
 		statistics.getStats().put(Stats.MAX_MP, EXAMPLE_UNIT_MP);
 		statistics.getStats().put(Stats.MP, EXAMPLE_UNIT_MP);
 		location = NullLocation.NULL_LOC;
-		parent = RootModule.getRootModule();
+		parent = RootModule.ROOT_MODULE;
 	}
 
 	/**

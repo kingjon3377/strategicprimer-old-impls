@@ -149,7 +149,7 @@ public final class MapXMLWriter {
 		}
 		writer.print(CLOSE_XML_ATT_TAG);
 		if (tile.getModuleOnTile() != null
-				&& !tile.getModuleOnTile().equals(RootModule.getRootModule())) {
+				&& !tile.getModuleOnTile().equals(RootModule.ROOT_MODULE)) {
 			writer.println();
 			if (tile.getModuleOnTile() instanceof Fortress) {
 				writeFortress((Fortress) tile.getModuleOnTile(), writer, START_TABS);
