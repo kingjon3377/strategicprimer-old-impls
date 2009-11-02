@@ -11,47 +11,57 @@ import javax.swing.JFileChooser;
 
 import model.main.Game;
 import model.main.MapXMLWriter;
+
 /**
- * A class to handle menu events
+ * A class to handle menu events.
+ * 
  * @author Jonathan Lovelace
  */
 public final class MenuListener implements ActionListener, Serializable {
 	/**
-	 * Version UID for serialization
+	 * Version UID for serialization.
 	 */
 	private static final long serialVersionUID = -3958202858414521914L;
 	/**
-	 * The singleton object
+	 * The singleton object.
 	 */
 	public static final MenuListener MENU_LISTENER = new MenuListener();
 	/**
-	 * The file-chooser dialog
+	 * The file-chooser dialog.
 	 */
 	private static final JFileChooser FILE_CHOOSER = new JFileChooser();
 	/**
-	 * Logger
+	 * Logger.
 	 */
 	private static final Logger LOGGER = Logger.getLogger(MenuListener.class.getName());
+
 	/**
-	 * This is singleton
+	 * This is singleton.
 	 */
 	private MenuListener() {
 		// Nothing as of yet
 	}
+
 	/**
-	 * Our reference to the main GUI
+	 * Our reference to the main GUI.
 	 */
 	private transient GameGUIDriver driver;
+
 	/**
-	 * Sets our reference to the GUI
-	 * @param _driver The main GUI
+	 * Sets our reference to the GUI.
+	 * 
+	 * @param theDriver
+	 *            The main GUI
 	 */
-	public void setDriver(final GameGUIDriver _driver) {
-		driver = _driver;
+	public void setDriver(final GameGUIDriver theDriver) {
+		driver = theDriver;
 	}
+
 	/**
 	 * Handle events.
-	 * @param event the event to handle
+	 * 
+	 * @param event
+	 *            the event to handle
 	 */
 	@Override
 	public void actionPerformed(final ActionEvent event) {
@@ -59,13 +69,14 @@ public final class MenuListener implements ActionListener, Serializable {
 			if (FILE_CHOOSER.showOpenDialog(driver) == JFileChooser.APPROVE_OPTION) {
 				Game.getGame().createMap(FILE_CHOOSER.getSelectedFile().getPath());
 				driver.reloadMap();
-	        }
+			}
 		} else if (event.getActionCommand().equals("Save")) {
 			if (FILE_CHOOSER.showSaveDialog(driver) == JFileChooser.APPROVE_OPTION) {
 				try {
 					MapXMLWriter.writeGameToXML(FILE_CHOOSER.getSelectedFile().getPath());
 				} catch (IOException e) {
-					LOGGER.log(Level.SEVERE,"I/O error when trying to write map to XML file",e);
+					LOGGER.log(Level.SEVERE,
+							"I/O error when trying to write map to XML file", e);
 				}
 			}
 		} else if (event.getActionCommand().equals("Quit")) {

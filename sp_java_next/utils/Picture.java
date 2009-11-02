@@ -59,35 +59,36 @@ import javax.swing.ImageIcon;
  * @author Jonathan Lovelace (modifier)
  * @author Josh Vroom (modifier) (Added dim(), negative(), flipVertical(), and
  *         shift() (horizontally 50%).)
- * @class CS108LA
- * @assignment HoTJ Lab #11
- * @date 16 November 2006
- * @semester 06FA
+ * 
+ * @calvin.class CS108LA
+ * @calvin.assignment HoTJ Lab #11
+ * @calvin.date 16 November 2006
+ * @calvin.semester 06FA
  * 
  */
-public final  class Picture implements Serializable{
+public final class Picture implements Serializable {
 	/**
-	 * Version UID for serialization
+	 * Version UID for serialization.
 	 */
 	private static final long serialVersionUID = 6855528690949053775L;
 	/**
-	 * How many pixels are being averaged by blur()
+	 * How many pixels are being averaged by blur().
 	 */
 	private static final int BLUR_PIXEL_COUNT = 9;
 	/**
-	 * The maximum value for any component
+	 * The maximum value for any component.
 	 */
 	private static final int MAX_INTENSITY = 255;
 	/**
-	 * If the image is in color
+	 * If the image is in color.
 	 */
 	public static final int COLOR = BufferedImage.TYPE_INT_RGB;
 	/**
-	 * If the image is grayscale
+	 * If the image is grayscale.
 	 */
 	public static final int GRAY = BufferedImage.TYPE_BYTE_GRAY;
 	/**
-	 * Color by default
+	 * Color by default.
 	 */
 	private static final int DEFAULT_IMG_TYPE = BufferedImage.TYPE_INT_RGB;
 	/**
@@ -103,13 +104,13 @@ public final  class Picture implements Serializable{
 	 */
 	private transient BufferedImage bufferedImage;
 	/**
-	 * The raster part of the image (?)
+	 * The raster part of the image (?).
 	 */
 	private transient WritableRaster raster;
 
-//	private int imageWidth, imageHeight;
+	// private int imageWidth, imageHeight;
 
-//	private Picture copy;
+	// private Picture copy;
 
 	/**
 	 * Construct a new Picture object with no image or type.
@@ -124,8 +125,8 @@ public final  class Picture implements Serializable{
 	 * Construct an image object with the given width and height and the default
 	 * type.
 	 * 
-	 * @param width
-	 * @param height
+	 * @param width the width of the image
+	 * @param height the height of the image
 	 */
 	public Picture(final int width, final int height) {
 		this(width, height, DEFAULT_IMG_TYPE);
@@ -134,9 +135,9 @@ public final  class Picture implements Serializable{
 	/**
 	 * Construct an image object with the given width, height and type.
 	 * 
-	 * @param width
-	 * @param height
-	 * @param type
+	 * @param width the width of the image
+	 * @param height the height of the image
+	 * @param type the type of the image
 	 */
 	public Picture(final int width, final int height, final int type) {
 		bufferedImage = new BufferedImage(width, height, type);
@@ -147,8 +148,8 @@ public final  class Picture implements Serializable{
 	/**
 	 * Construct an image object with the image loaded from the given filename.
 	 * 
-	 * @param filename
-	 * @throws FileNotFoundException
+	 * @param filename the filename of the image to load
+	 * @throws FileNotFoundException on file not found
 	 */
 	public Picture(final String filename) throws FileNotFoundException {
 		this(filename, DEFAULT_IMG_TYPE);
@@ -158,33 +159,37 @@ public final  class Picture implements Serializable{
 	 * Construct an image object with the image loaded from the given filename
 	 * and with the given type.
 	 * 
-	 * @param filename
+	 * @param filename the filename to load the image from
 	 * @param type
 	 *            (COLOR or GRAY)
-	 * @throws FileNotFoundException
+	 * @throws FileNotFoundException on file not found
 	 */
 	public Picture(final String filename, final int type) throws FileNotFoundException {
 		imageType = (type == COLOR || type == GRAY ? type : DEFAULT_IMG_TYPE);
 		load(filename);
 	}
+
 	/**
 	 * @return the image type
 	 */
 	public int getImageType() {
 		return imageType;
 	}
+
 	/**
 	 * @return the image's width
 	 */
 	public int getWidth() {
 		return bufferedImage.getWidth();
 	}
+
 	/**
 	 * @return the image's height
 	 */
 	public int getHeight() {
 		return bufferedImage.getHeight();
 	}
+
 	/**
 	 * @return the image as a WriteableRaster
 	 */
@@ -195,8 +200,8 @@ public final  class Picture implements Serializable{
 	/**
 	 * Load a new image from the given file.
 	 * 
-	 * @param filename
-	 * @throws FileNotFoundException
+	 * @param filename the filename to load an image from
+	 * @throws FileNotFoundException when the file doesn't exist
 	 */
 	public void load(final String filename) throws FileNotFoundException {
 		final File file = new File(filename);
@@ -204,8 +209,8 @@ public final  class Picture implements Serializable{
 			throw new FileNotFoundException("File not found: " + filename);
 		}
 		final Image image = new ImageIcon(filename).getImage();
-		bufferedImage = new BufferedImage(image.getWidth(null), image
-				.getHeight(null), imageType);
+		bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null),
+				imageType);
 		final Graphics pen = bufferedImage.getGraphics();
 		pen.drawImage(image, 0, 0, null);
 		pen.dispose();
@@ -229,8 +234,8 @@ public final  class Picture implements Serializable{
 	/**
 	 * Get the pixel object for the specified x,y location.
 	 * 
-	 * @param xCoord
-	 * @param yCoord
+	 * @param xCoord the X coordinate
+	 * @param yCoord the Y coordinate
 	 * @return the pixel at that location
 	 */
 	public Pixel getPixel(final int xCoord, final int yCoord) {
@@ -245,13 +250,17 @@ public final  class Picture implements Serializable{
 	 * Set the pixel object at x,y to the given pixel. The x,y coordinate must
 	 * be within the bounds of the image itself.
 	 * 
-	 * @param xCoord the X coordinate of the pixel
-	 * @param yCoord the Y coordinate of the pixel
-	 * @param pixel the new pixel
+	 * @param xCoord
+	 *            the X coordinate of the pixel
+	 * @param yCoord
+	 *            the Y coordinate of the pixel
+	 * @param pixel
+	 *            the new pixel
 	 */
 	public void setPixel(final int xCoord, final int yCoord, final Pixel pixel) {
 		raster.setPixel(xCoord, yCoord, pixel.getComponents());
 	}
+
 	/**
 	 * Flip the image horizontally.
 	 */
@@ -265,9 +274,9 @@ public final  class Picture implements Serializable{
 			}
 		}
 	}
-	
+
 	/**
-	 * Brighten the image
+	 * Brighten the image.
 	 */
 	public void brighten() {
 		for (int x = 0; x < getWidth(); x++) {
@@ -280,8 +289,9 @@ public final  class Picture implements Serializable{
 			}
 		}
 	}
+
 	/**
-	 * Dim the image
+	 * Dim the image.
 	 */
 	public void dim() {
 		for (int x = 0; x < getWidth(); x++) {
@@ -294,8 +304,9 @@ public final  class Picture implements Serializable{
 			}
 		}
 	}
+
 	/**
-	 * Reverse video
+	 * Reverse video.
 	 */
 	public void negative() {
 		for (int x = 0; x < getWidth(); x++) {
@@ -308,6 +319,7 @@ public final  class Picture implements Serializable{
 			}
 		}
 	}
+
 	/**
 	 * Flip the image vertically.
 	 */
@@ -321,6 +333,7 @@ public final  class Picture implements Serializable{
 			}
 		}
 	}
+
 	/**
 	 * Shift the image halfway to the right or left.
 	 */
@@ -333,8 +346,9 @@ public final  class Picture implements Serializable{
 			}
 		}
 	}
+
 	/**
-	 * blur the image
+	 * blur the image.
 	 */
 	public void blur() {
 		final Picture pictureCopy = copy();
@@ -349,35 +363,42 @@ public final  class Picture implements Serializable{
 				final Pixel pix21 = pictureCopy.getPixel(x, (y + 1) % getHeight());
 				final Pixel pix22 = pictureCopy.getPixel((x + 1) % getWidth(), (y + 1)
 						% getHeight());
-				pix11
-						.setBlue((pictureCopy.getPixel(MathExtension.modulus((x - 1),
-								getWidth()), MathExtension
-								.modulus((y - 1), getHeight())).getBlue() + pictureCopy.getPixel(x, MathExtension.modulus((y - 1),
-										getHeight())).getBlue()
-								+ pictureCopy.getPixel((x + 1) % getWidth(),
-										MathExtension.modulus((y - 1), getHeight())).getBlue() + pix10.getBlue()
-								+ pix11.getBlue() + pix12.getBlue()
-								+ pix20.getBlue() + pix21.getBlue() + pix22
-								.getBlue()) / BLUR_PIXEL_COUNT);
-				pix11.setGreen((pictureCopy.getPixel(MathExtension.modulus((x - 1),
-						getWidth()), MathExtension
-						.modulus((y - 1), getHeight())).getGreen() + pictureCopy.getPixel(x, MathExtension.modulus((y - 1),
-								getHeight())).getGreen()
+				pix11.setBlue((pictureCopy.getPixel(
+						MathExtension.modulus((x - 1), getWidth()),
+						MathExtension.modulus((y - 1), getHeight())).getBlue()
+						+ pictureCopy.getPixel(x,
+								MathExtension.modulus((y - 1), getHeight())).getBlue()
 						+ pictureCopy.getPixel((x + 1) % getWidth(),
-								MathExtension.modulus((y - 1), getHeight())).getGreen() + pix10.getGreen()
-						+ pix11.getGreen() + pix12.getGreen()
-						+ pix20.getGreen() + pix21.getGreen() + pix22
-						.getGreen()) / BLUR_PIXEL_COUNT);
-				pix11
-						.setRed((pictureCopy.getPixel(MathExtension.modulus((x - 1),
-								getWidth()), MathExtension
-								.modulus((y - 1), getHeight())).getRed() + pictureCopy.getPixel(x, MathExtension.modulus((y - 1),
-										getHeight())).getRed()
-								+ pictureCopy.getPixel((x + 1) % getWidth(),
-										MathExtension.modulus((y - 1), getHeight())).getRed() + pix10.getRed()
-								+ pix11.getRed() + pix12.getRed()
-								+ pix20.getRed() + pix21.getRed() + pix22
-								.getRed()) / BLUR_PIXEL_COUNT);
+								MathExtension.modulus((y - 1), getHeight())).getBlue()
+						+ pix10.getBlue()
+						+ pix11.getBlue()
+						+ pix12.getBlue()
+						+ pix20.getBlue() + pix21.getBlue() + pix22.getBlue())
+						/ BLUR_PIXEL_COUNT);
+				pix11.setGreen((pictureCopy.getPixel(
+						MathExtension.modulus((x - 1), getWidth()),
+						MathExtension.modulus((y - 1), getHeight())).getGreen()
+						+ pictureCopy.getPixel(x,
+								MathExtension.modulus((y - 1), getHeight())).getGreen()
+						+ pictureCopy.getPixel((x + 1) % getWidth(),
+								MathExtension.modulus((y - 1), getHeight())).getGreen()
+						+ pix10.getGreen()
+						+ pix11.getGreen()
+						+ pix12.getGreen()
+						+ pix20.getGreen() + pix21.getGreen() + pix22.getGreen())
+						/ BLUR_PIXEL_COUNT);
+				pix11.setRed((pictureCopy.getPixel(
+						MathExtension.modulus((x - 1), getWidth()),
+						MathExtension.modulus((y - 1), getHeight())).getRed()
+						+ pictureCopy.getPixel(x,
+								MathExtension.modulus((y - 1), getHeight())).getRed()
+						+ pictureCopy.getPixel((x + 1) % getWidth(),
+								MathExtension.modulus((y - 1), getHeight())).getRed()
+						+ pix10.getRed()
+						+ pix11.getRed()
+						+ pix12.getRed()
+						+ pix20.getRed() + pix21.getRed() + pix22.getRed())
+						/ BLUR_PIXEL_COUNT);
 				setPixel(x, y, pix11);
 			}
 		}

@@ -5,7 +5,7 @@ package utils;
  * improved modulo operator.
  * 
  * @author Jonathan Lovelace
- * @date 16 November 2006
+ * @calvin.date 16 November 2006
  * 
  */
 public final class MathExtension {

@@ -15,60 +15,60 @@ import model.module.kinds.MobileModule;
  * @author Kevin Glass
  */
 public class AStarPathFinder implements PathFinder {
-	/** The set of nodes that have been searched through */
+	/** The set of nodes that have been searched through. */
 	private final List<Node> closed = new ArrayList<Node>();
-	/** The set of nodes that we do not yet consider fully searched */
+	/** The set of nodes that we do not yet consider fully searched. */
 	private final SortedList<Node> open = new SortedList<Node>();
 
-	/** The map being searched */
+	/** The map being searched. */
 	private SPMap map;
-	/** The maximum depth of search we're willing to accept before giving up */
+	/** The maximum depth of search we're willing to accept before giving up. */
 	private int maxSearchDistance;
 
-	/** The complete set of nodes across the map */
+	/** The complete set of nodes across the map. */
 	private Node[][] nodes;
-	/** True if we allow diagonal movement */
+	/** True if we allow diagonal movement. */
 	private boolean allowDiagMovement;
-	/** The heuristic we're applying to determine which nodes to search first */
+	/** The heuristic we're applying to determine which nodes to search first. */
 	private AStarHeuristic heuristic;
 
 	/**
 	 * Create a path finder with the default heuristic - closest to target.
 	 * 
-	 * @param _map
-	 *            The map to be searched
-	 * @param _maxSearchDist
-	 *            The maximum depth we'll search before giving up
-	 * @param _allowDiagMove
-	 *            True if the search should try diagonal movement
-	 */
-	public AStarPathFinder(final SPMap _map, final int _maxSearchDist,
-			final boolean _allowDiagMove) {
-		this(_map, _maxSearchDist, _allowDiagMove, new ClosestHeuristic());
-	}
-
-	/**
-	 * Create a path finder
-	 * 
-	 * @param _heuristic
-	 *            The heuristic used to determine the search order of the map
-	 * @param _map
+	 * @param theMap
 	 *            The map to be searched
 	 * @param maxSearchDist
 	 *            The maximum depth we'll search before giving up
-	 * @param _allowDiagMove
+	 * @param allowDiagMove
+	 *            True if the search should try diagonal movement
+	 */
+	public AStarPathFinder(final SPMap theMap, final int maxSearchDist,
+			final boolean allowDiagMove) {
+		this(theMap, maxSearchDist, allowDiagMove, new ClosestHeuristic());
+	}
+
+	/**
+	 * Create a path finder.
+	 * 
+	 * @param theHeuristic
+	 *            The heuristic used to determine the search order of the map
+	 * @param theMap
+	 *            The map to be searched
+	 * @param maxSearchDist
+	 *            The maximum depth we'll search before giving up
+	 * @param allowDiagMove
 	 *            True if the search should try diaganol movement
 	 */
-	public AStarPathFinder(final SPMap _map, final int maxSearchDist,
-			final boolean _allowDiagMove, final AStarHeuristic _heuristic) {
-		this.heuristic = _heuristic;
-		this.map = _map;
-		this.maxSearchDistance = maxSearchDist;
-		this.allowDiagMovement = _allowDiagMove;
+	public AStarPathFinder(final SPMap theMap, final int maxSearchDist,
+			final boolean allowDiagMove, final AStarHeuristic theHeuristic) {
+		heuristic = theHeuristic;
+		map = theMap;
+		maxSearchDistance = maxSearchDist;
+		allowDiagMovement = allowDiagMove;
 
-		nodes = new Node[_map.getSizeCols()][_map.getSizeRows()];
-		for (int x = 0; x < _map.getSizeCols(); x++) {
-			for (int y = 0; y < _map.getSizeRows(); y++) {
+		nodes = new Node[theMap.getSizeCols()][theMap.getSizeRows()];
+		for (int x = 0; x < theMap.getSizeCols(); x++) {
+			for (int y = 0; y < theMap.getSizeRows(); y++) {
 				nodes[x][y] = new Node(x, y); // NOPMD
 			}
 		}
@@ -76,13 +76,23 @@ public class AStarPathFinder implements PathFinder {
 
 	/**
 	 * @see PathFinder#findPath(MobileModule, int, int, int, int)
+	 * @param mover
+	 *            the moving module
+	 * @param startX
+	 *            the starting X coordinate
+	 * @param startY
+	 *            the starting Y coordinate
+	 * @param destX
+	 *            the destination X coordinate
+	 * @param destY
+	 *            the destination Y coordinate
 	 * @return the shortest path for this mover from the start to the
 	 *         destination. Returns an *empty* Path, rather than null, if no
 	 *         path exists.
 	 */
 	@Override
-	public Path findPath(final MobileModule mover, final int startX,
-			final int startY, final int destX, final int destY) {
+	public Path findPath(final MobileModule mover, final int startX, final int startY,
+			final int destX, final int destY) {
 		// easy first check, if the destination is blocked, we can't get there
 		final Path path = new Path();
 		if (map.getTileAt(destX, destY).checkAdd(mover)) {
@@ -127,7 +137,7 @@ public class AStarPathFinder implements PathFinder {
 	}
 
 	/**
-	 * Formerly the main logic of findPath()
+	 * Formerly the main logic of findPath().
 	 * 
 	 * @param mover
 	 *            The moving module
@@ -172,7 +182,7 @@ public class AStarPathFinder implements PathFinder {
 	}
 
 	/**
-	 * The main logic of pathSearch()
+	 * The main logic of pathSearch().
 	 * 
 	 * @param mover
 	 *            The moving module
@@ -211,8 +221,7 @@ public class AStarPathFinder implements PathFinder {
 			// the open list)
 
 			if (!inOpenList(node) && !(inClosedList(node))) {
-				node.setCost(current.getCost()
-						+ getMovementCost(mover, current, node));
+				node.setCost(current.getCost() + getMovementCost(mover, current, node));
 				node.setHeuristic(getHeuristicCost(mover, node, dest));
 				maxDepth = Math.max(maxDepth, node.setParent(current));
 				addToOpen(node);
@@ -261,7 +270,7 @@ public class AStarPathFinder implements PathFinder {
 	}
 
 	/**
-	 * Add a node to the open list
+	 * Add a node to the open list.
 	 * 
 	 * @param node
 	 *            The node to be added to the open list
@@ -271,7 +280,7 @@ public class AStarPathFinder implements PathFinder {
 	}
 
 	/**
-	 * Check if a node is in the open list
+	 * Check if a node is in the open list.
 	 * 
 	 * @param node
 	 *            The node to check for
@@ -282,7 +291,7 @@ public class AStarPathFinder implements PathFinder {
 	}
 
 	/**
-	 * Remove a node from the open list
+	 * Remove a node from the open list.
 	 * 
 	 * @param node
 	 *            The node to remove from the open list
@@ -292,7 +301,7 @@ public class AStarPathFinder implements PathFinder {
 	}
 
 	/**
-	 * Add a node to the closed list
+	 * Add a node to the closed list.
 	 * 
 	 * @param node
 	 *            The node to add to the closed list
@@ -302,7 +311,7 @@ public class AStarPathFinder implements PathFinder {
 	}
 
 	/**
-	 * Check if the node supplied is in the closed list
+	 * Check if the node supplied is in the closed list.
 	 * 
 	 * @param node
 	 *            The node to search for
@@ -313,7 +322,7 @@ public class AStarPathFinder implements PathFinder {
 	}
 
 	/**
-	 * Remove a node from the closed list
+	 * Remove a node from the closed list.
 	 * 
 	 * @param node
 	 *            The node to remove from the closed list
@@ -323,7 +332,7 @@ public class AStarPathFinder implements PathFinder {
 	}
 
 	/**
-	 * Check if a given location is valid for the supplied mover
+	 * Check if a given location is valid for the supplied mover.
 	 * 
 	 * @param mover
 	 *            The mover that would hold a given location
@@ -335,20 +344,18 @@ public class AStarPathFinder implements PathFinder {
 	 *            The y coordinate of the location to check
 	 * @return True if the location is valid for the given mover
 	 */
-	protected boolean isValidLocation(final MobileModule mover,
-			final IPoint start, final int xCoord, final int yCoord) {
-		return !((((xCoord < 0) || (yCoord < 0)
-				|| (xCoord >= map.getSizeCols()) || (yCoord >= map
+	protected boolean isValidLocation(final MobileModule mover, final IPoint start,
+			final int xCoord, final int yCoord) {
+		return !((((xCoord < 0) || (yCoord < 0) || (xCoord >= map.getSizeCols()) || (yCoord >= map
 				.getSizeRows())))
 				|| ((start.getX() == xCoord) && (start.getY() == yCoord)) ? ((xCoord < 0)
 				|| (yCoord < 0) || (xCoord >= map.getSizeCols()) || (yCoord >= map
-				.getSizeRows()))
-				: !map.getTileAt(xCoord, yCoord).checkAdd(mover));
+				.getSizeRows())) : !map.getTileAt(xCoord, yCoord).checkAdd(mover));
 	}
 
 	// ESCA-JAVA0173:
 	/**
-	 * Get the cost to move through a given location
+	 * Get the cost to move through a given location.
 	 * 
 	 * @param mover
 	 *            The entity that is being moved
@@ -375,8 +382,8 @@ public class AStarPathFinder implements PathFinder {
 	 *            The coordinates of the target location
 	 * @return The heuristic cost assigned to the tile
 	 */
-	public double getHeuristicCost(final MobileModule mover,
-			final IPoint current, final IPoint dest) {
+	public double getHeuristicCost(final MobileModule mover, final IPoint current,
+			final IPoint dest) {
 		return heuristic.getCost(map, mover, current, dest);
 	}
 }

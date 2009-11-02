@@ -28,16 +28,16 @@ public class GameGUIDriver extends JFrame {
 	 */
 	private static final long serialVersionUID = 7140529521567754564L;
 	/**
-	 * Logger
+	 * Logger.
 	 */
 	private static final Logger LOGGER = Logger.getLogger(GameGUIDriver.class.getName());
 	/**
-	 * The main window
+	 * The main window.
 	 */
 	private static GameGUIDriver gui;
 
 	/**
-	 * @param args
+	 * @param args Command-line arguments
 	 */
 	public static void main(final String[] args) {
 		if (args.length > 0) {
@@ -52,14 +52,29 @@ public class GameGUIDriver extends JFrame {
 	 */
 	private transient InitiativeQueue initQueue;
 	/**
-	 * The main map
+	 * The main map.
 	 */
 	private final transient GUIMap map;
 	/**
-	 * The mini-map
+	 * The mini-map.
 	 */
 	private transient MiniMap miniMap;
-	
+	/**
+	 * Preferred size, X dimension.
+	 */
+	private static final int PREFERRED_X = 640;
+	/**
+	 * Preferred size, Y dimension.
+	 */
+	private static final int PREFERRED_Y = 480;
+	/**
+	 * Maximum size, X dimension.
+	 */
+	private static final int MAX_X = 800;
+	/**
+	 * Maximum size, Y dimension.
+	 */
+	private static final int MAX_Y = 600;
 	/**
 	 * Constructor.
 	 */
@@ -68,13 +83,13 @@ public class GameGUIDriver extends JFrame {
 		setLayout(new BorderLayout());
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setIgnoreRepaint(false);
-		setPreferredSize(new Dimension(640,480));
-		setMaximumSize(new Dimension(800,600));
+		setPreferredSize(new Dimension(PREFERRED_X, PREFERRED_Y));
+		setMaximumSize(new Dimension(MAX_X, MAX_Y));
 		map = new GUIMap(Game.getGame().getMap());
 		add(new JScrollPane(map), BorderLayout.CENTER);
 		/**
-		 * The window's menu. TODO: Should this be made its own class, hiding the
-		 * initialization details?
+		 * The window's menu. TODO: Should this be made its own class, hiding
+		 * the initialization details?
 		 */
 		final JMenuBar menu = new JMenuBar();
 		menu.add(createFileMenu());
@@ -90,7 +105,7 @@ public class GameGUIDriver extends JFrame {
 		 */
 		final CurrentModulePanel modulePanel = new CurrentModulePanel(map.isAdmin());
 		add(modulePanel, BorderLayout.EAST);
-		map.setSelectionListener(new SelectionListener(map,modulePanel));
+		map.setSelectionListener(new SelectionListener(map, modulePanel));
 		miniMap = new MiniMap();
 		add(miniMap, BorderLayout.SOUTH);
 		pack();
@@ -104,9 +119,12 @@ public class GameGUIDriver extends JFrame {
 		// TODO Auto-generated method stub
 		setVisible(true);
 	}
+
 	/**
-	 * Parse CLI arguments
-	 * @param args The arguments
+	 * Parse CLI arguments.
+	 * 
+	 * @param args
+	 *            The arguments
 	 */
 	private static void parseArgs(final String[] args) {
 		if (args.length > 1) {
@@ -114,6 +132,7 @@ public class GameGUIDriver extends JFrame {
 		}
 		Game.getGame().createMap(args[0]);
 	}
+
 	/**
 	 * @return The File menu to add to the menu bar.
 	 */
@@ -131,16 +150,18 @@ public class GameGUIDriver extends JFrame {
 		fileMenu.add(quitItem);
 		return fileMenu;
 	}
+
 	/**
 	 * Quits the program.
 	 */
-	public void quit() {
+	public final void quit() {
 		dispose();
 	}
+
 	/**
-	 * Reload all views of the map
+	 * Reload all views of the map.
 	 */
-	public void reloadMap() {
+	public final void reloadMap() {
 		map.reloadMap(Game.getGame().getMap());
 		repaint();
 		pack();

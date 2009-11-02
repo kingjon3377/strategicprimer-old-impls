@@ -11,29 +11,29 @@ import model.module.kinds.Weapon;
 import model.player.IPlayer;
 
 /**
- * A simple building
+ * A simple building.
  * 
  * @author Jonathan Lovelace.
  * 
  */
 public class SimpleBuilding implements Module, Renameable, TransferableModule {
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
 	public SimpleBuilding() {
-		location = NullLocation.getNullLocation();
+		location = NullLocation.NULL_LOC;
 	}
 
 	/**
-	 * The module's location
+	 * The module's location.
 	 */
 	private Location location;
 	/**
-	 * The module's name
+	 * The module's name.
 	 */
 	private String name;
 	/**
-	 * UUID
+	 * UUID.
 	 */
 	private final long uuid = UuidManager.UUID_MANAGER.getNewUuid();
 
@@ -52,13 +52,16 @@ public class SimpleBuilding implements Module, Renameable, TransferableModule {
 	public Location getLocation() {
 		return location;
 	}
-
+	/**
+	 * The moduleID for all instances of this exact class.
+	 */
+	private static final int MODULE_ID = 4;
 	/**
 	 * @return the moduleID
 	 */
 	@Override
 	public int getModuleID() {
-		return 4;
+		return MODULE_ID;
 	}
 
 	/**
@@ -78,7 +81,8 @@ public class SimpleBuilding implements Module, Renameable, TransferableModule {
 	}
 
 	/**
-	 * Set the building's location
+	 * Set the building's location.
+	 * @param loc the building's new location
 	 */
 	@Override
 	public void setLocation(final Location loc) {
@@ -86,7 +90,8 @@ public class SimpleBuilding implements Module, Renameable, TransferableModule {
 	}
 
 	/**
-	 * Take an attack
+	 * Take an attack.
+	 * @param attacker the attacking module
 	 */
 	@Override
 	public void takeAttack(final Weapon attacker) {
@@ -102,14 +107,14 @@ public class SimpleBuilding implements Module, Renameable, TransferableModule {
 	}
 
 	/**
-	 * @param _name
+	 * @param newName
 	 *            the SimpleBuilding's new name
 	 */
-	public void setName(final String _name) {
-		name = _name;
+	public void setName(final String newName) {
+		name = newName;
 	}
 	/**
-	 * The building's owner
+	 * The building's owner.
 	 */
 	private IPlayer owner;
 	/**
@@ -120,10 +125,10 @@ public class SimpleBuilding implements Module, Renameable, TransferableModule {
 		return owner;
 	}
 	/**
-	 * @param _owner the building's new owner
+	 * @param newOwner the building's new owner
 	 */
 	@Override
-	public void setOwner(final IPlayer _owner) {
-		owner = _owner;
+	public void setOwner(final IPlayer newOwner) {
+		owner = newOwner;
 	}
 }

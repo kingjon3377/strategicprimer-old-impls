@@ -31,10 +31,12 @@ public class LocationSet extends HashSet<Location> implements Location {
 
 	/**
 	 * @see model.location.Location#contains(model.location.Location)
+	 * @param loc a location
 	 * @return whether the set contains the given location.
 	 */
-	public boolean contains(final Location loc) {
-		return false || super.contains(loc);
+	@Override
+	public boolean contains(final Location loc) { // NOPMD
+		return super.contains(loc);
 	}
 
 	/**

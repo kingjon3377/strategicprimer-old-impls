@@ -22,7 +22,7 @@ import model.player.IPlayer;
 public class SimpleUnit implements Module, MobileModule, Weapon, Renameable,
 		TransferableModule {
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
 	public SimpleUnit() {
 		super();
@@ -30,20 +30,20 @@ public class SimpleUnit implements Module, MobileModule, Weapon, Renameable,
 	}
 
 	/**
-	 * The module's UUID
+	 * The module's UUID.
 	 */
 	private final long uuid = UuidManager.UUID_MANAGER.getNewUuid();
 	/**
-	 * The module's location
+	 * The module's location.
 	 */
-	private Location location = NullLocation.getNullLocation();
+	private Location location = NullLocation.NULL_LOC;
 	/**
-	 * The module's name
+	 * The module's name.
 	 */
 	private String name;
 
 	/**
-	 * @return the unit's locationn
+	 * @return the unit's location
 	 */
 	@Override
 	public Location getLocation() {
@@ -55,7 +55,6 @@ public class SimpleUnit implements Module, MobileModule, Weapon, Renameable,
 	 */
 	@Override
 	public int getModuleID() {
-		// TODO Auto-generated method stub
 		return 2;
 	}
 
@@ -78,6 +77,7 @@ public class SimpleUnit implements Module, MobileModule, Weapon, Renameable,
 
 	/**
 	 * Take an attack.
+	 * @param attacker the attacking module
 	 * 
 	 * @bug FIXME: Implement.
 	 */
@@ -96,7 +96,7 @@ public class SimpleUnit implements Module, MobileModule, Weapon, Renameable,
 
 	/**
 	 * Move to a new location, which (FIXME: this shouldn't last) at present
-	 * must be a tile
+	 * must be a tile.
 	 * 
 	 * @param loc
 	 *            the new location
@@ -128,7 +128,7 @@ public class SimpleUnit implements Module, MobileModule, Weapon, Renameable,
 	}
 
 	/**
-	 * Attack another module
+	 * Attack another module.
 	 * 
 	 * @param defender
 	 *            the module beng attacked
@@ -137,17 +137,21 @@ public class SimpleUnit implements Module, MobileModule, Weapon, Renameable,
 	public void attack(final Module defender) {
 		defender.takeAttack(this);
 	}
-
 	/**
-	 * Predict the results of an attack on another module
+	 * The damage a SimpleUnit does.
+	 */
+	private static final int DAMAGE = 15;
+	
+	/**
+	 * Predict the results of an attack on another module.
 	 * 
 	 * @param defender
-	 *            the module beng attacked
+	 *            the module being attacked
 	 * @return the expected damage dealt
 	 */
 	@Override
 	public int predictDamage(final Module defender) {
-		return 15;
+		return DAMAGE;
 	}
 
 	/**
@@ -159,15 +163,15 @@ public class SimpleUnit implements Module, MobileModule, Weapon, Renameable,
 	}
 
 	/**
-	 * @param _name
+	 * @param newName
 	 *            the ExampleUnit's new name
 	 */
-	public final void setName(final String _name) {
-		name = _name;
+	public final void setName(final String newName) {
+		name = newName;
 	}
 
 	/**
-	 * Check whether a move is possible
+	 * Check whether a move is possible.
 	 * 
 	 * @param loc
 	 *            the location to pretend to move to
@@ -191,7 +195,7 @@ public class SimpleUnit implements Module, MobileModule, Weapon, Renameable,
 		return 1;
 	}
 	/**
-	 * The unit's owner
+	 * The unit's owner.
 	 */
 	private IPlayer owner;
 	/**
@@ -202,10 +206,10 @@ public class SimpleUnit implements Module, MobileModule, Weapon, Renameable,
 		return owner;
 	}
 	/**
-	 * @param _owner the unit's new owner
+	 * @param newOwner the unit's new owner
 	 */
 	@Override
-	public void setOwner(final IPlayer _owner) {
-		owner = _owner;
+	public void setOwner(final IPlayer newOwner) {
+		owner = newOwner;
 	}
 }

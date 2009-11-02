@@ -14,16 +14,16 @@ package model.main;
  */
 public final class UuidManager {
 	/**
-	 * The singleton
+	 * The singleton.
 	 */
 	public static final UuidManager UUID_MANAGER = new UuidManager();
 	/**
-	 * The biggest UUID we've given out
+	 * The biggest UUID we've given out.
 	 */
 	private long maxUuid;
 
 	/**
-	 * Singleton
+	 * Singleton.
 	 */
 	private UuidManager() {
 		maxUuid = 2;

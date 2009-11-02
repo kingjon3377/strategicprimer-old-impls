@@ -10,7 +10,7 @@ package model.location;
  */
 public class LocationEvent {
 	/**
-	 * The number of the event
+	 * The number of the event.
 	 */
 	private final int number;
 	/**

@@ -25,20 +25,20 @@ public class GUIMap extends JPanel {
 	 */
 	private static final long serialVersionUID = -8873153191640697473L;
 	/**
-	 * The tiles on the map
+	 * The tiles on the map.
 	 */
 	private final transient Map<Point, GUITile> tiles;
 	/**
-	 * The currently selected tile
+	 * The currently selected tile.
 	 */
 	private transient GUITile selected;
 	/**
-	 * The listener to handle selection changes
+	 * The listener to handle selection changes.
 	 */
 	private transient SelectionListener slist;
 
 	/**
-	 * Set the SelectionListener
+	 * Set the SelectionListener.
 	 * 
 	 * @param list
 	 *            the new SelectionListener
@@ -51,7 +51,7 @@ public class GUIMap extends JPanel {
 	}
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 * 
 	 * @param map
 	 *            the map this class is displaying
@@ -151,7 +151,7 @@ public class GUIMap extends JPanel {
 		return selected;
 	}
 	/**
-	 * Refresh the view after a change to the map model
+	 * Refresh the view after a change to the map model.
 	 * @param map The map model we're a view of
 	 */
 	public final void reloadMap(final SPMap map) {

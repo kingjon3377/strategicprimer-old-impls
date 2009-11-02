@@ -18,12 +18,12 @@ public class AIPlayer extends Player {
 	}
 
 	/**
-	 * 
+	 * Version UID for serialization.
 	 */
 	private static final long serialVersionUID = -1310880988917379941L;
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 * 
 	 * @param associatedModule
 	 *            The module that represents this player in the game-world.

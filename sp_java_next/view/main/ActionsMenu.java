@@ -21,23 +21,23 @@ import view.map.GUITile;
 
 /**
  * A popup menu, primarily for actions that require a start and destination tile
- * (or actor and target)
+ * (or actor and target).
  * 
  * @author Jonathan Lovelace
  * 
  */
 public final class ActionsMenu extends JMenu implements ActionListener {
 	/**
-	 * Version UID for serialization
+	 * Version UID for serialization.
 	 */
 	private static final long serialVersionUID = -6391713952987105391L;
 	/**
-	 * Logger
+	 * Logger.
 	 */
 	private static final Logger LOGGER = Logger.getLogger(ActionsMenu.class
 			.getName());
 	/**
-	 * Singleton
+	 * Singleton.
 	 */
 	public static final ActionsMenu ACTIONS_MENU = new ActionsMenu();
 	/**
@@ -45,18 +45,21 @@ public final class ActionsMenu extends JMenu implements ActionListener {
 	 */
 	private boolean actionSelected;
 	/**
-	 * "Move" item
+	 * "Move" item.
 	 */
 	private final JMenuItem moveItem;
 	/**
-	 * "Attack" item
+	 * "Attack" item.
 	 */
 	private final JMenuItem attackItem;
 	/**
-	 * "Cancel" item (cancel pending action
+	 * "Cancel" item (cancel pending action).
 	 */
 	private final JMenuItem cancelItem;
-
+	/**
+	 * The number of the "Move" action.
+	 */
+	private static final long MOVE = -2L;
 	/**
 	 * The currently selected tile, i.e. the one holding the module that will do
 	 * the action
@@ -67,12 +70,12 @@ public final class ActionsMenu extends JMenu implements ActionListener {
 	 */
 	private long action;
 	/**
-	 * A mapping from text to action numbers
+	 * A mapping from text to action numbers.
 	 */
 	private final Map<String, Long> actionMap = new HashMap<String, Long>();
 
 	/**
-	 * Singleton constructor
+	 * Singleton constructor.
 	 */
 	private ActionsMenu() {
 		super("Actions");
@@ -98,7 +101,7 @@ public final class ActionsMenu extends JMenu implements ActionListener {
 		actionMap.put("Cancel", 0L);
 		if (getModuleOnTile(selectedTile) instanceof MobileModule) {
 			add(moveItem);
-			actionMap.put("Move", -2L);
+			actionMap.put("Move", MOVE);
 		}
 		if (getModuleOnTile(selectedTile) instanceof Weapon) {
 			add(attackItem);
@@ -126,6 +129,7 @@ public final class ActionsMenu extends JMenu implements ActionListener {
 
 	/**
 	 * Handle menu item selections.
+	 * @param event the event we're handling
 	 */
 	@Override
 	public void actionPerformed(final ActionEvent event) {
@@ -152,7 +156,7 @@ public final class ActionsMenu extends JMenu implements ActionListener {
 	 */
 	public void applyAction(final GUITile tile) {
 		if (action != 0) {
-			if (action == -2) {
+			if (action == MOVE) {
 				try {
 					if (((MobileModule) getModuleOnTile(selectedTile))
 							.checkMove(tile.getTile())) {

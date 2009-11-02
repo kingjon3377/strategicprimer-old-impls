@@ -16,15 +16,23 @@ import java.util.Comparator;
  * @author Jonathan Lovelace
  * 
  */
-public final class TimestampMessageComparator implements Comparator<Message>, Serializable {
+public final class TimestampMessageComparator implements Comparator<Message>,
+		Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -5552122955935461392L;
-
 	/**
-	 * Compare two Messages based on target timestamp and priority
+	 * Result based on arrival times.
+	 */
+	private static final int ARRIVAL_TIME = 2;
+	/**
+	 * Result based on target times.
+	 */
+	private static final int TARGET_TIME = 3;
+	/**
+	 * Compare two Messages based on target timestamp and priority.
 	 * 
 	 * @param msg1
 	 *            The first message
@@ -33,10 +41,10 @@ public final class TimestampMessageComparator implements Comparator<Message>, Se
 	 * @return The result of the comparison
 	 */
 	public int compare(final Message msg1, final Message msg2) {
-		return (msg1.targetTime == msg2.targetTime ? (msg1.arrivalTime == msg2.arrivalTime ? (msg1.priority
-				.equals(msg2.priority) ? 0 : (msg1.priority
-				.compareTo(msg2.priority) > 0 ? 1 : -1))
-				: (msg1.arrivalTime > msg2.arrivalTime ? -2 : 2))
-				: (msg1.targetTime > msg2.targetTime ? -3 : 3));
+		return (msg1.getTargetTime() == msg2.getTargetTime() ? (msg1.getArrivalTime() == msg2.getArrivalTime() ? (msg1.getPriority()
+				.equals(msg2.getPriority()) ? 0
+				: (msg1.getPriority().compareTo(msg2.getPriority()) > 0 ? 1 : -1))
+				: (msg1.getArrivalTime() > msg2.getArrivalTime() ? -ARRIVAL_TIME : ARRIVAL_TIME))
+				: (msg1.getTargetTime() > msg2.getTargetTime() ? -TARGET_TIME : TARGET_TIME));
 	}
 }

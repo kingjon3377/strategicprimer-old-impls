@@ -15,7 +15,7 @@ public interface IMessageDispatcher {
 	int QUEUE_DFLT_SIZE = 11;
 
 	/**
-	 * Send a message from sender to receiver
+	 * Send a message from sender to receiver.
 	 * 
 	 * @param receiver
 	 *            The module receiving the message

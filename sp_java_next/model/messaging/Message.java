@@ -13,97 +13,95 @@ package model.messaging;
  */
 public class Message {
 	/**
-	 * The various priorities I can think of TODO: evaluate this decision
+	 * The various priorities I can think of. TODO: Evaluate this decision
 	 * 
 	 * @author Jonathan Lovelace
 	 */
 	public enum Priority {
 		/**
-		 * Lowest priority
+		 * Lowest priority.
 		 */
 		LOWEST,
 
 		/**
-		 * Slightly higher
+		 * Slightly higher.
 		 */
 		VERY_LOW,
 
 		/**
-		 * Low priority
+		 * Low priority.
 		 */
 		LOW,
 
 		/**
-		 * Somewhat low priority
+		 * Somewhat low priority.
 		 */
 		MEDIUM_LOW,
 
 		/**
-		 * Medium priority
+		 * Medium priority.
 		 */
 		MEDIUM,
 
 		/**
-		 * Somewhat high priority
+		 * Somewhat high priority.
 		 */
 		MEDIUM_HIGH,
 
 		/**
-		 * High priority
+		 * High priority.
 		 */
 		HIGH,
 
 		/**
-		 * Even higher priority
+		 * Even higher priority.
 		 */
 		VERY_HIGH,
 
 		/**
-		 * Highest priority
+		 * Highest priority.
 		 */
 		HIGHEST
 	}
 
 	/**
-	 * "Time" the message arrived
+	 * "Time" the message arrived.
 	 */
-	protected final long arrivalTime; // NOPMD by kingjon on 2/10/08 10:03 PM
-
+	private final long arrivalTime;
 	/**
 	 * "Time" the message is intended to be dealt with (usually the same as the
-	 * arrival time unless it's an order)
+	 * arrival time unless it's an order).
 	 */
-	protected long targetTime = 0;
-
+	private long targetTime = 0;
 	/**
 	 * Message priority. Messages are ordered first by targetTime, then by
 	 * arrivalTime, then by priority. (Those last two might be switched, but the
 	 * algorithm for dealing with messages a module isn't ready to handle
 	 * involves changing the timestamps.)
 	 */
-	protected Priority priority;
+	private Priority priority;
 
 	/**
 	 * Constructor.
 	 * 
 	 * @param timestamp
 	 *            When the message arrived TODO: Check that this is sane
-	 * @param _targetTime
+	 * @param targTime
 	 *            When the message should be dealt with, if possible TODO: Add a
 	 *            flag on 'what should be done if this doesn't get dealt with in
 	 *            time?'
-	 * @param _priority
+	 * @param pri
 	 *            The priority of the message
 	 * 
 	 * TODO: Add constructors with default values for timestamp (some way of
 	 * getting "now" from the Game object -- and we need a singleton pattern for
 	 * that), targetTime (arrivalTime), and priority (medium).
 	 */
-	public Message(final long timestamp, final long _targetTime,
-			final Priority _priority) {
+	public Message(final long timestamp, final long targTime,
+			final Priority pri) {
 		arrivalTime = timestamp;
-		targetTime = _targetTime;
-		priority = _priority;
+		targetTime = targTime;
+		priority = pri;
 	}
 
 	/**
@@ -128,19 +126,19 @@ public class Message {
 	}
 
 	/**
-	 * @param _priority
+	 * @param pri
 	 *            the priority of the message
 	 */
-	public void setPriority(final Priority _priority) {
-		this.priority = _priority;
+	public void setPriority(final Priority pri) {
+		this.priority = pri;
 	}
 
 	/**
-	 * @param _targetTime
+	 * @param tTime
 	 *            the time at which the message should be dealt with
 	 */
-	public void setTargetTime(final long _targetTime) {
-		this.targetTime = _targetTime;
+	public void setTargetTime(final long tTime) {
+		this.targetTime = tTime;
 	}
 }
 

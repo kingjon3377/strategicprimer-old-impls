@@ -19,11 +19,19 @@ public class ModuleFactory {
 	 */
 	private static final Logger LOGGER = Logger.getLogger(ModuleFactory.class.getName());
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
 	public ModuleFactory() {
 		LOGGER.finest("ModuleFactory constructor");
 	}
+	/**
+	 * ModuleID for an ExampleUnit.
+	 */
+	private static final int EXAMPLEUNIT_ID = 3;
+	/**
+	 * ModuleID for a SimpleBuilding.
+	 */
+	private static final int SIMPLEBLDG_ID = 4;
 	/**
 	 * Create a module from a moduleID.
 	 * @param moduleId the moduleID.
@@ -35,9 +43,9 @@ public class ModuleFactory {
 			return RootModule.getRootModule(); // NOPMD
 		case 2:
 			return new SimpleUnit(); // NOPMD
-		case 3:
+		case EXAMPLEUNIT_ID:
 			return new ExampleUnit(); // NOPMD
-		case 4:
+		case SIMPLEBLDG_ID:
 			return new SimpleBuilding();
 		default:
 			throw new IllegalArgumentException("Unknown module type");

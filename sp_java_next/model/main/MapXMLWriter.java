@@ -27,14 +27,14 @@ public final class MapXMLWriter {
 	private static final String CLOSE_XML_ATT_TAG = "\">";
 
 	/**
-	 * Don't instantiate
+	 * Don't instantiate.
 	 */
 	private MapXMLWriter() {
 		// Don't instantiate
 	}
 
 	/**
-	 * Write the map to an XML file
+	 * Write the map to an XML file.
 	 * 
 	 * @param filename
 	 *            The name of the file to write to.
@@ -46,7 +46,7 @@ public final class MapXMLWriter {
 	}
 
 	/**
-	 * Write a map to an XML file
+	 * Write a map to an XML file.
 	 * 
 	 * @param filename
 	 *            The name of the file to write to
@@ -62,7 +62,7 @@ public final class MapXMLWriter {
 	}
 
 	/**
-	 * Write a game to XML
+	 * Write a game to XML.
 	 * 
 	 * @param game
 	 *            The game to write
@@ -78,7 +78,7 @@ public final class MapXMLWriter {
 	}
 
 	/**
-	 * Write the initial element of the XML
+	 * Write the initial element of the XML.
 	 * 
 	 * @param map
 	 *            The map we'll be writing
@@ -92,7 +92,7 @@ public final class MapXMLWriter {
 	}
 
 	/**
-	 * Write players to XML
+	 * Write players to XML.
 	 * 
 	 * @param players
 	 *            The set of players to write
@@ -108,7 +108,7 @@ public final class MapXMLWriter {
 	}
 
 	/**
-	 * Write a map to XML
+	 * Write a map to XML.
 	 * 
 	 * @param map
 	 *            The map to write
@@ -124,9 +124,12 @@ public final class MapXMLWriter {
 			writer.println("\t</row>");
 		}
 	}
-
 	/**
-	 * Write a tile to XML
+	 * The starting indentation for elements inside a tile.
+	 */
+	private static final int START_TABS = 3;
+	/**
+	 * Write a tile to XML.
 	 * 
 	 * @param tile
 	 *            the tile to write
@@ -149,9 +152,9 @@ public final class MapXMLWriter {
 				&& !tile.getModuleOnTile().equals(RootModule.getRootModule())) {
 			writer.println();
 			if (tile.getModuleOnTile() instanceof Fortress) {
-				writeFortress((Fortress) tile.getModuleOnTile(), writer, 3);
+				writeFortress((Fortress) tile.getModuleOnTile(), writer, START_TABS);
 			} else {
-				writeModule(tile.getModuleOnTile(), writer, 3);
+				writeModule(tile.getModuleOnTile(), writer, START_TABS);
 			}
 			writer.print("		");
 		}
@@ -159,7 +162,7 @@ public final class MapXMLWriter {
 	}
 
 	/**
-	 * Write a fortress to XML
+	 * Write a fortress to XML.
 	 * 
 	 * @param fortress
 	 *            the module to write
@@ -185,7 +188,7 @@ public final class MapXMLWriter {
 	}
 
 	/**
-	 * Append a specified  number of tabs to the writer
+	 * Append a specified  number of tabs to the writer.
 	 * @param writer The writer to write to to
 	 * @param indent The number of tabs to write
 	 */
@@ -196,7 +199,7 @@ public final class MapXMLWriter {
 	}
 
 	/**
-	 * Write a module to XML
+	 * Write a module to XML.
 	 * 
 	 * @param module
 	 *            the module to write

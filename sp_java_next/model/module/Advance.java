@@ -28,7 +28,7 @@ package model.module;
  */
 public interface Advance extends Comparable<Advance> {
 	/**
-	 * Compare this advance with another
+	 * Compare this advance with another.
 	 * 
 	 * @param advance
 	 *            The other advance

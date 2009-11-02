@@ -14,11 +14,11 @@ import model.location.Point;
  * @author Kevin Glass
  */
 public class Path {
-	/** The list of steps building up this path */
+	/** The list of steps building up this path. */
 	private final List<Point> steps;
 
 	/**
-	 * Create an empty path
+	 * Create an empty path.
 	 */
 	public Path() {
 		super();
@@ -35,7 +35,7 @@ public class Path {
 	}
 
 	/**
-	 * Get the step at a given index in the path
+	 * Get the step at a given index in the path.
 	 * 
 	 * @param index
 	 *            The index of the step to retrieve. Note this should be >= 0
@@ -47,7 +47,7 @@ public class Path {
 	}
 
 	/**
-	 * Get the x coordinate for the step at the given index
+	 * Get the x coordinate for the step at the given index.
 	 * 
 	 * @param index
 	 *            The index of the step whose x coordinate should be retrieved
@@ -58,7 +58,7 @@ public class Path {
 	}
 
 	/**
-	 * Get the y coordinate for the step at the given index
+	 * Get the y coordinate for the step at the given index.
 	 * 
 	 * @param index
 	 *            The index of the step whose y coordinate should be retrieved
@@ -93,7 +93,7 @@ public class Path {
 	}
 
 	/**
-	 * Check if this path contains the given step
+	 * Check if this path contains the given step.
 	 * 
 	 * @param xCoord
 	 *            The x coordinate of the step to check for
@@ -106,7 +106,7 @@ public class Path {
 	}
 
 	/**
-	 * Because we override equals()
+	 * Because we override equals().
 	 * 
 	 * @return a hash value for the class
 	 */

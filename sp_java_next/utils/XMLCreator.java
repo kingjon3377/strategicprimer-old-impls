@@ -77,7 +77,7 @@ public class XMLCreator {
 	}
 
 	/**
-	 * Create the XML file from the intermediate format
+	 * Create the XML file from the intermediate format.
 	 * 
 	 * @param filename
 	 *            The file to write to
@@ -103,7 +103,7 @@ public class XMLCreator {
 
 	/**
 	 * A mapping from the terrain type number in one particular map to what it
-	 * will be called in the XML
+	 * will be called in the XML.
 	 */
 	private static final Map<Character, String> CHAR_TILE_TYPE = new HashMap<Character, String>();
 	static {
@@ -119,7 +119,7 @@ public class XMLCreator {
 
 	/**
 	 * Convert a tile's intermediate (one-char) format to a more verbose
-	 * description
+	 * description.
 	 * 
 	 * @param character
 	 *            the tile's type ID (from the original map's converted format)

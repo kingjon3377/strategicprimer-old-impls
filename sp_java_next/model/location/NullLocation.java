@@ -7,7 +7,7 @@ import java.util.Set;
 import model.module.Module;
 
 /**
- * The null location
+ * The null location.
  * 
  * @author Jonathan Lovelace
  * 
@@ -17,29 +17,12 @@ public final class NullLocation implements Location {
 	/**
 	 * The one null location.
 	 */
-	private static NullLocation nloc;
+	public static final NullLocation NULL_LOC = new NullLocation();
 
 	/**
-	 * An object to synchronize on (to avoid a synchronized method)
-	 */
-	private static Object lock = new Float(3);
-
-	/**
-	 * 
+	 * Version UID for serialization. 
 	 */
 	private static final long serialVersionUID = 4346702324428423006L;
-
-	/**
-	 * @return the null location.
-	 */
-	public static NullLocation getNullLocation() {
-		synchronized (lock) {
-			if (nloc == null) {
-				nloc = new NullLocation();
-			}
-		}
-		return nloc;
-	}
 
 	/**
 	 * The modules in the null location.
@@ -63,7 +46,7 @@ public final class NullLocation implements Location {
 	}
 
 	/**
-	 * The null location contains no other locations, so
+	 * The null location contains no other locations. So
 	 * 
 	 * @return false
 	 * @param location a location, ignored
@@ -97,11 +80,11 @@ public final class NullLocation implements Location {
 	}
 	
 	/**
-	 * (Name misleading to mislead static analysis plugins.)
-	 * @param _members A set to join to the set of modules here.
+	 * (Name misleading to mislead static analysis plugins.).
+	 * @param newMembers A set to join to the set of modules here.
 	 */
-	public void setMembers(final Set<Module> _members) {
-		members.addAll(_members);
+	public void setMembers(final Set<Module> newMembers) {
+		members.addAll(newMembers);
 	}
 	/**
 	 * @param module a module to pretend to add

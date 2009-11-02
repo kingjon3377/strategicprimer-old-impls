@@ -50,11 +50,12 @@ public enum TerrainType {
 	 * The mapping from descriptive strings to tile types. Used to make
 	 * multiple-return-points warnings go away.
 	 */
-	private static final HashMap<String, TerrainType> TILE_TYPE_MAP = new HashMap<String, TerrainType>();// NOPMD
+	private static final HashMap<String, TerrainType> TILE_TYPE_MAP = new HashMap<String, TerrainType>(); // NOPMD
 	/**
 	 * A mapping from tile types to descriptive strings.
 	 */
-	private static final EnumMap<TerrainType,String> DESCRIPTIONS = new EnumMap<TerrainType,String>(TerrainType.class);
+	private static final EnumMap<TerrainType, String> DESCRIPTIONS = new EnumMap<TerrainType, String>(
+			TerrainType.class);
 	static {
 		TILE_TYPE_MAP.put("tundra", TerrainType.Tundra);
 		TILE_TYPE_MAP.put("temperate_forest", TerrainType.TemperateForest);
@@ -89,6 +90,7 @@ public enum TerrainType {
 		} // else
 		throw new IllegalArgumentException("Unrecognized terrain type string");
 	}
+
 	/**
 	 * @return the short tag for the terrain type
 	 */

@@ -41,8 +41,7 @@ public class GUITile extends JPanel {
 	/**
 	 * Logger.
 	 */
-	private static final Logger LOGGER = Logger.getLogger(GUITile.class
-			.getName());
+	private static final Logger LOGGER = Logger.getLogger(GUITile.class.getName());
 	/**
 	 * Is this tile currently selected?
 	 */
@@ -51,18 +50,18 @@ public class GUITile extends JPanel {
 	/**
 	 * Constructor, to make warnings go away.
 	 * 
-	 * @param _tile
+	 * @param newTile
 	 *            The tile this is the GUI for
 	 */
-	public GUITile(final Tile _tile) {
+	public GUITile(final Tile newTile) {
 		super(new BorderLayout());
 		setMinimumSize(new Dimension(GUI_TILE_MIN_SIZE, GUI_TILE_MIN_SIZE));
 		setPreferredSize(getMinimumSize());
-		setTile(_tile);
+		setTile(newTile);
 	}
 
 	/**
-	 * The tile this is the GUI representation of
+	 * The tile this is the GUI representation of.
 	 */
 	private Tile tile;
 
@@ -74,23 +73,23 @@ public class GUITile extends JPanel {
 	}
 
 	/**
-	 * @param _tile
+	 * @param newTile
 	 *            The new tile this should represent
 	 */
-	public final void setTile(final Tile _tile) {
-		tile = _tile;
+	public final void setTile(final Tile newTile) {
+		tile = newTile;
 		try {
-			terrainImage = getImage(_tile.getTerrain());
+			terrainImage = getImage(newTile.getTerrain());
 		} catch (IOException e) {
 			LOGGER.log(Level.SEVERE,
 					"I/O exception trying to set up image representing tile "
-							+ _tile.getLocation(), e);
+							+ newTile.getLocation(), e);
 		}
 		repaint();
 	}
 
 	/**
-	 * The image representing the tile's terrain
+	 * The image representing the tile's terrain.
 	 */
 	private transient Image terrainImage;
 
@@ -104,6 +103,17 @@ public class GUITile extends JPanel {
 	}
 
 	/**
+	 * The width in pixels of the border we draw (XOR) if the tile is selected.
+	 */
+	private static final int SELECTION_BORDER = 3;
+	/**
+	 * What fraction of the GUITile (in each dimension) a fortress should be
+	 * drawn. (This is what the height and width are divided by to produce the
+	 * appropriate results.)
+	 */
+	private static final int FORT_RATIO = 5;
+
+	/**
 	 * Draw the tile.
 	 * 
 	 * @param pen
@@ -112,26 +122,25 @@ public class GUITile extends JPanel {
 	@Override
 	public void paint(final Graphics pen) {
 		super.paint(pen);
-		pen.drawImage(terrainImage, 0, 0, getWidth(), getHeight(), Color.white,
-				this);
+		pen.drawImage(terrainImage, 0, 0, getWidth(), getHeight(), Color.white, this);
 		if (tile.getModuleOnTile() instanceof Fortress) {
 			drawModule(((Fortress) tile.getModuleOnTile()).getModule(), pen);
-			pen.drawImage(ModuleGUIManager.getImage(tile.getModuleOnTile()),
-					getWidth() / 5, getHeight() / 5, getWidth() / 5,
-					getHeight() / 5, this);
+			pen.drawImage(ModuleGUIManager.getImage(tile.getModuleOnTile()), getWidth()
+					/ FORT_RATIO, getHeight() / FORT_RATIO, getWidth() / FORT_RATIO,
+					getHeight() / FORT_RATIO, this);
 		} else {
 			drawModule(tile.getModuleOnTile(), pen);
 		}
 		if (selected) {
 			pen.setXORMode(getBackground());
-			pen.drawRect(0, 0, getWidth(), getHeight());
-			pen.drawRect(1, 1, getWidth() - 2, getHeight() - 2);
-			pen.drawRect(2, 2, getWidth() - 4, getHeight() - 4);
+			for (int i = 0; i < SELECTION_BORDER; i++) {
+				pen.drawRect(i, i, getWidth() - i * 2, getHeight() - i * 2);
+			}
 		}
 	}
 
 	/**
-	 * Draw a module
+	 * Draw a module.
 	 * 
 	 * @param mod
 	 *            the module to draw
@@ -140,17 +149,17 @@ public class GUITile extends JPanel {
 	 */
 	private void drawModule(final Module mod, final Graphics pen) {
 		if (mod != null && !(mod instanceof RootModule)) {
-			pen.drawImage(ModuleGUIManager.getImage(mod), 0, 0, getWidth(),
-					getHeight(), this);
+			pen.drawImage(ModuleGUIManager.getImage(mod), 0, 0, getWidth(), getHeight(),
+					this);
 		}
 	}
 
 	/**
-	 * @param _selected
+	 * @param isSelected
 	 *            Whether this tile is now selected
 	 */
-	public void setSelected(final boolean _selected) {
-		selected = _selected;
+	public void setSelected(final boolean isSelected) {
+		selected = isSelected;
 	}
 
 	/**
@@ -161,14 +170,13 @@ public class GUITile extends JPanel {
 	}
 
 	/**
-	 * Change the terrain image if the tile's terrain has changed
+	 * Change the terrain image if the tile's terrain has changed.
 	 */
 	public void refreshTerrainImage() {
 		try {
 			terrainImage = getImage(tile.getTerrain());
 		} catch (IOException e) {
-			LOGGER.log(Level.SEVERE,
-					"I/O exception while refreshing terrain image", e);
+			LOGGER.log(Level.SEVERE, "I/O exception while refreshing terrain image", e);
 		}
 		repaint();
 	}
@@ -184,18 +192,17 @@ public class GUITile extends JPanel {
 		if (imageMap.containsKey(terr)) {
 			return imageMap.get(terr); // NOPMD
 		} else {
-			final URL url = GUITile.class
-					.getResource(getTerrainTypeString(terr));
+			final URL url = GUITile.class.getResource(getTerrainTypeString(terr));
 			if (url == null) {
 				LOGGER.severe("Couldn't find image for " + terr);
 			}
-			return url == null ? null : Toolkit.getDefaultToolkit()
-					.createImage((ImageProducer) url.getContent());
+			return url == null ? null : Toolkit.getDefaultToolkit().createImage(
+					(ImageProducer) url.getContent());
 		}
 	}
 
 	/**
-	 * A cache of terrain type images
+	 * A cache of terrain type images.
 	 */
 	private static Map<TerrainType, Image> imageMap = new EnumMap<TerrainType, Image>(
 			TerrainType.class);

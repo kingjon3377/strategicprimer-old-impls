@@ -4,25 +4,25 @@ import java.util.ArrayList;
 import java.util.Collections;
 
 /**
- * A simple sorted list
+ * A simple sorted list.
  * 
  * @author kevin
  * 
- *         Adapted to use generics and extend, rather than encapsulate,
+ * @author Adapted to use generics and extend, rather than encapsulate,
  *         ArrayList by
- * @author Jonathan Lovelace
+ * Jonathan Lovelace
  * @param <T>
  *            What this is a list of
  */
 public class SortedList<T extends Comparable<T>> extends ArrayList<T> {
 
 	/**
-	 * Version UID for serialization
+	 * Version UID for serialization.
 	 */
 	private static final long serialVersionUID = -892161502148230780L;
 
 	/**
-	 * Retrieve the first element from the list
+	 * Retrieve the first element from the list.
 	 * 
 	 * @return The first element from the list
 	 */
@@ -31,7 +31,7 @@ public class SortedList<T extends Comparable<T>> extends ArrayList<T> {
 	}
 
 	/**
-	 * Add an element to the list - causes sorting
+	 * Add an element to the list - causes sorting.
 	 * 
 	 * @param element
 	 *            The element to add

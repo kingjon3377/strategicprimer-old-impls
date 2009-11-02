@@ -13,7 +13,7 @@ public class Order extends Message {
 	 */
 	public enum OrderType {
 		/**
-		 * Attack another module
+		 * Attack another module.
 		 */
 		ATTACK,
 		/**
@@ -22,7 +22,7 @@ public class Order extends Message {
 		 */
 		DEFEND,
 		/**
-		 * Move to a location
+		 * Move to a location.
 		 */
 		MOVE,
 		/**
@@ -32,7 +32,7 @@ public class Order extends Message {
 	}
 
 	/**
-	 * What kind of order this is
+	 * What kind of order this is.
 	 */
 	private OrderType orderType;
 
@@ -42,22 +42,22 @@ public class Order extends Message {
 	 * 
 	 * @param timestamp
 	 *            The time the order arrived
-	 * @param _targetTime
+	 * @param targetTime
 	 *            The time the order should be executed
-	 * @param _priority
+	 * @param priority
 	 *            The priority of the order
 	 * @param type
 	 *            What kind of order this is
 	 * @see Message#Message(long, long, Priority)
 	 */
-	public Order(final long timestamp, final long _targetTime,
-			final Priority _priority, final OrderType type) {
-		super(timestamp, _targetTime, _priority);
+	public Order(final long timestamp, final long targetTime,
+			final Priority priority, final OrderType type) {
+		super(timestamp, targetTime, priority);
 		orderType = type;
 	}
 
 	/**
-	 * Accessor
+	 * Accessor.
 	 * 
 	 * @return what kind of order this is
 	 */
@@ -66,10 +66,10 @@ public class Order extends Message {
 	}
 
 	/**
-	 * @param _orderType
+	 * @param type
 	 *            what kind of order this is
 	 */
-	public void setOrderType(final OrderType _orderType) {
-		orderType = _orderType;
+	public void setOrderType(final OrderType type) {
+		orderType = type;
 	}
 }

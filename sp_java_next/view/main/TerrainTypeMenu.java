@@ -9,25 +9,25 @@ import view.map.GUITile;
 
 import model.location.TerrainType;
 /**
- * A popup menu to allow an admin to change a tile's terrain type
+ * A popup menu to allow an admin to change a tile's terrain type.
  * @author Jonathan Lovelace
  *
  */
 public final class TerrainTypeMenu extends JMenu implements ActionListener {
 	/**
-	 * Version UID for serialization
+	 * Version UID for serialization.
 	 */
 	private static final long serialVersionUID = -8078872146001436461L;
 	/**
-	 * The tile that this menu would change
+	 * The tile that this menu would change.
 	 */
 	private GUITile tile;
 	/**
-	 * The singleton object
+	 * The singleton object.
 	 */
 	public static final TerrainTypeMenu MENU = new TerrainTypeMenu();
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
 	private TerrainTypeMenu() {
 		super("Change Terrain Type");
@@ -36,7 +36,7 @@ public final class TerrainTypeMenu extends JMenu implements ActionListener {
 		}
 	}
 	/**
-	 * Handle menu item clicks
+	 * Handle menu item clicks.
 	 * @param event The event we're handling
 	 */
 	@Override
@@ -47,10 +47,10 @@ public final class TerrainTypeMenu extends JMenu implements ActionListener {
 		}
 	}
 	/**
-	 * Set the tile we're referring to
-	 * @param _tile the tile we're to refer to
+	 * Set the tile we're referring to.
+	 * @param newTile the tile we're to refer to
 	 */
-	public void setTile(final GUITile _tile) {
-		tile = _tile;
+	public void setTile(final GUITile newTile) {
+		tile = newTile;
 	}
 }

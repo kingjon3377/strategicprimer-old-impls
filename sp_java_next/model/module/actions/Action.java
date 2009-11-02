@@ -2,27 +2,27 @@ package model.module.actions;
 
 /**
  * A class to identify actions (mapping from ID to description, number of
- * arguments, etc.)
+ * arguments, etc.).
  * 
  * @author Jonathan Lovelace
  * 
  */
 public class Action {
 	/**
-	 * The ID number of the action
+	 * The ID number of the action.
 	 */
 	private final long number;
 	/**
-	 * A description of the action
+	 * A description of the action.
 	 */
 	private final String description;
 	/**
-	 * How many arguments the action takes
+	 * How many arguments the action takes.
 	 */
 	private final int arguments;
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 * 
 	 * @param idNum
 	 *            the ID number of the action

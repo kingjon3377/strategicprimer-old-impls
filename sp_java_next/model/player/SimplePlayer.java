@@ -10,24 +10,24 @@ import model.module.kinds.Renameable;
  */
 public class SimplePlayer implements IPlayer, Renameable {
 	/**
-	 * Constructor
+	 * Constructor.
 	 * 
-	 * @param _name
+	 * @param newName
 	 *            The player's name
 	 * @param num
 	 *            The player's number
 	 */
-	public SimplePlayer(final String _name, final int num) {
-		name = _name;
+	public SimplePlayer(final String newName, final int num) {
+		name = newName;
 		number = num;
 	}
 
 	/**
-	 * The player's name
+	 * The player's name.
 	 */
 	private String name;
 	/**
-	 * The player's number
+	 * The player's number.
 	 */
 	private int number;
 
@@ -57,12 +57,12 @@ public class SimplePlayer implements IPlayer, Renameable {
 	}
 
 	/**
-	 * @param _name
+	 * @param newName
 	 *            the player's new name
 	 */
 	@Override
-	public void setName(final String _name) {
-		name = _name;
+	public void setName(final String newName) {
+		name = newName;
 	}
 
 	/**
