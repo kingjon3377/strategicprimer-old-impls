@@ -9,6 +9,7 @@ import java.util.logging.Logger;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
+import model.main.Game;
 import model.module.Module;
 import model.module.UnableToMoveException;
 import model.module.actions.Action;
@@ -17,6 +18,9 @@ import model.module.kinds.FunctionalModule;
 import model.module.kinds.MobileModule;
 import model.module.kinds.RootModule;
 import model.module.kinds.Weapon;
+import pathfinding.AStarPathFinder;
+import pathfinding.Path;
+import view.map.GUIMap;
 import view.map.GUITile;
 
 /**
@@ -34,8 +38,7 @@ public final class ActionsMenu extends JMenu implements ActionListener {
 	/**
 	 * Logger.
 	 */
-	private static final Logger LOGGER = Logger.getLogger(ActionsMenu.class
-			.getName());
+	private static final Logger LOGGER = Logger.getLogger(ActionsMenu.class.getName());
 	/**
 	 * Singleton.
 	 */
@@ -73,7 +76,10 @@ public final class ActionsMenu extends JMenu implements ActionListener {
 	 * A mapping from text to action numbers.
 	 */
 	private final Map<String, Long> actionMap = new HashMap<String, Long>();
-
+	/**
+	 * A reference to the main map.
+	 */
+	private GUIMap map;
 	/**
 	 * Singleton constructor.
 	 */
@@ -129,7 +135,9 @@ public final class ActionsMenu extends JMenu implements ActionListener {
 
 	/**
 	 * Handle menu item selections.
-	 * @param event the event we're handling
+	 * 
+	 * @param event
+	 *            the event we're handling
 	 */
 	@Override
 	public void actionPerformed(final ActionEvent event) {
@@ -158,17 +166,17 @@ public final class ActionsMenu extends JMenu implements ActionListener {
 		if (action != 0) {
 			if (action == MOVE) {
 				try {
-					if (((MobileModule) getModuleOnTile(selectedTile))
-							.checkMove(tile.getTile())) {
+					if (((MobileModule) getModuleOnTile(selectedTile)).checkMove(tile
+							.getTile())) {
 						((MobileModule) getModuleOnTile(selectedTile)).move(tile
 								.getTile());
 					}
 				} catch (UnableToMoveException e) {
 					LOGGER.info("Movement failed");
 				}
+				map.clearPaths();
 			} else if (action == -1) {
-				((Weapon) getModuleOnTile(selectedTile))
-						.attack(getModuleOnTile(tile));
+				((Weapon) getModuleOnTile(selectedTile)).attack(getModuleOnTile(tile));
 			} else {
 				((FunctionalModule) getModuleOnTile(selectedTile)).action(action,
 						getModuleOnTile(tile));
@@ -192,10 +200,8 @@ public final class ActionsMenu extends JMenu implements ActionListener {
 	private static Module getModuleOnTile(final GUITile tile) {
 		return tile == null ? null
 				: tile.getTile().getModuleOnTile() instanceof Fortress
-						&& (((Fortress) tile.getTile().getModuleOnTile())
-								.getModule() != null)
-						&& !(((Fortress) tile.getTile().getModuleOnTile())
-								.getModule() instanceof RootModule) ? ((Fortress) tile
+						&& (((Fortress) tile.getTile().getModuleOnTile()).getModule() != null)
+						&& !(((Fortress) tile.getTile().getModuleOnTile()).getModule() instanceof RootModule) ? ((Fortress) tile
 						.getTile().getModuleOnTile()).getModule()
 						: tile.getTile().getModuleOnTile();
 	}
@@ -212,5 +218,36 @@ public final class ActionsMenu extends JMenu implements ActionListener {
 	 */
 	public void cancelSelectedAction() {
 		actionSelected = false;
+		map.clearPaths();
+	}
+
+	/**
+	 * If "move" is the current action, and the tile the cursor is over
+	 * (argument) is a valid move target, draw the path the mover would take.
+	 * 
+	 * @param target
+	 *            the possible target of the move action
+	 */
+	public void drawMovePath(final GUITile target) {
+		if (action == MOVE
+				&& ((MobileModule) getModuleOnTile(selectedTile)).checkMove(target
+						.getTile())) {
+			map.clearPaths();
+			final Path path = new AStarPathFinder(Game.getGame().getMap(),
+					Game.getGame().getMap().getSizeRows() * 2, true).findPath((MobileModule) getModuleOnTile(selectedTile),
+					selectedTile.getTile().getLocation().getX(), selectedTile.getTile()
+							.getLocation().getY(), target.getTile().getLocation().getX(),
+					target.getTile().getLocation().getY());
+			for (int i = 0; i < path.getLength(); i++) {
+				map.tileAt(path.getStep(i)).setPartOfAPath(true);
+			}
+			map.repaint();
+		}
+	}
+	/**
+	 * @param theMap the GUI map
+	 */
+	public void setMap(final GUIMap theMap) {
+		map = theMap;
 	}
 }

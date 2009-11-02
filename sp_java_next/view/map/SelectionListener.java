@@ -46,25 +46,29 @@ public class SelectionListener implements MouseListener {
 	}
 
 	/**
-	 * Required by interface.
+	 * When the mouse moves into of a GUITile, update projected movement.
 	 * 
 	 * @param event
-	 *            ignored
+	 *            The GUITile
 	 */
 	@Override
 	public void mouseEntered(final MouseEvent event) {
-		// Do nothing for now
+		if (event.getSource() instanceof GUITile) {
+			ActionsMenu.ACTIONS_MENU.drawMovePath((GUITile) event.getSource());
+		}
 	}
 
 	/**
-	 * Required by interface.
+	 * When the mouse moves out of a GUITile, update projected movement.
 	 * 
 	 * @param event
-	 *            ignored
+	 *            The GUITile
 	 */
 	@Override
 	public void mouseExited(final MouseEvent event) {
-		// Do nothing for now
+		if (event.getSource() instanceof GUITile) {
+			ActionsMenu.ACTIONS_MENU.drawMovePath((GUITile) event.getSource());
+		}
 	}
 
 	/**

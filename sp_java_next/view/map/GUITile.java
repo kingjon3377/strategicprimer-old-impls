@@ -46,6 +46,10 @@ public class GUITile extends JPanel {
 	 * Is this tile currently selected?
 	 */
 	private boolean selected = false;
+	/**
+	 * Is this tile currently part of a path (showing potential movement)?
+	 */
+	private boolean partOfAPath = false;
 
 	/**
 	 * Constructor, to make warnings go away.
@@ -137,6 +141,11 @@ public class GUITile extends JPanel {
 				pen.drawRect(i, i, getWidth() - i * 2, getHeight() - i * 2);
 			}
 		}
+		if (partOfAPath) {
+			pen.setXORMode(getBackground());
+			pen.fillOval(2 * getWidth() / FORT_RATIO, 2 * getHeight() / FORT_RATIO,
+					getWidth() / FORT_RATIO, getHeight() / FORT_RATIO);
+		}
 	}
 
 	/**
@@ -160,6 +169,14 @@ public class GUITile extends JPanel {
 	 */
 	public void setSelected(final boolean isSelected) {
 		selected = isSelected;
+	}
+
+	/**
+	 * @param isPartOfAPath
+	 *            whether this tile is now part of a path
+	 */
+	public void setPartOfAPath(final boolean isPartOfAPath) {
+		partOfAPath = isPartOfAPath;
 	}
 
 	/**
