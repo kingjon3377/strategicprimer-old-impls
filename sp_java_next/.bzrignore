@@ -9,3 +9,6 @@ hs_err_pid*.log
 bin/res.jar
 bin/testMap.xml
 bin/model/module/todo.txt
+bin/.checkstyle
+bin/.fbprefs
+bin/.project
