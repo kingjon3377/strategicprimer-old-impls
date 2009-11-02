@@ -1,6 +1,6 @@
 package model.player;
 /**
- * An interface for Player objects to implement
+ * An interface for Player objects to implement.
  * @author Jonathan Lovelace
  * 
  * Most implementers should also implement Renameable.

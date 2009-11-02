@@ -6,11 +6,11 @@ package utils;
  */
 public class Incrementor {
 	/**
-	 * The counter
+	 * The counter.
 	 */
 	private int nextValue;
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
 	public Incrementor() {
 		super();

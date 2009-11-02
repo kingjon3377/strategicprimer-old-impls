@@ -24,33 +24,32 @@ public class Statistics implements Serializable {
 	public enum Stats {
 		// TODO: Enumerate
 		/**
-		 * Hit points
+		 * Hit points.
 		 */
 		HP,
 		/**
-		 * Maximum hit points
+		 * Maximum hit points.
 		 */
 		MAX_HP,
 		/**
-		 * Movement points
+		 * Movement points.
 		 */
 		MP,
 		/**
-		 * Maximum movement points
+		 * Maximum movement points.
 		 */
 		MAX_MP
 	}
 
 	/**
-	 * 
+	 * Version UID for serialization.
 	 */
 	private static final long serialVersionUID = -4949435769559622883L;
 
 	/**
-	 * The statistics
+	 * The statistics.
 	 */
-	protected final EnumMap<Stats, Number> stats; // NOPMD by kingjon on 2/10/08
-												// 10:49 PM
+	private final EnumMap<Stats, Number> stats;
 
 	/**
 	 * Constructor.

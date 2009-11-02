@@ -40,7 +40,7 @@ public class Player implements Serializable {
 	// PM
 
 	/**
-	 * The player's "name" or handle
+	 * The player's "name" or handle.
 	 */
 	private String name;
 
@@ -48,12 +48,12 @@ public class Player implements Serializable {
 	 * Constructor. TODO: Figure out what belongs here (remember, this is an
 	 * abstract class)
 	 * 
-	 * @param _associatedModule
+	 * @param assocModule
 	 *            The module that represents the player in the game-world.
 	 * 
 	 */
-	public Player(final Module _associatedModule) {
-		associatedModule = _associatedModule;
+	public Player(final Module assocModule) {
+		associatedModule = assocModule;
 		forbiddenAdvances = new HashSet<Advance>();
 		advances = new HashSet<Advance>();
 	}
@@ -74,7 +74,7 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * Forbid the player from discovering an advance
+	 * Forbid the player from discovering an advance.
 	 * 
 	 * @param advance
 	 *            the advance
@@ -100,7 +100,7 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * The advances a player cannot discover (Changed from returning the set to
+	 * The advances a player cannot discover. (Changed from returning the set to
 	 * copying it into the given set.)
 	 * 
 	 * @param getter
@@ -120,23 +120,22 @@ public class Player implements Serializable {
 	}
 
 	/**
-	 * @param _associatedModule
+	 * @param assocModule
 	 *            the module that represents the player in the game-world
 	 */
-	public void setAssociatedModule(final Module _associatedModule) {
-		associatedModule = _associatedModule;
+	public void setAssociatedModule(final Module assocModule) {
+		associatedModule = assocModule;
 	}
 
 	/**
-	 * Set a player's chosen "name" or "handle"
+	 * Set a player's chosen "name" or "handle".
 	 * 
-	 * @param _name
+	 * @param newName
 	 *            The player's chosen name
 	 * 
 	 * TODO: Implement (see Yudexen?)
 	 */
-	protected void setName(final String _name) {
-		this.name = _name;
-		// TODO Auto-generated method stub
+	protected void setName(final String newName) {
+		name = newName;
 	}
 }

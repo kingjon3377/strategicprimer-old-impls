@@ -15,29 +15,30 @@ import view.module.CurrentModulePanel;
  */
 public class SelectionListener implements MouseListener {
 	/**
-	 * Constructor
+	 * Constructor.
 	 * 
-	 * @param _map
+	 * @param theMap
 	 *            The GUIMap that should be told about selection changes.
-	 * @param _panel
+	 * @param modulePanel
 	 *            The module panel that should be told about selection changes
 	 */
-	public SelectionListener(final GUIMap _map, final CurrentModulePanel _panel) {
-		map = _map;
-		panel = _panel;
+	public SelectionListener(final GUIMap theMap, final CurrentModulePanel modulePanel) {
+		map = theMap;
+		panel = modulePanel;
 	}
 
 	/**
-	 * The GUIMap that should be told about selection changes
+	 * The GUIMap that should be told about selection changes.
 	 */
 	private final GUIMap map;
 	/**
-	 * The ModulePanel that should be told about selection changes
+	 * The ModulePanel that should be told about selection changes.
 	 */
 	private final CurrentModulePanel panel;
 
 	/**
-	 * Ignored
+	 * Ignored.
+	 * @param event ignored
 	 */
 	@Override
 	public void mouseClicked(final MouseEvent event) {
@@ -45,7 +46,7 @@ public class SelectionListener implements MouseListener {
 	}
 
 	/**
-	 * Required by interface
+	 * Required by interface.
 	 * 
 	 * @param event
 	 *            ignored
@@ -56,7 +57,7 @@ public class SelectionListener implements MouseListener {
 	}
 
 	/**
-	 * Required by interface
+	 * Required by interface.
 	 * 
 	 * @param event
 	 *            ignored

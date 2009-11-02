@@ -42,7 +42,7 @@ public class Side {
 	// 2/10/08 10:53 PM
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 * 
 	 * @param baseModule
 	 *            The root of the module tree.
@@ -55,7 +55,7 @@ public class Side {
 	}
 
 	/**
-	 * Discover an advance (all players on this side gain it)
+	 * Discover an advance (all players on this side gain it).
 	 * 
 	 * @param advance
 	 *            The advance to discover
@@ -112,10 +112,10 @@ public class Side {
 	}
 
 	/**
-	 * @param _moduleTree
+	 * @param theModuleTree
 	 *            the root of the module tree TODO: Sanity checking here ...
 	 */
-	public void setModuleTree(final Module _moduleTree) {
-		moduleTree = _moduleTree;
+	public void setModuleTree(final Module theModuleTree) {
+		moduleTree = theModuleTree;
 	}
 }

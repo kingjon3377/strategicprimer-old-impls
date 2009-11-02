@@ -10,14 +10,14 @@ import model.module.kinds.RootModule;
 import utils.StringImage;
 
 /**
- * Manages GUIs for particular modules
+ * Manages GUIs for particular modules.
  * 
  * @author Jonathan Lovelace
  * 
  */
 public final class ModuleGUIManager {
 	/**
-	 * Do not instantiate
+	 * Do not instantiate.
 	 */
 	private ModuleGUIManager() {
 		// Don't instantiate
@@ -41,13 +41,13 @@ public final class ModuleGUIManager {
 	 * @return an image for that module
 	 */
 	public static Image getImage(final Module module) {
-		return UUID_MAP.containsKey(Long.valueOf(module.getUuid())) ? UUID_MAP
-				.get(Long.valueOf(module.getUuid())).getImage() : MODULE_ID_MAP
-				.get(Integer.valueOf(module.getModuleID())).getImage();
+		return UUID_MAP.containsKey(Long.valueOf(module.getUuid())) ? UUID_MAP.get(
+				Long.valueOf(module.getUuid())).getImage() : MODULE_ID_MAP.get(
+				Integer.valueOf(module.getModuleID())).getImage();
 	}
 
 	/**
-	 * Add an image for a Module
+	 * Add an image for a Module.
 	 * 
 	 * @param module
 	 *            the module
@@ -57,25 +57,21 @@ public final class ModuleGUIManager {
 	public static void addImage(final Module module, final String filename) {
 		if (checkAddImageInput(module, filename)) {
 			if (UUID_MAP.containsKey(Long.valueOf(module.getUuid()))
-					&& !UUID_MAP.get(Long.valueOf(module.getUuid()))
-							.getString().equals(filename)) {
-				throw new IllegalStateException(
-						"Already had an image for that module");
-			} else if (MODULE_ID_MAP.containsKey(Integer.valueOf(module
-					.getModuleID()))
+					&& !UUID_MAP.get(Long.valueOf(module.getUuid())).getString().equals(
+							filename)) {
+				throw new IllegalStateException("Already had an image for that module");
+			} else if (MODULE_ID_MAP.containsKey(Integer.valueOf(module.getModuleID()))
 					&& !UUID_MAP.containsKey(Long.valueOf(module.getUuid()))) {
-				UUID_MAP.put(Long.valueOf(module.getUuid()), new StringImage(
+				UUID_MAP.put(Long.valueOf(module.getUuid()), new StringImage(filename));
+			} else if (!MODULE_ID_MAP.containsKey(Integer.valueOf(module.getModuleID()))) {
+				MODULE_ID_MAP.put(Integer.valueOf(module.getModuleID()), new StringImage(
 						filename));
-			} else if (!MODULE_ID_MAP.containsKey(Integer.valueOf(module
-					.getModuleID()))) {
-				MODULE_ID_MAP.put(Integer.valueOf(module.getModuleID()),
-						new StringImage(filename));
 			}
 		}
 	}
 
 	/**
-	 * Checks whether addImage() should go ahead
+	 * Checks whether addImage() should go ahead.
 	 * 
 	 * @param module
 	 *            The module
@@ -84,16 +80,13 @@ public final class ModuleGUIManager {
 	 * @return True if the module is non-null and the image isn't already
 	 *         associated with this module
 	 */
-	private static boolean checkAddImageInput(final Module module,
-			final String filename) {
+	private static boolean checkAddImageInput(final Module module, final String filename) {
 		return module != null
-				&& (!MODULE_ID_MAP.containsKey(Integer.valueOf(module
-						.getModuleID())) || !MODULE_ID_MAP.get(
-						Integer.valueOf(module.getModuleID())).getString()
-						.equals(filename))
+				&& (!MODULE_ID_MAP.containsKey(Integer.valueOf(module.getModuleID())) || !MODULE_ID_MAP
+						.get(Integer.valueOf(module.getModuleID())).getString().equals(
+								filename))
 				&& ((!UUID_MAP.containsKey(Long.valueOf(module.getUuid()))) || !UUID_MAP
-						.get(Long.valueOf(module.getUuid())).getString()
-						.equals(filename));
+						.get(Long.valueOf(module.getUuid())).getString().equals(filename));
 	}
 
 	/**
@@ -102,15 +95,14 @@ public final class ModuleGUIManager {
 	 * @return the filename of its image. (For serialization purposes.)
 	 */
 	public static String getFilename(final Module module) {
-		return UUID_MAP.containsKey(Long.valueOf(module.getUuid())) ? UUID_MAP
-				.get(Long.valueOf(module.getUuid())).getString()
-				: MODULE_ID_MAP.containsKey(Integer.valueOf(module
-						.getModuleID())) ? MODULE_ID_MAP.get(
-						Integer.valueOf(module.getModuleID())).getString() : "";
+		return UUID_MAP.containsKey(Long.valueOf(module.getUuid())) ? UUID_MAP.get(
+				Long.valueOf(module.getUuid())).getString() : MODULE_ID_MAP
+				.containsKey(Integer.valueOf(module.getModuleID())) ? MODULE_ID_MAP.get(
+				Integer.valueOf(module.getModuleID())).getString() : "";
 	}
 
 	static {
 		addImage(RootModule.getRootModule(), "/clear.png");
-		addImage(new Fortress(null,null,""), "/fortress.png");
+		addImage(new Fortress(null, null, ""), "/fortress.png");
 	}
 }

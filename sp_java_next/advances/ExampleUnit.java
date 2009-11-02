@@ -36,16 +36,17 @@ import pathfinding.Path;
 public class ExampleUnit implements Module, Serializable, MobileModule,
 		Renameable, TransferableModule, FunctionalModule {
 	/**
-	 * An ExampleUnit's starting movement points
+	 * An ExampleUnit's starting movement points.
 	 */
 	private static final int EXAMPLE_UNIT_MP = 5;
 
 	/**
-	 * An ExampleUnit's starting hit points
+	 * An ExampleUnit's starting hit points.
 	 */
 	private static final int EXAMPLE_UNIT_HP = 20;
 
 	/**
+	 * Version UID for serialization.
 	 */
 	private static final long serialVersionUID = -1201325245093673269L;
 
@@ -54,22 +55,22 @@ public class ExampleUnit implements Module, Serializable, MobileModule,
 	 */
 	private Location location;
 	/**
-	 * The module's name
+	 * The module's name.
 	 */
 	private String name;
 	/**
 	 * My parent in the tree.
 	 */
-	protected Module parent;
+	private Module parent;
 
 	/**
 	 * My set of statistics.
 	 */
 	private Statistics statistics;
 	/**
-	 * UUID
+	 * UUID.
 	 */
-	protected final long uuid = UuidManager.UUID_MANAGER.getNewUuid();
+	private final long uuid = UuidManager.UUID_MANAGER.getNewUuid();
 
 	/**
 	 * Constructor.
@@ -80,7 +81,7 @@ public class ExampleUnit implements Module, Serializable, MobileModule,
 		statistics.getStats().put(Stats.HP, EXAMPLE_UNIT_HP);
 		statistics.getStats().put(Stats.MAX_MP, EXAMPLE_UNIT_MP);
 		statistics.getStats().put(Stats.MP, EXAMPLE_UNIT_MP);
-		location = NullLocation.getNullLocation();
+		location = NullLocation.NULL_LOC;
 		parent = RootModule.getRootModule();
 	}
 
@@ -95,7 +96,7 @@ public class ExampleUnit implements Module, Serializable, MobileModule,
 	}
 
 	/**
-	 * Accessor
+	 * Accessor.
 	 * 
 	 * @return the module that contains me
 	 */
@@ -123,11 +124,11 @@ public class ExampleUnit implements Module, Serializable, MobileModule,
 	}
 
 	/**
-	 * @param _parent
+	 * @param newParent
 	 *            My new parent in the tree.
 	 */
-	protected void setParent(final Module _parent) {
-		parent = _parent;
+	protected void setParent(final Module newParent) {
+		parent = newParent;
 	}
 
 	/**
@@ -154,13 +155,16 @@ public class ExampleUnit implements Module, Serializable, MobileModule,
 			die();
 		}
 	}
-
+	/**
+	 * The ModuleID of all instances of this class (not of subclasses).
+	 */
+	private static final int MODULE_ID = 3;
 	/**
 	 * @return the unit's moduleID. Should be overridden by subclasses
 	 */
 	@Override
 	public int getModuleID() {
-		return 3;
+		return MODULE_ID;
 	}
 
 	/**
@@ -172,7 +176,7 @@ public class ExampleUnit implements Module, Serializable, MobileModule,
 	}
 
 	/**
-	 * Move to a new location
+	 * Move to a new location.
 	 * 
 	 * @param loc
 	 *            the new location
@@ -220,11 +224,11 @@ public class ExampleUnit implements Module, Serializable, MobileModule,
 	}
 
 	/**
-	 * @param _name
+	 * @param newName
 	 *            the ExampleUnit's new name
 	 */
-	public void setName(final String _name) {
-		name = _name;
+	public void setName(final String newName) {
+		name = newName;
 	}
 
 	/**
@@ -293,7 +297,7 @@ public class ExampleUnit implements Module, Serializable, MobileModule,
 	}
 
 	/**
-	 * The unit's owner
+	 * The unit's owner.
 	 */
 	private IPlayer owner;
 
@@ -306,16 +310,16 @@ public class ExampleUnit implements Module, Serializable, MobileModule,
 	}
 
 	/**
-	 * @param _owner
+	 * @param newOwner
 	 *            the unit's new owner
 	 */
 	@Override
-	public void setOwner(final IPlayer _owner) {
-		owner = _owner;
+	public void setOwner(final IPlayer newOwner) {
+		owner = newOwner;
 	}
 
 	/**
-	 * The set of supported actions
+	 * The set of supported actions.
 	 */
 	private static final Set<Action> ACTIONS = new HashSet<Action>();
 	static {
@@ -323,7 +327,7 @@ public class ExampleUnit implements Module, Serializable, MobileModule,
 	}
 
 	/**
-	 * Do an action
+	 * Do an action.
 	 * 
 	 * @param action
 	 *            the action to do
@@ -346,7 +350,14 @@ public class ExampleUnit implements Module, Serializable, MobileModule,
 	public Set<Action> supportedActions() {
 		return Collections.unmodifiableSet(ACTIONS);
 	}
-
+	/**
+	 * Movement cost for forests.
+	 */
+	private static final double FOREST_COST = 4.0;
+	/**
+	 * Movement cost for jungle and mountain.
+	 */
+	private static final double JUNGLE_COST = 5.0;
 	/**
 	 * A mapping from terrain types to the cost to enter tiles of that type.
 	 */
@@ -356,10 +367,10 @@ public class ExampleUnit implements Module, Serializable, MobileModule,
 		MOVE_COST_MAP.put(TerrainType.Plains, 1.0);
 		MOVE_COST_MAP.put(TerrainType.Desert, 2.0);
 		MOVE_COST_MAP.put(TerrainType.Tundra, 2.0);
-		MOVE_COST_MAP.put(TerrainType.TemperateForest, 4.0);
-		MOVE_COST_MAP.put(TerrainType.BorealForest, 4.0);
-		MOVE_COST_MAP.put(TerrainType.Jungle, 5.0);
-		MOVE_COST_MAP.put(TerrainType.Mountain, 5.0);
+		MOVE_COST_MAP.put(TerrainType.TemperateForest, FOREST_COST);
+		MOVE_COST_MAP.put(TerrainType.BorealForest, FOREST_COST);
+		MOVE_COST_MAP.put(TerrainType.Jungle, JUNGLE_COST);
+		MOVE_COST_MAP.put(TerrainType.Mountain, JUNGLE_COST);
 		MOVE_COST_MAP.put(TerrainType.Ocean, Double.MAX_VALUE);
 		MOVE_COST_MAP.put(TerrainType.NotVisible, Double.MAX_VALUE);
 	}

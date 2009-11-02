@@ -38,11 +38,11 @@ public final class Game implements Serializable {
 	 */
 	private static final long serialVersionUID = -3912749657208931450L;
 	/**
-	 * Logger
+	 * Logger.
 	 */
 	private static final Logger LOGGER = Logger.getLogger(Game.class.getName());
 	/**
-	 * The game object
+	 * The game object.
 	 */
 	private static Game theGame;
 	static {
@@ -55,10 +55,11 @@ public final class Game implements Serializable {
 	public static Game getGame() {
 		return theGame;
 	}
+
 	/**
-	 * The players in the game
+	 * The players in the game.
 	 */
-	private final Map<Integer,IPlayer> players;
+	private final Map<Integer, IPlayer> players;
 	/**
 	 * All the teams in the game.
 	 */
@@ -68,18 +69,19 @@ public final class Game implements Serializable {
 	 * best way to do this (given that various levels needed)?
 	 */
 	private SPMap map; // NOPMD by kingjon on 5/19/08 4:29 PM
+
 	/**
-	 * Constructor
+	 * Constructor.
 	 */
 	private Game() {
 		sides = new HashSet<Side>();
-		players = new HashMap<Integer,IPlayer>();
+		players = new HashMap<Integer, IPlayer>();
 		map = new SPMap();
 		RootModule.getRootModule();
 	}
 
 	/**
-	 * Add a team to the game
+	 * Add a team to the game.
 	 * 
 	 * @param side
 	 *            The team to add
@@ -103,40 +105,50 @@ public final class Game implements Serializable {
 	public Set<Side> getSides() {
 		return Collections.unmodifiableSet(sides);
 	}
+
 	/**
-	 * Get the map from file
-	 * @param filename The filename of the XML map
+	 * Get the map from file.
+	 * 
+	 * @param filename
+	 *            The filename of the XML map
 	 */
 	public void createMap(final String filename) {
 		try {
 			map = new MapXMLReader(filename).getMap();
 		} catch (SAXException e) {
-			LOGGER.log(Level.SEVERE,"Parsing problem",e);
+			LOGGER.log(Level.SEVERE, "Parsing problem", e);
 		} catch (IOException e) {
-			LOGGER.log(Level.SEVERE,"Parsing I/O problem",e);
+			LOGGER.log(Level.SEVERE, "Parsing I/O problem", e);
 		}
 	}
+
 	/**
-	 * Add a player to the game
-	 * @param player the player to add
+	 * Add a player to the game.
+	 * 
+	 * @param player
+	 *            the player to add
 	 */
 	public void addPlayer(final IPlayer player) {
-		players.put(Integer.valueOf(player.getNumber()),player);
+		players.put(Integer.valueOf(player.getNumber()), player);
 	}
+
 	/**
 	 * @return the players in the game
 	 */
-	public Map<Integer,IPlayer> getPlayers() {
+	public Map<Integer, IPlayer> getPlayers() {
 		return Collections.unmodifiableMap(players);
 	}
+
 	/**
-	 * Remove all players from the game
+	 * Remove all players from the game.
 	 */
 	public void clearPlayers() {
 		players.clear();
 	}
+
 	/**
-	 * @param number the number of a player
+	 * @param number
+	 *            the number of a player
 	 * @return the player whose number that is
 	 */
 	public IPlayer getPlayer(final int number) {

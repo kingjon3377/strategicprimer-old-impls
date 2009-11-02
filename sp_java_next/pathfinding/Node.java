@@ -3,47 +3,47 @@ package pathfinding;
 import model.location.IPoint;
 
 /**
- * A single node in the search graph
+ * A single node in the search graph.
  * 
  * @author Kevin Glass
  */
 public class Node implements Comparable<Node>, IPoint {
-	/** The x coordinate of the node */
+	/** The x coordinate of the node. */
 	private final int xCoord;
-	/** The y coordinate of the node */
+	/** The y coordinate of the node. */
 	private final int yCoord;
-	/** The path cost for this node */
+	/** The path cost for this node. */
 	private double cost;
-	/** The parent of this node, how we reached it in the search */
+	/** The parent of this node, how we reached it in the search. */
 	private Node parent;
-	/** The heuristic cost of this node */
+	/** The heuristic cost of this node. */
 	private double heuristic;
-	/** The search depth of this node */
+	/** The search depth of this node. */
 	private int depth;
 
 	/**
-	 * Create a new node
+	 * Create a new node.
 	 * 
-	 * @param _xCoord
+	 * @param xCoordinate
 	 *            The x coordinate of the node
-	 * @param _yCoord
+	 * @param yCoordinate
 	 *            The y coordinate of the node
 	 */
-	public Node(final int _xCoord, final int _yCoord) {
-		this.xCoord = _xCoord;
-		this.yCoord = _yCoord;
+	public Node(final int xCoordinate, final int yCoordinate) {
+		xCoord = xCoordinate;
+		yCoord = yCoordinate;
 	}
 
 	/**
-	 * Set the parent of this node
+	 * Set the parent of this node.
 	 * 
-	 * @param _parent
+	 * @param newParent
 	 *            The parent node which lead us to this node
 	 * @return The depth we have no reached in searching
 	 */
-	public int setParent(final Node _parent) {
-		depth = _parent == null ? 1 : _parent.depth + 1;
-		parent = _parent;
+	public int setParent(final Node newParent) {
+		depth = newParent == null ? 1 : newParent.depth + 1;
+		parent = newParent;
 		return depth;
 	}
 
@@ -88,26 +88,26 @@ public class Node implements Comparable<Node>, IPoint {
 	}
 
 	/**
-	 * @param _cost
+	 * @param newCost
 	 *            the new cost of the Node
 	 */
-	public void setCost(final double _cost) {
-		cost = _cost;
+	public void setCost(final double newCost) {
+		cost = newCost;
 	}
 
 	/**
-	 * @param _depth
+	 * @param newDepth
 	 *            the Node's new depth
 	 */
-	public void setDepth(final int _depth) {
-		depth = _depth;
+	public void setDepth(final int newDepth) {
+		depth = newDepth;
 	}
 
 	/**
-	 * @param _heuristic
+	 * @param newHeuristic
 	 *            the new heuristic
 	 */
-	public void setHeuristic(final double _heuristic) {
-		heuristic = _heuristic;
+	public void setHeuristic(final double newHeuristic) {
+		heuristic = newHeuristic;
 	}
 }

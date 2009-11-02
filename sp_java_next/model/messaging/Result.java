@@ -8,26 +8,26 @@ package model.messaging;
 public class Result extends Message {
 
 	/**
-	 * The order this is the report of the result of
+	 * The order this is the report of the result of.
 	 */
 	private final Order order; // NOPMD by kingjon on 2/9/08 3:03 PM
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 * 
-	 * @param _arrivalTime
+	 * @param arrivalTime
 	 *            When the report arrived
-	 * @param _targetTime
+	 * @param targetTime
 	 *            When the report should be dealt with
-	 * @param _priority
+	 * @param priority
 	 *            The report's priority
-	 * @param _order
+	 * @param theOrder
 	 *            The order this is the report of the result of
 	 */
-	public Result(final long _arrivalTime, final long _targetTime,
-			final Priority _priority, final Order _order) {
-		super(_arrivalTime, _targetTime, _priority);
-		order = _order;
+	public Result(final long arrivalTime, final long targetTime,
+			final Priority priority, final Order theOrder) {
+		super(arrivalTime, targetTime, priority);
+		order = theOrder;
 	}
 
 	/**
@@ -36,6 +36,6 @@ public class Result extends Message {
 	 * @return The order this is the report of the result of
 	 */
 	public Order getOrder() {
-		return this.order;
+		return order;
 	}
 }

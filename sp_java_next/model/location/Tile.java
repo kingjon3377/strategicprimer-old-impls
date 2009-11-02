@@ -21,15 +21,16 @@ public class Tile implements Location {
 	 */
 	private Module moduleOnTile;
 	/**
-	 * The location of this tile on the grid
+	 * The location of this tile on the grid.
 	 */
 	private Point location;
 	/**
-	 * The event, if any, on the tile
+	 * The event, if any, on the tile.
 	 */
 	private LocationEvent event;
+
 	/**
-	 * Constructor, to make warnings go away
+	 * Constructor, to make warnings go away.
 	 * 
 	 * @param row
 	 *            The row the tile is in
@@ -41,7 +42,7 @@ public class Tile implements Location {
 	}
 
 	/**
-	 * Constructor taking a preconstructed Point
+	 * Constructor taking a preconstructed Point.
 	 * 
 	 * @param point
 	 *            The point on the grid that this tile goes
@@ -65,16 +66,13 @@ public class Tile implements Location {
 		} else if (moduleOnTile instanceof Fortress) {
 			((Fortress) moduleOnTile).add(module);
 		} else {
-			throw new IllegalStateException(
-					"There's already a module on this tile");
+			throw new IllegalStateException("There's already a module on this tile");
 		}
 	}
 
 	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see model.location.Location#contains(model.location.Location)
-	 * @return false -- a Tile cannot contain another location.
+	 * @param loc a location
+	 * @return whether the module on the tile is a location and is the given location.
 	 */
 	public boolean contains(final Location loc) {
 		return (moduleOnTile instanceof Location && moduleOnTile.equals(loc));
@@ -96,8 +94,8 @@ public class Tile implements Location {
 	public boolean contains(final Module module) {
 		return module != null
 				&& (module.getLocation().equals(this)
-						|| (moduleOnTile instanceof Fortress ? module
-								.getLocation().equals(moduleOnTile) : false) || contains(module
+						|| (moduleOnTile instanceof Fortress ? module.getLocation()
+								.equals(moduleOnTile) : false) || contains(module
 						.getParent()));
 	}
 
@@ -109,13 +107,12 @@ public class Tile implements Location {
 	}
 
 	/**
-	 * If
+	 * If the module to remove is the top-level module on the tile, remove it.
+	 * Otherwise, object.
 	 * 
 	 * @param module
 	 *            the module to remove
 	 * 
-	 *            is the top-level module on the tile, remove it. Otherwise,
-	 *            object.
 	 */
 	public void remove(final Module module) {
 		if (moduleOnTile.equals(module)) {
@@ -129,11 +126,11 @@ public class Tile implements Location {
 	}
 
 	/**
-	 * @param _moduleOnTile
+	 * @param newModuleOnTile
 	 *            the "top-level" module on the tile
 	 */
-	public void setModuleOnTile(final Module _moduleOnTile) {
-		this.moduleOnTile = _moduleOnTile;
+	public void setModuleOnTile(final Module newModuleOnTile) {
+		this.moduleOnTile = newModuleOnTile;
 	}
 
 	/**
@@ -174,16 +171,19 @@ public class Tile implements Location {
 	public Point getLocation() {
 		return location;
 	}
+
 	/**
 	 * @return the event, if any, on the tile
 	 */
 	public LocationEvent getEvent() {
 		return event;
 	}
+
 	/**
-	 * @param _event the event to go on the tile
+	 * @param newEvent
+	 *            the event to go on the tile
 	 */
-	public void setEvent(final LocationEvent _event) {
-		event = _event;
+	public void setEvent(final LocationEvent newEvent) {
+		event = newEvent;
 	}
 }

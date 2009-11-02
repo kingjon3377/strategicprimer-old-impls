@@ -9,14 +9,14 @@ import model.module.Module;
 import model.module.kinds.Fortress;
 
 /**
- * A panel to describe the current module
+ * A panel to describe the current module.
  * 
  * @author Jonathan Lovelace
  * 
  */
 public class CurrentModulePanel extends JPanel {
 	/**
-	 * 
+	 * Version UID for serialization.
 	 */
 	private static final long serialVersionUID = 6550745365212019975L;
 	/**
@@ -24,12 +24,12 @@ public class CurrentModulePanel extends JPanel {
 	 */
 	private final transient JLabel label = new JLabel();
 	/**
-	 * Administrative version of this panel
+	 * Administrative version of this panel.
 	 */
 	private final transient AdminModuleEditPanel adminPanel;
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 * 
 	 * @param admin
 	 *            Should we show the administrative panel?
@@ -46,7 +46,7 @@ public class CurrentModulePanel extends JPanel {
 	}
 
 	/**
-	 * Change the label to a new module
+	 * Change the label to a new module.
 	 * 
 	 * @param mod
 	 *            The module to describe

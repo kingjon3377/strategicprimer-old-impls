@@ -93,20 +93,20 @@ public interface Unit extends Module {
 	Collection<Module> getEquipment();
 
 	/**
-	 * Add equipment
+	 * Add equipment.
 	 * 
-	 * @param _equipment
+	 * @param equipment
 	 *            The equipment to add.
 	 */
-	void addEquipment(Collection<Module> _equipment);
+	void addEquipment(Collection<Module> equipment);
 
 	/**
-	 * Remove equipment
+	 * Remove equipment.
 	 * 
-	 * @param _equipment
+	 * @param equipment
 	 *            The equipment to remove.
 	 */
-	void removeEquipment(Collection<Module> _equipment);
+	void removeEquipment(Collection<Module> equipment);
 
 	/**
 	 * @return The jobs the unit has.
@@ -114,7 +114,7 @@ public interface Unit extends Module {
 	Set<Job> getJobs();
 
 	/**
-	 * Add a job
+	 * Add a job.
 	 * 
 	 * @param job
 	 *            The job to add.
@@ -122,7 +122,7 @@ public interface Unit extends Module {
 	void addJob(Job job);
 
 	/**
-	 * Remove a job
+	 * Remove a job.
 	 * 
 	 * @param job
 	 *            The job to remove.

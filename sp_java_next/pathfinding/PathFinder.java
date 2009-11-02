@@ -1,6 +1,5 @@
 package pathfinding;
 
-import model.location.SPMap;
 import model.module.kinds.MobileModule;
 
 /**
@@ -8,7 +7,7 @@ import model.module.kinds.MobileModule;
  * location on a tile map to another based on information provided
  * by that tile map.
  * 
- * @see SPMap
+ * @see model.location.SPMap
  * @author Kevin Glass
  */
 public interface PathFinder {

@@ -20,7 +20,7 @@ import java.util.logging.Logger;
  */
 public class MapReaderDriver implements Serializable {
 	/**
-	 * Version UID for serialization
+	 * Version UID for serialization.
 	 */
 	private static final long serialVersionUID = -1956548986752307179L;
 	/**
@@ -29,7 +29,7 @@ public class MapReaderDriver implements Serializable {
 	private static final Logger LOGGER = Logger.getLogger(MapReaderDriver.class
 			.getName());
 	/**
-	 * The image we're converting
+	 * The image we're converting.
 	 */
 	private final Picture pict;
 	/**
@@ -42,7 +42,7 @@ public class MapReaderDriver implements Serializable {
 	private static final Character A_CHARACTER = new Character('a');
 
 	/**
-	 * @param args
+	 * @param args Command-line arguments
 	 */
 	public static void main(final String[] args) {
 		try {
@@ -55,7 +55,7 @@ public class MapReaderDriver implements Serializable {
 	}
 
 	/**
-	 * Constructor
+	 * Constructor.
 	 * 
 	 * @param filename
 	 *            The filename of the image
@@ -159,7 +159,7 @@ public class MapReaderDriver implements Serializable {
 	}
 
 	/**
-	 * Remove duplicate pixels from a list of pixels
+	 * Remove duplicate pixels from a list of pixels.
 	 * 
 	 * @param list
 	 *            The list to reduce

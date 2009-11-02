@@ -9,16 +9,16 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
- * A String-Image pair
+ * A String-Image pair.
  * @author Jonathan Lovelace
  */
 public class StringImage {
 	/**
-	 * Logger
+	 * Logger.
 	 */
 	private static final Logger LOGGER = Logger.getLogger(StringImage.class.getName()); 
 	/**
-	 * Constructor
+	 * Constructor.
 	 * @param str The filename of the image
 	 */
 	public StringImage(final String str) {

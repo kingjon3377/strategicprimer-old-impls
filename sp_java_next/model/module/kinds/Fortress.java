@@ -15,45 +15,45 @@ import model.player.IPlayer;
 public class Fortress implements Module, Renameable, Location,
 		TransferableModule {
 	/**
-	 * Constructor
+	 * Constructor.
 	 * @param loc The location of the fortress
-	 * @param _owner The owner of the fortress
-	 * @param _name The name of the fortress
+	 * @param newOwner The owner of the fortress
+	 * @param newName The name of the fortress
 	 */
-	public Fortress(final Location loc, final IPlayer _owner, final String _name) {
+	public Fortress(final Location loc, final IPlayer newOwner, final String newName) {
 		module = RootModule.getRootModule();
 		location = loc;
-		owner = _owner;
-		name = _name;
+		owner = newOwner;
+		name = newName;
 	}
 
 	/**
-	 * Version UID for serialization
+	 * Version UID for serialization.
 	 */
 	private static final long serialVersionUID = 804901337979354609L;
 	/**
-	 * The location of the fortress
+	 * The location of the fortress.
 	 */
 	private Location location;
 	/**
-	 * The module in the fortress
+	 * The module in the fortress.
 	 */
 	private Module module;
 	/**
-	 * The name of the fortress
+	 * The name of the fortress.
 	 */
 	private String name;
 	/**
-	 * The owner of the fortress
+	 * The owner of the fortress.
 	 */
 	private IPlayer owner;
 	/**
-	 * UUID
+	 * UUID.
 	 */
 	private final long uuid = UuidManager.UUID_MANAGER.getNewUuid();
 
 	/**
-	 * Destroy the fortress
+	 * Destroy the fortress.
 	 */
 	@Override
 	public void die() {
@@ -68,13 +68,16 @@ public class Fortress implements Module, Renameable, Location,
 	public Location getLocation() {
 		return location;
 	}
-
+	/**
+	 * The moduleID of all instances of this exact class.
+	 */
+	private static final int MODULE_ID = 5;
 	/**
 	 * @return the moduleid of this class
 	 */
 	@Override
 	public int getModuleID() {
-		return 5;
+		return MODULE_ID;
 	}
 
 	/**
@@ -119,7 +122,7 @@ public class Fortress implements Module, Renameable, Location,
 	}
 
 	/**
-	 * Pass any attacks on to the module inside, unless the fortress is empty
+	 * Pass any attacks on to the module inside, unless the fortress is empty.
 	 * 
 	 * @param attacker
 	 *            the attacker
@@ -134,16 +137,16 @@ public class Fortress implements Module, Renameable, Location,
 	}
 
 	/**
-	 * @param _name
+	 * @param newName
 	 *            the new name of the fortress
 	 */
 	@Override
-	public void setName(final String _name) {
-		name = _name;
+	public void setName(final String newName) {
+		name = newName;
 	}
 
 	/**
-	 * Add a module to the fortress
+	 * Add a module to the fortress.
 	 * 
 	 * @param mod
 	 *            the module to add
@@ -173,7 +176,7 @@ public class Fortress implements Module, Renameable, Location,
 	}
 
 	/**
-	 * Can't contain other locations
+	 * Can't contain other locations.
 	 * 
 	 * @param loc
 	 *            ignored
@@ -196,7 +199,7 @@ public class Fortress implements Module, Renameable, Location,
 	}
 
 	/**
-	 * Remove a module
+	 * Remove a module.
 	 * 
 	 * @param mod
 	 *            the module to remove
@@ -212,12 +215,12 @@ public class Fortress implements Module, Renameable, Location,
 	}
 
 	/**
-	 * @param _owner
+	 * @param newOwner
 	 *            the new owner of the fortress
 	 */
 	@Override
-	public void setOwner(final IPlayer _owner) {
-		owner = _owner;
+	public void setOwner(final IPlayer newOwner) {
+		owner = newOwner;
 	}
 	/**
 	 * @return the module in the fortress

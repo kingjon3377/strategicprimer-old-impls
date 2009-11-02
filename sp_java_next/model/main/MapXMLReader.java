@@ -26,14 +26,14 @@ import org.xml.sax.helpers.XMLReaderFactory;
 import view.module.ModuleGUIManager;
 
 /**
- * A SAX parser for an XML map
+ * A SAX parser for an XML map.
  * 
  * @author Jonathan Lovelace
  * 
  */
-public class MapXMLReader extends DefaultHandler implements Serializable {
+public final class MapXMLReader extends DefaultHandler implements Serializable {
 	/**
-	 * Version UID for serialization
+	 * Version UID for serialization.
 	 */
 	private static final long serialVersionUID = 5145532899438459585L;
 	/**
@@ -42,27 +42,27 @@ public class MapXMLReader extends DefaultHandler implements Serializable {
 	 */
 	private transient boolean safeToReturn;
 	/**
-	 * The tile we're currently parsing
+	 * The tile we're currently parsing.
 	 */
 	private transient Tile currentTile;
 	/**
-	 * The fortress we're currently parsing
+	 * The fortress we're currently parsing.
 	 */
 	private transient Fortress currentFort;
 	/**
-	 * The tiles that will go in the map
+	 * The tiles that will go in the map.
 	 */
 	private final transient Map<Point, Tile> tiles = new HashMap<Point, Tile>();
 	/**
-	 * The module we're currently parsing
+	 * The module we're currently parsing.
 	 */
 	private transient Module currentModule;
 	/**
-	 * Module factory
+	 * Module factory.
 	 */
 	private static final ModuleFactory FACTORY = new ModuleFactory();
 	/**
-	 * The map
+	 * The map.
 	 */
 	private transient SPMap map;
 
@@ -94,9 +94,12 @@ public class MapXMLReader extends DefaultHandler implements Serializable {
 		reader.setContentHandler(this);
 		return reader;
 	}
-
 	/**
-	 * Blocks until ready to return
+	 * How long to sleep before checking whether we're ready again.
+	 */
+	private static final int SLEEP_TIME = 1000;
+	/**
+	 * Blocks until ready to return.
 	 * 
 	 * @return the parsed map
 	 */
@@ -106,7 +109,7 @@ public class MapXMLReader extends DefaultHandler implements Serializable {
 				// FIXME: If the app is single-threaded, this could be just as
 				// bad as busy-waiting.
 				// ESCA-JAVA0087:
-				Thread.sleep(1000);
+				Thread.sleep(SLEEP_TIME);
 			} catch (InterruptedException e) {
 				continue;
 			}
@@ -253,7 +256,7 @@ public class MapXMLReader extends DefaultHandler implements Serializable {
 	}
 
 	/**
-	 * Parse a module
+	 * Parse a module.
 	 * 
 	 * @param atts
 	 *            The XML tag's attributes.

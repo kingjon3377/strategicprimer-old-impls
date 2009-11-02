@@ -17,23 +17,23 @@ public class SPMap implements Serializable {
 	 */
 	private static final long serialVersionUID = 8308256668999321710L;
 	/**
-	 * The map's default number of rows
+	 * The map's default number of rows.
 	 */
 	private static final int DEFAULT_SIZE_ROWS = 10;
 	/**
-	 * The map's default number of columns
+	 * The map's default number of columns.
 	 */
 	private static final int DEFAULT_SIZE_COLS = 10;
 	/**
-	 * The size of the map in rows
+	 * The size of the map in rows.
 	 */
 	private final int sizeRows;
 	/**
-	 * The size of the map in columns
+	 * The size of the map in columns.
 	 */
 	private final int sizeCols;
 	/**
-	 * The tiles on the map
+	 * The tiles on the map.
 	 */
 	private final Map<Point, Tile> tiles = new HashMap<Point, Tile>();
 
@@ -46,14 +46,14 @@ public class SPMap implements Serializable {
 	}
 
 	/**
-	 * @param _rows
+	 * @param rows
 	 *            How tall this map is
-	 * @param _cols
+	 * @param cols
 	 *            How wide this map is
 	 */
-	public SPMap(final int _rows, final int _cols) {
-		sizeRows = _rows;
-		sizeCols = _cols;
+	public SPMap(final int rows, final int cols) {
+		sizeRows = rows;
+		sizeCols = cols;
 	}
 
 	/**
@@ -68,7 +68,7 @@ public class SPMap implements Serializable {
 	}
 
 	/**
-	 * @return the number of columns wide this map is
+	 * @return the number of columns wide this map is.
 	 */
 	public int getSizeCols() {
 		return sizeCols;
@@ -106,7 +106,7 @@ public class SPMap implements Serializable {
 	}
 
 	/**
-	 * To appease static analysis plugins, and Eclipse in general
+	 * To appease static analysis plugins, and Eclipse in general.
 	 * 
 	 * @return the array of tiles
 	 */

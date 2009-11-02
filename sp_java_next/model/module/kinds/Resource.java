@@ -24,9 +24,9 @@ public interface Resource extends Module {
 	 * throw an exception, while others will let the user go into debt. There
 	 * ought to be a way to have some resources let the user specify what to do.
 	 * 
-	 * @param _quantity
+	 * @param quantity
 	 *            How much to remove
 	 * @return The removed collection of the resource.
 	 */
-	Resource tap(double _quantity);
+	Resource tap(double quantity);
 }

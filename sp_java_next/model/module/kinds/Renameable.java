@@ -1,11 +1,7 @@
-/**
- * 
- */
 package model.module.kinds;
 
-
 /**
- * Something that can be renamed at runtime
+ * Something that can be renamed at runtime.
  * @author Jonathan Lovelace
  */
 public interface Renameable {

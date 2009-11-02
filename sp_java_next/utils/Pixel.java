@@ -8,9 +8,9 @@ package utils;
  * @author modified by Keith Vander Linden (July2006)
  * 
  */
-public class Pixel {
+public final class Pixel {
 	/**
-	 * The maximum intensity of any color of a pixel
+	 * The maximum intensity of any color of a pixel.
 	 */
 	private static final int MAX_INTENSITY = 255;
 
@@ -20,20 +20,21 @@ public class Pixel {
 	 */
 	public enum Color {
 		/**
-		 * Red
+		 * Red.
 		 */
-		RED, 
+		RED,
 		/**
-		 * Green
+		 * Green.
 		 */
-		GREEN, 
+		GREEN,
 		/**
-		 * Blue
+		 * Blue.
 		 */
 		BLUE
 	}
+
 	/**
-	 * The three color components
+	 * The three color components.
 	 */
 	private int[] component;
 
@@ -43,9 +44,12 @@ public class Pixel {
 	public Pixel() {
 		this(0, 0, 0);
 	}
+
 	/**
-	 * Construct a gray-scale pixel
-	 * @param gray the intensity of the pixel
+	 * Construct a gray-scale pixel.
+	 * 
+	 * @param gray
+	 *            the intensity of the pixel
 	 */
 	public Pixel(final int gray) {
 		component = new int[1];
@@ -55,12 +59,15 @@ public class Pixel {
 	/**
 	 * Construct a pixel with explicit RGB intensity values.
 	 * 
-	 * @param red red component
-	 * @param green green component
-	 * @param blue blue component
+	 * @param red
+	 *            red component
+	 * @param green
+	 *            green component
+	 * @param blue
+	 *            blue component
 	 */
 	public Pixel(final int red, final int green, final int blue) {
-		component = new int[3];
+		component = new int[Color.values().length];
 		component[0] = red;
 		component[1] = green;
 		component[2] = blue;
@@ -69,11 +76,11 @@ public class Pixel {
 	/**
 	 * Construct a Pixel object with the given component values.
 	 * 
-	 * @param components
+	 * @param components the component values of the pixel
 	 */
 	public Pixel(final int[] components) {
 		component = new int[components.length];
-		System.arraycopy(components,0, component,0, components.length);
+		System.arraycopy(components, 0, component, 0, components.length);
 	}
 
 	/**
@@ -141,8 +148,10 @@ public class Pixel {
 	}
 
 	/**
-	 * Ensure the value is a valid color intensity
-	 * @param value a proposed color intensity
+	 * Ensure the value is a valid color intensity.
+	 * 
+	 * @param value
+	 *            a proposed color intensity
 	 * @return the intensity, or 0 or 255 if it was an invalid value.
 	 */
 	private static int normalizeColorValue(final int value) {
@@ -156,7 +165,7 @@ public class Pixel {
 	}
 
 	/**
-	 * Set the red intensity value of the pixel
+	 * Set the red intensity value of the pixel.
 	 * 
 	 * @param red
 	 *            an integer from 0-255
@@ -166,7 +175,7 @@ public class Pixel {
 	}
 
 	/**
-	 * Set the green intensity value of the pixel
+	 * Set the green intensity value of the pixel.
 	 * 
 	 * @param green
 	 *            an integer from 0-255
@@ -176,7 +185,7 @@ public class Pixel {
 	}
 
 	/**
-	 * Set the blue intensity value of the pixel
+	 * Set the blue intensity value of the pixel.
 	 * 
 	 * @param blue
 	 *            an integer from 0-255
@@ -186,7 +195,7 @@ public class Pixel {
 	}
 
 	/**
-	 * Set the red intensity value of the pixel to red
+	 * Set the red intensity value of the pixel to red.
 	 * 
 	 * @param gray
 	 *            an integer from 0-255
@@ -196,11 +205,12 @@ public class Pixel {
 	}
 
 	/**
-	 * @return the color components of the pixel
+	 * @return the color components of the pixel.
 	 */
 	public int[] getComponents() {
 		return component.clone();
 	}
+
 	/**
 	 * @return a String representation of the pixel's color values
 	 */
@@ -217,10 +227,7 @@ public class Pixel {
 	}
 
 	/**
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#equals(java.lang.Object)
-	 * 
+	 * @param other another object
 	 * @return whether the two objects are equal
 	 */
 	@Override
@@ -239,14 +246,16 @@ public class Pixel {
 		}
 		return false;
 	}
+
 	/**
 	 * @return a hash code for the pixel
 	 */
 	@Override
 	public int hashCode() {
-		return (MAX_INTENSITY + 1) * (MAX_INTENSITY + 1) * component[0] + (MAX_INTENSITY + 1) * component[1] + component[2];
+		return (MAX_INTENSITY + 1) * (MAX_INTENSITY + 1) * component[0]
+				+ (MAX_INTENSITY + 1) * component[1] + component[2];
 	}
-	
+
 	/**
 	 * A black pixel.
 	 */
