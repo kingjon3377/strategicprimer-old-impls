@@ -40,7 +40,7 @@ public class ModuleFactory {
 	public Module createModule(final int moduleId) {
 		switch(moduleId) {
 		case 0:
-			return RootModule.getRootModule(); // NOPMD
+			return RootModule.ROOT_MODULE; // NOPMD
 		case 2:
 			return new SimpleUnit(); // NOPMD
 		case EXAMPLEUNIT_ID:

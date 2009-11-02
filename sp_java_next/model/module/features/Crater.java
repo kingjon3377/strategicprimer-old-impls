@@ -74,7 +74,7 @@ public class Crater implements Module {
 	 */
 	@Override
 	public Module getParent() {
-		return RootModule.getRootModule();
+		return RootModule.ROOT_MODULE;
 	}
 	/**
 	 * UUID.

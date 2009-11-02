@@ -11,7 +11,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import model.location.SPMap;
-import model.module.kinds.RootModule;
 import model.player.IPlayer;
 import model.player.Side;
 
@@ -77,7 +76,6 @@ public final class Game implements Serializable {
 		sides = new HashSet<Side>();
 		players = new HashMap<Integer, IPlayer>();
 		map = new SPMap();
-		RootModule.getRootModule();
 	}
 
 	/**

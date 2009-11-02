@@ -102,7 +102,7 @@ public final class ModuleGUIManager {
 	}
 
 	static {
-		addImage(RootModule.getRootModule(), "/clear.png");
+		addImage(RootModule.ROOT_MODULE, "/clear.png");
 		addImage(new Fortress(null, null, ""), "/fortress.png");
 	}
 }

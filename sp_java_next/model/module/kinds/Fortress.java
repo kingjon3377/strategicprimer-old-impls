@@ -21,7 +21,7 @@ public class Fortress implements Module, Renameable, Location,
 	 * @param newName The name of the fortress
 	 */
 	public Fortress(final Location loc, final IPlayer newOwner, final String newName) {
-		module = RootModule.getRootModule();
+		module = RootModule.ROOT_MODULE;
 		location = loc;
 		owner = newOwner;
 		name = newName;
@@ -101,7 +101,7 @@ public class Fortress implements Module, Renameable, Location,
 	 */
 	@Override
 	public Module getParent() {
-		return RootModule.getRootModule();
+		return RootModule.ROOT_MODULE;
 	}
 
 	/**
@@ -156,7 +156,7 @@ public class Fortress implements Module, Renameable, Location,
 		if (mod instanceof Fortress) {
 			throw new IllegalStateException(
 					"Can't have a fortress inside a fortress");
-		} else if (module.equals(RootModule.getRootModule())) {
+		} else if (module.equals(RootModule.ROOT_MODULE)) {
 			module = mod;
 		} else {
 			throw new IllegalStateException(
@@ -171,7 +171,7 @@ public class Fortress implements Module, Renameable, Location,
 	 */
 	@Override
 	public boolean checkAdd(final Module mod) {
-		return module.equals(RootModule.getRootModule())
+		return module.equals(RootModule.ROOT_MODULE)
 				&& !(mod instanceof Fortress);
 	}
 
@@ -207,7 +207,7 @@ public class Fortress implements Module, Renameable, Location,
 	@Override
 	public void remove(final Module mod) {
 		if (module.equals(mod)) {
-			module = RootModule.getRootModule();
+			module = RootModule.ROOT_MODULE;
 		} else {
 			throw new IllegalArgumentException(
 					"That isn't the top-level module in the fortress!");

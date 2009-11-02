@@ -18,24 +18,12 @@ public final class RootModule implements Module, Serializable {
 	/**
 	 * The single root module of the tree.
 	 */
-	private static RootModule root;
+	public static final RootModule ROOT_MODULE = new RootModule();
 
 	/**
 	 * Version UID for serialization.
 	 */
 	private static final long serialVersionUID = -2504997378608944492L;
-
-	/**
-	 * @return The single root module of the tree.
-	 */
-	public static RootModule getRootModule() {
-		synchronized (RootModule.class) {
-			if (root == null) {
-				root = new RootModule();
-			}
-		}
-		return root;
-	}
 
 	/**
 	 * This module's direct children.

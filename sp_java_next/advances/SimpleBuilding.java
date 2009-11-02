@@ -69,7 +69,7 @@ public class SimpleBuilding implements Module, Renameable, TransferableModule {
 	 */
 	@Override
 	public Module getParent() {
-		return RootModule.getRootModule();
+		return RootModule.ROOT_MODULE;
 	}
 
 	/**
