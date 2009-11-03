@@ -16,7 +16,9 @@
 		<tile row="0" column="6" type="tundra" event="5"></tile>
 		<tile row="0" column="7" type="temperate_forest" event="5"></tile>
 		<tile row="0" column="8" type="temperate_forest" event="5"></tile>
-		<tile row="0" column="9" type="boreal_forest" event="5"></tile>
+		<tile row="0" column="9" type="boreal_forest" event="5">
+			<feature mid="6" image="/crater.png" name="Crater" />
+		</tile>
 	</row>
 	<row index="1">
 		<tile row="1" column="0" type="ocean" event="5"></tile>

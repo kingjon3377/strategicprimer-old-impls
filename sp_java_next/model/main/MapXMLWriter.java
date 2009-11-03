@@ -9,6 +9,7 @@ import java.util.Map;
 import model.location.SPMap;
 import model.location.Tile;
 import model.module.Module;
+import model.module.features.Feature;
 import model.module.kinds.Fortress;
 import model.module.kinds.RootModule;
 import model.player.IPlayer;
@@ -57,8 +58,7 @@ public final class MapXMLWriter {
 	 */
 	public static void writeGameToXML(final String filename, final Game game)
 			throws IOException {
-		writeGame(game, new PrintWriter(new BufferedWriter(new FileWriter(
-				filename))));
+		writeGame(game, new PrintWriter(new BufferedWriter(new FileWriter(filename))));
 	}
 
 	/**
@@ -85,8 +85,7 @@ public final class MapXMLWriter {
 	 * @param writer
 	 *            the Writer to write to
 	 */
-	private static void writeInitialElement(final SPMap map,
-			final PrintWriter writer) {
+	private static void writeInitialElement(final SPMap map, final PrintWriter writer) {
 		writer.println("<map rows=\"" + map.getSizeRows() + "\" columns=\""
 				+ map.getSizeCols() + "\" version=\"0\">");
 	}
@@ -102,8 +101,8 @@ public final class MapXMLWriter {
 	public static void writePlayers(final Map<Integer, IPlayer> players,
 			final PrintWriter writer) {
 		for (IPlayer player : players.values()) {
-			writer.println("\t<player number=\"" + player.getNumber()
-					+ "\" code_name=\"" + player.getName() + "\" />");
+			writer.println("\t<player number=\"" + player.getNumber() + "\" code_name=\""
+					+ player.getName() + "\" />");
 		}
 	}
 
@@ -124,10 +123,12 @@ public final class MapXMLWriter {
 			writer.println("\t</row>");
 		}
 	}
+
 	/**
 	 * The starting indentation for elements inside a tile.
 	 */
 	private static final int START_TABS = 3;
+
 	/**
 	 * Write a tile to XML.
 	 * 
@@ -153,6 +154,8 @@ public final class MapXMLWriter {
 			writer.println();
 			if (tile.getModuleOnTile() instanceof Fortress) {
 				writeFortress((Fortress) tile.getModuleOnTile(), writer, START_TABS);
+			} else if (tile.getModuleOnTile() instanceof Feature) {
+				writeFeature((Feature) tile.getModuleOnTile(), writer, START_TABS);
 			} else {
 				writeModule(tile.getModuleOnTile(), writer, START_TABS);
 			}
@@ -171,8 +174,8 @@ public final class MapXMLWriter {
 	 * @param indent
 	 *            how many tabs to indent
 	 */
-	private static void writeFortress(final Fortress fortress,
-			final PrintWriter writer, final int indent) {
+	private static void writeFortress(final Fortress fortress, final PrintWriter writer,
+			final int indent) {
 		appendTabs(writer, indent);
 		writer.print("<fortress name=\"");
 		writer.print(fortress.getName());
@@ -188,9 +191,12 @@ public final class MapXMLWriter {
 	}
 
 	/**
-	 * Append a specified  number of tabs to the writer.
-	 * @param writer The writer to write to to
-	 * @param indent The number of tabs to write
+	 * Append a specified number of tabs to the writer.
+	 * 
+	 * @param writer
+	 *            The writer to write to to
+	 * @param indent
+	 *            The number of tabs to write
 	 */
 	private static void appendTabs(final PrintWriter writer, final int indent) {
 		for (int i = 0; i < indent; i++) {
@@ -208,18 +214,40 @@ public final class MapXMLWriter {
 	 * @param indent
 	 *            how many tabs to indent
 	 */
-	private static void writeModule(final Module module,
-			final PrintWriter writer, final int indent) {
+	private static void writeModule(final Module module, final PrintWriter writer,
+			final int indent) {
 		for (int i = 0; i < indent; i++) {
 			writer.append('\t');
 		}
 		writer.println("<module mid=\""
 				+ module.getModuleID()
-				+ ("".equals(ModuleGUIManager.getFilename(module)) ? ""
-						: "\" image=\"" + ModuleGUIManager.getFilename(module))
+				+ ("".equals(ModuleGUIManager.getFilename(module)) ? "" : "\" image=\""
+						+ ModuleGUIManager.getFilename(module))
 				+ "\" name=\""
 				+ module.getName()
 				+ (module.getOwner() == null ? "" : "\" owner=\""
 						+ module.getOwner().getNumber()) + "\"></module>");
+	}
+
+	/**
+	 * Write a landscape feature to XML.
+	 * 
+	 * @param feature
+	 *            the feature to write
+	 * @param writer
+	 *            the Writer to write to
+	 * @param indent
+	 *            how many tabs to indent
+	 */
+	private static void writeFeature(final Feature feature, final PrintWriter writer,
+			final int indent) {
+		for (int i = 0; i < indent; i++) {
+			writer.append('\t');
+		}
+		writer.println("<feature mid=\""
+				+ feature.getModuleID()
+				+ ("".equals(ModuleGUIManager.getFilename(feature)) ? "" : "\" image=\""
+						+ ModuleGUIManager.getFilename(feature)) + "\" name=\""
+				+ feature.getName() + "\" />");
 	}
 }
