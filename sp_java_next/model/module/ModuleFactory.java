@@ -2,8 +2,8 @@ package model.module;
 
 import java.util.logging.Logger;
 
+import model.module.features.Crater;
 import model.module.kinds.RootModule;
-
 import advances.ExampleUnit;
 import advances.SimpleBuilding;
 import advances.SimpleUnit;
@@ -33,6 +33,10 @@ public class ModuleFactory {
 	 */
 	private static final int SIMPLEBLDG_ID = 4;
 	/**
+	 * ModuleID for a Crater landscape feature.
+	 */
+	private static final int CRATER_ID = 6;
+	/**
 	 * Create a module from a moduleID.
 	 * @param moduleId the moduleID.
 	 * @return a module of that type
@@ -46,7 +50,9 @@ public class ModuleFactory {
 		case EXAMPLEUNIT_ID:
 			return new ExampleUnit(); // NOPMD
 		case SIMPLEBLDG_ID:
-			return new SimpleBuilding();
+			return new SimpleBuilding(); // NOPMD
+		case CRATER_ID:
+			return new Crater(); // NOPMD
 		default:
 			throw new IllegalArgumentException("Unknown module type");
 		}

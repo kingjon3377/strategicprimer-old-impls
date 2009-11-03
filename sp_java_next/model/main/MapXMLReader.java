@@ -12,6 +12,7 @@ import model.location.TerrainType;
 import model.location.Tile;
 import model.module.Module;
 import model.module.ModuleFactory;
+import model.module.features.Feature;
 import model.module.kinds.Fortress;
 import model.module.kinds.Renameable;
 import model.module.kinds.TransferableModule;
@@ -32,6 +33,15 @@ import view.module.ModuleGUIManager;
  * 
  */
 public final class MapXMLReader extends DefaultHandler implements Serializable {
+	/**
+	 * The XML attribute that holds a module's name.
+	 */
+	private static final String NAME_ATT = "name";
+	/**
+	 * The XML attribute that holds the filename of the image to represent a
+	 * module.
+	 */
+	private static final String IMAGE_ATT = "image";
 	/**
 	 * Version UID for serialization.
 	 */
@@ -79,8 +89,7 @@ public final class MapXMLReader extends DefaultHandler implements Serializable {
 	public MapXMLReader(final String filename) throws SAXException, IOException {
 		super();
 		safeToReturn = false;
-		parserSetContentHandler(XMLReaderFactory.createXMLReader()).parse(
-				filename);
+		parserSetContentHandler(XMLReaderFactory.createXMLReader()).parse(filename);
 	}
 
 	/**
@@ -94,10 +103,12 @@ public final class MapXMLReader extends DefaultHandler implements Serializable {
 		reader.setContentHandler(this);
 		return reader;
 	}
+
 	/**
 	 * How long to sleep before checking whether we're ready again.
 	 */
 	private static final int SLEEP_TIME = 1000;
+
 	/**
 	 * Blocks until ready to return.
 	 * 
@@ -180,12 +191,11 @@ public final class MapXMLReader extends DefaultHandler implements Serializable {
 	 */
 	@Override
 	public void startElement(final String namespaceURI, final String localName,
-			final String qualifiedName, final Attributes atts)
-			throws SAXException {
+			final String qualifiedName, final Attributes atts) throws SAXException {
 		if (map == null) {
 			if ("map".equals(localName)) {
-				map = new SPMap(Integer.parseInt(atts.getValue("rows")),
-						Integer.parseInt(atts.getValue("columns")));
+				map = new SPMap(Integer.parseInt(atts.getValue("rows")), Integer
+						.parseInt(atts.getValue("columns")));
 				Game.getGame().clearPlayers();
 			} else {
 				throw new SAXException(new IllegalStateException(
@@ -203,6 +213,8 @@ public final class MapXMLReader extends DefaultHandler implements Serializable {
 				parsePlayer(atts);
 			} else if ("fortress".equals(localName)) {
 				parseFortress(atts);
+			} else if ("feature".equals(localName)) {
+				parseFeature(atts);
 			}
 		}
 	}
@@ -221,13 +233,12 @@ public final class MapXMLReader extends DefaultHandler implements Serializable {
 				throw new SAXException(new IllegalStateException(
 						"Can't have a fort outside a tile"));
 			} else {
-				currentFort = new Fortress(currentTile, Game.getGame()
-						.getPlayer(Integer.parseInt(atts.getValue("owner"))),
-						atts.getValue("name"));
+				currentFort = new Fortress(currentTile, Game.getGame().getPlayer(
+						Integer.parseInt(atts.getValue("owner"))), atts
+						.getValue(NAME_ATT));
 			}
 		} else {
-			throw new SAXException(new IllegalStateException(
-					"Can't have nested forts"));
+			throw new SAXException(new IllegalStateException("Can't have nested forts"));
 		}
 	}
 
@@ -241,10 +252,9 @@ public final class MapXMLReader extends DefaultHandler implements Serializable {
 	 */
 	private void parseTile(final Attributes atts) throws SAXException {
 		if (currentTile == null) {
-			currentTile = new Tile(Integer.parseInt(atts.getValue("row")),
-					Integer.parseInt(atts.getValue("column")));
-			currentTile.setTerrain(TerrainType.getTileType(atts
-					.getValue("type")));
+			currentTile = new Tile(Integer.parseInt(atts.getValue("row")), Integer
+					.parseInt(atts.getValue("column")));
+			currentTile.setTerrain(TerrainType.getTileType(atts.getValue("type")));
 			if (atts.getValue("event") != null) {
 				currentTile.setEvent(new LocationEvent(Integer.parseInt(atts
 						.getValue("event"))));
@@ -269,20 +279,17 @@ public final class MapXMLReader extends DefaultHandler implements Serializable {
 			throw new SAXException(new IllegalStateException(
 					"Cannot (at present) have a module outside a tile"));
 		} else if (currentModule == null) {
-			currentModule = FACTORY.createModule(Integer.parseInt(atts
-					.getValue("mid")));
-			if (atts.getValue("image") != null) {
-				ModuleGUIManager
-						.addImage(currentModule, atts.getValue("image"));
+			currentModule = FACTORY.createModule(Integer.parseInt(atts.getValue("mid")));
+			if (atts.getValue(IMAGE_ATT) != null) {
+				ModuleGUIManager.addImage(currentModule, atts.getValue(IMAGE_ATT));
 			}
-			if (currentModule instanceof Renameable
-					&& atts.getValue("name") != null) {
-				((Renameable) currentModule).setName(atts.getValue("name"));
+			if (currentModule instanceof Renameable && atts.getValue(NAME_ATT) != null) {
+				((Renameable) currentModule).setName(atts.getValue(NAME_ATT));
 			}
 			if (currentModule instanceof TransferableModule
 					&& atts.getValue("owner") != null) {
-				((TransferableModule) currentModule).setOwner(Game.getGame()
-						.getPlayer(Integer.valueOf(atts.getValue("owner"))));
+				((TransferableModule) currentModule).setOwner(Game.getGame().getPlayer(
+						Integer.valueOf(atts.getValue("owner"))));
 			}
 		} else {
 			throw new SAXException(new IllegalStateException(
@@ -298,7 +305,33 @@ public final class MapXMLReader extends DefaultHandler implements Serializable {
 	 */
 	private static void parsePlayer(final Attributes atts) {
 		Game.getGame().addPlayer(
-				new SimplePlayer(atts.getValue("code_name"), Integer
-						.parseInt(atts.getValue("number"))));
+				new SimplePlayer(atts.getValue("code_name"), Integer.parseInt(atts
+						.getValue("number"))));
+	}
+
+	/**
+	 * Parse a landscape feature.
+	 * 
+	 * @param atts
+	 *            The XML tag's attributes
+	 * @throws SAXException
+	 *             when a feature isn't inside a tile (wraps
+	 *             IllegalStateException)
+	 */
+	private void parseFeature(final Attributes atts) throws SAXException {
+		if (currentTile == null) {
+			throw new SAXException(new IllegalStateException(
+					"Cannot (at present) have a module outside a tile"));
+		} else {
+			final Feature feature = (Feature) FACTORY.createModule(Integer.parseInt(atts
+					.getValue("mid")));
+			if (atts.getValue(IMAGE_ATT) != null) {
+				ModuleGUIManager.addImage(feature, atts.getValue(IMAGE_ATT));
+			}
+			if (feature instanceof Renameable && atts.getValue(NAME_ATT) != null) {
+				((Renameable) feature).setName(atts.getValue(NAME_ATT));
+			}
+			currentTile.setModuleOnTile(feature);
+		}
 	}
 }

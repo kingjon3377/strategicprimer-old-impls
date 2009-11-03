@@ -13,7 +13,7 @@ import model.player.IPlayer;
  * 
  * @author Jonathan Lovelace
  */
-public class Crater implements Module {
+public class Crater implements Module, Feature {
 	/**
 	 * Constructor.
 	 */
@@ -102,5 +102,11 @@ public class Crater implements Module {
 	public void takeAttack(final Weapon attacker) {
 		// Do nothing
 	}
-
+	/**
+	 * @return a description of the feature
+	 */
+	@Override
+	public String description() {
+		return "A crater is here.";
+	}
 }
