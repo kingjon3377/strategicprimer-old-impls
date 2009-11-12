@@ -183,9 +183,9 @@ public final class MapXMLWriter {
 		writer.print("\" owner=\"");
 		writer.print(fortress.getOwner().getNumber());
 		writer.print(CLOSE_XML_ATT_TAG);
-		if (fortress.getModule() != null && !(fortress.getModule() instanceof RootModule)) {
+		if (fortress.getSelected() != null && !(fortress.getSelected() instanceof RootModule)) {
 			writer.println();
-			writeModule(fortress.getModule(), writer, indent + 1);
+			writeModule(fortress.getSelected(), writer, indent + 1);
 			appendTabs(writer, indent);
 		}
 		writer.println("</fortress>");
