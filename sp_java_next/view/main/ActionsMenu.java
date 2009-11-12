@@ -174,7 +174,6 @@ public final class ActionsMenu extends JMenu implements ActionListener {
 				} catch (UnableToMoveException e) {
 					LOGGER.info("Movement failed");
 				}
-				map.clearPaths();
 			} else if (action == -1) {
 				((Weapon) getModuleOnTile(selectedTile)).attack(getModuleOnTile(tile));
 			} else {
@@ -183,6 +182,7 @@ public final class ActionsMenu extends JMenu implements ActionListener {
 			}
 		}
 		cancelSelectedAction();
+		map.clearPaths();
 		if (selectedTile != null) {
 			selectedTile.repaint();
 		}
@@ -219,6 +219,7 @@ public final class ActionsMenu extends JMenu implements ActionListener {
 	 */
 	public void cancelSelectedAction() {
 		actionSelected = false;
+		action = 0;
 		map.clearPaths();
 	}
 
