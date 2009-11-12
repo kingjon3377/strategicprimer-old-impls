@@ -12,7 +12,6 @@ import model.module.Module;
 import model.module.features.Feature;
 import model.module.kinds.Camp;
 import model.module.kinds.Fortress;
-import model.module.kinds.RootModule;
 import model.player.IPlayer;
 import view.module.ModuleGUIManager;
 
@@ -186,9 +185,11 @@ public final class MapXMLWriter {
 		writer.print("\" owner=\"");
 		writer.print(fortress.getOwner().getNumber());
 		writer.print(CLOSE_XML_ATT_TAG);
-		if (fortress.getSelected() != null && !(fortress.getSelected() instanceof RootModule)) {
+		if (!fortress.getModules().isEmpty()) {
 			writer.println();
-			writeModule(fortress.getSelected(), writer, indent + 1);
+			for (Module mod : fortress.getModules()) {
+				writeModule(mod, writer, indent + 1);
+			}
 			appendTabs(writer, indent);
 		}
 		writer.println("</fortress>");
@@ -211,9 +212,11 @@ public final class MapXMLWriter {
 		writer.print("\" owner=\"");
 		writer.print(camp.getOwner().getNumber());
 		writer.print(CLOSE_XML_ATT_TAG);
-		if (camp.getSelected() != null && !(camp.getSelected() instanceof RootModule)) {
+		if (!camp.getModules().isEmpty()) {
 			writer.println();
-			writeModule(camp.getSelected(), writer, indent + 1);
+			for (Module mod : camp.getModules()) {
+				writeModule(mod, writer, indent + 1);
+			}
 			appendTabs(writer, indent);
 		}
 		writer.println("</camp>");
