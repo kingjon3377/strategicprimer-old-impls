@@ -5,6 +5,7 @@ import java.awt.event.MouseListener;
 
 import view.main.ActionsMenu;
 import view.main.TerrainTypeMenu;
+import view.main.TopModuleMenu;
 import view.module.CurrentModulePanel;
 
 /**
@@ -97,18 +98,14 @@ public class SelectionListener implements MouseListener {
 				&& event.getButton() == MouseEvent.BUTTON1) {
 			if (ActionsMenu.ACTIONS_MENU.isActionSelected()) {
 				ActionsMenu.ACTIONS_MENU.applyAction((GUITile) event.getComponent());
-				panel.changeCurrentModule(((GUITile) event.getSource()).getTile()
-						.getModuleOnTile());
-				map.select((GUITile) event.getSource());
-				TerrainTypeMenu.MENU.setTile((GUITile) event.getSource());
-				ActionsMenu.ACTIONS_MENU.setSelectedTile(map.getSelection());
-			} else {
-				panel.changeCurrentModule(((GUITile) event.getSource()).getTile()
-						.getModuleOnTile());
-				map.select((GUITile) event.getSource());
-				TerrainTypeMenu.MENU.setTile((GUITile) event.getSource());
-				ActionsMenu.ACTIONS_MENU.setSelectedTile(map.getSelection());
 			}
+			panel.changeCurrentModule(((GUITile) event.getSource()).getTile()
+					.getSelected());
+			map.select((GUITile) event.getSource());
+			TerrainTypeMenu.MENU.setTile((GUITile) event.getSource());
+			TopModuleMenu.TOP_MODULE_MENU.initialize(((GUITile) event.getComponent())
+					.getTile());
+			ActionsMenu.ACTIONS_MENU.setSelectedTile(map.getSelection());
 		}
 	}
 }
