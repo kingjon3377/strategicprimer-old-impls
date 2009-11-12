@@ -38,7 +38,9 @@ public class SelectionListener implements MouseListener {
 
 	/**
 	 * Ignored.
-	 * @param event ignored
+	 * 
+	 * @param event
+	 *            ignored
 	 */
 	@Override
 	public void mouseClicked(final MouseEvent event) {
@@ -83,18 +85,18 @@ public class SelectionListener implements MouseListener {
 	}
 
 	/**
-	 * Change the selected tile when a tile is clicked.
+	 * Change the selected tile when a tile is clicked. TODO: Convert to the new
+	 * multiple-modules-on-a-tile syntax.
 	 * 
 	 * @param event
 	 *            ignored
-	 * TODO: Convert to the new multiple-modules-on-a-tile syntax.
 	 */
 	@Override
 	public void mouseReleased(final MouseEvent event) {
-		if (event.getSource() instanceof GUITile) {
+		if (event.getSource() instanceof GUITile
+				&& event.getButton() == MouseEvent.BUTTON1) {
 			if (ActionsMenu.ACTIONS_MENU.isActionSelected()) {
-				ActionsMenu.ACTIONS_MENU.applyAction((GUITile) event
-						.getComponent());
+				ActionsMenu.ACTIONS_MENU.applyAction((GUITile) event.getComponent());
 				panel.changeCurrentModule(((GUITile) event.getSource()).getTile()
 						.getModuleOnTile());
 				map.select((GUITile) event.getSource());
