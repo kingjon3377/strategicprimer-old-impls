@@ -1,8 +1,10 @@
 package model.location;
 
 import java.util.HashSet;
+import java.util.Set;
 
 import model.module.Module;
+import model.module.kinds.RootModule;
 
 /**
  * A set of locations can also be a location -- higher-level (in the tree)
@@ -31,7 +33,8 @@ public class LocationSet extends HashSet<Location> implements Location {
 
 	/**
 	 * @see model.location.Location#contains(model.location.Location)
-	 * @param loc a location
+	 * @param loc
+	 *            a location
 	 * @return whether the set contains the given location.
 	 */
 	@Override
@@ -69,12 +72,39 @@ public class LocationSet extends HashSet<Location> implements Location {
 			}
 		}
 	}
+
 	/**
-	 * @param module a module
+	 * @param module
+	 *            a module
 	 * @return that it's not possible to directly add it to a LocationSet./
 	 */
 	@Override
 	public boolean checkAdd(final Module module) {
 		return false;
+	}
+
+	/**
+	 * @return an empty set, because a LocationSet directly contains no modules.
+	 */
+	@Override
+	public Set<Module> getModules() {
+		return new HashSet<Module>();
+	}
+
+	/**
+	 * @param module
+	 *            ignored
+	 */
+	@Override
+	public void select(final Module module) {
+		throw new IllegalStateException(
+				"A LocationSet contains no modules; none can be selected");
+	}
+	/**
+	 * @return the Module equivalent of null.
+	 */
+	@Override
+	public Module getSelected() {
+		return RootModule.ROOT_MODULE;
 	}
 }
