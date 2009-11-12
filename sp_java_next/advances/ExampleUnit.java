@@ -18,6 +18,7 @@ import model.module.Statistics;
 import model.module.UnableToMoveException;
 import model.module.Statistics.Stats;
 import model.module.actions.Action;
+import model.module.features.Feature;
 import model.module.kinds.FunctionalModule;
 import model.module.kinds.MobileModule;
 import model.module.kinds.Renameable;
@@ -33,8 +34,8 @@ import pathfinding.Path;
  * 
  * @author Jonathan Lovelace
  */
-public class ExampleUnit implements Module, Serializable, MobileModule,
-		Renameable, TransferableModule, FunctionalModule {
+public class ExampleUnit implements Module, Serializable, MobileModule, Renameable,
+		TransferableModule, FunctionalModule {
 	/**
 	 * An ExampleUnit's starting movement points.
 	 */
@@ -155,10 +156,12 @@ public class ExampleUnit implements Module, Serializable, MobileModule,
 			die();
 		}
 	}
+
 	/**
 	 * The ModuleID of all instances of this class (not of subclasses).
 	 */
 	private static final int MODULE_ID = 3;
+
 	/**
 	 * @return the unit's moduleID. Should be overridden by subclasses
 	 */
@@ -197,12 +200,11 @@ public class ExampleUnit implements Module, Serializable, MobileModule,
 				Stats.MP,
 				getStatistics().getStats().get(Stats.MP).doubleValue()
 						- pathCost(new AStarPathFinder(Game.getGame().getMap(),
-								statistics.getStats().get(Stats.MP).intValue(),
-								true).findPath(this, ((Tile) location)
-								.getLocation().getX(), ((Tile) location)
-								.getLocation().getY(), ((Tile) loc)
-								.getLocation().getX(), ((Tile) loc)
-								.getLocation().getY())));
+								statistics.getStats().get(Stats.MP).intValue(), true)
+								.findPath(this, ((Tile) location).getLocation().getX(),
+										((Tile) location).getLocation().getY(),
+										((Tile) loc).getLocation().getX(), ((Tile) loc)
+												.getLocation().getY())));
 		System.out.println(getStatistics().getStats().get(Stats.MP) + " MP left");
 	}
 
@@ -242,12 +244,11 @@ public class ExampleUnit implements Module, Serializable, MobileModule,
 		return loc.checkAdd(this)
 				&& location instanceof Tile
 				&& loc instanceof Tile
-				&& checkPath(new AStarPathFinder(Game.getGame().getMap(),
-						statistics.getStats().get(Stats.MP).intValue(), true)
-						.findPath(this, ((Tile) location).getLocation().getX(),
-								((Tile) location).getLocation().getY(),
-								((Tile) loc).getLocation().getX(), ((Tile) loc)
-										.getLocation().getY()));
+				&& checkPath(new AStarPathFinder(Game.getGame().getMap(), statistics
+						.getStats().get(Stats.MP).intValue(), true).findPath(this,
+						((Tile) location).getLocation().getX(), ((Tile) location)
+								.getLocation().getY(), ((Tile) loc).getLocation().getX(),
+						((Tile) loc).getLocation().getY()));
 	}
 
 	/**
@@ -259,8 +260,7 @@ public class ExampleUnit implements Module, Serializable, MobileModule,
 	 */
 	private boolean checkPath(final Path path) {
 		return !path.equals(new Path())
-				&& pathCost(path) <= statistics.getStats().get(Stats.MP)
-						.doubleValue();
+				&& pathCost(path) <= statistics.getStats().get(Stats.MP).doubleValue();
 	}
 
 	/**
@@ -290,8 +290,7 @@ public class ExampleUnit implements Module, Serializable, MobileModule,
 		} else if (loc instanceof Tile) {
 			return MOVE_COST_MAP.get(((Tile) loc).getTerrain());
 		} else {
-			throw new IllegalStateException(
-					"Called getCost() on a non-Tile Location");
+			throw new IllegalStateException("Called getCost() on a non-Tile Location");
 		}
 	}
 
@@ -323,6 +322,7 @@ public class ExampleUnit implements Module, Serializable, MobileModule,
 	private static final Set<Action> ACTIONS = new HashSet<Action>();
 	static {
 		ACTIONS.add(new Action(2, "Heal", 0));
+		ACTIONS.add(new Action(3, "Explore", 1));
 	}
 
 	/**
@@ -337,6 +337,11 @@ public class ExampleUnit implements Module, Serializable, MobileModule,
 	public void action(final long action, final Module... args) {
 		if (action == 2) {
 			statistics.getStats().put(Stats.HP, EXAMPLE_UNIT_HP);
+		} else if (action == 3) {
+			if (args[0] instanceof Feature) {
+				System.out.println(((Feature) args[0]).description());
+			}
+			// else silently ignore the illegal argument
 		} else {
 			throw new IllegalStateException("Unsupported action");
 		}
@@ -349,6 +354,7 @@ public class ExampleUnit implements Module, Serializable, MobileModule,
 	public Set<Action> supportedActions() {
 		return Collections.unmodifiableSet(ACTIONS);
 	}
+
 	/**
 	 * Movement cost for forests.
 	 */
