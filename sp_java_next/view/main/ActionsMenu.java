@@ -196,6 +196,7 @@ public final class ActionsMenu extends JMenu implements ActionListener {
 	 *            a GUI tile
 	 * @return The module on that tile's model, or its module if it is a
 	 *         Fortress.
+	 * TODO: Convert to the new multiple-modules-on-a-tile syntax.
 	 */
 	private static Module getModuleOnTile(final GUITile tile) {
 		return tile == null ? null

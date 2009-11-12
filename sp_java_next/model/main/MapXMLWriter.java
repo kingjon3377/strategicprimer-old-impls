@@ -149,17 +149,18 @@ public final class MapXMLWriter {
 			writer.print(tile.getEvent().getNumber());
 		}
 		writer.print(CLOSE_XML_ATT_TAG);
-		if (tile.getModuleOnTile() != null
-				&& !tile.getModuleOnTile().equals(RootModule.ROOT_MODULE)) {
+		if (!tile.getModules().isEmpty()) {
 			writer.println();
-			if (tile.getModuleOnTile() instanceof Fortress) {
-				writeFortress((Fortress) tile.getModuleOnTile(), writer, START_TABS);
-			} else if (tile.getModuleOnTile() instanceof Feature) {
-				writeFeature((Feature) tile.getModuleOnTile(), writer, START_TABS);
-			} else {
-				writeModule(tile.getModuleOnTile(), writer, START_TABS);
+			for (Module mod : tile.getModules()) {
+				if (mod instanceof Fortress) {
+					writeFortress((Fortress) mod, writer, START_TABS);
+				} else if (mod instanceof Feature) {
+					writeFeature((Feature) mod, writer, START_TABS);
+				} else {
+					writeModule(mod, writer, START_TABS);
+				}
 			}
-			writer.print("		");
+			writer.print("\t\t");
 		}
 		writer.println("</tile>");
 	}
