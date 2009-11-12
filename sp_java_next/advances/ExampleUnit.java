@@ -204,7 +204,6 @@ public class ExampleUnit implements Module, Serializable, MobileModule,
 								.getLocation().getX(), ((Tile) loc)
 								.getLocation().getY())));
 		System.out.println(getStatistics().getStats().get(Stats.MP) + " MP left");
-		// FIXME: Should subtract an appropriate cost from MP.
 	}
 
 	/**
