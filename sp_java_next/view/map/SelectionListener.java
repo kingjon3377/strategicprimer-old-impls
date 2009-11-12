@@ -87,6 +87,7 @@ public class SelectionListener implements MouseListener {
 	 * 
 	 * @param event
 	 *            ignored
+	 * TODO: Convert to the new multiple-modules-on-a-tile syntax.
 	 */
 	@Override
 	public void mouseReleased(final MouseEvent event) {

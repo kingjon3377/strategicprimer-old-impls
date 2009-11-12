@@ -170,7 +170,7 @@ public final class MapXMLReader extends DefaultHandler implements Serializable {
 		} else if ("map".equals(localName)) {
 			map.addTiles(tiles);
 		} else if ("fortress".equals(localName)) {
-			currentTile.setModuleOnTile(currentFort);
+			currentTile.add(currentFort);
 			currentFort.setLocation(currentTile);
 		}
 	}
@@ -331,7 +331,7 @@ public final class MapXMLReader extends DefaultHandler implements Serializable {
 			if (feature instanceof Renameable && atts.getValue(NAME_ATT) != null) {
 				((Renameable) feature).setName(atts.getValue(NAME_ATT));
 			}
-			currentTile.setModuleOnTile(feature);
+			currentTile.add(feature);
 		}
 	}
 }

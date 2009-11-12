@@ -122,6 +122,7 @@ public class GUITile extends JPanel {
 	 * 
 	 * @param pen
 	 *            The graphics context.
+	 * TODO: Convert to the new multiple-modules-on-a-tile syntax.
 	 */
 	@Override
 	public void paint(final Graphics pen) {

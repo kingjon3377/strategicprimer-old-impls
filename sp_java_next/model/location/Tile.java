@@ -1,5 +1,9 @@
 package model.location;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 import model.module.Module;
 import model.module.kinds.Fortress;
 import model.module.kinds.RootModule;
@@ -20,6 +24,10 @@ public class Tile implements Location {
 	 * The top-level module on the tile.
 	 */
 	private Module moduleOnTile;
+	/**
+	 * The set of modules on the tile.
+	 */
+	private final Set<Module> modules = new HashSet<Module>();
 	/**
 	 * The location of this tile on the grid.
 	 */
@@ -63,19 +71,26 @@ public class Tile implements Location {
 	public void add(final Module module) {
 		if (moduleOnTile.equals(RootModule.ROOT_MODULE)) {
 			setModuleOnTile(module);
+			modules.add(module);
 		} else if (moduleOnTile instanceof Fortress) {
 			((Fortress) moduleOnTile).add(module);
 		} else {
-			throw new IllegalStateException("There's already a module on this tile");
+			modules.add(module);
 		}
 	}
 
 	/**
-	 * @param loc a location
-	 * @return whether the module on the tile is a location and is the given location.
+	 * @param loc
+	 *            a location
+	 * @return whether the module on the tile is a location and is the given
+	 *         location.
 	 */
 	public boolean contains(final Location loc) {
-		return (moduleOnTile instanceof Location && moduleOnTile.equals(loc));
+		boolean retval = loc.equals(this);
+		for (Module mod : modules) {
+			retval |= (mod instanceof Location && ((Location) mod).contains(loc));
+		}
+		return retval;
 	}
 
 	/**
@@ -92,11 +107,19 @@ public class Tile implements Location {
 	 * @return whether the tile contains the given module
 	 */
 	public boolean contains(final Module module) {
-		return module != null
-				&& (module.getLocation().equals(this)
-						|| (moduleOnTile instanceof Fortress ? module.getLocation()
-								.equals(moduleOnTile) : false) || contains(module
-						.getParent()));
+		if (module == null || module.equals(RootModule.ROOT_MODULE)) {
+			return false; // NOPMD
+		} else if (modules.contains(module)) {
+			return true; // NOPMD
+		} else if (contains(module.getParent())) {
+			return true; // NOPMD
+		} else {
+			boolean retval = false;
+			for (Module mod : modules) {
+				retval |= (mod instanceof Location && ((Location) mod).contains(module));
+			}
+			return retval;
+		}
 	}
 
 	/**
@@ -116,12 +139,19 @@ public class Tile implements Location {
 	 */
 	public void remove(final Module module) {
 		if (moduleOnTile.equals(module)) {
-			moduleOnTile = RootModule.ROOT_MODULE;
+			modules.remove(module);
+			if (modules.isEmpty()) {
+				moduleOnTile = RootModule.ROOT_MODULE;
+			} else {
+				moduleOnTile = modules.iterator().next();
+			}
+		} else if (modules.contains(module)) {
+			modules.remove(module);
 		} else if (moduleOnTile instanceof Fortress) {
 			((Fortress) moduleOnTile).remove(module);
 		} else {
 			throw new IllegalArgumentException(
-					"That isn't the top-level module on the tile!");
+					"That isn't on the tile.");
 		}
 	}
 
@@ -129,7 +159,7 @@ public class Tile implements Location {
 	 * @param newModuleOnTile
 	 *            the "top-level" module on the tile
 	 */
-	public void setModuleOnTile(final Module newModuleOnTile) {
+	private void setModuleOnTile(final Module newModuleOnTile) {
 		this.moduleOnTile = newModuleOnTile;
 	}
 
@@ -157,12 +187,14 @@ public class Tile implements Location {
 	 * @param module
 	 *            a module
 	 * @return whether it's possible to add that module to the tile now.
+	 * FIXME: This now basically returns "true"; it should mean something more substantial.
 	 */
 	@Override
 	public boolean checkAdd(final Module module) {
-		return moduleOnTile.equals(RootModule.ROOT_MODULE)
-				|| (moduleOnTile instanceof Fortress && ((Fortress) moduleOnTile)
-						.checkAdd(module));
+		return !modules.contains(module);
+		//		return moduleOnTile.equals(RootModule.ROOT_MODULE)
+//				|| (moduleOnTile instanceof Fortress && ((Fortress) moduleOnTile)
+//						.checkAdd(module));
 	}
 
 	/**
@@ -185,5 +217,11 @@ public class Tile implements Location {
 	 */
 	public void setEvent(final LocationEvent newEvent) {
 		event = newEvent;
+	}
+	/**
+	 * @return an unmodifiable wrapper around the set of modules on the tile
+	 */
+	public Set<Module> getModules() {
+		return Collections.unmodifiableSet(modules);
 	}
 }
