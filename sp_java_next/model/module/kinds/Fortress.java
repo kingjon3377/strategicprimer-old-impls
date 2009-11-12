@@ -1,5 +1,9 @@
 package model.module.kinds;
 
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 import model.location.Location;
 import model.main.UuidManager;
 import model.module.Module;
@@ -12,16 +16,19 @@ import model.player.IPlayer;
  * @author Jonathan Lovelace
  * 
  */
-public class Fortress implements Module, Renameable, Location,
-		TransferableModule {
+public class Fortress implements Module, Renameable, Location, TransferableModule {
 	/**
 	 * Constructor.
-	 * @param loc The location of the fortress
-	 * @param newOwner The owner of the fortress
-	 * @param newName The name of the fortress
+	 * 
+	 * @param loc
+	 *            The location of the fortress
+	 * @param newOwner
+	 *            The owner of the fortress
+	 * @param newName
+	 *            The name of the fortress
 	 */
 	public Fortress(final Location loc, final IPlayer newOwner, final String newName) {
-		module = RootModule.ROOT_MODULE;
+		selected = RootModule.ROOT_MODULE;
 		location = loc;
 		owner = newOwner;
 		name = newName;
@@ -36,9 +43,13 @@ public class Fortress implements Module, Renameable, Location,
 	 */
 	private Location location;
 	/**
-	 * The module in the fortress.
+	 * The selected module in the fortress.
 	 */
-	private Module module;
+	private Module selected;
+	/**
+	 * The set of modules in the fortress.
+	 */
+	private final Set<Module> modules = new HashSet<Module>();
 	/**
 	 * The name of the fortress.
 	 */
@@ -58,7 +69,9 @@ public class Fortress implements Module, Renameable, Location,
 	@Override
 	public void die() {
 		location.remove(this);
-		location.add(module);
+		for (Module mod : modules) {
+			location.add(mod);
+		}
 	}
 
 	/**
@@ -68,10 +81,12 @@ public class Fortress implements Module, Renameable, Location,
 	public Location getLocation() {
 		return location;
 	}
+
 	/**
 	 * The moduleID of all instances of this exact class.
 	 */
 	private static final int MODULE_ID = 5;
+
 	/**
 	 * @return the moduleid of this class
 	 */
@@ -122,17 +137,18 @@ public class Fortress implements Module, Renameable, Location,
 	}
 
 	/**
-	 * Pass any attacks on to the module inside, unless the fortress is empty.
+	 * Pass any attacks on to the selected module inside, unless the fortress is
+	 * empty.
 	 * 
 	 * @param attacker
 	 *            the attacker
 	 */
 	@Override
 	public void takeAttack(final Weapon attacker) {
-		if (module instanceof RootModule || module == null) {
+		if (selected instanceof RootModule || selected == null) {
 			die();
 		} else {
-			module.takeAttack(attacker);
+			selected.takeAttack(attacker);
 		}
 	}
 
@@ -154,13 +170,12 @@ public class Fortress implements Module, Renameable, Location,
 	@Override
 	public void add(final Module mod) {
 		if (mod instanceof Fortress) {
-			throw new IllegalStateException(
-					"Can't have a fortress inside a fortress");
-		} else if (module.equals(RootModule.ROOT_MODULE)) {
-			module = mod;
+			throw new IllegalStateException("Can't have a fortress inside a fortress");
 		} else {
-			throw new IllegalStateException(
-					"There's already a module in this fortress");
+			modules.add(mod);
+			if (modules.size() == 1) {
+				select(mod);
+			}
 		}
 	}
 
@@ -171,12 +186,12 @@ public class Fortress implements Module, Renameable, Location,
 	 */
 	@Override
 	public boolean checkAdd(final Module mod) {
-		return module.equals(RootModule.ROOT_MODULE)
-				&& !(mod instanceof Fortress);
+		return !modules.contains(mod) && !(mod instanceof Fortress);
 	}
 
 	/**
-	 * Can't contain other locations.
+	 * Can't contain other locations. FIXME: This should be more along the lines
+	 * of Tile#contains().
 	 * 
 	 * @param loc
 	 *            ignored
@@ -188,6 +203,8 @@ public class Fortress implements Module, Renameable, Location,
 	}
 
 	/**
+	 * FIXME: This should be more along the lines of Tile#contains().
+	 * 
 	 * @param mod
 	 *            a module
 	 * @return whether that module is in this fortress
@@ -195,7 +212,7 @@ public class Fortress implements Module, Renameable, Location,
 	@Override
 	public boolean contains(final Module mod) {
 		return mod != null
-				&& (mod.getLocation().equals(this) || contains(mod.getParent()));
+				&& (modules.contains(mod) || contains(mod.getParent()));
 	}
 
 	/**
@@ -206,11 +223,18 @@ public class Fortress implements Module, Renameable, Location,
 	 */
 	@Override
 	public void remove(final Module mod) {
-		if (module.equals(mod)) {
-			module = RootModule.ROOT_MODULE;
+		if (modules.contains(mod)) {
+			modules.remove(mod);
+			if (selected.equals(mod)) {
+				if (modules.isEmpty()) {
+					selected = RootModule.ROOT_MODULE;
+				} else {
+					selected = modules.iterator().next();
+				}
+			}
 		} else {
 			throw new IllegalArgumentException(
-					"That isn't the top-level module in the fortress!");
+					"That module isn't directly in the fortress");
 		}
 	}
 
@@ -222,10 +246,33 @@ public class Fortress implements Module, Renameable, Location,
 	public void setOwner(final IPlayer newOwner) {
 		owner = newOwner;
 	}
+
 	/**
 	 * @return the module in the fortress
 	 */
-	public Module getModule() {
-		return module;
+	@Override
+	public Module getSelected() {
+		return selected;
+	}
+
+	/**
+	 * @return a set of the modules in the fortress
+	 */
+	@Override
+	public Set<Module> getModules() {
+		return Collections.unmodifiableSet(modules);
+	}
+
+	/**
+	 * @param module
+	 *            the new selected module
+	 */
+	@Override
+	public void select(final Module module) {
+		if (modules.contains(module)) {
+			selected = module;
+		} else {
+			throw new IllegalArgumentException("module not directly in the fortress");
+		}
 	}
 }
