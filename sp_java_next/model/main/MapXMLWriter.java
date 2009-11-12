@@ -10,6 +10,7 @@ import model.location.SPMap;
 import model.location.Tile;
 import model.module.Module;
 import model.module.features.Feature;
+import model.module.kinds.Camp;
 import model.module.kinds.Fortress;
 import model.module.kinds.RootModule;
 import model.player.IPlayer;
@@ -152,7 +153,9 @@ public final class MapXMLWriter {
 		if (!tile.getModules().isEmpty()) {
 			writer.println();
 			for (Module mod : tile.getModules()) {
-				if (mod instanceof Fortress) {
+				if (mod instanceof Camp) {
+					writeCamp((Camp) mod, writer, START_TABS);
+				} else if (mod instanceof Fortress) {
 					writeFortress((Fortress) mod, writer, START_TABS);
 				} else if (mod instanceof Feature) {
 					writeFeature((Feature) mod, writer, START_TABS);
@@ -189,6 +192,31 @@ public final class MapXMLWriter {
 			appendTabs(writer, indent);
 		}
 		writer.println("</fortress>");
+	}
+	/**
+	 * Write a camp to XML.
+	 * 
+	 * @param camp
+	 *            the camp to write
+	 * @param writer
+	 *            the Writer to write to
+	 * @param indent
+	 *            how many tabs to indent
+	 */
+	private static void writeCamp(final Camp camp, final PrintWriter writer,
+			final int indent) {
+		appendTabs(writer, indent);
+		writer.print("<camp name=\"");
+		writer.print(camp.getName());
+		writer.print("\" owner=\"");
+		writer.print(camp.getOwner().getNumber());
+		writer.print(CLOSE_XML_ATT_TAG);
+		if (camp.getSelected() != null && !(camp.getSelected() instanceof RootModule)) {
+			writer.println();
+			writeModule(camp.getSelected(), writer, indent + 1);
+			appendTabs(writer, indent);
+		}
+		writer.println("</camp>");
 	}
 
 	/**
