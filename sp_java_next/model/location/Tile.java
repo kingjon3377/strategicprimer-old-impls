@@ -1,6 +1,5 @@
 package model.location;
 
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -70,8 +69,8 @@ public class Tile implements Location {
 	 */
 	public void add(final Module module) {
 		if (moduleOnTile.equals(RootModule.ROOT_MODULE)) {
-			setModuleOnTile(module);
 			modules.add(module);
+			select(module);
 		} else if (moduleOnTile instanceof Fortress) {
 			((Fortress) moduleOnTile).add(module);
 		} else {
@@ -111,21 +110,20 @@ public class Tile implements Location {
 			return false; // NOPMD
 		} else if (modules.contains(module)) {
 			return true; // NOPMD
-		} else if (contains(module.getParent())) {
-			return true; // NOPMD
 		} else {
-			boolean retval = false;
 			for (Module mod : modules) {
-				retval |= (mod instanceof Location && ((Location) mod).contains(module));
+				if (mod instanceof Location && ((Location) mod).contains(module)) {
+					return true; // NOPMD
+				}
 			}
-			return retval;
+			return contains(module.getParent());
 		}
 	}
 
 	/**
 	 * @return the "top-level" module on the tile
 	 */
-	public Module getModuleOnTile() {
+	public Module getSelected() {
 		return moduleOnTile;
 	}
 
@@ -147,20 +145,36 @@ public class Tile implements Location {
 			}
 		} else if (modules.contains(module)) {
 			modules.remove(module);
-		} else if (moduleOnTile instanceof Fortress) {
-			((Fortress) moduleOnTile).remove(module);
 		} else {
-			throw new IllegalArgumentException(
-					"That isn't on the tile.");
+			for (Module mod : modules) {
+				if (mod instanceof Location && ((Location) mod).contains(module)) {
+					((Location) mod).remove(module);
+					return;
+				}
+			}
+			throw new IllegalArgumentException("That isn't on the tile.");
 		}
 	}
 
 	/**
-	 * @param newModuleOnTile
+	 * @param selectee
 	 *            the "top-level" module on the tile
 	 */
-	private void setModuleOnTile(final Module newModuleOnTile) {
-		this.moduleOnTile = newModuleOnTile;
+	public void select(final Module selectee) {
+		if (modules.contains(selectee)) {
+			moduleOnTile = selectee;
+		} else if (contains(selectee)) {
+			for (Module mod : modules) {
+				if (mod instanceof Location && ((Location) mod).contains(selectee)) {
+					moduleOnTile = mod;
+					((Location) mod).select(selectee);
+				}
+			}
+		} else {
+			System.out.println("Breakpoint here");
+			throw new IllegalArgumentException(
+					"Can only select a module that is on the tile.");
+		}
 	}
 
 	/**
@@ -186,15 +200,16 @@ public class Tile implements Location {
 	/**
 	 * @param module
 	 *            a module
-	 * @return whether it's possible to add that module to the tile now.
-	 * FIXME: This now basically returns "true"; it should mean something more substantial.
+	 * @return whether it's possible to add that module to the tile now. FIXME:
+	 *         This now basically returns "true"; it should mean something more
+	 *         substantial.
 	 */
 	@Override
 	public boolean checkAdd(final Module module) {
 		return !modules.contains(module);
-		//		return moduleOnTile.equals(RootModule.ROOT_MODULE)
-//				|| (moduleOnTile instanceof Fortress && ((Fortress) moduleOnTile)
-//						.checkAdd(module));
+		// return moduleOnTile.equals(RootModule.ROOT_MODULE)
+		// || (moduleOnTile instanceof Fortress && ((Fortress) moduleOnTile)
+		// .checkAdd(module));
 	}
 
 	/**
@@ -218,10 +233,17 @@ public class Tile implements Location {
 	public void setEvent(final LocationEvent newEvent) {
 		event = newEvent;
 	}
+
 	/**
 	 * @return an unmodifiable wrapper around the set of modules on the tile
 	 */
 	public Set<Module> getModules() {
-		return Collections.unmodifiableSet(modules);
+		final Set<Module> temp = new HashSet<Module>(modules);
+		for (Module mod : modules) {
+			if (mod instanceof Location) {
+				temp.addAll(((Location) mod).getModules());
+			}
+		}
+		return temp;
 	}
 }
