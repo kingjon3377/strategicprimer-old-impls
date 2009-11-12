@@ -58,8 +58,8 @@ public class CurrentModulePanel extends JPanel {
 		if (mod == null) {
 			label.setText("none");
 		} else if (mod instanceof Fortress
-				&& ((Fortress) mod).getModule() != null) {
-			changeCurrentModule(((Fortress) mod).getModule());
+				&& ((Fortress) mod).getSelected() != null) {
+			changeCurrentModule(((Fortress) mod).getSelected());
 		} else {
 			label.setText(mod.getName());
 		}
