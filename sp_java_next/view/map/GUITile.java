@@ -128,13 +128,13 @@ public class GUITile extends JPanel {
 	public void paint(final Graphics pen) {
 		super.paint(pen);
 		pen.drawImage(terrainImage, 0, 0, getWidth(), getHeight(), Color.white, this);
-		if (tile.getModuleOnTile() instanceof Fortress) {
-			drawModule(((Fortress) tile.getModuleOnTile()).getModule(), pen);
-			pen.drawImage(ModuleGUIManager.getImage(tile.getModuleOnTile()), getWidth()
+		if (tile.getSelected() instanceof Fortress) {
+			drawModule(((Fortress) tile.getSelected()).getSelected(), pen);
+			pen.drawImage(ModuleGUIManager.getImage(tile.getSelected()), getWidth()
 					/ FORT_RATIO, getHeight() / FORT_RATIO, getWidth() / FORT_RATIO,
 					getHeight() / FORT_RATIO, this);
 		} else {
-			drawModule(tile.getModuleOnTile(), pen);
+			drawModule(tile.getSelected(), pen);
 		}
 		if (selected) {
 			pen.setXORMode(getBackground());
