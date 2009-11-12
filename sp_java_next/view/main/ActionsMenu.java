@@ -200,11 +200,11 @@ public final class ActionsMenu extends JMenu implements ActionListener {
 	 */
 	private static Module getModuleOnTile(final GUITile tile) {
 		return tile == null ? null
-				: tile.getTile().getModuleOnTile() instanceof Fortress
-						&& (((Fortress) tile.getTile().getModuleOnTile()).getModule() != null)
-						&& !(((Fortress) tile.getTile().getModuleOnTile()).getModule() instanceof RootModule) ? ((Fortress) tile
-						.getTile().getModuleOnTile()).getModule()
-						: tile.getTile().getModuleOnTile();
+				: tile.getTile().getSelected() instanceof Fortress
+						&& (((Fortress) tile.getTile().getSelected()).getSelected() != null)
+						&& !(((Fortress) tile.getTile().getSelected()).getSelected() instanceof RootModule) ? ((Fortress) tile
+						.getTile().getSelected()).getSelected()
+						: tile.getTile().getSelected();
 	}
 
 	/**
