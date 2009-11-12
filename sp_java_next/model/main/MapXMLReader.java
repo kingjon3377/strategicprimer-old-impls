@@ -13,6 +13,7 @@ import model.location.Tile;
 import model.module.Module;
 import model.module.ModuleFactory;
 import model.module.features.Feature;
+import model.module.kinds.Camp;
 import model.module.kinds.Fortress;
 import model.module.kinds.Renameable;
 import model.module.kinds.TransferableModule;
@@ -33,6 +34,10 @@ import view.module.ModuleGUIManager;
  * 
  */
 public final class MapXMLReader extends DefaultHandler implements Serializable {
+	/**
+	 * The XML attribute that holds a module's owner's number.
+	 */
+	private static final String OWNER_TAG = "owner";
 	/**
 	 * The XML attribute that holds a module's name.
 	 */
@@ -169,7 +174,7 @@ public final class MapXMLReader extends DefaultHandler implements Serializable {
 			currentFort = null; // NOPMD
 		} else if ("map".equals(localName)) {
 			map.addTiles(tiles);
-		} else if ("fortress".equals(localName)) {
+		} else if ("fortress".equals(localName) || "camp".equals(localName)) {
 			currentTile.add(currentFort);
 			currentFort.setLocation(currentTile);
 		}
@@ -192,30 +197,52 @@ public final class MapXMLReader extends DefaultHandler implements Serializable {
 	@Override
 	public void startElement(final String namespaceURI, final String localName,
 			final String qualifiedName, final Attributes atts) throws SAXException {
-		if (map == null) {
-			if ("map".equals(localName)) {
-				map = new SPMap(Integer.parseInt(atts.getValue("rows")), Integer
-						.parseInt(atts.getValue("columns")));
-				Game.getGame().clearPlayers();
-			} else {
+		if (map == null && "map".equals(localName)) {
+			map = new SPMap(Integer.parseInt(atts.getValue("rows")), Integer
+					.parseInt(atts.getValue("columns")));
+			Game.getGame().clearPlayers();
+		} else if (map == null) {
+			throw new SAXException(
+					new IllegalStateException("Must start with a map tag!"));
+		} else if ("map".equals(localName)) {
+			throw new SAXException(new IllegalStateException(
+					"Shouldn't have multiple map tags"));
+		} else if ("tile".equals(localName)) {
+			parseTile(atts);
+		} else if ("module".equals(localName)) {
+			parseModule(atts);
+		} else if ("player".equals(localName)) {
+			parsePlayer(atts);
+		} else if ("fortress".equals(localName)) {
+			parseFortress(atts);
+		} else if ("feature".equals(localName)) {
+			parseFeature(atts);
+		} else if ("camp".equals(localName)) {
+			parseCamp(atts);
+		}
+
+	}
+
+	/**
+	 * Parse a camp (mobile fortress).
+	 * 
+	 * @param atts
+	 *            The XML tag's attributes
+	 * @throws SAXException
+	 *             on various illegal constructs in the XML
+	 */
+	private void parseCamp(final Attributes atts) throws SAXException {
+		if (currentFort == null) {
+			if (currentTile == null) {
 				throw new SAXException(new IllegalStateException(
-						"Must start with a map tag!"));
+						"Can't have a fort outside a tile"));
+			} else {
+				currentFort = new Camp(currentTile, Game.getGame().getPlayer(
+						Integer.parseInt(atts.getValue(OWNER_TAG))), atts
+						.getValue(NAME_ATT));
 			}
 		} else {
-			if ("map".equals(localName)) {
-				throw new SAXException(new IllegalStateException(
-						"Shouldn't have multiple map tags"));
-			} else if ("tile".equals(localName)) {
-				parseTile(atts);
-			} else if ("module".equals(localName)) {
-				parseModule(atts);
-			} else if ("player".equals(localName)) {
-				parsePlayer(atts);
-			} else if ("fortress".equals(localName)) {
-				parseFortress(atts);
-			} else if ("feature".equals(localName)) {
-				parseFeature(atts);
-			}
+			throw new SAXException(new IllegalStateException("Can't have nested forts"));
 		}
 	}
 
@@ -234,7 +261,7 @@ public final class MapXMLReader extends DefaultHandler implements Serializable {
 						"Can't have a fort outside a tile"));
 			} else {
 				currentFort = new Fortress(currentTile, Game.getGame().getPlayer(
-						Integer.parseInt(atts.getValue("owner"))), atts
+						Integer.parseInt(atts.getValue(OWNER_TAG))), atts
 						.getValue(NAME_ATT));
 			}
 		} else {
@@ -287,9 +314,9 @@ public final class MapXMLReader extends DefaultHandler implements Serializable {
 				((Renameable) currentModule).setName(atts.getValue(NAME_ATT));
 			}
 			if (currentModule instanceof TransferableModule
-					&& atts.getValue("owner") != null) {
+					&& atts.getValue(OWNER_TAG) != null) {
 				((TransferableModule) currentModule).setOwner(Game.getGame().getPlayer(
-						Integer.valueOf(atts.getValue("owner"))));
+						Integer.valueOf(atts.getValue(OWNER_TAG))));
 			}
 		} else {
 			throw new SAXException(new IllegalStateException(
