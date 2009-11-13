@@ -22,6 +22,7 @@ import model.module.features.Feature;
 import model.module.kinds.FunctionalModule;
 import model.module.kinds.MobileModule;
 import model.module.kinds.Renameable;
+import model.module.kinds.Resource;
 import model.module.kinds.RootModule;
 import model.module.kinds.TransferableModule;
 import model.module.kinds.Weapon;
@@ -317,12 +318,21 @@ public class ExampleUnit implements Module, Serializable, MobileModule, Renameab
 	}
 
 	/**
+	 * An action to explore a Feature.
+	 */
+	private static final int EXPLORE = 3;
+	/**
+	 * An action to tap a Resource.
+	 */
+	private static final int TAP = 4;
+	/**
 	 * The set of supported actions.
 	 */
 	private static final Set<Action> ACTIONS = new HashSet<Action>();
 	static {
 		ACTIONS.add(new Action(2, "Heal", 0));
-		ACTIONS.add(new Action(3, "Explore", 1));
+		ACTIONS.add(new Action(EXPLORE, "Explore", 1));
+		ACTIONS.add(new Action(TAP, "Tap Resource", 1));
 	}
 
 	/**
@@ -337,9 +347,17 @@ public class ExampleUnit implements Module, Serializable, MobileModule, Renameab
 	public void action(final long action, final Module... args) {
 		if (action == 2) {
 			statistics.getStats().put(Stats.HP, EXAMPLE_UNIT_HP);
-		} else if (action == 3) {
+		} else if (action == EXPLORE) {
 			if (args[0] instanceof Feature) {
 				System.out.println(((Feature) args[0]).description());
+			}
+			// else silently ignore the illegal argument
+		} else if (action == TAP) {
+			if (args[0] instanceof Resource) {
+				// FIXME: Should do something with the resulting resource.
+				// FIXME: Need some way of specifying how much.
+				System.out.print("Tapped ");
+				System.out.print(((Resource) args[0]).tap(1.0));
 			}
 			// else silently ignore the illegal argument
 		} else {
