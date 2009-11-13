@@ -12,6 +12,17 @@ import model.module.Module;
  */
 public interface Resource extends Module {
 	/**
+	 * This method should probably only be used at initialization, and so may
+	 * take exception to its being called later, and Resources that get their
+	 * quantity by constructor need not accept it at all.
+	 * 
+	 * @param quantity
+	 *            how much of this resource there is to be in this collection of
+	 *            it.
+	 */
+	void setQuantity(double quantity);
+
+	/**
 	 * @return how much of this resource there is in this collection of it.
 	 */
 	double getQuantity();
