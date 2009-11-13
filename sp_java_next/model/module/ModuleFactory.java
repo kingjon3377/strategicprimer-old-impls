@@ -5,6 +5,7 @@ import java.util.logging.Logger;
 import model.module.features.Crater;
 import model.module.features.OilWell;
 import model.module.kinds.RootModule;
+import model.module.resource.Oil;
 import advances.ExampleUnit;
 import advances.SimpleBuilding;
 import advances.SimpleUnit;
@@ -42,6 +43,10 @@ public class ModuleFactory {
 	 */
 	private static final int OIL_WELL_ID = 8;
 	/**
+	 * ModuleID for an Oil.
+	 */
+	private static final int OIL_ID = 9;
+	/**
 	 * Create a module from a moduleID.
 	 * @param moduleId the moduleID.
 	 * @return a module of that type
@@ -59,7 +64,9 @@ public class ModuleFactory {
 		case CRATER_ID:
 			return new Crater(); // NOPMD
 		case OIL_WELL_ID:
-			return new OilWell();
+			return new OilWell(); // NOPMD
+		case OIL_ID:
+			return new Oil(); // NOPMD
 		default:
 			throw new IllegalArgumentException("Unknown module type");
 		}

@@ -7,6 +7,7 @@ import model.module.Module;
 import model.module.kinds.Resource;
 import model.module.kinds.RootModule;
 import model.module.kinds.Weapon;
+import model.module.resource.Oil;
 import model.player.IPlayer;
 
 /**
@@ -38,7 +39,7 @@ public class OilWell implements Feature, Resource {
 	}
 
 	/**
-	 * The crater's location.
+	 * The feature's location.
 	 */
 	private Location location;
 
@@ -153,8 +154,13 @@ public class OilWell implements Feature, Resource {
 	 */
 	@Override
 	public Resource tap(final double qty) {
-		// TODO Auto-generated method stub
-		return null;
+		if (qty > quantity) {
+			throw new IllegalArgumentException("Can't tap an oil well for more than it contains");
+		} else if (qty < 0) {
+			throw new IllegalArgumentException("Can't tap a negative amount of oil");
+		}
+		quantity -= qty;
+		return new Oil(qty);
 	}
 
 }
