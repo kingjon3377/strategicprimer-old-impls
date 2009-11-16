@@ -289,7 +289,8 @@ public class ExampleUnit implements Module, Serializable, MobileModule, Renameab
 		if (loc == null) {
 			throw new IllegalStateException("Called getCost(null)");
 		} else if (loc instanceof Tile) {
-			return MOVE_COST_MAP.get(((Tile) loc).getTerrain());
+			return MOVE_COST_MAP.get(((Tile) loc).getTerrain())
+					+ (loc.getSelected() instanceof RootModule ? 0 : 1);
 		} else {
 			throw new IllegalStateException("Called getCost() on a non-Tile Location");
 		}
