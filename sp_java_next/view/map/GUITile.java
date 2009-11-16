@@ -5,15 +5,13 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Image;
-import java.awt.Toolkit;
-import java.awt.image.ImageProducer;
 import java.io.IOException;
-import java.net.URL;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
 import model.location.TerrainType;
@@ -121,8 +119,8 @@ public class GUITile extends JPanel {
 	 * Draw the tile.
 	 * 
 	 * @param pen
-	 *            The graphics context.
-	 * TODO: Convert to the new multiple-modules-on-a-tile syntax.
+	 *            The graphics context. TODO: Convert to the new
+	 *            multiple-modules-on-a-tile syntax.
 	 */
 	@Override
 	public void paint(final Graphics pen) {
@@ -207,16 +205,10 @@ public class GUITile extends JPanel {
 	 *             Thrown by a method used in producing the image
 	 */
 	private static Image getImage(final TerrainType terr) throws IOException {
-		if (imageMap.containsKey(terr)) {
-			return imageMap.get(terr); // NOPMD
-		} else {
-			final URL url = GUITile.class.getResource(getTerrainTypeString(terr));
-			if (url == null) {
-				LOGGER.severe("Couldn't find image for " + terr);
-			}
-			return url == null ? null : Toolkit.getDefaultToolkit().createImage(
-					(ImageProducer) url.getContent());
-		}
+		if (!imageMap.containsKey(terr)) {
+			imageMap.put(terr, ImageIO.read(GUITile.class.getResource(getTerrainTypeString(terr))));
+		} 
+		return imageMap.get(terr);
 	}
 
 	/**
