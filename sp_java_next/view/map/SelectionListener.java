@@ -56,7 +56,7 @@ public class SelectionListener implements MouseListener {
 	 */
 	@Override
 	public void mouseEntered(final MouseEvent event) {
-		if (event.getSource() instanceof GUITile) {
+		if (event.getSource() instanceof GUITile && panel != null) {
 			ActionsMenu.ACTIONS_MENU.drawMovePath((GUITile) event.getSource());
 		}
 	}
@@ -69,7 +69,7 @@ public class SelectionListener implements MouseListener {
 	 */
 	@Override
 	public void mouseExited(final MouseEvent event) {
-		if (event.getSource() instanceof GUITile) {
+		if (event.getSource() instanceof GUITile && panel != null) {
 			ActionsMenu.ACTIONS_MENU.drawMovePath((GUITile) event.getSource());
 		}
 	}
@@ -99,13 +99,17 @@ public class SelectionListener implements MouseListener {
 			if (ActionsMenu.ACTIONS_MENU.isActionSelected()) {
 				ActionsMenu.ACTIONS_MENU.applyAction((GUITile) event.getComponent());
 			}
-			panel.changeCurrentModule(((GUITile) event.getSource()).getTile()
-					.getSelected());
+			if (panel != null) {
+				panel.changeCurrentModule(((GUITile) event.getSource()).getTile()
+						.getSelected());
+			}
 			map.select((GUITile) event.getSource());
-			TerrainTypeMenu.MENU.setTile((GUITile) event.getSource());
-			TopModuleMenu.TOP_MODULE_MENU.initialize(((GUITile) event.getComponent())
-					.getTile());
-			ActionsMenu.ACTIONS_MENU.setSelectedTile(map.getSelection());
+			if (panel != null) {
+				TerrainTypeMenu.MENU.setTile((GUITile) event.getSource());
+				TopModuleMenu.TOP_MODULE_MENU.initialize(((GUITile) event.getComponent())
+						.getTile());
+				ActionsMenu.ACTIONS_MENU.setSelectedTile(map.getSelection());
+			}
 		}
 	}
 }
