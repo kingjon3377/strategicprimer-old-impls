@@ -5,8 +5,10 @@ import java.awt.GridLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
+import model.location.Location;
 import model.module.Module;
-import model.module.kinds.Fortress;
+import model.module.features.Feature;
+import model.module.kinds.Resource;
 
 /**
  * A panel to describe the current module.
@@ -55,14 +57,41 @@ public class CurrentModulePanel extends JPanel {
 		if (adminPanel != null) {
 			adminPanel.setModule(mod);
 		}
+//		if (mod == null) {
+//			label.setText("none");
+//		} else if (mod instanceof Fortress
+//				&& ((Fortress) mod).getSelected() != null) {
+//			changeCurrentModule(((Fortress) mod).getSelected());
+//		} else {
+//			label.setText(mod.getName());
+//		}
+		label.setText(getDescription(mod));
+	}
+	/**
+	 * @param mod a module to describe
+	 * @return a description of it
+	 */
+	private static String getDescription(final Module mod) {
 		if (mod == null) {
-			label.setText("none");
-		} else if (mod instanceof Fortress
-				&& ((Fortress) mod).getSelected() != null) {
-			changeCurrentModule(((Fortress) mod).getSelected());
+			return "none"; // NOPMD
 		} else {
-			label.setText(mod.getName());
+			final StringBuffer buf = new StringBuffer(mod.getName());
+			if (mod instanceof Location) {
+				buf.append(" (Location, selected: ");
+				buf.append(getDescription(((Location) mod).getSelected()));
+				buf.append(')');
+			}
+			if (mod instanceof Feature) {
+				buf.append(" (Feature: ");
+				buf.append(((Feature) mod).description());
+				buf.append(')');
+			}
+			if (mod instanceof Resource) {
+				buf.append(" Resource: ");
+				buf.append(((Resource) mod).getQuantity());
+				buf.append(')');
+			}
+			return buf.toString();
 		}
 	}
-
 }
