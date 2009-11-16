@@ -12,6 +12,7 @@ import javax.swing.JTextField;
 
 import model.module.Module;
 import model.module.kinds.Renameable;
+import model.module.kinds.Resource;
 
 /**
  * 
@@ -37,6 +38,9 @@ public final class AdminModuleEditPanel extends JPanel implements ActionListener
 			if (module instanceof Renameable) { // NOPMD
 				((Renameable) module).setName(nameField.getText());
 			}
+			if (module instanceof Resource) {
+				((Resource) module).setQuantity(Double.parseDouble(qtyField.getText()));
+			}
 		}
 	}
 
@@ -49,6 +53,10 @@ public final class AdminModuleEditPanel extends JPanel implements ActionListener
 		panel.add(new JLabel("Name:"));
 		nameField.setEnabled(false);
 		panel.add(nameField);
+		qtyLabel.setVisible(false);
+		panel.add(qtyLabel);
+		qtyField.setVisible(false);
+		panel.add(qtyField);
 		add(panel, BorderLayout.CENTER);
 		add(button, BorderLayout.SOUTH);
 		button.addActionListener(this);
@@ -58,6 +66,14 @@ public final class AdminModuleEditPanel extends JPanel implements ActionListener
 	 * A text field for the module's name.
 	 */
 	private final transient JTextField nameField = new JTextField(5);
+	/**
+	 * A label for the resource-quantity field.
+	 */
+	private final transient JLabel qtyLabel = new JLabel("Quantity: ");
+	/**
+	 * A text field for a resource's quantity.
+	 */
+	private final transient JTextField qtyField = new JTextField();
 	/**
 	 * The module we're editing.
 	 */
@@ -75,6 +91,8 @@ public final class AdminModuleEditPanel extends JPanel implements ActionListener
 		module = mod;
 		nameField.setText(module.getName());
 		nameField.setEnabled(module instanceof Renameable);
+		qtyLabel.setVisible(module instanceof Resource);
+		qtyField.setVisible(module instanceof Resource);
 		button.setEnabled(module != null);
 	}
 }

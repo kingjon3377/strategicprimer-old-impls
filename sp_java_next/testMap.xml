@@ -24,7 +24,9 @@
 		<tile row="1" column="0" type="ocean" event="5"></tile>
 		<tile row="1" column="1" type="desert" event="5"></tile>
 		<tile row="1" column="2" type="plains" event="5"></tile>
-		<tile row="1" column="3" type="plains" event="5"></tile>
+		<tile row="1" column="3" type="plains" event="5">
+			<feature mid="8" image="/oilwell.png" name="Oil Well" />
+		</tile>
 		<tile row="1" column="4" type="mountain" event="5"></tile>
 		<tile row="1" column="5" type="ocean" event="5"></tile>
 		<tile row="1" column="6" type="desert" event="5"></tile>
