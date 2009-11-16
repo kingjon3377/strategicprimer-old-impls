@@ -2,8 +2,10 @@ package model.module;
 
 import java.util.logging.Logger;
 
+import model.module.features.Canal;
 import model.module.features.Crater;
 import model.module.features.OilWell;
+import model.module.features.River;
 import model.module.kinds.RootModule;
 import model.module.resource.Oil;
 import advances.ExampleUnit;
@@ -47,6 +49,14 @@ public class ModuleFactory {
 	 */
 	private static final int OIL_ID = 9;
 	/**
+	 * ModuleID for a River.
+	 */
+	private static final int RIVER_ID = 10;
+	/**
+	 * ModuleID for a Canal.
+	 */
+	private static final int CANAL_ID = 11;
+	/**
 	 * Create a module from a moduleID.
 	 * @param moduleId the moduleID.
 	 * @return a module of that type
@@ -67,6 +77,10 @@ public class ModuleFactory {
 			return new OilWell(); // NOPMD
 		case OIL_ID:
 			return new Oil(); // NOPMD
+		case RIVER_ID:
+			return new River(); // NOPMD
+		case CANAL_ID:
+			return new Canal(); // NOPMD
 		default:
 			throw new IllegalArgumentException("Unknown module type");
 		}
