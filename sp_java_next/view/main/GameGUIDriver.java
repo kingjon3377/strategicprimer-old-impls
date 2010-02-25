@@ -15,7 +15,6 @@ import view.map.GUIMap;
 import view.map.MiniMap;
 import view.map.SelectionListener;
 import view.module.CurrentModulePanel;
-import view.module.InitiativeQueue;
 
 /**
  * @author Jonathan Lovelace
@@ -47,10 +46,6 @@ public class GameGUIDriver extends JFrame {
 		gui.run();
 	}
 
-	/**
-	 * The panel showing the initiative queue.
-	 */
-	private transient InitiativeQueue initQueue;
 	/**
 	 * The main map.
 	 */
@@ -99,8 +94,6 @@ public class GameGUIDriver extends JFrame {
 		menu.add(TopModuleMenu.TOP_MODULE_MENU);
 		menu.add(ActionsMenu.ACTIONS_MENU);
 		add(menu, BorderLayout.NORTH);
-		initQueue = new InitiativeQueue();
-		add(initQueue, BorderLayout.WEST);
 		/**
 		 * The panel showing the current module.
 		 */
