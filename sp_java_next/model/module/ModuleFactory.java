@@ -58,6 +58,10 @@ public class ModuleFactory {
 	private static final int CANAL_ID = 11;
 	/**
 	 * Create a module from a moduleID.
+	 * 
+	 * FIXME: To reduce cyclomatic complexity, etc., use reflection:
+	 * investigate.
+	 * 
 	 * @param moduleId the moduleID.
 	 * @return a module of that type
 	 */
