@@ -14,20 +14,24 @@ import advances.SimpleUnit;
 
 /**
  * A class to create modules when from their moduleIDs.
+ * 
  * @author Jonathan Lovelace
- *
+ * 
  */
 public class ModuleFactory {
 	/**
 	 * Logger.
 	 */
-	private static final Logger LOGGER = Logger.getLogger(ModuleFactory.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(ModuleFactory.class
+			.getName());
+
 	/**
 	 * Constructor.
 	 */
 	public ModuleFactory() {
 		LOGGER.finest("ModuleFactory constructor");
 	}
+
 	/**
 	 * ModuleID for an ExampleUnit.
 	 */
@@ -56,17 +60,19 @@ public class ModuleFactory {
 	 * ModuleID for a Canal.
 	 */
 	private static final int CANAL_ID = 11;
+
 	/**
 	 * Create a module from a moduleID.
 	 * 
 	 * FIXME: To reduce cyclomatic complexity, etc., use reflection:
 	 * investigate.
 	 * 
-	 * @param moduleId the moduleID.
+	 * @param moduleId
+	 *            the moduleID.
 	 * @return a module of that type
 	 */
 	public Module createModule(final int moduleId) {
-		switch(moduleId) {
+		switch (moduleId) {
 		case 0:
 			return RootModule.ROOT_MODULE; // NOPMD
 		case 2:
