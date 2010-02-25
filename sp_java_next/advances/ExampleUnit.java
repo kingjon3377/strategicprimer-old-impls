@@ -6,6 +6,7 @@ import java.util.EnumMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.logging.Logger;
 
 import model.location.Location;
 import model.location.NullLocation;
@@ -37,6 +38,10 @@ import pathfinding.Path;
  */
 public class ExampleUnit implements Module, Serializable, MobileModule, Renameable,
 		TransferableModule, FunctionalModule {
+	/**
+	 * Logger.
+	 */
+	private static final Logger LOGGER = Logger.getLogger(ExampleUnit.class.getName());
 	/**
 	 * An ExampleUnit's starting movement points.
 	 */
@@ -206,7 +211,7 @@ public class ExampleUnit implements Module, Serializable, MobileModule, Renameab
 										((Tile) location).getLocation().getY(),
 										((Tile) loc).getLocation().getX(), ((Tile) loc)
 												.getLocation().getY())));
-		System.out.println(getStatistics().getStats().get(Stats.MP) + " MP left");
+		LOGGER.info(getStatistics().getStats().get(Stats.MP) + " MP left");
 	}
 
 	/**
@@ -350,15 +355,15 @@ public class ExampleUnit implements Module, Serializable, MobileModule, Renameab
 			statistics.getStats().put(Stats.HP, EXAMPLE_UNIT_HP);
 		} else if (action == EXPLORE) {
 			if (args[0] instanceof Feature) {
-				System.out.println(((Feature) args[0]).description());
+				LOGGER.info(((Feature) args[0]).description());
 			}
 			// else silently ignore the illegal argument
 		} else if (action == TAP) {
 			if (args[0] instanceof Resource) {
 				// FIXME: Should do something with the resulting resource.
 				// FIXME: Need some way of specifying how much.
-				System.out.print("Tapped ");
-				System.out.print(((Resource) args[0]).tap(1.0));
+				LOGGER.info("Tapped ");
+				LOGGER.info(((Resource) args[0]).tap(1.0).toString());
 			}
 			// else silently ignore the illegal argument
 		} else {
