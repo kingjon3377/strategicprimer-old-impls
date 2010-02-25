@@ -171,7 +171,7 @@ public class Tile implements Location {
 				}
 			}
 		} else {
-			System.out.println("Breakpoint here");
+//			System.out.println("Breakpoint here");
 			throw new IllegalArgumentException(
 					"Can only select a module that is on the tile.");
 		}
