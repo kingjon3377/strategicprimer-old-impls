@@ -12,7 +12,6 @@ import javax.swing.JScrollPane;
 
 import model.main.Game;
 import view.map.GUIMap;
-import view.map.MiniMap;
 import view.map.SelectionListener;
 import view.module.CurrentModulePanel;
 
@@ -50,10 +49,6 @@ public class GameGUIDriver extends JFrame {
 	 * The main map.
 	 */
 	private final transient GUIMap map;
-	/**
-	 * The mini-map.
-	 */
-	private transient MiniMap miniMap;
 	/**
 	 * Preferred size, X dimension.
 	 */
@@ -100,8 +95,6 @@ public class GameGUIDriver extends JFrame {
 		final CurrentModulePanel modulePanel = new CurrentModulePanel(map.isAdmin());
 		add(modulePanel, BorderLayout.EAST);
 		map.setSelectionListener(new SelectionListener(map, modulePanel));
-		miniMap = new MiniMap();
-		add(miniMap, BorderLayout.SOUTH);
 		pack();
 		repaint();
 	}
