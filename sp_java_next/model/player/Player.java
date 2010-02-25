@@ -91,7 +91,12 @@ public class Player implements Serializable {
 		getter.addAll(advances);
 		getter.retainAll(advances);
 	}
-
+	/**
+	 * @return the set of advances the player knows
+	 */
+	public Set<Advance> getAdvances() {
+		return new HashSet<Advance>(advances);
+	}
 	/**
 	 * @return the associatedModule
 	 */
