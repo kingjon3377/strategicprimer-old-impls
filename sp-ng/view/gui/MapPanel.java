@@ -3,6 +3,7 @@ package view.gui;
 import java.awt.Color;
 import java.awt.Graphics;
 
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import model.map.SPMap;
@@ -47,7 +48,9 @@ public class MapPanel extends JPanel {
 	 * @param args ignored for now
 	 */
 	public static void main(final String[] args) {
-		new Window(new MapPanel(new SPMap())).setVisible(true);
+		final Window window = new Window(new MapPanel(new SPMap()));
+		window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		window.setVisible(true);
 	}
 	@Override
 	public void paint(final Graphics pen) {
