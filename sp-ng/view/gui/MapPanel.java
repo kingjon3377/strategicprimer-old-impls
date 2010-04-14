@@ -4,8 +4,8 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
-import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.WindowConstants;
 
 import model.map.SPMap;
 import view.util.Window;
@@ -52,7 +52,7 @@ public class MapPanel extends JPanel {
 	 */
 	public static void main(final String[] args) {
 		final Window window = new Window(new MapPanel(new SPMap()));
-		window.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+		window.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		window.setVisible(true);
 	}
 	@Override
