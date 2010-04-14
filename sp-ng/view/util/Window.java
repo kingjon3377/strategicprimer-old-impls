@@ -25,5 +25,9 @@ public class Window extends JFrame {
 	public Window(final Component comp) {
 		super();
 		add(comp);
+		setPreferredSize(comp.getPreferredSize());
+		setMaximumSize(comp.getMaximumSize());
+		setMinimumSize(comp.getMinimumSize());
+		setSize(comp.getSize());
 	}
 }
