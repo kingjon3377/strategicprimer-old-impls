@@ -36,4 +36,16 @@ public class SPMap {
 	public int terrainAt(final int row, final int col) {
 		return theMap[row][col];
 	}
+	/**
+	 * @return the number of rows in the map
+	 */
+	public final int getRows() {
+		return theMap.length;
+	}
+	/**
+	 * @return the number of columns in the map
+	 */
+	public final int getCols() {
+		return theMap[0].length;
+	}
 }
