@@ -1,6 +1,7 @@
 package view.gui;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Graphics;
 
 import javax.swing.JFrame;
@@ -36,6 +37,8 @@ public class MapPanel extends JPanel {
 	 */
 	public MapPanel(final SPMap map) {
 		theMap = map;
+		setPreferredSize(new Dimension(map.getCols() * TILE_WIDTH, map.getRows() * TILE_HEIGHT));
+		setMinimumSize(getPreferredSize());
 	}
 	/**
 	 * Constructor.
