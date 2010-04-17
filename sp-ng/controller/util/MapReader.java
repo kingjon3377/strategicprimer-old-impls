@@ -26,12 +26,17 @@ public class MapReader {
 	public SPMap readMap(final String filename) {
 		return new SPMap();
 	}
+
 	/**
 	 * Position the cursor before the next relevant character.
-	 * @param istream the stream we're reading from
-	 * @throws IOException on EOF or other I/O error
+	 * 
+	 * @param istream
+	 *            the stream we're reading from
+	 * @throws IOException
+	 *             on EOF or other I/O error
 	 */
-	private static void prepare(final BufferedReader istream) throws IOException {
+	private static void prepare(final BufferedReader istream)
+			throws IOException {
 		int ch;
 		while (true) {
 			istream.mark(2);
