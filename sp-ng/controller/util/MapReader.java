@@ -77,4 +77,28 @@ public class MapReader {
 		}
 		return Integer.parseInt(builder.toString());
 	}
+
+	/**
+	 * Read a two-dimensional array of integers.
+	 * 
+	 * @param istream
+	 *            the stream we're reading from
+	 * @param rows
+	 *            how many rows there are to read
+	 * @param cols
+	 *            how many columns there are to read
+	 * @throws IOException
+	 *             on EOF or other I/O error
+	 * @return the array
+	 */
+	private static int[][] readArray(final BufferedReader istream,
+			final int rows, final int cols) throws IOException {
+		final int[][] array = new int[rows][cols];
+		for (int row = 0; row < rows; row++) {
+			for (int col = 0; col < cols; col++) {
+				array[row][col] = readValue(istream);
+			}
+		}
+		return array;
+	}
 }
