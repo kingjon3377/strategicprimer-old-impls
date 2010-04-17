@@ -44,4 +44,32 @@ public class MapReader {
 			}
 		}
 	}
+
+	/**
+	 * Read the next value. If our map file format adds something more than
+	 * integers, we'll need to modularize this.
+	 * 
+	 * @param istream
+	 *            the stream we're reading from
+	 * @return the next (integer) value in it, which we've then passed by.
+	 * @throws IOException
+	 *             on EOF or other I/O error
+	 */
+	private static int readValue(final BufferedReader istream)
+			throws IOException {
+		int ch;
+		prepare(istream);
+		StringBuilder builder = new StringBuilder();
+		while (true) {
+			istream.mark(4);
+			ch = istream.read();
+			if (ch < 1 || Character.isWhitespace((char) ch)) {
+				istream.reset();
+				break;
+			} else {
+				builder.append((char) ch);
+			}
+		}
+		return Integer.parseInt(builder.toString());
+	}
 }
