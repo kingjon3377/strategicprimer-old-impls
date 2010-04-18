@@ -43,7 +43,13 @@ public class MapReader {
 	public SPMap readMap(final BufferedReader istream)
 			throws IOException {
 		int rows = readValue(istream);
+		if (rows < 1) {
+			throw new IllegalArgumentException("Non-positive number of rows in the map");
+		}
 		int cols = readValue(istream);
+		if (cols < 1) {
+			throw new IllegalArgumentException("Non-positive number of columns in the map");
+		}
 		return new SPMap(readArray(istream, rows, cols));
 	}
 
