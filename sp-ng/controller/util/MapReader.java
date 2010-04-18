@@ -1,6 +1,8 @@
 package controller.util;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 
 import model.map.SPMap;
@@ -22,9 +24,27 @@ public class MapReader {
 	 * @param filename
 	 *            the file to read from
 	 * @return the map in that file
+	 * @throws FileNotFoundException if file not found
+	 * @throws IOException on EOF or other I/O errors
 	 */
-	public SPMap readMap(final String filename) {
-		return new SPMap();
+	public SPMap readMap(final String filename) throws FileNotFoundException, IOException {
+		return readMap(new BufferedReader(new FileReader(filename)));
+	}
+
+	/**
+	 * Read the map from an input stream
+	 * 
+	 * @param istream
+	 *            the stream we're reading from
+	 * @throws IOException
+	 *             on EOF or other I/O error
+	 * @return the map described by the input
+	 */
+	public SPMap readMap(final BufferedReader istream)
+			throws IOException {
+		int rows = readValue(istream);
+		int cols = readValue(istream);
+		return new SPMap(readArray(istream, rows, cols));
 	}
 
 	/**
