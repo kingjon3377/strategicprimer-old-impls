@@ -25,13 +25,17 @@ public class SPMap {
 	public SPMap() {
 		theMap = new int[69][88];
 	}
+
 	/**
 	 * Constructor for use in loading a map from file
-	 * @param map the data to load into the map
+	 * 
+	 * @param map
+	 *            the data to load into the map
 	 */
 	public SPMap(final int[][] map) {
 		theMap = map.clone();
 	}
+
 	/**
 	 * Get what's at a position on the map.
 	 * 
