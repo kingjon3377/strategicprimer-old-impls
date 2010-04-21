@@ -159,7 +159,25 @@ public class TextMap {
 	 *            The stream to draw to.
 	 */
 	private void paintTile(TileType tile, PrintStream out) {
-		out.append('.');
+		switch (tile) {
+		case DESERT:
+			out.append('"');
+			break;
+		case ICE:
+			out.append('_');
+			break;
+		case PLAINS:
+			out.append('.');
+			break;
+		case SWAMP:
+			out.append(',');
+			break;
+		case WATER:
+			out.append('#');
+			break;
+		default:
+			throw new IllegalStateException("Shouldn't get here!");
+		}
 	}
 	/**
 	 * Shift the map left.
