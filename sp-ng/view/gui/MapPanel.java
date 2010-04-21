@@ -62,7 +62,7 @@ public class MapPanel extends JPanel {
 		Color origColor = pen.getColor();
 		for (int row = 0; row < theMap.getRows(); row++) {
 			for (int col = 0; col < theMap.getCols(); col++) {
-				pen.setColor(COLOR_MAP.get(theMap.terrainAt(row, col)));
+				pen.setColor(COLOR_MAP.get(theMap.terrainAt(row, col).getType()));
 				pen.fillRect(col * TILE_WIDTH, row * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
 				pen.setColor(Color.black);
 				pen.drawRect(col * TILE_WIDTH, row * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);

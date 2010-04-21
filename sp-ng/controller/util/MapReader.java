@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import model.map.SPMap;
+import model.map.Tile;
 import model.map.TileType;
 
 /**
@@ -131,11 +132,11 @@ public class MapReader {
 	 * @param array the array of ints
 	 * @return the equivalent array of TileTypes
 	 */
-	public static TileType[][] createTiles(final int[][] array) {
-		final TileType[][] tiles = new TileType[array.length][array[0].length];
+	public static Tile[][] createTiles(final int[][] array) {
+		final Tile[][] tiles = new Tile[array.length][array[0].length];
 		for (int i = 0; i < array.length; i++) {
 			for (int j = 0; j < array[0].length; j++) {
-				tiles[i][j] = TileType.values()[array[i][j]];
+				tiles[i][j] = new Tile(TileType.values()[array[i][j]]);
 			}
 		}
 		return tiles;
