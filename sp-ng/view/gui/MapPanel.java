@@ -3,11 +3,13 @@ package view.gui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.util.EnumMap;
 
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import model.map.SPMap;
+import model.map.TileType;
 import view.util.Window;
 /**
  * A graphical representation of the map.
@@ -60,12 +62,25 @@ public class MapPanel extends JPanel {
 		Color origColor = pen.getColor();
 		for (int row = 0; row < theMap.getRows(); row++) {
 			for (int col = 0; col < theMap.getCols(); col++) {
-				pen.setColor(Color.blue);
+				pen.setColor(COLOR_MAP.get(theMap.terrainAt(row, col)));
 				pen.fillRect(col * TILE_WIDTH, row * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
 				pen.setColor(Color.black);
 				pen.drawRect(col * TILE_WIDTH, row * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
 			}
 		}
 		pen.setColor(origColor);
+	}
+	/**
+	 * Colors to use in the map.
+	 */
+	private static final EnumMap<TileType,Color> COLOR_MAP = new EnumMap<TileType,Color>(TileType.class);
+	// ESCA-JAVA0076:
+	static {
+		COLOR_MAP.put(TileType.DESERT, new Color(249, 233, 28));
+		COLOR_MAP.put(TileType.ICE, new Color(153, 153, 153));
+		COLOR_MAP.put(TileType.PLAINS, new Color(0, 117, 0));
+		COLOR_MAP.put(TileType.SWAMP, new Color(0, 44, 0));
+		COLOR_MAP.put(TileType.WATER, new Color(0, 0, 255));
+		COLOR_MAP.put(TileType.UNEXPLORED, new Color(255, 255, 255));
 	}
 }
