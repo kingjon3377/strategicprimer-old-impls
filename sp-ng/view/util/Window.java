@@ -1,8 +1,11 @@
 package view.util;
 
 import java.awt.Component;
+import java.awt.Dimension;
 
 import javax.swing.JFrame;
+import javax.swing.JScrollPane;
+import javax.swing.ScrollPaneConstants;
 
 /**
  * A utility class to make a window out of a panel or other component.
@@ -24,10 +27,13 @@ public class Window extends JFrame {
 	 */
 	public Window(final Component comp) {
 		super();
-		add(comp);
+		JScrollPane jsp = new JScrollPane(comp);
+		jsp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		jsp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		add(jsp);
 		setPreferredSize(comp.getPreferredSize());
 		setMaximumSize(comp.getMaximumSize());
-		setMinimumSize(comp.getMinimumSize());
+		setMinimumSize(new Dimension(640,480));
 		setSize(comp.getSize());
 	}
 }
