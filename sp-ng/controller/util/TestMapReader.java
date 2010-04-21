@@ -70,7 +70,7 @@ public final class TestMapReader {
 	 */
 	@Test
 	public void testReturnsProperResult() throws IOException {
-		SPMap map = new SPMap(new int[][] {{1,2},{3,4}});
+		SPMap map = new SPMap(MapReader.createTiles(new int[][] {{1,2},{3,4}}));
 		assertTrue(map.equals(reader.readMap(new BufferedReader(new StringReader("2 2 1 2 3 4")))));
 		assertEquals(map,reader.readMap(new BufferedReader(new StringReader("2 2 1 2 3 4"))));
 	}
