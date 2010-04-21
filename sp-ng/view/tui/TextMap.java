@@ -66,6 +66,7 @@ public class TextMap {
 	 *            ignored for now
 	 */
 	public static void main(final String[] args) {
+		// ESCA-JAVA0266:
 		new TextMap(new SPMap()).paint(System.out);
 	}
 
