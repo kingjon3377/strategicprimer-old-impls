@@ -126,7 +126,7 @@ public class TextMap {
 					"Text tile height and width must either be both 1 or both greater than 1");
 		} else {
 			for (int row = topRow; row < topRow + rowsVisible && row < theMap.getRows(); row++) {
-				for (int j = 0; j < tileWidth * rowsVisible; j++) {
+				for (int j = 0; j < tileWidth * colsVisible; j++) {
 					out.append('-');
 				}
 				out.append('\n');
