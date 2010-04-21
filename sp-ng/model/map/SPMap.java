@@ -16,14 +16,17 @@ public class SPMap {
 	 * The data about each position. TODO: should we do more than just trust the
 	 * compiler to catch illegal array bounds, etc.?
 	 */
-	private int[][] theMap;
+	private TileType[][] theMap;
 
 	/**
 	 * Default constructor: make the map 69 rows by 88 columns, the size of the
 	 * campaign map pre-revamp.
 	 */
 	public SPMap() {
-		theMap = new int[69][88];
+		theMap = new TileType[69][88];
+		for (TileType[] array : theMap) {
+			Arrays.fill(array, TileType.PLAINS);
+		}
 	}
 
 	/**
@@ -32,7 +35,7 @@ public class SPMap {
 	 * @param map
 	 *            the data to load into the map
 	 */
-	public SPMap(final int[][] map) {
+	public SPMap(final TileType[][] map) {
 		theMap = map.clone();
 	}
 
@@ -45,7 +48,7 @@ public class SPMap {
 	 *            the column to look at
 	 * @return what's at that position
 	 */
-	public int terrainAt(final int row, final int col) {
+	public TileType terrainAt(final int row, final int col) {
 		return theMap[row][col];
 	}
 	/**

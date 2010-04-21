@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import model.map.SPMap;
+import model.map.TileType;
 
 /**
  * A class to read a map from file.
@@ -50,7 +51,7 @@ public class MapReader {
 		if (cols < 1) {
 			throw new IllegalArgumentException("Non-positive number of columns in the map");
 		}
-		return new SPMap(readArray(istream, rows, cols));
+		return new SPMap(createTiles(readArray(istream, rows, cols)));
 	}
 
 	/**
@@ -124,5 +125,19 @@ public class MapReader {
 			}
 		}
 		return array;
+	}
+	/**
+	 * Turn an array of ints into an array of TileTypes.
+	 * @param array the array of ints
+	 * @return the equivalent array of TileTypes
+	 */
+	public static TileType[][] createTiles(final int[][] array) {
+		final TileType[][] tiles = new TileType[array.length][array[0].length];
+		for (int i = 0; i < array.length; i++) {
+			for (int j = 0; j < array[0].length; j++) {
+				tiles[i][j] = TileType.values()[array[i][j]];
+			}
+		}
+		return tiles;
 	}
 }

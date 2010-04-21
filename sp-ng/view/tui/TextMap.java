@@ -3,6 +3,7 @@ package view.tui;
 import java.io.PrintStream;
 
 import model.map.SPMap;
+import model.map.TileType;
 
 /**
  * A text (ASCII-art) representation of the map TODO: add an event loop.
@@ -157,7 +158,7 @@ public class TextMap {
 	 * @param out
 	 *            The stream to draw to.
 	 */
-	private void paintTile(int tile, PrintStream out) {
+	private void paintTile(TileType tile, PrintStream out) {
 		out.append('.');
 	}
 	/**
