@@ -3,6 +3,7 @@ package view.tui;
 import java.io.PrintStream;
 
 import model.map.SPMap;
+import model.map.Tile;
 import model.map.TileType;
 
 /**
@@ -158,8 +159,8 @@ public class TextMap {
 	 * @param out
 	 *            The stream to draw to.
 	 */
-	private void paintTile(TileType tile, PrintStream out) {
-		switch (tile) {
+	private void paintTile(Tile tile, PrintStream out) {
+		switch (tile.getType()) {
 		case DESERT:
 			out.append('"');
 			break;
