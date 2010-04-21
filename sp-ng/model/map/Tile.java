@@ -1,8 +1,10 @@
 package model.map;
+
 /**
  * A tile on the map, representing a 10-foot-by-10-foot area.
+ * 
  * @author Jonathan Lovelace
- *
+ * 
  */
 public class Tile {
 	/**
