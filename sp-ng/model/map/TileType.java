@@ -28,7 +28,11 @@ public enum TileType {
 	/**
 	 * Ice or quasi-permanent snow.
 	 */
-	ICE;
+	ICE,
+	/**
+	 * A tile that the viewer doesn't know about. 
+	 */
+	UNEXPLORED;
 	/**
 	 * TODO: What about inside buildings?
 	 */

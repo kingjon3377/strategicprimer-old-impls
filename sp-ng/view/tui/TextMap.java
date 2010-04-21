@@ -175,6 +175,9 @@ public class TextMap {
 		case WATER:
 			out.append('#');
 			break;
+		case UNEXPLORED:
+			out.append(' ');
+			break;
 		default:
 			throw new IllegalStateException("Shouldn't get here!");
 		}
