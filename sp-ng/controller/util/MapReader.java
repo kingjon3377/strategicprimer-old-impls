@@ -63,10 +63,9 @@ public class MapReader {
 	 */
 	private static void prepare(final BufferedReader istream)
 			throws IOException {
-		int ch;
 		while (true) {
 			istream.mark(2);
-			ch = istream.read();
+			final int ch = istream.read();
 			if (ch < 1) {
 				break;
 			} else if (!Character.isWhitespace((char) ch)) {
@@ -88,12 +87,11 @@ public class MapReader {
 	 */
 	private static int readValue(final BufferedReader istream)
 			throws IOException {
-		int ch;
 		prepare(istream);
 		StringBuilder builder = new StringBuilder();
 		while (true) {
 			istream.mark(4);
-			ch = istream.read();
+			final int ch = istream.read();
 			if (ch < 1 || Character.isWhitespace((char) ch)) {
 				istream.reset();
 				break;
