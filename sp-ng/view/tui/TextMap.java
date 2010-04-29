@@ -4,7 +4,6 @@ import java.io.PrintStream;
 
 import model.map.SPMap;
 import model.map.Tile;
-import model.map.TileType;
 
 /**
  * A text (ASCII-art) representation of the map TODO: add an event loop.
