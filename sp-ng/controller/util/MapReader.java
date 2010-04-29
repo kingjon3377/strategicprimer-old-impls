@@ -52,7 +52,7 @@ public class MapReader {
 		if (cols < 1) {
 			throw new IllegalArgumentException("Non-positive number of columns in the map");
 		}
-		return new SPMap(createTiles(readArray(istream, rows, cols),readArray(istream,rows,cols)));
+		return new SPMap(createTiles(readArray(istream, rows, cols),readArray(istream,rows,cols), readArray(istream,rows,cols)));
 	}
 
 	/**
@@ -131,13 +131,14 @@ public class MapReader {
 	 * Turn arrays of ints into an array of TileTypes.
 	 * @param terrain an array of ints representing terrain
 	 * @param elevation an array of ints representing elevation
+	 * @param waterLevels an array of ints representing water table levels
 	 * @return the equivalent array of TileTypes
 	 */
-	public static Tile[][] createTiles(final int[][] terrain, final int[][] elevation) {
+	public static Tile[][] createTiles(final int[][] terrain, final int[][] elevation, final int[][] waterLevels) {
 		final Tile[][] tiles = new Tile[terrain.length][terrain[0].length];
 		for (int i = 0; i < terrain.length; i++) {
 			for (int j = 0; j < terrain[0].length; j++) {
-				tiles[i][j] = new Tile(TileType.values()[terrain[i][j]],elevation[i][j]);
+				tiles[i][j] = new Tile(TileType.values()[terrain[i][j]],elevation[i][j], waterLevels[i][j]);
 			}
 		}
 		return tiles;

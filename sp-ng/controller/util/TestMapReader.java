@@ -70,8 +70,8 @@ public final class TestMapReader {
 	 */
 	@Test
 	public void testReturnsProperResult() throws IOException {
-		SPMap map = new SPMap(MapReader.createTiles(new int[][] {{1,2},{3,4}},new int[][] {{0,0},{0,0}}));
-		assertEquals(map,reader.readMap(new BufferedReader(new StringReader("2 2 1 2 3 4 0 0 0 0"))));
+		SPMap map = new SPMap(MapReader.createTiles(new int[][] {{1,2},{3,4}},new int[][] {{0,0},{0,0}}, new int[][] {{-1,-1},{-1,-1}}));
+		assertEquals(map,reader.readMap(new BufferedReader(new StringReader("2 2 1 2 3 4 0 0 0 0 -1 -1 -1 -1"))));
 	}
 	/**
 	 * Tests that the reader rejects a map without elevation data
@@ -80,5 +80,13 @@ public final class TestMapReader {
 	@Test(expected=Exception.class)
 	public void testRejectsWithoutElevation() throws IOException {
 		reader.readMap(new BufferedReader(new StringReader("2 2 1 2 3 4")));
+	}
+	/**
+	 * Tests that the reader rejects a map without water-table data
+	 * @throws IOException "Thrown" by the method we're testing
+	 */
+	@Test(expected=Exception.class)
+	public void testRejectsWithoutWaterTablle() throws IOException {
+		reader.readMap(new BufferedReader(new StringReader("2 2 1 2 3 4 0 0 0 0")));
 	}
 }
