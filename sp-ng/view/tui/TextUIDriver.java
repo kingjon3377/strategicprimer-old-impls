@@ -2,6 +2,8 @@ package view.tui;
 
 import java.io.IOException;
 import java.io.PrintStream;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import model.map.SPMap;
 
@@ -15,7 +17,10 @@ public class TextUIDriver {
 	 * The "control" by which we display the map.
 	 */
 	private TextMap map;
-
+	/**
+	 * A logger.
+	 */
+	private static final Logger LOGGER = Logger.getLogger(TextUIDriver.class.getName());
 	/**
 	 * Constructor.
 	 * 
@@ -69,6 +74,7 @@ public class TextUIDriver {
 	 * @param args
 	 *            ignored for now
 	 */
+	// ESCA-JAVA0266:
 	public static void main(final String[] args) {
 		TextUIDriver tuid = new TextUIDriver(new SPMap(), 5, 5);
 		tuid.handleCommand(' ', System.out);
@@ -81,7 +87,7 @@ public class TextUIDriver {
 					tuid.handleCommand(command, System.out);
 				}
 			} catch (final IOException except) {
-				except.printStackTrace();
+				LOGGER.log(Level.SEVERE, "I/O error", except);
 			}
 		}
 	}
