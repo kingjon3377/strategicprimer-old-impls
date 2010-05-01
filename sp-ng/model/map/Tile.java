@@ -116,14 +116,31 @@ public class Tile {
 	@Override
 	public boolean equals(final Object other) {
 		return other instanceof Tile && ((Tile) other).type.equals(type)
-				&& ((Tile) other).elevation == elevation;
+				&& ((Tile) other).elevation == elevation
+				&& ((Tile) other).waterLevel == waterLevel;
 	}
+
 	/**
 	 * Since we override equals().
+	 * 
 	 * @return a hash code.
 	 */
 	@Override
 	public int hashCode() {
-		return type.hashCode() | elevation;
+		return type.hashCode() | elevation | waterLevel;
+	}
+
+	/**
+	 * @return the depth of water on this tile. If positive, how deep water is;
+	 *         if negative, how far you have to dig to get to water.
+	 */
+	public int waterDepth() {
+		return waterLevel - elevation;
+	}
+	/**
+	 * @return whether this tile is water (i.e. ocean/lake, not swamp)
+	 */
+	public boolean isWater() {
+		return type.equals(TileType.WATER) || waterLevel > elevation;
 	}
 }
