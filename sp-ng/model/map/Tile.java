@@ -16,10 +16,11 @@ public class Tile {
 	 */
 	private int elevation;
 	/**
-	 * The water table level of the tile. If higher than the elevation, 
-	 * this tile is a water tile.
+	 * The water table level of the tile. If higher than the elevation, this
+	 * tile is a water tile.
 	 */
 	private int waterLevel;
+
 	/**
 	 * Constructor.
 	 */
@@ -48,6 +49,7 @@ public class Tile {
 	public Tile(final TileType tileType, final int elev) {
 		this(tileType, elev, 0);
 	}
+
 	/**
 	 * Constructor.
 	 * 
@@ -93,14 +95,14 @@ public class Tile {
 	public void setElevation(final int elev) {
 		elevation = elev;
 	}
-	
+
 	/**
 	 * @return the water level
 	 */
 	public int getWaterLevel() {
 		return waterLevel;
 	}
-	
+
 	/**
 	 * @param waterTable
 	 *            the water table level
@@ -108,6 +110,7 @@ public class Tile {
 	public void setWaterLevel(final int waterTable) {
 		waterLevel = waterTable;
 	}
+
 	/**
 	 * @param other
 	 *            another Tile
