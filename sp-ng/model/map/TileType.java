@@ -30,7 +30,7 @@ public enum TileType {
 	 */
 	ICE,
 	/**
-	 * A tile that the viewer doesn't know about. 
+	 * A tile that the viewer doesn't know about.
 	 */
 	UNEXPLORED;
 	/**

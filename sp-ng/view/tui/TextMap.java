@@ -67,6 +67,7 @@ public class TextMap {
 		rowsVisible = visibleRows;
 		colsVisible = visibleCols;
 	}
+
 	/**
 	 * Constructor.
 	 * 
@@ -80,6 +81,7 @@ public class TextMap {
 	public TextMap(final SPMap map, final int tWidth, final int tHeight) {
 		this(map, tWidth, tHeight, map.getRows(), map.getCols());
 	}
+
 	/**
 	 * Constructor.
 	 * 
@@ -115,8 +117,10 @@ public class TextMap {
 	 */
 	public void paint(PrintStream out) {
 		if (tileHeight < 2 && tileWidth < 2) {
-			for (int row = topRow; row < topRow + rowsVisible && row < theMap.getRows(); row++) {
-				for (int col = leftCol; col < leftCol + colsVisible && col < theMap.getCols(); col++) {
+			for (int row = topRow; row < topRow + rowsVisible
+					&& row < theMap.getRows(); row++) {
+				for (int col = leftCol; col < leftCol + colsVisible
+						&& col < theMap.getCols(); col++) {
 					paintTile(theMap.terrainAt(row, col), out);
 				}
 				out.append('\n');
@@ -125,28 +129,30 @@ public class TextMap {
 		} else if (tileHeight < 2 || tileWidth < 2) {
 			throw new IllegalStateException(
 					"Text tile height and width must either be both 1 or both greater than 1");
-		} // else 
-			for (int row = topRow; row < topRow + rowsVisible && row < theMap.getRows(); row++) {
-				for (int j = 0; j < tileWidth * colsVisible; j++) {
-					out.append('-');
-				}
-				out.append('\n');
-				for (int i = 1; i < tileHeight; i++) {
-					for (int col = leftCol; col < leftCol + colsVisible && col < theMap.getCols(); col++) {
-						out.append('|');
-						for (int j = 1; j < tileWidth; j++) {
-							paintTile(theMap.terrainAt(row, col), out);
-						}
-					}
-					out.append('|');
-					out.append('\n');
-				}
-			}
+		} // else
+		for (int row = topRow; row < topRow + rowsVisible
+				&& row < theMap.getRows(); row++) {
 			for (int j = 0; j < tileWidth * colsVisible; j++) {
 				out.append('-');
 			}
 			out.append('\n');
-		
+			for (int i = 1; i < tileHeight; i++) {
+				for (int col = leftCol; col < leftCol + colsVisible
+						&& col < theMap.getCols(); col++) {
+					out.append('|');
+					for (int j = 1; j < tileWidth; j++) {
+						paintTile(theMap.terrainAt(row, col), out);
+					}
+				}
+				out.append('|');
+				out.append('\n');
+			}
+		}
+		for (int j = 0; j < tileWidth * colsVisible; j++) {
+			out.append('-');
+		}
+		out.append('\n');
+
 	}
 
 	/**
@@ -187,6 +193,7 @@ public class TextMap {
 			throw new IllegalStateException("Shouldn't get here!");
 		}
 	}
+
 	/**
 	 * Shift the map left.
 	 */
@@ -195,6 +202,7 @@ public class TextMap {
 			leftCol--;
 		}
 	}
+
 	/**
 	 * Shift the map right.
 	 */
@@ -203,6 +211,7 @@ public class TextMap {
 			leftCol++;
 		}
 	}
+
 	/**
 	 * Shift the map up.
 	 */
@@ -211,6 +220,7 @@ public class TextMap {
 			topRow--;
 		}
 	}
+
 	/**
 	 * Shift the map down.
 	 */
