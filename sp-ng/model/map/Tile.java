@@ -140,6 +140,7 @@ public class Tile {
 	public int waterDepth() {
 		return waterLevel - elevation;
 	}
+
 	/**
 	 * @return whether this tile is water (i.e. ocean/lake, not swamp)
 	 */
