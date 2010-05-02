@@ -73,7 +73,8 @@ public final class TestMapReader {
 		SPMap map = new SPMap(MapReader.createTiles(new int[][] { { 1, 2 },
 				{ 3, 4 } }, new int[][] { { 0, 0 }, { 0, 0 } }, new int[][] {
 				{ -1, -1 }, { -1, -1 } }));
-		assertEquals(map,reader.readMap(new BufferedReader(new StringReader("2 2 1 2 3 4 0 0 0 0 -1 -1 -1 -1"))));
+		map.terrainAt(0, 0).setObject(0);
+		assertEquals(map,reader.readMap(new BufferedReader(new StringReader("2 2 1 2 3 4 0 0 0 0 -1 -1 -1 -1 1 0 0 0"))));
 	}
 	/**
 	 * Tests that the reader rejects a map without elevation data
@@ -90,5 +91,21 @@ public final class TestMapReader {
 	@Test(expected=Exception.class)
 	public void testRejectsWithoutWaterTable() throws IOException {
 		reader.readMap(new BufferedReader(new StringReader("2 2 1 2 3 4 0 0 0 0")));
+	}
+	/**
+	 * Tests that the reader rejects a map without terrain-object data
+	 * @throws IOException "Thrown" by the method we're testing
+	 */
+	@Test(expected=Exception.class)
+	public void testRejectsWithoutObjects() throws IOException {
+		reader.readMap(new BufferedReader(new StringReader("2 2 1 2 3 4 0 0 0 0 -1 -1 -1 -1")));
+	}
+	/**
+	 * Tests that the reader rejects a map with fewer objects than it specifies
+	 * @throws IOException "Thrown" by the method we're testing
+	 */
+	@Test(expected=Exception.class)
+	public void testRejectsTooFewObjects() throws IOException {
+		reader.readMap(new BufferedReader(new StringReader("2 2 1 2 3 4 0 0 0 0 -1 -1 -1 -1 1")));
 	}
 }
