@@ -3,6 +3,8 @@ package view.gui;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.EnumMap;
 
 import javax.swing.JPanel;
@@ -37,6 +39,14 @@ public class MapPanel extends JPanel {
 	 * runtime.
 	 */
 	private static final int TILE_HEIGHT = 10;
+	/**
+	 * The row of the currently selected tile
+	 */
+	private int currentRow = -1;
+	/**
+	 * The column of the currently selected tile
+	 */
+	private int currentCol = -1;
 
 	/**
 	 * Constructor.
@@ -50,6 +60,62 @@ public class MapPanel extends JPanel {
 				.getRows()
 				* TILE_HEIGHT));
 		setMinimumSize(getPreferredSize());
+		addMouseListener(new MouseListener() {
+			/**
+			 * Select the tile under the cursor as the current tile.
+			 * 
+			 * @param event
+			 *            used to determine the tile in question
+			 */
+			@Override
+			public void mouseClicked(final MouseEvent event) {
+				if (event.getX() < getMap().getCols() * TILE_WIDTH
+						&& event.getY() < getMap().getRows() * TILE_HEIGHT) {
+					setCurrentCol(event.getX() / TILE_WIDTH);
+					setCurrentRow(event.getY() / TILE_HEIGHT);
+				} else {
+					setCurrentCol(-1);
+					setCurrentRow(-1);
+				}
+				repaint();
+			}
+
+			/**
+			 * @param event
+			 *            ignored
+			 */
+			@Override
+			public void mouseEntered(final MouseEvent event) {
+				// Do nothing
+			}
+
+			/**
+			 * @param event
+			 *            ignored
+			 */
+			@Override
+			public void mouseExited(final MouseEvent event) {
+				// Do nothing
+			}
+
+			/**
+			 * @param event
+			 *            ignored
+			 */
+			@Override
+			public void mousePressed(final MouseEvent event) {
+				// Do nothing
+			}
+
+			/**
+			 * @param event
+			 *            ignored
+			 */
+			@Override
+			public void mouseReleased(final MouseEvent event) {
+				// Do nothing
+			}
+		});
 	}
 
 	/**
@@ -94,9 +160,32 @@ public class MapPanel extends JPanel {
 						TILE_HEIGHT);
 			}
 		}
+		if (currentRow != -1 && currentCol != -1) {
+			pen.setColor(Color.magenta);
+			pen.drawRect(currentCol * TILE_WIDTH, currentRow * TILE_HEIGHT,
+					TILE_WIDTH, TILE_HEIGHT);
+		}
 		pen.setColor(origColor);
 	}
 
+	/**
+	 * @return the map
+	 */
+	public SPMap getMap() {
+		return theMap;
+	}
+	/**
+	 * @param col the column of the new selected tile
+	 */
+	public void setCurrentCol(int col) {
+		currentCol = col;
+	}
+	/**
+	 * @param row the row of the new selected tile
+	 */
+	public void setCurrentRow(int row) {
+		currentRow = row;
+	}
 	/**
 	 * Colors to use in the map.
 	 */
