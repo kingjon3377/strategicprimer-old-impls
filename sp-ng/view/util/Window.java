@@ -28,12 +28,14 @@ public class Window extends JFrame {
 	public Window(final Component comp) {
 		super();
 		JScrollPane jsp = new JScrollPane(comp);
-		jsp.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-		jsp.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+		jsp
+				.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		jsp
+				.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
 		add(jsp);
 		setPreferredSize(comp.getPreferredSize());
 		setMaximumSize(comp.getMaximumSize());
-		setMinimumSize(new Dimension(640,480));
+		setMinimumSize(new Dimension(640, 480));
 		setSize(comp.getSize());
 	}
 }
