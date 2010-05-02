@@ -143,4 +143,29 @@ public class MapReader {
 		}
 		return tiles;
 	}
+
+	/**
+	 * Read objects from the stream and add them to the map. There must be at
+	 * least 1 value on the stream; it is the number of objects. Each object
+	 * consists of three ints: its object type and the row and column of its
+	 * tile. These coordinates must denote a valid tile.
+	 * 
+	 * @param map
+	 *            the map we're dealing with
+	 * @param istream
+	 *            the stream we're reading from
+	 * @throws IOException
+	 *             on I/O error
+	 * @returns the map with the objects added.
+	 */
+	private SPMap addObjs(final SPMap map, final BufferedReader istream)
+			throws IOException {
+		int num = readValue(istream);
+		for (int i = 0; i < num; i++) {
+			int obj = readValue(istream);
+			map.terrainAt(readValue(istream), readValue(istream))
+					.setObject(obj);
+		}
+		return map;
+	}
 }
