@@ -52,7 +52,7 @@ public class MapReader {
 		if (cols < 1) {
 			throw new IllegalArgumentException("Non-positive number of columns in the map");
 		}
-		return new SPMap(createTiles(readArray(istream, rows, cols),readArray(istream,rows,cols), readArray(istream,rows,cols)));
+		return addObjs(new SPMap(createTiles(readArray(istream, rows, cols),readArray(istream,rows,cols), readArray(istream,rows,cols))), istream);
 	}
 
 	/**
