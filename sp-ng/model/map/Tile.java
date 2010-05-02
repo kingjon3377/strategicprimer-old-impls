@@ -141,7 +141,8 @@ public class Tile {
 	public boolean equals(final Object other) {
 		return other instanceof Tile && ((Tile) other).type.equals(type)
 				&& ((Tile) other).elevation == elevation
-				&& ((Tile) other).waterLevel == waterLevel;
+				&& ((Tile) other).waterLevel == waterLevel
+				&& ((Tile) other).object == object;
 	}
 
 	/**
@@ -151,7 +152,7 @@ public class Tile {
 	 */
 	@Override
 	public int hashCode() {
-		return type.hashCode() | elevation | waterLevel;
+		return type.hashCode() | elevation | waterLevel | object;
 	}
 
 	/**
