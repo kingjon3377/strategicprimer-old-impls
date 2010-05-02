@@ -26,6 +26,7 @@ public class Tile {
 	 * enumerated type, but for now is just an int. -1 means "nothing."
 	 */
 	private int object;
+
 	/**
 	 * Constructor.
 	 */
@@ -68,6 +69,7 @@ public class Tile {
 	public Tile(final TileType tileType, final int elev, final int waterTable) {
 		this(tileType, elev, waterTable, -1);
 	}
+
 	/**
 	 * Constructor.
 	 * 
@@ -80,7 +82,8 @@ public class Tile {
 	 * @param obj
 	 *            the terrain object on the this tile
 	 */
-	public Tile(final TileType tileType, final int elev, final int waterTable, final int obj) {
+	public Tile(final TileType tileType, final int elev, final int waterTable,
+			final int obj) {
 		type = tileType;
 		elevation = elev;
 		waterLevel = waterTable;
@@ -169,16 +172,17 @@ public class Tile {
 	public boolean isWater() {
 		return type.equals(TileType.WATER) || waterLevel > elevation;
 	}
-	
+
 	/**
 	 * @return the object on this tile
 	 */
 	public int getObject() {
 		return object;
 	}
-	
+
 	/**
-	 * @param obj the new object on the tile
+	 * @param obj
+	 *            the new object on the tile
 	 */
 	public void setObject(final int obj) {
 		object = obj;
