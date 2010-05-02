@@ -88,7 +88,7 @@ public final class TestMapReader {
 	 * @throws IOException "Thrown" by the method we're testing
 	 */
 	@Test(expected=Exception.class)
-	public void testRejectsWithoutWaterTablle() throws IOException {
+	public void testRejectsWithoutWaterTable() throws IOException {
 		reader.readMap(new BufferedReader(new StringReader("2 2 1 2 3 4 0 0 0 0")));
 	}
 }
