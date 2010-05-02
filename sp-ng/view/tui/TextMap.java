@@ -160,6 +160,10 @@ public class TextMap {
 	 *            The stream to draw to.
 	 */
 	private void paintTile(Tile tile, PrintStream out) {
+		if (tile.getObject() != -1) {
+			out.append('*');
+			return;
+		}
 		switch (tile.getType()) {
 		case DESERT:
 			out.append('"');

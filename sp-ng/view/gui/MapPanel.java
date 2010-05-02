@@ -47,13 +47,15 @@ public class MapPanel extends JPanel {
 	 */
 	public MapPanel() {
 		this(new SPMap());
+		theMap.terrainAt(0, 0).setObject(0);
 	}
 	/**
 	 * Entry point for the program.
 	 * @param args ignored for now
 	 */
 	public static void main(final String[] args) {
-		final Window window = new Window(new MapPanel(new SPMap()));
+//		final Window window = new Window(new MapPanel(new SPMap()));
+		final Window window = new Window(new MapPanel());
 		window.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
 		window.setVisible(true);
 	}
@@ -64,6 +66,13 @@ public class MapPanel extends JPanel {
 			for (int col = 0; col < theMap.getCols(); col++) {
 				pen.setColor(COLOR_MAP.get(theMap.terrainAt(row, col).getType()));
 				pen.fillRect(col * TILE_WIDTH, row * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
+				if (theMap.terrainAt(row, col).getObject() != -1) {
+					pen.setColor(Color.pink);
+					// FIXME: That should be something guaranteed to contrast
+					// with the tile type color
+					pen.fillOval(col * TILE_WIDTH, row * TILE_HEIGHT,
+							TILE_WIDTH, TILE_HEIGHT);
+				}
 				pen.setColor(Color.black);
 				pen.drawRect(col * TILE_WIDTH, row * TILE_HEIGHT, TILE_WIDTH, TILE_HEIGHT);
 			}
