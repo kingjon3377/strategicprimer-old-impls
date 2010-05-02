@@ -53,12 +53,14 @@ public class SPMap {
 	public Tile terrainAt(final int row, final int col) {
 		return theMap[row][col];
 	}
+
 	/**
 	 * @return the number of rows in the map
 	 */
 	public final int getRows() {
 		return theMap.length;
 	}
+
 	/**
 	 * @return the number of columns in the map
 	 */
@@ -74,7 +76,7 @@ public class SPMap {
 	@Override
 	public boolean equals(final Object map) {
 		return map instanceof SPMap && getRows() == ((SPMap) map).getRows()
-				&& getCols() == ((SPMap) map).getCols()  
+				&& getCols() == ((SPMap) map).getCols()
 				&& Arrays.deepEquals(theMap, ((SPMap) map).theMap);
 	}
 
