@@ -42,6 +42,14 @@ public class TextMap {
 	 * How many columns to display
 	 */
 	private int colsVisible;
+	/**
+	 * The row of the selected tile, if any
+	 */
+	private int selectedRow = -2;
+	/**
+	 * The column of the selected tile, if any
+	 */
+	private int selectedCol = -2;
 
 	/**
 	 * Constructor.
@@ -132,19 +140,49 @@ public class TextMap {
 		} // else
 		for (int row = topRow; row < topRow + rowsVisible
 				&& row < theMap.getRows(); row++) {
-			for (int j = 0; j < tileWidth * colsVisible; j++) {
-				out.append('-');
+			if (selectedRow == row || selectedRow == row - 1
+					&& selectedCol >= leftCol
+					&& selectedCol < leftCol + colsVisible) {
+				for (int col = leftCol; col < selectedCol; col++) {
+					for (int j = 0; j < tileWidth; j++) {
+						out.append('-');
+					}
+				}
+				for (int j = 0; j < tileWidth; j++) {
+					out.append('=');
+				}
+				for (int col = selectedCol + 1; col < leftCol + colsVisible; col++) {
+					for (int j = 0; j < tileWidth; j++) {
+						out.append('-');
+					}
+				}
+			} else {
+				for (int j = 0; j < tileWidth * colsVisible; j++) {
+					out.append('-');
+				}
 			}
 			out.append('\n');
 			for (int i = 1; i < tileHeight; i++) {
 				for (int col = leftCol; col < leftCol + colsVisible
 						&& col < theMap.getCols(); col++) {
-					out.append('|');
+					if (row == selectedRow && col == selectedCol) {
+						out.append('{');
+					} else if (row == selectedRow && col - 1 == selectedCol) {
+						out.append('}');
+					} else {
+						out.append('|');
+					}
 					for (int j = 1; j < tileWidth; j++) {
 						paintTile(theMap.terrainAt(row, col), out);
 					}
 				}
-				out.append('|');
+				if (row == selectedRow
+						&& (selectedCol + 1 == leftCol + colsVisible || selectedCol + 1 == theMap
+								.getCols())) {
+					out.append('}');
+				} else {
+					out.append('|');
+				}
 				out.append('\n');
 			}
 		}
