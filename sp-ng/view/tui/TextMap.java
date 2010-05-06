@@ -43,15 +43,6 @@ public class TextMap {
 	 */
 	private int colsVisible;
 	/**
-	 * The row of the selected tile, if any
-	 */
-	private int selectedRow = -2;
-	/**
-	 * The column of the selected tile, if any
-	 */
-	private int selectedCol = -2;
-
-	/**
 	 * Constructor.
 	 * 
 	 * @param map
@@ -140,10 +131,10 @@ public class TextMap {
 		} // else
 		for (int row = topRow; row < topRow + rowsVisible
 				&& row < theMap.getRows(); row++) {
-			if (selectedRow == row || selectedRow == row - 1
-					&& selectedCol >= leftCol
-					&& selectedCol < leftCol + colsVisible) {
-				for (int col = leftCol; col < selectedCol; col++) {
+			if (topRow + (rowsVisible / 2) == row || topRow + (rowsVisible / 2) == row - 1
+					&& leftCol + (colsVisible / 2) >= leftCol
+					&& leftCol + (colsVisible / 2) < leftCol + colsVisible) {
+				for (int col = leftCol; col < leftCol + (colsVisible / 2); col++) {
 					for (int j = 0; j < tileWidth; j++) {
 						out.append('-');
 					}
@@ -151,7 +142,7 @@ public class TextMap {
 				for (int j = 0; j < tileWidth; j++) {
 					out.append('=');
 				}
-				for (int col = selectedCol + 1; col < leftCol + colsVisible; col++) {
+				for (int col = (leftCol + (colsVisible / 2)) + 1; col < leftCol + colsVisible; col++) {
 					for (int j = 0; j < tileWidth; j++) {
 						out.append('-');
 					}
@@ -165,9 +156,9 @@ public class TextMap {
 			for (int i = 1; i < tileHeight; i++) {
 				for (int col = leftCol; col < leftCol + colsVisible
 						&& col < theMap.getCols(); col++) {
-					if (row == selectedRow && col == selectedCol) {
+					if (row == topRow + (rowsVisible / 2) && col == leftCol + (colsVisible / 2)) {
 						out.append('{');
-					} else if (row == selectedRow && col - 1 == selectedCol) {
+					} else if (row == topRow + (rowsVisible / 2) && col - 1 == leftCol + (colsVisible / 2)) {
 						out.append('}');
 					} else {
 						out.append('|');
@@ -176,8 +167,8 @@ public class TextMap {
 						paintTile(theMap.terrainAt(row, col), out);
 					}
 				}
-				if (row == selectedRow
-						&& (selectedCol + 1 == leftCol + colsVisible || selectedCol + 1 == theMap
+				if (row == topRow + (rowsVisible / 2)
+						&& ((leftCol + (colsVisible / 2)) + 1 == leftCol + colsVisible || (leftCol + (colsVisible / 2)) + 1 == theMap
 								.getCols())) {
 					out.append('}');
 				} else {
