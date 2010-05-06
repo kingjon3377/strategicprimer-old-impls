@@ -42,6 +42,7 @@ public class TextMap {
 	 * How many columns to display
 	 */
 	private int colsVisible;
+
 	/**
 	 * Constructor.
 	 * 
@@ -131,7 +132,8 @@ public class TextMap {
 		} // else
 		for (int row = topRow; row < topRow + rowsVisible
 				&& row < theMap.getRows(); row++) {
-			if (topRow + (rowsVisible / 2) == row || topRow + (rowsVisible / 2) == row - 1
+			if (topRow + (rowsVisible / 2) == row
+					|| topRow + (rowsVisible / 2) == row - 1
 					&& leftCol + (colsVisible / 2) >= leftCol
 					&& leftCol + (colsVisible / 2) < leftCol + colsVisible) {
 				for (int col = leftCol; col < leftCol + (colsVisible / 2); col++) {
@@ -142,7 +144,8 @@ public class TextMap {
 				for (int j = 0; j < tileWidth; j++) {
 					out.append('=');
 				}
-				for (int col = (leftCol + (colsVisible / 2)) + 1; col < leftCol + colsVisible; col++) {
+				for (int col = (leftCol + (colsVisible / 2)) + 1; col < leftCol
+						+ colsVisible; col++) {
 					for (int j = 0; j < tileWidth; j++) {
 						out.append('-');
 					}
@@ -156,9 +159,11 @@ public class TextMap {
 			for (int i = 1; i < tileHeight; i++) {
 				for (int col = leftCol; col < leftCol + colsVisible
 						&& col < theMap.getCols(); col++) {
-					if (row == topRow + (rowsVisible / 2) && col == leftCol + (colsVisible / 2)) {
+					if (row == topRow + (rowsVisible / 2)
+							&& col == leftCol + (colsVisible / 2)) {
 						out.append('{');
-					} else if (row == topRow + (rowsVisible / 2) && col - 1 == leftCol + (colsVisible / 2)) {
+					} else if (row == topRow + (rowsVisible / 2)
+							&& col - 1 == leftCol + (colsVisible / 2)) {
 						out.append('}');
 					} else {
 						out.append('|');
@@ -168,7 +173,8 @@ public class TextMap {
 					}
 				}
 				if (row == topRow + (rowsVisible / 2)
-						&& ((leftCol + (colsVisible / 2)) + 1 == leftCol + colsVisible || (leftCol + (colsVisible / 2)) + 1 == theMap
+						&& ((leftCol + (colsVisible / 2)) + 1 == leftCol
+								+ colsVisible || (leftCol + (colsVisible / 2)) + 1 == theMap
 								.getCols())) {
 					out.append('}');
 				} else {
