@@ -1,17 +1,24 @@
 package view.gui;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.beans.PropertyChangeEvent;
+import java.beans.PropertyChangeListener;
 import java.util.EnumMap;
 
+import javax.swing.JFrame;
+import javax.swing.JMenuBar;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 import model.map.SPMap;
 import model.map.TileType;
+import view.util.TileTypeMenu;
 import view.util.Window;
 
 /**
@@ -20,7 +27,7 @@ import view.util.Window;
  * @author Jonathan Lovelace
  * 
  */
-public class MapPanel extends JPanel {
+public class MapPanel extends JPanel implements PropertyChangeListener {
 	/**
 	 * Version UID for serialization.
 	 */
@@ -47,6 +54,12 @@ public class MapPanel extends JPanel {
 	 * The column of the currently selected tile
 	 */
 	private int currentCol = -1;
+
+	/**
+	 * Whether we've set up stuff on the containing frame yet. (This can't be
+	 * done in the constructor because this panel is created before the frame.)
+	 */
+	private boolean initialized;
 
 	/**
 	 * Constructor.
@@ -116,6 +129,9 @@ public class MapPanel extends JPanel {
 				// Do nothing
 			}
 		});
+		initialized = false;
+		menu = new JMenuBar();
+		menu.add(new TileTypeMenu(this));
 	}
 
 	/**
@@ -141,6 +157,18 @@ public class MapPanel extends JPanel {
 
 	@Override
 	public void paint(final Graphics pen) {
+		if (!initialized) {
+			Component comp;
+			for (comp = this; comp != null && !(comp instanceof JFrame); comp = comp
+					.getParent()) {
+				// do nothing
+			}
+			if (comp != null) {
+				((JFrame) comp).setJMenuBar(menu);
+				initialized = true;
+				return;
+			}
+		}
 		Color origColor = pen.getColor();
 		for (int row = 0; row < theMap.getRows(); row++) {
 			for (int col = 0; col < theMap.getCols(); col++) {
@@ -191,6 +219,11 @@ public class MapPanel extends JPanel {
 	 */
 	private static final EnumMap<TileType, Color> COLOR_MAP = new EnumMap<TileType, Color>(
 			TileType.class);
+	/**
+	 * The menu bar. We need to store it as a local variable because when this panel is
+	 * initialized it doesn't have a frame to stick the menu on yet.
+	 */
+	private final JMenuBar menu;
 	// ESCA-JAVA0076:
 	static {
 		COLOR_MAP.put(TileType.DESERT, new Color(249, 233, 28));
@@ -199,5 +232,20 @@ public class MapPanel extends JPanel {
 		COLOR_MAP.put(TileType.SWAMP, new Color(0, 44, 0));
 		COLOR_MAP.put(TileType.WATER, new Color(0, 0, 255));
 		COLOR_MAP.put(TileType.UNEXPLORED, new Color(255, 255, 255));
+	}
+
+	/**
+	 * Handle property changes; at present just tile type changes.
+	 * 
+	 * @param evt
+	 *            the event we're handling
+	 */
+	@Override
+	public void propertyChange(PropertyChangeEvent evt) {
+		if (evt != null && "tiletype".equals(evt.getPropertyName())) {
+			theMap.terrainAt(currentRow, currentCol).setType(
+					(TileType) evt.getNewValue());
+			repaint();
+		}
 	}
 }
