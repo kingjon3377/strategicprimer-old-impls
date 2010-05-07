@@ -202,26 +202,31 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 	public SPMap getMap() {
 		return theMap;
 	}
+
 	/**
-	 * @param col the column of the new selected tile
+	 * @param col
+	 *            the column of the new selected tile
 	 */
 	public void setCurrentCol(int col) {
 		currentCol = col;
 	}
+
 	/**
-	 * @param row the row of the new selected tile
+	 * @param row
+	 *            the row of the new selected tile
 	 */
 	public void setCurrentRow(int row) {
 		currentRow = row;
 	}
+
 	/**
 	 * Colors to use in the map.
 	 */
 	private static final EnumMap<TileType, Color> COLOR_MAP = new EnumMap<TileType, Color>(
 			TileType.class);
 	/**
-	 * The menu bar. We need to store it as a local variable because when this panel is
-	 * initialized it doesn't have a frame to stick the menu on yet.
+	 * The menu bar. We need to store it as a local variable because when this
+	 * panel is initialized it doesn't have a frame to stick the menu on yet.
 	 */
 	private final JMenuBar menu;
 	// ESCA-JAVA0076:
