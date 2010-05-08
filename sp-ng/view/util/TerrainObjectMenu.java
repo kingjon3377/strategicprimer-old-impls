@@ -8,10 +8,12 @@ import java.beans.PropertyChangeListener;
 import javax.swing.JMenu;
 
 import model.map.TerrainObject;
+
 /**
  * A menu to allow an admin to change what terrain object is on a tile.
+ * 
  * @author Jonathan Lovelace.
- *
+ * 
  */
 public class TerrainObjectMenu extends JMenu implements ActionListener {
 	/**
