@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 
 import model.map.SPMap;
+import model.map.TerrainObject;
 import model.map.Tile;
 import model.map.TileType;
 
@@ -177,8 +178,11 @@ public class MapReader {
 		int num = readValue(istream);
 		for (int i = 0; i < num; i++) {
 			int obj = readValue(istream);
+			if (obj > TerrainObject.values().length) {
+				throw new IllegalArgumentException("Unknown terrain object");
+			}
 			map.terrainAt(readValue(istream), readValue(istream))
-					.setObject(obj);
+					.setObject(TerrainObject.values()[obj]);
 		}
 		return map;
 	}

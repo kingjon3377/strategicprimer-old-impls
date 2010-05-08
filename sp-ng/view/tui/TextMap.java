@@ -3,6 +3,7 @@ package view.tui;
 import java.io.PrintStream;
 
 import model.map.SPMap;
+import model.map.TerrainObject;
 import model.map.Tile;
 
 /**
@@ -201,7 +202,7 @@ public class TextMap {
 	 *            The stream to draw to.
 	 */
 	private void paintTile(Tile tile, PrintStream out) {
-		if (tile.getObject() != -1) {
+		if (!(TerrainObject.NOTHING.equals(tile.getObject()))) {
 			out.append('*');
 			return;
 		}
