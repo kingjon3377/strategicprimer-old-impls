@@ -181,8 +181,8 @@ public class MapReader {
 			if (obj > TerrainObject.values().length) {
 				throw new IllegalArgumentException("Unknown terrain object");
 			}
-			map.terrainAt(readValue(istream), readValue(istream))
-					.setObject(TerrainObject.values()[obj]);
+			map.terrainAt(readValue(istream), readValue(istream)).setObject(
+					TerrainObject.values()[obj]);
 		}
 		return map;
 	}

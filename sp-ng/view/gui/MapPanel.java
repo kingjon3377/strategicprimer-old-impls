@@ -179,7 +179,8 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 						.get(theMap.terrainAt(row, col).getType()));
 				pen.fillRect(col * TILE_WIDTH, row * TILE_HEIGHT, TILE_WIDTH,
 						TILE_HEIGHT);
-				if (!(TerrainObject.NOTHING.equals(theMap.terrainAt(row, col).getObject()))) {
+				if (!(TerrainObject.NOTHING.equals(theMap.terrainAt(row, col)
+						.getObject()))) {
 					pen.setColor(Color.pink);
 					// FIXME: That should be something guaranteed to contrast
 					// with the tile type color

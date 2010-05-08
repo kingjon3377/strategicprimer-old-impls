@@ -22,7 +22,7 @@ public class Tile {
 	private int waterLevel;
 
 	/**
-	 * A terrain object on the tile. 
+	 * A terrain object on the tile.
 	 */
 	private TerrainObject object;
 
