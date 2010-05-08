@@ -13,7 +13,6 @@ import java.util.EnumMap;
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 import javax.swing.WindowConstants;
 
 import model.map.SPMap;
@@ -158,6 +157,7 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 	@Override
 	public void paint(final Graphics pen) {
 		if (!initialized) {
+			// ESCA-JAVA0177:
 			Component comp;
 			for (comp = this; comp != null && !(comp instanceof JFrame); comp = comp
 					.getParent()) {
