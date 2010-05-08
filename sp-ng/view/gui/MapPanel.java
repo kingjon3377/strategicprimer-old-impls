@@ -18,6 +18,7 @@ import javax.swing.WindowConstants;
 import model.map.SPMap;
 import model.map.TerrainObject;
 import model.map.TileType;
+import view.util.TerrainObjectMenu;
 import view.util.TileTypeMenu;
 import view.util.Window;
 
@@ -132,6 +133,7 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 		initialized = false;
 		menu = new JMenuBar();
 		menu.add(new TileTypeMenu(this));
+		menu.add(new TerrainObjectMenu(this));
 	}
 
 	/**
@@ -252,6 +254,9 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 			theMap.terrainAt(currentRow, currentCol).setType(
 					(TileType) evt.getNewValue());
 			repaint();
+		} else if (evt != null && "terr_obj".equals(evt.getPropertyName())) {
+			theMap.terrainAt(currentRow, currentCol).setObject(
+					(TerrainObject) evt.getNewValue());
 		}
 	}
 }
