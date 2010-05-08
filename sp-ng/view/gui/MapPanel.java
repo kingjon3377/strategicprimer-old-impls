@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
 import model.map.SPMap;
+import model.map.TerrainObject;
 import model.map.TileType;
 import view.util.TileTypeMenu;
 import view.util.Window;
@@ -138,7 +139,7 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 	 */
 	public MapPanel() {
 		this(new SPMap());
-		theMap.terrainAt(0, 0).setObject(0);
+		theMap.terrainAt(0, 0).setObject(TerrainObject.NOTHING);
 	}
 
 	/**
@@ -176,7 +177,7 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 						.get(theMap.terrainAt(row, col).getType()));
 				pen.fillRect(col * TILE_WIDTH, row * TILE_HEIGHT, TILE_WIDTH,
 						TILE_HEIGHT);
-				if (theMap.terrainAt(row, col).getObject() != -1) {
+				if (!(TerrainObject.NOTHING.equals(theMap.terrainAt(row, col).getObject()))) {
 					pen.setColor(Color.pink);
 					// FIXME: That should be something guaranteed to contrast
 					// with the tile type color

@@ -1,12 +1,13 @@
 package controller.util;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
 
 import model.map.SPMap;
+import model.map.TerrainObject;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -92,7 +93,7 @@ public final class TestMapReader {
 		SPMap map = new SPMap(MapReader.createTiles(new int[][] { { 1, 2 },
 				{ 3, 4 } }, new int[][] { { 0, 0 }, { 0, 0 } }, new int[][] {
 				{ -1, -1 }, { -1, -1 } }));
-		map.terrainAt(0, 0).setObject(0);
+		map.terrainAt(0, 0).setObject(TerrainObject.NOTHING);
 		assertEquals(map, reader.readMap(new BufferedReader(new StringReader(
 				"2 2 1 2 3 4 0 0 0 0 -1 -1 -1 -1 1 0 0 0"))));
 	}

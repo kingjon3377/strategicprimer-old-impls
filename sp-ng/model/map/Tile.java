@@ -22,10 +22,9 @@ public class Tile {
 	private int waterLevel;
 
 	/**
-	 * A terrain object on the tile. This should be a full object or an
-	 * enumerated type, but for now is just an int. -1 means "nothing."
+	 * A terrain object on the tile. 
 	 */
-	private int object;
+	private TerrainObject object;
 
 	/**
 	 * Constructor.
@@ -67,7 +66,7 @@ public class Tile {
 	 *            the water table level on this tile
 	 */
 	public Tile(final TileType tileType, final int elev, final int waterTable) {
-		this(tileType, elev, waterTable, -1);
+		this(tileType, elev, waterTable, TerrainObject.NOTHING);
 	}
 
 	/**
@@ -83,7 +82,7 @@ public class Tile {
 	 *            the terrain object on the this tile
 	 */
 	public Tile(final TileType tileType, final int elev, final int waterTable,
-			final int obj) {
+			final TerrainObject obj) {
 		type = tileType;
 		elevation = elev;
 		waterLevel = waterTable;
@@ -155,7 +154,7 @@ public class Tile {
 	 */
 	@Override
 	public int hashCode() {
-		return type.hashCode() | elevation | waterLevel | object;
+		return type.hashCode() | elevation | waterLevel | object.ordinal();
 	}
 
 	/**
@@ -176,7 +175,7 @@ public class Tile {
 	/**
 	 * @return the object on this tile
 	 */
-	public int getObject() {
+	public TerrainObject getObject() {
 		return object;
 	}
 
@@ -184,7 +183,7 @@ public class Tile {
 	 * @param obj
 	 *            the new object on the tile
 	 */
-	public void setObject(final int obj) {
+	public void setObject(final TerrainObject obj) {
 		object = obj;
 	}
 }
