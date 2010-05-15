@@ -259,6 +259,7 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 		} else if (evt != null && "terr_obj".equals(evt.getPropertyName())) {
 			theMap.terrainAt(currentRow, currentCol).setObject(
 					(TerrainObject) evt.getNewValue());
+			repaint();
 		}
 	}
 }
