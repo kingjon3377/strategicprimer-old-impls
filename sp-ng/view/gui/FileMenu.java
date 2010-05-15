@@ -2,6 +2,7 @@ package view.gui;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -10,6 +11,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 
+import controller.util.MapReader;
 import controller.util.MapWriter;
 
 /**
@@ -47,15 +49,19 @@ public class FileMenu extends JMenu implements ActionListener {
 		addMenuItem("Load map");
 		// add("Quit");
 	}
+
 	/**
 	 * Add a menu item and set this as its ActionListener.
-	 * @param text the text of the menu item
+	 * 
+	 * @param text
+	 *            the text of the menu item
 	 */
 	private void addMenuItem(final String text) {
 		final JMenuItem item = new JMenuItem(text);
 		item.addActionListener(this);
 		add(item);
 	}
+
 	/**
 	 * Handle menu items.
 	 * 
@@ -76,7 +82,17 @@ public class FileMenu extends JMenu implements ActionListener {
 			}
 		} else if ("Load map".equals(evt.getActionCommand())) {
 			if (FILE_CHOOSER.showOpenDialog(map) == JFileChooser.APPROVE_OPTION) {
-				// map.load(FILE_CHOOSER.getSelectedFile().getPath());
+				try {
+					map.setMap(new MapReader().readMap(FILE_CHOOSER
+							.getSelectedFile().getPath()));
+				} catch (FileNotFoundException e) {
+					Logger.getLogger(FileMenu.class.getName()).log(
+							Level.SEVERE,
+							"File not found while opening new map", e);
+				} catch (IOException e) {
+					Logger.getLogger(FileMenu.class.getName()).log(
+							Level.SEVERE, "I/O error while loading the map", e);
+				}
 			}
 		}
 	}
