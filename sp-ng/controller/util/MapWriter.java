@@ -34,6 +34,8 @@ public class MapWriter {
 		ostream.print(' ');
 		ostream.println(map.getCols());
 		Tile tile = null;
+		final StringBuffer elevations = new StringBuffer("");
+		final StringBuffer waterLevels = new StringBuffer("");
 		int numObjects = 0;
 		final StringBuffer objects = new StringBuffer("");
 		for (int row = 0; row < map.getRows(); row++) {
@@ -41,6 +43,10 @@ public class MapWriter {
 				tile = map.terrainAt(row, col);
 				ostream.print(tile.getType().ordinal());
 				ostream.print(' ');
+				elevations.append(Integer.toString(tile.getElevation()));
+				elevations.append(' ');
+				waterLevels.append(Integer.toString(tile.getWaterLevel()));
+				waterLevels.append(' ');
 				if (!TerrainObject.NOTHING.equals(tile.getObject())) {
 					numObjects++;
 					objects.append(Integer.toString(tile.getObject().ordinal()));
@@ -52,7 +58,11 @@ public class MapWriter {
 				}
 			}
 			ostream.println();
+			elevations.append('\n');
+			waterLevels.append('\n');
 		}
+		ostream.print(elevations);
+		ostream.print(waterLevels);
 		ostream.println(numObjects);
 		ostream.print(objects);
 		ostream.close();
