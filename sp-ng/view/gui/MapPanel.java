@@ -132,6 +132,7 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 		});
 		initialized = false;
 		menu = new JMenuBar();
+		menu.add(new FileMenu(this));
 		menu.add(new TileTypeMenu(this));
 		menu.add(new TerrainObjectMenu(this));
 	}
