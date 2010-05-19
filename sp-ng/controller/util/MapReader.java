@@ -173,7 +173,7 @@ public class MapReader {
 	 *             on I/O error
 	 * @return the map with the objects added.
 	 */
-	private SPMap addObjs(final SPMap map, final BufferedReader istream)
+	private static SPMap addObjs(final SPMap map, final BufferedReader istream)
 			throws IOException {
 		int num = readValue(istream);
 		for (int i = 0; i < num; i++) {
