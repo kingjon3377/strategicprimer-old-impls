@@ -8,6 +8,7 @@ import java.io.PrintWriter;
 import model.map.SPMap;
 import model.map.TerrainObject;
 import model.map.Tile;
+import model.unit.SimpleUnit;
 
 /**
  * A class to write a map to a file.
@@ -38,6 +39,8 @@ public class MapWriter {
 		final StringBuffer waterLevels = new StringBuffer("");
 		int numObjects = 0;
 		final StringBuffer objects = new StringBuffer("");
+		int numUnits = 0;
+		final StringBuffer units = new StringBuffer("");
 		for (int row = 0; row < map.getRows(); row++) {
 			for (int col = 0; col < map.getCols(); col++) {
 				tile = map.terrainAt(row, col);
@@ -49,12 +52,11 @@ public class MapWriter {
 				waterLevels.append(' ');
 				if (!TerrainObject.NOTHING.equals(tile.getObject())) {
 					numObjects++;
-					objects.append(Integer.toString(tile.getObject().ordinal()));
-					objects.append(' ');
-					objects.append(row);
-					objects.append(' ');
-					objects.append(col);
-					objects.append('\n');
+					writeObject(tile.getObject(), objects, row, col);
+				}
+				if (tile.getUnit() != null) {
+					numUnits++;
+					writeUnit(tile.getUnit(), units, row, col);
 				}
 			}
 			ostream.println();
@@ -65,6 +67,48 @@ public class MapWriter {
 		ostream.print(waterLevels);
 		ostream.println(numObjects);
 		ostream.print(objects);
+		ostream.println(numUnits);
+		ostream.print(units);
 		ostream.close();
+	}
+
+	/**
+	 * Write a terrain object.
+	 * 
+	 * @param obj
+	 *            the object
+	 * @param objects
+	 *            The buffer to write to, containing all the objects; it'll get
+	 *            appended to the file after the tile-types, elevations, and
+	 *            water levels.
+	 * @param row
+	 *            the row the object is in
+	 * @param col
+	 *            the column the object is in
+	 */
+	private static void writeObject(TerrainObject obj, final StringBuffer objects,
+			int row, int col) {
+		objects.append(Integer.toString(obj.ordinal()));
+		objects.append(' ');
+		objects.append(row);
+		objects.append(' ');
+		objects.append(col);
+		objects.append('\n');
+	}
+	/**
+	 * Write a unit.
+	 * @param unit the unit
+	 * @param units the buffer to write to.
+	 * @param row the row the unit is in
+	 * @param col the column the unit is in
+	 */
+	private static void writeUnit(final SimpleUnit unit, final StringBuffer units, final int row, final int col) {
+		units.append("0 ");
+		units.append(row);
+		units.append(' ');
+		units.append(col);
+		units.append(' ');
+		units.append(unit.getOwner());
+		units.append('\n');
 	}
 }
