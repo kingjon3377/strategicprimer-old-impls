@@ -176,6 +176,17 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 		Color origColor = pen.getColor();
 		for (int row = 0; row < theMap.getRows(); row++) {
 			for (int col = 0; col < theMap.getCols(); col++) {
+				if (pen.getClipBounds() != null
+						&& (col * TILE_WIDTH > pen.getClipBounds().x
+								+ pen.getClipBounds().width
+								|| col * TILE_WIDTH + TILE_WIDTH < pen
+										.getClipBounds().x
+								|| row * TILE_HEIGHT > pen.getClipBounds().y
+										+ pen.getClipBounds().height || row
+								* TILE_HEIGHT + TILE_HEIGHT < pen
+								.getClipBounds().y)) {
+					continue;
+				}
 				pen.setColor(COLOR_MAP
 						.get(theMap.terrainAt(row, col).getType()));
 				pen.fillRect(col * TILE_WIDTH, row * TILE_HEIGHT, TILE_WIDTH,
