@@ -198,6 +198,14 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 					// with the tile type color
 					pen.fillOval(col * TILE_WIDTH, row * TILE_HEIGHT,
 							TILE_WIDTH, TILE_HEIGHT);
+				} else if (theMap.terrainAt(row, col).getUnit() != null) {
+					pen.setColor(Color.pink);
+					pen.drawLine(col * TILE_WIDTH, row * TILE_HEIGHT, col
+							* TILE_WIDTH + TILE_WIDTH, row * TILE_HEIGHT
+							+ TILE_HEIGHT);
+					pen.drawLine(col * TILE_WIDTH + TILE_WIDTH, row
+							* TILE_HEIGHT, col * TILE_WIDTH, row * TILE_HEIGHT
+							+ TILE_HEIGHT);
 				}
 				pen.setColor(Color.black);
 				pen.drawRect(col * TILE_WIDTH, row * TILE_HEIGHT, TILE_WIDTH,
