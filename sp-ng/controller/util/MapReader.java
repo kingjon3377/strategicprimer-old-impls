@@ -9,6 +9,7 @@ import model.map.SPMap;
 import model.map.TerrainObject;
 import model.map.Tile;
 import model.map.TileType;
+import model.unit.SimpleUnit;
 
 /**
  * A class to read a map from file.
@@ -160,10 +161,10 @@ public class MapReader {
 	}
 
 	/**
-	 * Read objects from the stream and add them to the map. There must be at
-	 * least 1 value on the stream; it is the number of objects. Each object
-	 * consists of three ints: its object type and the row and column of its
-	 * tile. These coordinates must denote a valid tile.
+	 * Read objects and units from the stream and add them to the map. There
+	 * must be at least 1 value on the stream; it is the number of objects. Each
+	 * object consists of three ints: its object type and the row and column of
+	 * its tile. These coordinates must denote a valid tile.
 	 * 
 	 * @param map
 	 *            the map we're dealing with
@@ -183,6 +184,39 @@ public class MapReader {
 			}
 			map.terrainAt(readValue(istream), readValue(istream)).setObject(
 					TerrainObject.values()[obj]);
+		}
+		return addUnits(map, istream);
+	}
+
+	/**
+	 * Read units from the stream and add them to the map. There must be at
+	 * least 1 value on the stream; it is the number of units. Each unit begins
+	 * with which version of the reading code it is targeted for; at present
+	 * only 0 is supported. For version 0 units, that version number is followed
+	 * by the coordinates of the tile the unit is on, followed by the owner of
+	 * the unit. The coordinates must denote a valid tile; if another unit is on
+	 * the tile already it is silently overwritten.
+	 * 
+	 * @param map
+	 *            the map we're dealing with
+	 * @param istream
+	 *            the stream we're reading from
+	 * @throws IOException
+	 *             on I/O error
+	 * @return the map with the units added.
+	 */
+	private static SPMap addUnits(final SPMap map, final BufferedReader istream)
+			throws IOException {
+		int num = readValue(istream);
+		for (int i = 0; i < num; i++) {
+			int api = readValue(istream);
+			if (api == 0) {
+				map.terrainAt(readValue(istream), readValue(istream)).setUnit(
+						new SimpleUnit(readValue(istream)));
+			} else {
+				throw new IOException(new IllegalStateException(
+						"Unsupported unit API"));
+			}
 		}
 		return map;
 	}

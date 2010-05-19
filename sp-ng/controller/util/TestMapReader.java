@@ -8,6 +8,7 @@ import java.io.StringReader;
 
 import model.map.SPMap;
 import model.map.TerrainObject;
+import model.unit.SimpleUnit;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -94,8 +95,9 @@ public final class TestMapReader {
 				{ 3, 4 } }, new int[][] { { 0, 0 }, { 0, 0 } }, new int[][] {
 				{ -1, -1 }, { -1, -1 } }));
 		map.terrainAt(0, 0).setObject(TerrainObject.NOTHING);
+		map.terrainAt(0, 1).setUnit(new SimpleUnit(1));
 		assertEquals(map, reader.readMap(new BufferedReader(new StringReader(
-				"2 2 1 2 3 4 0 0 0 0 -1 -1 -1 -1 1 0 0 0"))));
+				"2 2 1 2 3 4 0 0 0 0 -1 -1 -1 -1 1 0 0 0 1 0 0 1 1"))));
 	}
 
 	/**
@@ -144,4 +146,41 @@ public final class TestMapReader {
 		reader.readMap(new BufferedReader(new StringReader(
 				"2 2 1 2 3 4 0 0 0 0 -1 -1 -1 -1 1")));
 	}
+
+	/**
+	 * Tests that the reader rejects a map with no units section
+	 * 
+	 * @throws IOException
+	 *             "Thrown" by the method we're testing
+	 */
+	@Test(expected = Exception.class)
+	public void testRejectsWithoutUnits() throws IOException {
+		reader.readMap(new BufferedReader(new StringReader(
+				"2 2 1 2 3 4 0 0 0 0 -1 -1 -1 -1 1 0 0 0")));
+	}
+
+	/**
+	 * Tests that the reader rejects a map with fewer units than specified
+	 * 
+	 * @throws IOException
+	 *             "Thrown" by the method we're testing
+	 */
+	@Test(expected = Exception.class)
+	public void testRejectsTooFewUnits() throws IOException {
+		reader.readMap(new BufferedReader(new StringReader(
+				"2 2 1 2 3 4 0 0 0 0 -1 -1 -1 -1 1 0 0 0 1")));
+	}
+
+	/**
+	 * Tests that the reader rejects a map with an unsupported unit API
+	 * 
+	 * @throws IOException
+	 *             "Thrown" by the method we're testing
+	 */
+	@Test(expected = Exception.class)
+	public void testRejectsUnsupportedAPI() throws IOException {
+		reader.readMap(new BufferedReader(new StringReader(
+				"2 2 1 2 3 4 0 0 0 0 -1 -1 -1 -1 1 0 0 0 1 -1 0 0 1")));
+	}
+
 }
