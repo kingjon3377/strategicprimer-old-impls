@@ -1,5 +1,7 @@
 package model.map;
 
+import model.unit.SimpleUnit;
+
 /**
  * A tile on the map, representing a 10-foot-by-10-foot area.
  * 
@@ -26,6 +28,11 @@ public class Tile {
 	 */
 	private TerrainObject object;
 
+	/**
+	 * A unit on the tile
+	 */
+	private SimpleUnit unit = null;
+	
 	/**
 	 * Constructor.
 	 */
@@ -185,5 +192,19 @@ public class Tile {
 	 */
 	public void setObject(final TerrainObject obj) {
 		object = obj;
+	}
+	
+	/**
+	 * @return the unit on the tile
+	 */
+	public SimpleUnit getUnit() {
+		return unit;
+	}
+	
+	/**
+	 * @param newUnit the new unit on the tile
+	 */
+	public void setUnit(final SimpleUnit newUnit) {
+		unit = newUnit;
 	}
 }
