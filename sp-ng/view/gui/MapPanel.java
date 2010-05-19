@@ -281,9 +281,12 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 			repaint();
 		}
 	}
+
 	/**
 	 * Load in a new map
-	 * @param map the new map
+	 * 
+	 * @param map
+	 *            the new map
 	 */
 	public void setMap(final SPMap map) {
 		theMap = map;
