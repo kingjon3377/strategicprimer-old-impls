@@ -18,6 +18,7 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * A test class for the MapWriter class.
+ * @author Jonathan Lovelace
  */
 public class TestMapWriter {
 	/**
@@ -64,7 +65,7 @@ public class TestMapWriter {
 	 */
 	@Test
 	public void testWritingWorks() throws IOException {
-		SPMap map = new SPMap(
+		final SPMap map = new SPMap(
 				new Tile[][] {
 						{ new Tile(), new Tile(TileType.WATER) },
 						{ new Tile(TileType.DESERT, 2),
