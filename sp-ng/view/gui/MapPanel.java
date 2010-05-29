@@ -17,7 +17,11 @@ import javax.swing.WindowConstants;
 
 import model.map.SPMap;
 import model.map.TerrainObject;
+import model.map.Tile;
 import model.map.TileType;
+import model.unit.SimpleUnit;
+import model.unit.UnitAction;
+import view.util.ActionMenu;
 import view.util.TerrainObjectMenu;
 import view.util.TileTypeMenu;
 import view.util.Window;
@@ -55,12 +59,25 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 	 * The column of the currently selected tile
 	 */
 	private int currentCol = -1;
-
+	/**
+	 * The currently selected tile
+	 */
+	private Tile selectedTile = null;
 	/**
 	 * Whether we've set up stuff on the containing frame yet. (This can't be
 	 * done in the constructor because this panel is created before the frame.)
 	 */
 	private boolean initialized;
+
+	/**
+	 * The action menu; we need to tell it what actions are supported by the
+	 * currently selected unit every time a new unit is selected.
+	 */
+	private final ActionMenu actionMenu;
+	/**
+	 * The currently selected action.
+	 */
+	private UnitAction action = UnitAction.Cancel;
 
 	/**
 	 * Constructor.
@@ -85,11 +102,14 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 			public void mouseClicked(final MouseEvent event) {
 				if (event.getX() < getMap().getCols() * TILE_WIDTH
 						&& event.getY() < getMap().getRows() * TILE_HEIGHT) {
-					setCurrentCol(event.getX() / TILE_WIDTH);
-					setCurrentRow(event.getY() / TILE_HEIGHT);
+					selectTile(event.getX() / TILE_WIDTH, event.getY()
+							/ TILE_HEIGHT);
+					// setCurrentCol(event.getX() / TILE_WIDTH);
+					// setCurrentRow(event.getY() / TILE_HEIGHT);
 				} else {
-					setCurrentCol(-1);
-					setCurrentRow(-1);
+					selectTile(-1, -1);
+					// setCurrentCol(-1);
+					// setCurrentRow(-1);
 				}
 				repaint();
 			}
@@ -135,6 +155,8 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 		menu.add(new FileMenu(this));
 		menu.add(new TileTypeMenu(this));
 		menu.add(new TerrainObjectMenu(this));
+		actionMenu = new ActionMenu(this);
+		menu.add(actionMenu);
 	}
 
 	/**
@@ -228,6 +250,26 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 	}
 
 	/**
+	 * Set the selected tile.
+	 * 
+	 * @param col
+	 *            the column of the new selected tile
+	 * @param row
+	 *            the row of the new selected tile
+	 */
+	public void selectTile(int col, int row) {
+		currentCol = col;
+		currentRow = row;
+		if (currentCol == -1 || currentRow == -1) {
+			selectedTile = null;
+		} else {
+			runAction(selectedTile, theMap.terrainAt(currentRow, currentCol));
+			action = UnitAction.Cancel;
+			selectedTile = theMap.terrainAt(currentRow, currentCol);
+		}
+	}
+
+	/**
 	 * @param col
 	 *            the column of the new selected tile
 	 */
@@ -279,6 +321,41 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 			theMap.terrainAt(currentRow, currentCol).setObject(
 					(TerrainObject) evt.getNewValue());
 			repaint();
+		} else if (evt != null && "action".equals(evt.getPropertyName())) {
+			handleAction(theMap.terrainAt(currentRow, currentCol).getUnit(),
+					(UnitAction) evt.getNewValue());
+		}
+	}
+
+	/**
+	 * Handle an action. Any actions that require an actor and an object are
+	 * here just set as the current action; this method is more for actions that
+	 * don't require an object.
+	 * 
+	 * @param unit
+	 * @param newValue
+	 */
+	private void handleAction(final SimpleUnit unit, final UnitAction newValue) {
+		action = newValue;
+	}
+
+	/**
+	 * Handle an action that requires an object in addition to an actor.
+	 * 
+	 * @param old
+	 *            the previously selected tile
+	 * @param newTile
+	 *            the newly selected tile
+	 */
+	private void runAction(final Tile old, final Tile newTile) {
+		if (old == null || newTile == null || UnitAction.Cancel.equals(action)) {
+			return;
+		} else if (UnitAction.Move.equals(action)) {
+			if (old.getUnit() != null && newTile.getUnit() == null) {
+				newTile.setUnit(old.getUnit());
+				old.setUnit(null);
+				repaint();
+			}
 		}
 	}
 
