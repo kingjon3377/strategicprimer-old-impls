@@ -204,7 +204,7 @@ public class Tile {
 	/**
 	 * @param newModule the new module on the tile
 	 */
-	public void setUnit(final SPModule newModule) {
+	public void setModule(final SPModule newModule) {
 		module = newModule;
 	}
 }
