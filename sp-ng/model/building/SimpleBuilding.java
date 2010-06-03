@@ -1,6 +1,10 @@
 package model.building;
 
+import java.util.EnumSet;
+import java.util.Set;
+
 import model.module.SPModule;
+import model.unit.UnitAction;
 
 /**
  * A simple building (i.e. structure) class
@@ -30,5 +34,11 @@ public class SimpleBuilding implements SPModule {
 	 */
 	public void setOwner(final int bOwner) {
 		owner = bOwner;
+	}
+	/**
+	 * @return the actions this building supports: none
+	 */
+	public Set<UnitAction> supportedActions() {
+		return EnumSet.noneOf(UnitAction.class);
 	}
 }
