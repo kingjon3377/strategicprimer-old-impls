@@ -79,4 +79,70 @@ public class TestMapWriter {
 		assertEquals(map, new MapReader().readMap(new BufferedReader(
 				new StringReader(cstream.getBuffer().toString()))));
 	}
+
+	/**
+	 * Tests that writing a simple map works.
+	 * @throws IOException Might be thrown by the reading operation.
+	 */
+	public void testSimpleWritingWorks() throws IOException {
+		final SPMap map = new SPMap(
+				new Tile[][] {
+						{ new Tile(), new Tile(TileType.WATER) },
+						{ new Tile(TileType.DESERT, 2),
+								new Tile(TileType.PLAINS, 3, 1) } });
+		writer.writeMap(ostream, map);
+		assertEquals(map, new MapReader().readMap(new BufferedReader(
+				new StringReader(cstream.getBuffer().toString()))));
+	}
+
+	/**
+	 * Tests that terrain objects are properly written.
+	 * @throws IOException Might be thrown by the reading operation.
+	 */
+	@Test
+	public void testWritingObjectsWorks() throws IOException {
+		final SPMap map = new SPMap(
+				new Tile[][] {
+						{ new Tile(), new Tile(TileType.WATER) },
+						{ new Tile(TileType.DESERT, 2),
+								new Tile(TileType.PLAINS, 3, 1) } });
+		map.terrainAt(0, 0).setObject(TerrainObject.TREE);
+		writer.writeMap(ostream, map);
+		assertEquals(map, new MapReader().readMap(new BufferedReader(
+				new StringReader(cstream.getBuffer().toString()))));
+	}
+
+	/**
+	 * Tests that writing units works
+	 * @throws IOException Might be thrown by the reading operation.
+	 */
+	@Test
+	public void testWritingUnitsWorks() throws IOException {
+		final SPMap map = new SPMap(
+				new Tile[][] {
+						{ new Tile(), new Tile(TileType.WATER) },
+						{ new Tile(TileType.DESERT, 2),
+								new Tile(TileType.PLAINS, 3, 1) } });
+		map.terrainAt(0, 1).setModule(new SimpleUnit(0));
+		writer.writeMap(ostream, map);
+		assertEquals(map, new MapReader().readMap(new BufferedReader(
+				new StringReader(cstream.getBuffer().toString()))));
+	}
+
+	/**
+	 * Tests that writing buildings works.
+	 * @throws IOException Might be thrown by the reading operation.
+	 */
+	@Test
+	public void testWritingBuildingsWorks() throws IOException {
+		final SPMap map = new SPMap(
+				new Tile[][] {
+						{ new Tile(), new Tile(TileType.WATER) },
+						{ new Tile(TileType.DESERT, 2),
+								new Tile(TileType.PLAINS, 3, 1) } });
+		map.terrainAt(1, 0).setModule(new SimpleBuilding(1));
+		writer.writeMap(ostream, map);
+		assertEquals(map, new MapReader().readMap(new BufferedReader(
+				new StringReader(cstream.getBuffer().toString()))));
+	}
 }
