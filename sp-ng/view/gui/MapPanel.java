@@ -354,6 +354,8 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 	}
 
 	/**
+	 * FIXME: Model-view mixing! This should just call methods in the model.
+	 * 
 	 * Handle an action that requires an object in addition to an actor.
 	 * 
 	 * @param old
