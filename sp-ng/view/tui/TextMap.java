@@ -205,7 +205,7 @@ public class TextMap {
 		if (!(TerrainObject.NOTHING.equals(tile.getObject()))) {
 			out.append('*');
 			return;
-		} else if (tile.getUnit() != null) {
+		} else if (tile.getModule() != null) {
 			out.append('u');
 			return;
 		}

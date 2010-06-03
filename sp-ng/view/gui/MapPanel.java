@@ -15,10 +15,12 @@ import javax.swing.JMenuBar;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
 
+import model.building.SimpleBuilding;
 import model.map.SPMap;
 import model.map.TerrainObject;
 import model.map.Tile;
 import model.map.TileType;
+import model.module.SPModule;
 import model.unit.SimpleUnit;
 import model.unit.UnitAction;
 import view.util.ActionMenu;
@@ -220,7 +222,8 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 					// with the tile type color
 					pen.fillOval(col * TILE_WIDTH, row * TILE_HEIGHT,
 							TILE_WIDTH, TILE_HEIGHT);
-				} else if (theMap.terrainAt(row, col).getUnit() != null) {
+				} else if (theMap.terrainAt(row, col).getModule() != null
+						&& theMap.terrainAt(row, col).getModule() instanceof SimpleUnit) {
 					pen.setColor(Color.pink);
 					pen.drawLine(col * TILE_WIDTH, row * TILE_HEIGHT, col
 							* TILE_WIDTH + TILE_WIDTH, row * TILE_HEIGHT
@@ -228,6 +231,15 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 					pen.drawLine(col * TILE_WIDTH + TILE_WIDTH, row
 							* TILE_HEIGHT, col * TILE_WIDTH, row * TILE_HEIGHT
 							+ TILE_HEIGHT);
+				} else if (theMap.terrainAt(row, col).getModule() != null
+						&& theMap.terrainAt(row, col).getModule() instanceof SimpleBuilding) {
+					pen.setColor(Color.pink);
+					pen.drawLine(col * TILE_WIDTH + TILE_WIDTH / 2, row
+							* TILE_HEIGHT, col * TILE_WIDTH + TILE_WIDTH / 2,
+							row * TILE_HEIGHT + TILE_HEIGHT);
+					pen.drawLine(col * TILE_WIDTH, row * TILE_HEIGHT
+							+ TILE_HEIGHT / 2, col * TILE_WIDTH + TILE_WIDTH,
+							row * TILE_HEIGHT + TILE_HEIGHT / 2);
 				}
 				pen.setColor(Color.black);
 				pen.drawRect(col * TILE_WIDTH, row * TILE_HEIGHT, TILE_WIDTH,
@@ -322,7 +334,7 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 					(TerrainObject) evt.getNewValue());
 			repaint();
 		} else if (evt != null && "action".equals(evt.getPropertyName())) {
-			handleAction(theMap.terrainAt(currentRow, currentCol).getUnit(),
+			handleAction(theMap.terrainAt(currentRow, currentCol).getModule(),
 					(UnitAction) evt.getNewValue());
 		}
 	}
@@ -332,10 +344,12 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 	 * here just set as the current action; this method is more for actions that
 	 * don't require an object.
 	 * 
-	 * @param unit
+	 * @param module
+	 *            the currently selected module
 	 * @param newValue
+	 *            the new action
 	 */
-	private void handleAction(final SimpleUnit unit, final UnitAction newValue) {
+	private void handleAction(final SPModule module, final UnitAction newValue) {
 		action = newValue;
 	}
 
@@ -351,8 +365,10 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 		if (old == null || newTile == null || UnitAction.Cancel.equals(action)) {
 			return;
 		} else if (UnitAction.Move.equals(action)) {
-			if (old.getUnit() != null && newTile.getUnit() == null) {
-				newTile.setUnit(old.getUnit());
+			if (old.getModule() != null
+					&& old.getModule() instanceof SimpleUnit
+					&& newTile.getModule() == null) {
+				newTile.setUnit(old.getModule());
 				old.setUnit(null);
 				repaint();
 			}
