@@ -387,4 +387,11 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 		theMap = map;
 		repaint();
 	}
+
+	/**
+	 * @return the currently selected module, if any
+	 */
+	public SPModule currentModule() {
+		return (selectedTile == null ? null : selectedTile.getModule());
+	}
 }
