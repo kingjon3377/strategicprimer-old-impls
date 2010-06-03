@@ -5,6 +5,7 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 
+import model.building.SimpleBuilding;
 import model.map.SPMap;
 import model.map.TerrainObject;
 import model.map.Tile;
@@ -185,7 +186,7 @@ public class MapReader {
 			map.terrainAt(readValue(istream), readValue(istream)).setObject(
 					TerrainObject.values()[obj]);
 		}
-		return addUnits(map, istream);
+		return addBuildings(addUnits(map, istream), istream);
 	}
 
 	/**
@@ -211,11 +212,39 @@ public class MapReader {
 		for (int i = 0; i < num; i++) {
 			int api = readValue(istream);
 			if (api == 0) {
-				map.terrainAt(readValue(istream), readValue(istream)).setModule(
-						new SimpleUnit(readValue(istream)));
+				map.terrainAt(readValue(istream), readValue(istream))
+						.setModule(new SimpleUnit(readValue(istream)));
 			} else {
 				throw new IOException(new IllegalStateException(
 						"Unsupported unit API"));
+			}
+		}
+		return map;
+	}
+
+	/**
+	 * Read buildings from the stream and add them to the map. The format is the
+	 * same as MapReader#addUnits().
+	 * 
+	 * @param map
+	 *            the map we're dealing with
+	 * @param istream
+	 *            the stream we're reading from
+	 * @throws IOException
+	 *             on I/O error
+	 * @return the map with the buildings added.
+	 */
+	private static SPMap addBuildings(final SPMap map, final BufferedReader istream)
+			throws IOException {
+		int num = readValue(istream);
+		for (int i = 0; i < num; i++) {
+			int api = readValue(istream);
+			if (api == 0) {
+				map.terrainAt(readValue(istream), readValue(istream))
+						.setModule(new SimpleBuilding(readValue(istream)));
+			} else {
+				throw new IOException(new IllegalStateException(
+						"Unsupported building API"));
 			}
 		}
 		return map;

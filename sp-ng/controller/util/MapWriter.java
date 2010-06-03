@@ -5,6 +5,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
+import model.building.SimpleBuilding;
 import model.map.SPMap;
 import model.map.TerrainObject;
 import model.map.Tile;
@@ -41,6 +42,8 @@ public class MapWriter {
 		final StringBuffer objects = new StringBuffer("");
 		int numUnits = 0;
 		final StringBuffer units = new StringBuffer("");
+		int numBuildings = 0;
+		final StringBuffer buildings = new StringBuffer("");
 		for (int row = 0; row < map.getRows(); row++) {
 			for (int col = 0; col < map.getCols(); col++) {
 				tile = map.terrainAt(row, col);
@@ -57,6 +60,9 @@ public class MapWriter {
 				if (tile.getModule() != null && tile.getModule() instanceof SimpleUnit) {
 					numUnits++;
 					writeUnit((SimpleUnit) tile.getModule(), units, row, col);
+				} else if (tile.getModule() != null && tile.getModule() instanceof SimpleBuilding) {
+					numBuildings++;
+					writeBuilding((SimpleBuilding) tile.getModule(), buildings, row, col);
 				}
 			}
 			ostream.println();
@@ -69,6 +75,8 @@ public class MapWriter {
 		ostream.print(objects);
 		ostream.println(numUnits);
 		ostream.print(units);
+		ostream.println(numBuildings);
+		ostream.print(buildings);
 		ostream.close();
 	}
 
@@ -110,5 +118,22 @@ public class MapWriter {
 		units.append(' ');
 		units.append(unit.getOwner());
 		units.append('\n');
+	}
+
+	/**
+	 * Write a building.
+	 * @param building the unit
+	 * @param buildings the buffer to write to.
+	 * @param row the row the building is in
+	 * @param col the column the building is in
+	 */
+	private static void writeBuilding(final SimpleBuilding building, final StringBuffer buildings, final int row, final int col) {
+		buildings.append("0 ");
+		buildings.append(row);
+		buildings.append(' ');
+		buildings.append(col);
+		buildings.append(' ');
+		buildings.append(building.getOwner());
+		buildings.append('\n');
 	}
 }

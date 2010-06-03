@@ -1,20 +1,22 @@
 package controller.util;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringReader;
 import java.io.StringWriter;
 
+import model.building.SimpleBuilding;
 import model.map.SPMap;
+import model.map.TerrainObject;
 import model.map.Tile;
 import model.map.TileType;
 import model.unit.SimpleUnit;
 
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.assertEquals;
 
 /**
  * A test class for the MapWriter class.
@@ -70,7 +72,9 @@ public class TestMapWriter {
 						{ new Tile(), new Tile(TileType.WATER) },
 						{ new Tile(TileType.DESERT, 2),
 								new Tile(TileType.PLAINS, 3, 1) } });
+		map.terrainAt(0, 0).setObject(TerrainObject.TREE);
 		map.terrainAt(0, 1).setModule(new SimpleUnit(0));
+		map.terrainAt(1, 0).setModule(new SimpleBuilding(1));
 		writer.writeMap(ostream, map);
 		assertEquals(map, new MapReader().readMap(new BufferedReader(
 				new StringReader(cstream.getBuffer().toString()))));
