@@ -6,6 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.StringReader;
 
+import model.building.SimpleBuilding;
 import model.map.SPMap;
 import model.map.TerrainObject;
 import model.unit.SimpleUnit;
@@ -96,8 +97,9 @@ public final class TestMapReader {
 				{ -1, -1 }, { -1, -1 } }));
 		map.terrainAt(0, 0).setObject(TerrainObject.NOTHING);
 		map.terrainAt(0, 1).setModule(new SimpleUnit(1));
+		map.terrainAt(1, 0).setModule(new SimpleBuilding(2));
 		assertEquals(map, reader.readMap(new BufferedReader(new StringReader(
-				"2 2 1 2 3 4 0 0 0 0 -1 -1 -1 -1 1 0 0 0 1 0 0 1 1"))));
+				"2 2 1 2 3 4 0 0 0 0 -1 -1 -1 -1 1 0 0 0 1 0 0 1 1 1 0 1 0 1"))));
 	}
 
 	/**
@@ -183,4 +185,29 @@ public final class TestMapReader {
 				"2 2 1 2 3 4 0 0 0 0 -1 -1 -1 -1 1 0 0 0 1 -1 0 0 1")));
 	}
 
+	/**
+	 * Tests that the reader rejects a map without a buildings section.
+	 * 
+	 * @throws IOException
+	 *             "Thrown" by the method we're testing
+	 */
+	@Test(expected = Exception.class)
+	public void testRejectsWithoutBuildings() throws IOException {
+		reader.readMap(new BufferedReader(new StringReader(
+				"2 2 1 2 3 4 0 0 0 0 -1 -1 -1 -1 1 0 0 0 1 0 0 1 1")));
+
+	}
+
+	/**
+	 * Tests that the reader rejects a map with too few buildings
+	 * 
+	 * @throws IOException
+	 *             "Thrown" by the method we're testing
+	 */
+	@Test(expected = Exception.class)
+	public void testRejectsTooFewBuildings() throws IOException {
+		reader.readMap(new BufferedReader(new StringReader(
+				"2 2 1 2 3 4 0 0 0 0 -1 -1 -1 -1 1 0 0 0 1 0 0 1 1 1")));
+
+	}
 }
