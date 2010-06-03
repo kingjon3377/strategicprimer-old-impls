@@ -70,7 +70,7 @@ public class TestMapWriter {
 						{ new Tile(), new Tile(TileType.WATER) },
 						{ new Tile(TileType.DESERT, 2),
 								new Tile(TileType.PLAINS, 3, 1) } });
-		map.terrainAt(0, 1).setUnit(new SimpleUnit(0));
+		map.terrainAt(0, 1).setModule(new SimpleUnit(0));
 		writer.writeMap(ostream, map);
 		assertEquals(map, new MapReader().readMap(new BufferedReader(
 				new StringReader(cstream.getBuffer().toString()))));

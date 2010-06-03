@@ -211,7 +211,7 @@ public class MapReader {
 		for (int i = 0; i < num; i++) {
 			int api = readValue(istream);
 			if (api == 0) {
-				map.terrainAt(readValue(istream), readValue(istream)).setUnit(
+				map.terrainAt(readValue(istream), readValue(istream)).setModule(
 						new SimpleUnit(readValue(istream)));
 			} else {
 				throw new IOException(new IllegalStateException(

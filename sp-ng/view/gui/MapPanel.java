@@ -368,8 +368,8 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 			if (old.getModule() != null
 					&& old.getModule() instanceof SimpleUnit
 					&& newTile.getModule() == null) {
-				newTile.setUnit(old.getModule());
-				old.setUnit(null);
+				newTile.setModule(old.getModule());
+				old.setModule(null);
 				repaint();
 			}
 		}
