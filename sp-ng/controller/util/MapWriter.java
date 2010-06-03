@@ -54,9 +54,9 @@ public class MapWriter {
 					numObjects++;
 					writeObject(tile.getObject(), objects, row, col);
 				}
-				if (tile.getUnit() != null) {
+				if (tile.getModule() != null && tile.getModule() instanceof SimpleUnit) {
 					numUnits++;
-					writeUnit(tile.getUnit(), units, row, col);
+					writeUnit((SimpleUnit) tile.getModule(), units, row, col);
 				}
 			}
 			ostream.println();

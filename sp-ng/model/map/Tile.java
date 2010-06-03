@@ -1,6 +1,6 @@
 package model.map;
 
-import model.unit.SimpleUnit;
+import model.module.SPModule;
 
 /**
  * A tile on the map, representing a 10-foot-by-10-foot area.
@@ -29,9 +29,9 @@ public class Tile {
 	private TerrainObject object;
 
 	/**
-	 * A unit on the tile
+	 * A unit or building on the tile
 	 */
-	private SimpleUnit unit = null;
+	private SPModule module = null;
 	
 	/**
 	 * Constructor.
@@ -195,16 +195,16 @@ public class Tile {
 	}
 	
 	/**
-	 * @return the unit on the tile
+	 * @return the module on the tile
 	 */
-	public SimpleUnit getUnit() {
-		return unit;
+	public SPModule getModule() {
+		return module;
 	}
 	
 	/**
-	 * @param newUnit the new unit on the tile
+	 * @param newModule the new module on the tile
 	 */
-	public void setUnit(final SimpleUnit newUnit) {
-		unit = newUnit;
+	public void setUnit(final SPModule newModule) {
+		module = newModule;
 	}
 }

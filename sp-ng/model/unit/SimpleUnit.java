@@ -1,11 +1,13 @@
 package model.unit;
 
+import model.module.SPModule;
+
 /**
  * A simple unit class.
  * 
  * @author Jonathan Lovelace
  */
-public class SimpleUnit {
+public class SimpleUnit implements SPModule {
 	/**
 	 * Which player owns this unit.
 	 */
