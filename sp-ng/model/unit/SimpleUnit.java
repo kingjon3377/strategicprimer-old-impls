@@ -1,5 +1,9 @@
 package model.unit;
 
+import java.util.Collections;
+import java.util.EnumSet;
+import java.util.Set;
+
 import model.module.SPModule;
 
 /**
@@ -30,5 +34,21 @@ public class SimpleUnit implements SPModule {
 	 */
 	public void setOwner(final int unitOwner) {
 		owner = unitOwner;
+	}
+	/**
+	 * Mere SimpleUnits only support one action, namely movement.
+	 */
+	private static final Set<UnitAction> MOVE_ACTION;
+	static {
+		EnumSet<UnitAction> tempSet = EnumSet.noneOf(UnitAction.class);
+		tempSet.add(UnitAction.Move);
+		MOVE_ACTION = Collections.unmodifiableSet(tempSet);
+	}
+	/**
+	 * @return what actions this unit supports.
+	 */
+	public Set<UnitAction> supportedActions() {
+		// ESCA-JAVA0259: The collection we're returning is unmodifiable.
+		return MOVE_ACTION;
 	}
 }
