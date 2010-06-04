@@ -10,6 +10,7 @@ import model.map.SPMap;
 import model.map.TerrainObject;
 import model.map.Tile;
 import model.map.TileType;
+import model.unit.Harvester;
 import model.unit.SimpleUnit;
 
 /**
@@ -214,6 +215,14 @@ public class MapReader {
 			if (api == 0) {
 				map.terrainAt(readValue(istream), readValue(istream))
 						.setModule(new SimpleUnit(readValue(istream)));
+			} else if (api == 1) {
+				int row = readValue(istream);
+				int col = readValue(istream);
+				int owner = readValue(istream);
+				int burden = readValue(istream);
+				Harvester harv = new Harvester(owner);
+				harv.setBurden(burden);
+				map.terrainAt(row, col).setModule(harv);
 			} else {
 				throw new IOException(new IllegalStateException(
 						"Unsupported unit API"));

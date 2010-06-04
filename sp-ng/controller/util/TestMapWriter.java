@@ -13,6 +13,7 @@ import model.map.SPMap;
 import model.map.TerrainObject;
 import model.map.Tile;
 import model.map.TileType;
+import model.unit.Harvester;
 import model.unit.SimpleUnit;
 
 import org.junit.Before;
@@ -141,6 +142,24 @@ public class TestMapWriter {
 						{ new Tile(TileType.DESERT, 2),
 								new Tile(TileType.PLAINS, 3, 1) } });
 		map.terrainAt(1, 0).setModule(new SimpleBuilding(1));
+		writer.writeMap(ostream, map);
+		assertEquals(map, new MapReader().readMap(new BufferedReader(
+				new StringReader(cstream.getBuffer().toString()))));
+	}
+	/**
+	 * Test that writing Harvester units works.
+	 * @throws IOException Might be thrown by the reading operation.
+	 */
+	@Test
+	public void testWritingHarvesterWorks() throws IOException {
+		final SPMap map = new SPMap(
+				new Tile[][] {
+						{ new Tile(), new Tile(TileType.WATER) },
+						{ new Tile(TileType.DESERT, 2),
+								new Tile(TileType.PLAINS, 3, 1) } });
+		Harvester harv = new Harvester(1);
+		harv.setBurden(3);
+		map.terrainAt(0, 1).setModule(harv);
 		writer.writeMap(ostream, map);
 		assertEquals(map, new MapReader().readMap(new BufferedReader(
 				new StringReader(cstream.getBuffer().toString()))));

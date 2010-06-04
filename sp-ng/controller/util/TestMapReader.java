@@ -9,6 +9,7 @@ import java.io.StringReader;
 import model.building.SimpleBuilding;
 import model.map.SPMap;
 import model.map.TerrainObject;
+import model.unit.Harvester;
 import model.unit.SimpleUnit;
 
 import org.junit.Before;
@@ -98,8 +99,11 @@ public final class TestMapReader {
 		map.terrainAt(0, 0).setObject(TerrainObject.NOTHING);
 		map.terrainAt(0, 1).setModule(new SimpleUnit(1));
 		map.terrainAt(1, 0).setModule(new SimpleBuilding(2));
+		Harvester harv = new Harvester(3);
+		harv.setBurden(4);
+		map.terrainAt(1, 1).setModule(harv);
 		assertEquals(map, reader.readMap(new BufferedReader(new StringReader(
-				"2 2 1 2 3 4 0 0 0 0 -1 -1 -1 -1 1 0 0 0 1 0 0 1 1 1 0 1 0 1"))));
+				"2 2 1 2 3 4 0 0 0 0 -1 -1 -1 -1 1 0 0 0 2 0 0 1 1 1 1 1 3 4 1 0 1 0 1"))));
 	}
 
 	/**
