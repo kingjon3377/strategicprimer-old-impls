@@ -9,6 +9,7 @@ import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.EnumMap;
+import java.util.EnumSet;
 
 import javax.swing.JFrame;
 import javax.swing.JMenuBar;
@@ -278,6 +279,9 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 			runAction(selectedTile, theMap.terrainAt(currentRow, currentCol));
 			action = UnitAction.Cancel;
 			selectedTile = theMap.terrainAt(currentRow, currentCol);
+			actionMenu.hideInvalidItems(currentModule() == null ? EnumSet
+					.noneOf(UnitAction.class) : currentModule()
+					.supportedActions());
 		}
 	}
 
