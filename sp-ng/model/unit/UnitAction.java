@@ -13,6 +13,14 @@ public enum UnitAction {
 	 */
 	Cancel,
 	/**
+	 * Harvest a resource.
+	 */
+	Harvest,
+	/**
+	 * Unload a unit's load.
+	 */
+	Unload,
+	/**
 	 * Movement.
 	 */
 	Move;
