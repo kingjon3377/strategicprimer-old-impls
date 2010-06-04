@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
-import java.util.EnumSet;
+import java.util.Set;
 
 import javax.swing.JMenu;
 import javax.swing.JMenuItem;
@@ -65,7 +65,7 @@ public class ActionMenu extends JMenu implements ActionListener {
 	 * Show only those menu items in a specified set.
 	 * @param validItems the set of valid items
 	 */
-	public void hideInvalidItems(final EnumSet<UnitAction> validItems) {
+	public void hideInvalidItems(final Set<UnitAction> validItems) {
 		for (Component com : getMenuComponents()) {
 			if (com instanceof JMenuItem) {
 				if ("Cancel".equals(((JMenuItem) com).getText())
