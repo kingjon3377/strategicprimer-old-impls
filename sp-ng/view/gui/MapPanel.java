@@ -22,6 +22,7 @@ import model.map.TerrainObject;
 import model.map.Tile;
 import model.map.TileType;
 import model.module.SPModule;
+import model.unit.Harvester;
 import model.unit.SimpleUnit;
 import model.unit.UnitAction;
 import view.util.ActionMenu;
@@ -377,6 +378,25 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 				newTile.setModule(old.getModule());
 				old.setModule(null);
 				repaint();
+			}
+		} else if (UnitAction.Harvest.equals(action)) {
+			if (old.getModule() != null && old.getModule() instanceof Harvester
+					&& TerrainObject.TREE.equals(newTile.getObject())) {
+				// TODO: Should have to be adjacent.
+				((Harvester) old.getModule()).setBurden(((Harvester) old
+						.getModule()).getBurden() + 1);
+				newTile.setObject(TerrainObject.NOTHING);
+				repaint();
+			}
+		} else if (UnitAction.Unload.equals(action)) {
+			if (old.getModule() != null && old.getModule() instanceof Harvester
+					&& newTile.getModule() != null
+					&& newTile.getModule() instanceof SimpleBuilding) {
+				// TODO: Make the building have to be a stockpile and increment
+				// it.
+				// TODO: Should have to be adjacent.
+				((Harvester) old.getModule()).setBurden(((Harvester) old
+						.getModule()).getBurden() - 1);
 			}
 		}
 	}
