@@ -102,8 +102,12 @@ public final class TestMapReader {
 		Harvester harv = new Harvester(3);
 		harv.setBurden(4);
 		map.terrainAt(1, 1).setModule(harv);
-		assertEquals(map, reader.readMap(new BufferedReader(new StringReader(
-				"2 2 1 2 3 4 0 0 0 0 -1 -1 -1 -1 1 0 0 0 2 0 0 1 1 1 1 1 3 4 1 0 1 0 1"))));
+		assertEquals(
+				map,
+				reader
+						.readMap(new BufferedReader(
+								new StringReader(
+										"2 2 1 2 3 4 0 0 0 0 -1 -1 -1 -1 1 0 0 0 2 0 0 1 1 1 1 1 3 4 1 0 1 0 1"))));
 	}
 
 	/**

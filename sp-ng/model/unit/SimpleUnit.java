@@ -16,25 +16,32 @@ public class SimpleUnit implements SPModule {
 	 * Which player owns this unit.
 	 */
 	private int owner;
+
 	/**
 	 * Constructor.
-	 * @param unitOwner which player owns this unit
+	 * 
+	 * @param unitOwner
+	 *            which player owns this unit
 	 */
 	public SimpleUnit(final int unitOwner) {
 		owner = unitOwner;
 	}
+
 	/**
 	 * @return which player owns this unit
 	 */
 	public int getOwner() {
 		return owner;
 	}
+
 	/**
-	 * @param unitOwner the unit's new owner
+	 * @param unitOwner
+	 *            the unit's new owner
 	 */
 	public void setOwner(final int unitOwner) {
 		owner = unitOwner;
 	}
+
 	/**
 	 * Mere SimpleUnits only support one action, namely movement.
 	 */
@@ -44,6 +51,7 @@ public class SimpleUnit implements SPModule {
 		tempSet.add(UnitAction.Move);
 		MOVE_ACTION = Collections.unmodifiableSet(tempSet);
 	}
+
 	/**
 	 * @return what actions this unit supports.
 	 */
