@@ -9,27 +9,39 @@ import model.building.SimpleBuilding;
 import model.map.SPMap;
 import model.map.TerrainObject;
 import model.map.Tile;
+import model.unit.Harvester;
 import model.unit.SimpleUnit;
 
 /**
  * A class to write a map to a file.
+ * 
  * @author Jonathan Lovelace
- *
+ * 
  */
 public class MapWriter {
 	/**
 	 * Write a map to a file.
-	 * @param filename the file to write to
-	 * @param map the map to write
-	 * @throws IOException on I/O error
+	 * 
+	 * @param filename
+	 *            the file to write to
+	 * @param map
+	 *            the map to write
+	 * @throws IOException
+	 *             on I/O error
 	 */
-	public void writeMap(final String filename, final SPMap map) throws IOException {
-		writeMap(new PrintWriter(new BufferedWriter(new FileWriter(filename))), map);
+	public void writeMap(final String filename, final SPMap map)
+			throws IOException {
+		writeMap(new PrintWriter(new BufferedWriter(new FileWriter(filename))),
+				map);
 	}
+
 	/**
 	 * Write a map to an output stream.
-	 * @param ostream the stream we're writing to
-	 * @param map the map to write
+	 * 
+	 * @param ostream
+	 *            the stream we're writing to
+	 * @param map
+	 *            the map to write
 	 */
 	public void writeMap(final PrintWriter ostream, final SPMap map) {
 		ostream.print(map.getRows());
@@ -57,12 +69,15 @@ public class MapWriter {
 					numObjects++;
 					writeObject(tile.getObject(), objects, row, col);
 				}
-				if (tile.getModule() != null && tile.getModule() instanceof SimpleUnit) {
+				if (tile.getModule() != null
+						&& tile.getModule() instanceof SimpleUnit) {
 					numUnits++;
 					writeUnit((SimpleUnit) tile.getModule(), units, row, col);
-				} else if (tile.getModule() != null && tile.getModule() instanceof SimpleBuilding) {
+				} else if (tile.getModule() != null
+						&& tile.getModule() instanceof SimpleBuilding) {
 					numBuildings++;
-					writeBuilding((SimpleBuilding) tile.getModule(), buildings, row, col);
+					writeBuilding((SimpleBuilding) tile.getModule(), buildings,
+							row, col);
 				}
 			}
 			ostream.println();
@@ -94,8 +109,8 @@ public class MapWriter {
 	 * @param col
 	 *            the column the object is in
 	 */
-	private static void writeObject(TerrainObject obj, final StringBuffer objects,
-			int row, int col) {
+	private static void writeObject(TerrainObject obj,
+			final StringBuffer objects, int row, int col) {
 		objects.append(Integer.toString(obj.ordinal()));
 		objects.append(' ');
 		objects.append(row);
@@ -103,14 +118,21 @@ public class MapWriter {
 		objects.append(col);
 		objects.append('\n');
 	}
+
 	/**
 	 * Write a unit.
-	 * @param unit the unit
-	 * @param units the buffer to write to.
-	 * @param row the row the unit is in
-	 * @param col the column the unit is in
+	 * 
+	 * @param unit
+	 *            the unit
+	 * @param units
+	 *            the buffer to write to.
+	 * @param row
+	 *            the row the unit is in
+	 * @param col
+	 *            the column the unit is in
 	 */
-	private static void writeUnit(final SimpleUnit unit, final StringBuffer units, final int row, final int col) {
+	private static void writeUnit(final SimpleUnit unit,
+			final StringBuffer units, final int row, final int col) {
 		if (unit instanceof Harvester) {
 			units.append("1 ");
 			units.append(row);
@@ -133,12 +155,18 @@ public class MapWriter {
 
 	/**
 	 * Write a building.
-	 * @param building the unit
-	 * @param buildings the buffer to write to.
-	 * @param row the row the building is in
-	 * @param col the column the building is in
+	 * 
+	 * @param building
+	 *            the unit
+	 * @param buildings
+	 *            the buffer to write to.
+	 * @param row
+	 *            the row the building is in
+	 * @param col
+	 *            the column the building is in
 	 */
-	private static void writeBuilding(final SimpleBuilding building, final StringBuffer buildings, final int row, final int col) {
+	private static void writeBuilding(final SimpleBuilding building,
+			final StringBuffer buildings, final int row, final int col) {
 		buildings.append("0 ");
 		buildings.append(row);
 		buildings.append(' ');

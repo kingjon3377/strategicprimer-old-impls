@@ -32,7 +32,7 @@ public class Tile {
 	 * A unit or building on the tile
 	 */
 	private SPModule module = null;
-	
+
 	/**
 	 * Constructor.
 	 */
@@ -193,16 +193,17 @@ public class Tile {
 	public void setObject(final TerrainObject obj) {
 		object = obj;
 	}
-	
+
 	/**
 	 * @return the module on the tile
 	 */
 	public SPModule getModule() {
 		return module;
 	}
-	
+
 	/**
-	 * @param newModule the new module on the tile
+	 * @param newModule
+	 *            the new module on the tile
 	 */
 	public void setModule(final SPModule newModule) {
 		module = newModule;

@@ -31,23 +31,28 @@ public class Harvester extends SimpleUnit {
 		tempSet.add(UnitAction.Unload);
 		return tempSet;
 	}
+
 	/**
 	 * How much of a resource (TODO: make some way to specify the resource) the
 	 * unit is holding.
 	 */
 	private int burden;
+
 	/**
 	 * @return how much of a resource this unit is holding
 	 */
 	public int getBurden() {
 		return burden;
 	}
+
 	/**
-	 * @param newBurden how much of a resource this unit will now be holding
+	 * @param newBurden
+	 *            how much of a resource this unit will now be holding
 	 */
 	public void setBurden(final int newBurden) {
 		if (newBurden < 0) {
-			throw new IllegalArgumentException("Harvester can't hold a negative amount");
+			throw new IllegalArgumentException(
+					"Harvester can't hold a negative amount");
 		} else {
 			burden = newBurden;
 		}

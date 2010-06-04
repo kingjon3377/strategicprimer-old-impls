@@ -243,8 +243,8 @@ public class MapReader {
 	 *             on I/O error
 	 * @return the map with the buildings added.
 	 */
-	private static SPMap addBuildings(final SPMap map, final BufferedReader istream)
-			throws IOException {
+	private static SPMap addBuildings(final SPMap map,
+			final BufferedReader istream) throws IOException {
 		int num = readValue(istream);
 		for (int i = 0; i < num; i++) {
 			int api = readValue(istream);

@@ -21,6 +21,7 @@ import org.junit.Test;
 
 /**
  * A test class for the MapWriter class.
+ * 
  * @author Jonathan Lovelace
  */
 public class TestMapWriter {
@@ -64,7 +65,9 @@ public class TestMapWriter {
 
 	/**
 	 * Tests that a rather complex map is writable to a readable format.
-	 * @throws IOException Might be thrown by the reading operation.
+	 * 
+	 * @throws IOException
+	 *             Might be thrown by the reading operation.
 	 */
 	@Test
 	public void testWritingWorks() throws IOException {
@@ -83,7 +86,9 @@ public class TestMapWriter {
 
 	/**
 	 * Tests that writing a simple map works.
-	 * @throws IOException Might be thrown by the reading operation.
+	 * 
+	 * @throws IOException
+	 *             Might be thrown by the reading operation.
 	 */
 	public void testSimpleWritingWorks() throws IOException {
 		final SPMap map = new SPMap(
@@ -98,7 +103,9 @@ public class TestMapWriter {
 
 	/**
 	 * Tests that terrain objects are properly written.
-	 * @throws IOException Might be thrown by the reading operation.
+	 * 
+	 * @throws IOException
+	 *             Might be thrown by the reading operation.
 	 */
 	@Test
 	public void testWritingObjectsWorks() throws IOException {
@@ -115,7 +122,9 @@ public class TestMapWriter {
 
 	/**
 	 * Tests that writing units works
-	 * @throws IOException Might be thrown by the reading operation.
+	 * 
+	 * @throws IOException
+	 *             Might be thrown by the reading operation.
 	 */
 	@Test
 	public void testWritingUnitsWorks() throws IOException {
@@ -132,7 +141,9 @@ public class TestMapWriter {
 
 	/**
 	 * Tests that writing buildings works.
-	 * @throws IOException Might be thrown by the reading operation.
+	 * 
+	 * @throws IOException
+	 *             Might be thrown by the reading operation.
 	 */
 	@Test
 	public void testWritingBuildingsWorks() throws IOException {
@@ -146,9 +157,12 @@ public class TestMapWriter {
 		assertEquals(map, new MapReader().readMap(new BufferedReader(
 				new StringReader(cstream.getBuffer().toString()))));
 	}
+
 	/**
 	 * Test that writing Harvester units works.
-	 * @throws IOException Might be thrown by the reading operation.
+	 * 
+	 * @throws IOException
+	 *             Might be thrown by the reading operation.
 	 */
 	@Test
 	public void testWritingHarvesterWorks() throws IOException {

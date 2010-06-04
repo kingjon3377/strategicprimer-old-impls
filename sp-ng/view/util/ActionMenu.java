@@ -63,7 +63,9 @@ public class ActionMenu extends JMenu implements ActionListener {
 
 	/**
 	 * Show only those menu items in a specified set.
-	 * @param validItems the set of valid items
+	 * 
+	 * @param validItems
+	 *            the set of valid items
 	 */
 	public void hideInvalidItems(final Set<UnitAction> validItems) {
 		for (Component com : getMenuComponents()) {
