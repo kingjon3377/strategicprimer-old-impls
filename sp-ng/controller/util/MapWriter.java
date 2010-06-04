@@ -111,12 +111,23 @@ public class MapWriter {
 	 * @param col the column the unit is in
 	 */
 	private static void writeUnit(final SimpleUnit unit, final StringBuffer units, final int row, final int col) {
-		units.append("0 ");
-		units.append(row);
-		units.append(' ');
-		units.append(col);
-		units.append(' ');
-		units.append(unit.getOwner());
+		if (unit instanceof Harvester) {
+			units.append("1 ");
+			units.append(row);
+			units.append(' ');
+			units.append(col);
+			units.append(' ');
+			units.append(unit.getOwner());
+			units.append(' ');
+			units.append(((Harvester) unit).getBurden());
+		} else {
+			units.append("0 ");
+			units.append(row);
+			units.append(' ');
+			units.append(col);
+			units.append(' ');
+			units.append(unit.getOwner());
+		}
 		units.append('\n');
 	}
 
