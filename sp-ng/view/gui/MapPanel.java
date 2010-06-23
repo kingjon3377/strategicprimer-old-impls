@@ -21,8 +21,8 @@ import model.map.SPMap;
 import model.map.TerrainObject;
 import model.map.Tile;
 import model.map.TileType;
+import model.module.ActionHandler;
 import model.module.SPModule;
-import model.unit.Harvester;
 import model.unit.SimpleUnit;
 import model.unit.UnitAction;
 import view.util.ActionMenu;
@@ -83,6 +83,11 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 	 */
 	private UnitAction action = UnitAction.Cancel;
 
+	/**
+	 * The object to run actions. FIXME: This should be in the map, or
+	 * something.
+	 */
+	private final ActionHandler actionHandler = new ActionHandler();
 	/**
 	 * Constructor.
 	 * 
@@ -369,36 +374,8 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 	 *            the newly selected tile
 	 */
 	private void runAction(final Tile old, final Tile newTile) {
-		if (old == null || newTile == null || UnitAction.Cancel.equals(action)) {
-			return;
-		} else if (UnitAction.Move.equals(action)) {
-			if (old.getModule() != null
-					&& old.getModule() instanceof SimpleUnit
-					&& newTile.getModule() == null) {
-				newTile.setModule(old.getModule());
-				old.setModule(null);
-				repaint();
-			}
-		} else if (UnitAction.Harvest.equals(action)) {
-			if (old.getModule() != null && old.getModule() instanceof Harvester
-					&& TerrainObject.TREE.equals(newTile.getObject())) {
-				// TODO: Should have to be adjacent.
-				((Harvester) old.getModule()).setBurden(((Harvester) old
-						.getModule()).getBurden() + 1);
-				newTile.setObject(TerrainObject.NOTHING);
-				repaint();
-			}
-		} else if (UnitAction.Unload.equals(action)) {
-			if (old.getModule() != null && old.getModule() instanceof Harvester
-					&& newTile.getModule() != null
-					&& newTile.getModule() instanceof SimpleBuilding) {
-				// TODO: Make the building have to be a stockpile and increment
-				// it.
-				// TODO: Should have to be adjacent.
-				((Harvester) old.getModule()).setBurden(((Harvester) old
-						.getModule()).getBurden() - 1);
-			}
-		}
+		actionHandler.runAction(action, old, newTile);
+		repaint();
 	}
 
 	/**
