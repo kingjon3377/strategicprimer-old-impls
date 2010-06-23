@@ -50,7 +50,7 @@ public class ActionHandler {
 	 *            The tile the actor is on
 	 * @param object
 	 *            The tile the actor is acting on, or containing the module it
-	 *            is acitng on.
+	 *            is acting on.
 	 */
 	public void runAction(final UnitAction action, final Tile actor,
 			final Tile object) {
