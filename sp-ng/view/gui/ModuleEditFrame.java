@@ -18,6 +18,10 @@ import view.gui.module.ModuleEditPanel;
  */
 public class ModuleEditFrame extends JFrame {
 	/**
+	 * Version UID for serialization
+	 */
+	private static final long serialVersionUID = 3646970429478465694L;
+	/**
 	 * The cancel button.
 	 */
 	private final JButton revertButton = new JButton("Revert");
