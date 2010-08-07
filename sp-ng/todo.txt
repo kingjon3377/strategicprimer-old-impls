@@ -1,0 +1,3 @@
+Maybe eliminate non-atomic actions (including movement to non-adjacent tiles)
+from the core Game. Then we can add user-selectable Goals ("move to X", etc.,
+in a queue) ...
