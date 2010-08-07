@@ -47,6 +47,8 @@ public class FileMenu extends JMenu implements ActionListener {
 		map = mpanel;
 		addMenuItem("Save map");
 		addMenuItem("Load map");
+		addSeparator();
+		addMenuItem("Edit module");
 		// add("Quit");
 	}
 
@@ -93,6 +95,10 @@ public class FileMenu extends JMenu implements ActionListener {
 					Logger.getLogger(FileMenu.class.getName()).log(
 							Level.SEVERE, "I/O error while loading the map", e);
 				}
+			}
+		} else if ("Edit module".equals(evt.getActionCommand())) {
+			if (map.currentModule() != null) {
+				new ModuleEditFrame(map.currentModule()).setVisible(true);
 			}
 		}
 	}
