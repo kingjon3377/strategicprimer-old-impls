@@ -1,5 +1,6 @@
 package server;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -10,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import common.AckMessage;
+import common.FailMessage;
 import common.ProtocolMessage;
 
 /**
@@ -84,6 +86,9 @@ public class SPServer extends Thread {
 	@Override
 	public void run() {
 		LOGGER.info("Running client");
+		if (GameServer.getGameServer() == null) {
+			new GameServer().start();
+		}
 		// ESCA-JAVA0177:
 		ObjectInputStream is;
 		// ESCA-JAVA0177:
@@ -125,7 +130,16 @@ public class SPServer extends Thread {
 			acknowledge(obj, os);
 			break;
 		case Load:
-			// loadFile(obj);
+			try {
+				GameServer.getGameServer().loadMap((String)obj.getFirstArg());
+				acknowledge(obj, os);
+			} catch (FileNotFoundException e) {
+				LOGGER.log(Level.WARNING, "Tried to load a nonexistent file", e);
+				fail(obj, e, os);
+			} catch (IOException e) {
+				LOGGER.log(Level.WARNING, "Loading from file caused I/O error", e);
+				fail(obj, e, os);
+			}
 			break;
 		default:
 			break;
@@ -141,6 +155,19 @@ public class SPServer extends Thread {
 			os.writeObject(new AckMessage(msg));
 		} catch (final IOException except) {
 			LOGGER.log(Level.SEVERE, "I/O error while sending ACK", except);
+		}
+	}
+	/**
+	 * Send a "failure" message
+	 * @param msg the message that caused the failure
+	 * @param except the exception that was raised
+	 * @param os the steram to send the message on
+	 */
+	private static void fail(final ProtocolMessage msg, final Exception except, final ObjectOutputStream os) {
+		try {
+			os.writeObject(new FailMessage(msg, except));
+		} catch (final IOException exc) {
+			LOGGER.log(Level.SEVERE, "I/O error while sending failure message", exc);
 		}
 	}
 }
