@@ -30,7 +30,11 @@ public class ProtocolMessage implements Serializable {
 		/**
 		 * Acknowledge another message
 		 */
-		Ack;
+		Ack,
+		/**
+		 * The opposite of Ack; dealing with a message failed.
+		 */
+		Fail;
 	}
 	/**
 	 * What kind of message this is.
@@ -43,7 +47,16 @@ public class ProtocolMessage implements Serializable {
 	public MessageType getMessageType() {
 		return messageType;
 	}
-
+	/**
+	 * The first argument, if any
+	 */
+	private Object arg1;
+	/**
+	 * @return the first argument
+	 */
+	public Object getFirstArg() {
+		return arg1;
+	}
 	/**
 	 * Constructor.
 	 * @param msgType what kind of message this is
@@ -51,5 +64,8 @@ public class ProtocolMessage implements Serializable {
 	 */
 	protected ProtocolMessage(final MessageType msgType, final Object... args) {
 		messageType = msgType;
+		if (args.length > 0) {
+			arg1 = args[0];
+		}
 	}
 }
