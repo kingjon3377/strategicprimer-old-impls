@@ -9,6 +9,8 @@ import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import common.LoadMessage;
+import common.ProtocolMessage;
 import common.QuitMessage;
 
 /**
@@ -58,15 +60,36 @@ public class SimpleClient {
 			return;
 		}
 		try {
-			os.writeObject(new QuitMessage());
+			os.writeObject(new LoadMessage("/home/kingjon/test.map"));
 		} catch (final IOException except) {
-			LOGGER.log(Level.SEVERE, "Sending test message failed; continuing",
-					except);
+			LOGGER.log(Level.SEVERE, "Sending load message failed; continuing", except);
 		}
 		Object ack;
 		try {
 			ack = is.readObject();
-			LOGGER.info("Acknowledged: " + ack);
+			if (ack instanceof ProtocolMessage) {
+				if (ProtocolMessage.MessageType.Ack.equals(((ProtocolMessage) ack).getMessageType())) {
+					LOGGER.info("Load message acknowledged");
+				} else if (ProtocolMessage.MessageType.Fail.equals(((ProtocolMessage) ack).getMessageType())) {
+					LOGGER.info("Server failed to load map");
+				} else {
+					LOGGER.warning("Unexpected reply to load message");
+				}
+			}
+		} catch (final IOException except) {
+			LOGGER.log(Level.SEVERE, "I/O error receiving reply", except);
+		} catch (final ClassNotFoundException except) {
+			LOGGER.log(Level.SEVERE, "Wasn't the ACK or Fail we expected", except);
+		}
+		try {
+			os.writeObject(new QuitMessage());
+		} catch (final IOException except) {
+			LOGGER.log(Level.SEVERE, "Sending quit message failed; continuing",
+					except);
+		}
+		try {
+			ack = is.readObject();
+			LOGGER.info("Quit acknowledged: " + ack);
 		} catch (final IOException except) {
 			LOGGER.log(Level.SEVERE, "I/O error receiving ACK", except);
 		} catch (final ClassNotFoundException except) {
