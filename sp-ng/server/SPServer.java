@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import common.AckMessage;
 import common.ProtocolMessage;
 
 /**
@@ -137,7 +138,7 @@ public class SPServer extends Thread {
 	 */
 	private static void acknowledge(final ProtocolMessage msg, final ObjectOutputStream os) {
 		try {
-			os.writeObject(new ProtocolMessage(ProtocolMessage.MessageType.Ack, msg));
+			os.writeObject(new AckMessage(msg));
 		} catch (final IOException except) {
 			LOGGER.log(Level.SEVERE, "I/O error while sending ACK", except);
 		}

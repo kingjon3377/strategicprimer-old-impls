@@ -9,7 +9,7 @@ import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import common.ProtocolMessage;
+import common.QuitMessage;
 
 /**
  * A simple client, primarily to test the server. Should perhaps eventually
@@ -58,13 +58,19 @@ public class SimpleClient {
 			return;
 		}
 		try {
-			os.writeObject(new ProtocolMessage(ProtocolMessage.MessageType.Quit));
+			os.writeObject(new QuitMessage());
 		} catch (final IOException except) {
-			LOGGER
-					.log(
-							Level.SEVERE,
-							"Writing test message to socket failed; continuing",
-							except);
+			LOGGER.log(Level.SEVERE, "Sending test message failed; continuing",
+					except);
+		}
+		Object ack;
+		try {
+			ack = is.readObject();
+			LOGGER.info("Acknowledged: " + ack);
+		} catch (final IOException except) {
+			LOGGER.log(Level.SEVERE, "I/O error receiving ACK", except);
+		} catch (final ClassNotFoundException except) {
+			LOGGER.log(Level.SEVERE, "Wasn't the ACK we expected", except);
 		}
 		closeSocket(sock);
 		return;
