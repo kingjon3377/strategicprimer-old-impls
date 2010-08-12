@@ -49,7 +49,7 @@ public class ProtocolMessage implements Serializable {
 	 * @param msgType what kind of message this is
 	 * @param args arguments
 	 */
-	public ProtocolMessage(final MessageType msgType, final Object... args) {
+	protected ProtocolMessage(final MessageType msgType, final Object... args) {
 		messageType = msgType;
 	}
 }
