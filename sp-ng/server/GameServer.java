@@ -6,6 +6,10 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import model.map.SPMap;
+
+import common.NotReadyException;
+import common.SPPoint;
+
 import controller.util.MapReader;
 
 /**
@@ -109,6 +113,18 @@ public class GameServer extends Thread {
 	 */
 	public void setMap(final SPMap newMap) {
 		map = newMap;
+	}
+
+	/**
+	 * @return the size of the map. 
+	 * @throws NotReadyException if the map isn't loaded
+	 */
+	public SPPoint getMapSize() throws NotReadyException {
+		if (map == null) {
+			throw new NotReadyException("Don't have a map yet");
+		} else {
+			return new SPPoint(map.getRows(), map.getCols());
+		}
 	}
 
 	/**

@@ -11,7 +11,9 @@ import java.util.logging.Logger;
 
 import common.LoadMessage;
 import common.ProtocolMessage;
+import common.QueryMessage;
 import common.QuitMessage;
+import common.SPPoint;
 
 /**
  * A simple client, primarily to test the server. Should perhaps eventually
@@ -80,6 +82,41 @@ public class SimpleClient {
 			LOGGER.log(Level.SEVERE, "I/O error receiving reply", except);
 		} catch (final ClassNotFoundException except) {
 			LOGGER.log(Level.SEVERE, "Wasn't the ACK or Fail we expected", except);
+		}
+		try {
+			os.writeObject(new QueryMessage("size"));
+		} catch (final IOException except) {
+			LOGGER.log(Level.SEVERE,
+					"Sending size-query message failed; continuing", except);
+		}
+		try {
+			ack = is.readObject();
+			if (ack instanceof ProtocolMessage) {
+				if (ProtocolMessage.MessageType.Reply
+						.equals(((ProtocolMessage) ack).getMessageType())) {
+					if ("size".equals(((ProtocolMessage) ack).getFirstArg())
+							&& ((ProtocolMessage) ack).getSecondArg() instanceof SPPoint) {
+						LOGGER.info("Size of map is "
+								+ ((SPPoint) ((ProtocolMessage) ack)
+										.getSecondArg()).row()
+								+ " rows and "
+								+ ((SPPoint) ((ProtocolMessage) ack)
+										.getSecondArg()).col() + " columns.");
+					} else {
+						LOGGER.warning("Didn't get the reply we expected to size query.");
+					}
+				} else if (ProtocolMessage.MessageType.Fail
+						.equals(((ProtocolMessage) ack).getMessageType())) {
+					LOGGER.info("Server failed to determine map size");
+				} else {
+					LOGGER.warning("Unexpected reply to size query");
+				}
+			}
+		} catch (final IOException except) {
+			LOGGER.log(Level.SEVERE, "I/O error receiving reply", except);
+		} catch (final ClassNotFoundException except) {
+			LOGGER.log(Level.SEVERE, "Wasn't the Reply or Fail we expected",
+					except);
 		}
 		try {
 			os.writeObject(new QuitMessage());

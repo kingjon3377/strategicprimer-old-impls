@@ -12,7 +12,11 @@ import java.util.logging.Logger;
 
 import common.AckMessage;
 import common.FailMessage;
+import common.NotReadyException;
 import common.ProtocolMessage;
+import common.QueryMessage;
+import common.ReplyMessage;
+import common.UnknownMessageException;
 
 /**
  * A server for SP; this class, which perhaps ought to be renamed, is what
@@ -141,10 +145,37 @@ public class SPServer extends Thread {
 				fail(obj, e, os);
 			}
 			break;
+		case Query:
+			try {
+				reply((QueryMessage) obj, handleQuery((QueryMessage)obj), os);
+			} catch (final UnknownMessageException except) {
+				LOGGER.log(Level.WARNING, "Got a query we don't know how to handle", except);
+				fail(obj, except, os);
+			} catch (NotReadyException except) {
+				LOGGER.log(Level.WARNING, "Got query for map size before map was loaded", except);
+				fail(obj, except, os);
+			}
+			break;
 		default:
+			fail(obj, new UnknownMessageException(), os);
 			break;
 		}
 	}
+	/**
+	 * Send a reply to a query
+	 * @param query the query message we're replying to
+	 * @param reply the reply to send
+	 * @param os the stream to send it on
+	 */
+	private static void reply(QueryMessage query, Object reply,
+			ObjectOutputStream os) {
+		try {
+			os.writeObject(new ReplyMessage((String)query.getFirstArg(),reply, query));
+		} catch (final IOException except) {
+			LOGGER.log(Level.SEVERE, "I/O error while sending reply", except);
+		}
+	}
+
 	/**
 	 * Acknowledge
 	 * @param msg the message to acknowledge
@@ -168,6 +199,20 @@ public class SPServer extends Thread {
 			os.writeObject(new FailMessage(msg, except));
 		} catch (final IOException exc) {
 			LOGGER.log(Level.SEVERE, "I/O error while sending failure message", exc);
+		}
+	}
+	/**
+	 * Handle a query.
+	 * @param msg the message to handle.
+	 * @return the object to send in the reply
+	 * @throws UnknownMessageException when we don't know how to handle that kind of query
+	 * @throws NotReadyException when the map isn't loaded yet
+	 */
+	private static Object handleQuery(final QueryMessage msg) throws UnknownMessageException, NotReadyException {
+		if ("size".equals(msg.getFirstArg())) {
+			return GameServer.getGameServer().getMapSize();
+		} else {
+			throw new UnknownMessageException();
 		}
 	}
 }
