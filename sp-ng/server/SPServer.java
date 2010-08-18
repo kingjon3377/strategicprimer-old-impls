@@ -110,7 +110,8 @@ public class SPServer extends Thread {
 				if (obj instanceof ProtocolMessage) {
 					handleProtocol((ProtocolMessage) obj, os);
 				}
-				if (quit) break;
+				if (quit)
+					break;
 				obj = is.readObject();
 			}
 		} catch (IOException except) {
@@ -135,24 +136,29 @@ public class SPServer extends Thread {
 			break;
 		case Load:
 			try {
-				GameServer.getGameServer().loadMap((String)obj.getFirstArg());
+				GameServer.getGameServer().loadMap((String) obj.getFirstArg());
 				acknowledge(obj, os);
 			} catch (FileNotFoundException e) {
-				LOGGER.log(Level.WARNING, "Tried to load a nonexistent file", e);
+				LOGGER
+						.log(Level.WARNING, "Tried to load a nonexistent file",
+								e);
 				fail(obj, e, os);
 			} catch (IOException e) {
-				LOGGER.log(Level.WARNING, "Loading from file caused I/O error", e);
+				LOGGER.log(Level.WARNING, "Loading from file caused I/O error",
+						e);
 				fail(obj, e, os);
 			}
 			break;
 		case Query:
 			try {
-				reply((QueryMessage) obj, handleQuery((QueryMessage)obj), os);
+				reply((QueryMessage) obj, handleQuery((QueryMessage) obj), os);
 			} catch (final UnknownMessageException except) {
-				LOGGER.log(Level.WARNING, "Got a query we don't know how to handle", except);
+				LOGGER.log(Level.WARNING,
+						"Got a query we don't know how to handle", except);
 				fail(obj, except, os);
 			} catch (NotReadyException except) {
-				LOGGER.log(Level.WARNING, "Got query for map size before map was loaded", except);
+				LOGGER.log(Level.WARNING,
+						"Got query for map size before map was loaded", except);
 				fail(obj, except, os);
 			}
 			break;
@@ -161,16 +167,22 @@ public class SPServer extends Thread {
 			break;
 		}
 	}
+
 	/**
 	 * Send a reply to a query
-	 * @param query the query message we're replying to
-	 * @param reply the reply to send
-	 * @param os the stream to send it on
+	 * 
+	 * @param query
+	 *            the query message we're replying to
+	 * @param reply
+	 *            the reply to send
+	 * @param os
+	 *            the stream to send it on
 	 */
 	private static void reply(QueryMessage query, Object reply,
 			ObjectOutputStream os) {
 		try {
-			os.writeObject(new ReplyMessage((String)query.getFirstArg(),reply, query));
+			os.writeObject(new ReplyMessage((String) query.getFirstArg(),
+					reply, query));
 		} catch (final IOException except) {
 			LOGGER.log(Level.SEVERE, "I/O error while sending reply", except);
 		}
@@ -178,37 +190,54 @@ public class SPServer extends Thread {
 
 	/**
 	 * Acknowledge
-	 * @param msg the message to acknowledge
-	 * @param os The stream to send the ACK on
+	 * 
+	 * @param msg
+	 *            the message to acknowledge
+	 * @param os
+	 *            The stream to send the ACK on
 	 */
-	private static void acknowledge(final ProtocolMessage msg, final ObjectOutputStream os) {
+	private static void acknowledge(final ProtocolMessage msg,
+			final ObjectOutputStream os) {
 		try {
 			os.writeObject(new AckMessage(msg));
 		} catch (final IOException except) {
 			LOGGER.log(Level.SEVERE, "I/O error while sending ACK", except);
 		}
 	}
+
 	/**
 	 * Send a "failure" message
-	 * @param msg the message that caused the failure
-	 * @param except the exception that was raised
-	 * @param os the steram to send the message on
+	 * 
+	 * @param msg
+	 *            the message that caused the failure
+	 * @param except
+	 *            the exception that was raised
+	 * @param os
+	 *            the steram to send the message on
 	 */
-	private static void fail(final ProtocolMessage msg, final Exception except, final ObjectOutputStream os) {
+	private static void fail(final ProtocolMessage msg, final Exception except,
+			final ObjectOutputStream os) {
 		try {
 			os.writeObject(new FailMessage(msg, except));
 		} catch (final IOException exc) {
-			LOGGER.log(Level.SEVERE, "I/O error while sending failure message", exc);
+			LOGGER.log(Level.SEVERE, "I/O error while sending failure message",
+					exc);
 		}
 	}
+
 	/**
 	 * Handle a query.
-	 * @param msg the message to handle.
+	 * 
+	 * @param msg
+	 *            the message to handle.
 	 * @return the object to send in the reply
-	 * @throws UnknownMessageException when we don't know how to handle that kind of query
-	 * @throws NotReadyException when the map isn't loaded yet
+	 * @throws UnknownMessageException
+	 *             when we don't know how to handle that kind of query
+	 * @throws NotReadyException
+	 *             when the map isn't loaded yet
 	 */
-	private static Object handleQuery(final QueryMessage msg) throws UnknownMessageException, NotReadyException {
+	private static Object handleQuery(final QueryMessage msg)
+			throws UnknownMessageException, NotReadyException {
 		if ("size".equals(msg.getFirstArg())) {
 			return GameServer.getGameServer().getMapSize();
 		} else {

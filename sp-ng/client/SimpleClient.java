@@ -64,15 +64,18 @@ public class SimpleClient {
 		try {
 			os.writeObject(new LoadMessage("/home/kingjon/test.map"));
 		} catch (final IOException except) {
-			LOGGER.log(Level.SEVERE, "Sending load message failed; continuing", except);
+			LOGGER.log(Level.SEVERE, "Sending load message failed; continuing",
+					except);
 		}
 		Object ack;
 		try {
 			ack = is.readObject();
 			if (ack instanceof ProtocolMessage) {
-				if (ProtocolMessage.MessageType.Ack.equals(((ProtocolMessage) ack).getMessageType())) {
+				if (ProtocolMessage.MessageType.Ack
+						.equals(((ProtocolMessage) ack).getMessageType())) {
 					LOGGER.info("Load message acknowledged");
-				} else if (ProtocolMessage.MessageType.Fail.equals(((ProtocolMessage) ack).getMessageType())) {
+				} else if (ProtocolMessage.MessageType.Fail
+						.equals(((ProtocolMessage) ack).getMessageType())) {
 					LOGGER.info("Server failed to load map");
 				} else {
 					LOGGER.warning("Unexpected reply to load message");
@@ -81,7 +84,8 @@ public class SimpleClient {
 		} catch (final IOException except) {
 			LOGGER.log(Level.SEVERE, "I/O error receiving reply", except);
 		} catch (final ClassNotFoundException except) {
-			LOGGER.log(Level.SEVERE, "Wasn't the ACK or Fail we expected", except);
+			LOGGER.log(Level.SEVERE, "Wasn't the ACK or Fail we expected",
+					except);
 		}
 		try {
 			os.writeObject(new QueryMessage("size"));
@@ -103,7 +107,8 @@ public class SimpleClient {
 								+ ((SPPoint) ((ProtocolMessage) ack)
 										.getSecondArg()).col() + " columns.");
 					} else {
-						LOGGER.warning("Didn't get the reply we expected to size query.");
+						LOGGER
+								.warning("Didn't get the reply we expected to size query.");
 					}
 				} else if (ProtocolMessage.MessageType.Fail
 						.equals(((ProtocolMessage) ack).getMessageType())) {

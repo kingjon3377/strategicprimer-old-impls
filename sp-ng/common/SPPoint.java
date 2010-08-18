@@ -3,7 +3,8 @@ package common;
 import java.io.Serializable;
 
 /**
- * A class encapsulating a row value and a column value. 
+ * A class encapsulating a row value and a column value.
+ * 
  * @author Jonathan Lovelace
  */
 public class SPPoint implements Serializable {
@@ -19,22 +20,28 @@ public class SPPoint implements Serializable {
 	 * Column.
 	 */
 	private final int col;
+
 	/**
 	 * @return the row value
 	 */
 	public int row() {
 		return row;
 	}
+
 	/**
 	 * @return the column value
 	 */
 	public int col() {
 		return col;
 	}
+
 	/**
 	 * Constructor.
-	 * @param _row the row value
-	 * @param _col the column value
+	 * 
+	 * @param _row
+	 *            the row value
+	 * @param _col
+	 *            the column value
 	 */
 	public SPPoint(final int _row, final int _col) {
 		row = _row;

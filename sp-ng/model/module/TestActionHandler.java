@@ -38,6 +38,7 @@ public class TestActionHandler {
 	 * A second Tile for testing.
 	 */
 	private Tile tileTwo;
+
 	/**
 	 * Set up for the tests.
 	 */
@@ -45,6 +46,7 @@ public class TestActionHandler {
 	public void setUp() {
 		handler = new ActionHandler();
 	}
+
 	/**
 	 * Tests that movement works properly. TODO: pathfinding
 	 */
@@ -62,6 +64,7 @@ public class TestActionHandler {
 		assertTrue(tileTwo.getModule() instanceof SimpleUnit);
 		assertEquals(null, tileOne.getModule());
 	}
+
 	/**
 	 * Test harvesting.
 	 */
@@ -81,6 +84,7 @@ public class TestActionHandler {
 		assertEquals(4, harv.getBurden());
 		assertEquals(TerrainObject.NOTHING, tileTwo.getObject());
 	}
+
 	/**
 	 * Test unloading.
 	 */

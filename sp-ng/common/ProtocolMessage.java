@@ -50,47 +50,57 @@ public class ProtocolMessage implements Serializable {
 	 * What kind of message this is.
 	 */
 	private MessageType messageType;
-	
+
 	/**
 	 * @return what kind of message this is.
 	 */
 	public MessageType getMessageType() {
 		return messageType;
 	}
+
 	/**
 	 * The first argument, if any
 	 */
 	private Object arg1;
+
 	/**
 	 * @return the first argument
 	 */
 	public Object getFirstArg() {
 		return arg1;
 	}
+
 	/**
 	 * The second argument, if any
 	 */
 	private Object arg2;
+
 	/**
 	 * @return the second argument
 	 */
 	public Object getSecondArg() {
 		return arg2;
 	}
+
 	/**
 	 * The third argument, if any
 	 */
 	private Object arg3;
+
 	/**
 	 * @return the third argument
 	 */
 	public Object getThirdArg() {
 		return arg3;
 	}
+
 	/**
 	 * Constructor.
-	 * @param msgType what kind of message this is
-	 * @param args arguments
+	 * 
+	 * @param msgType
+	 *            what kind of message this is
+	 * @param args
+	 *            arguments
 	 */
 	protected ProtocolMessage(final MessageType msgType, final Object... args) {
 		messageType = msgType;

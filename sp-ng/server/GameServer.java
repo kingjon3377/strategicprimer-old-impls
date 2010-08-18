@@ -27,6 +27,7 @@ public class GameServer extends Thread {
 	public GameServer() {
 		super();
 	}
+
 	/**
 	 * Logger; also used for synchronization
 	 */
@@ -116,8 +117,9 @@ public class GameServer extends Thread {
 	}
 
 	/**
-	 * @return the size of the map. 
-	 * @throws NotReadyException if the map isn't loaded
+	 * @return the size of the map.
+	 * @throws NotReadyException
+	 *             if the map isn't loaded
 	 */
 	public SPPoint getMapSize() throws NotReadyException {
 		if (map == null) {
