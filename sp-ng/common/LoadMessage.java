@@ -1,8 +1,10 @@
 package common;
+
 /**
  * A message to tell the server to load a map
+ * 
  * @author Jonathan Lovelace
- *
+ * 
  */
 public class LoadMessage extends ProtocolMessage {
 	/**
@@ -12,7 +14,9 @@ public class LoadMessage extends ProtocolMessage {
 
 	/**
 	 * Constructor.
-	 * @param filename the name of the file to load
+	 * 
+	 * @param filename
+	 *            the name of the file to load
 	 */
 	public LoadMessage(final String filename) {
 		super(MessageType.Load, filename);

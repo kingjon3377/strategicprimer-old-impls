@@ -1,8 +1,10 @@
 package common;
+
 /**
  * A Quit message
+ * 
  * @author Jonathan Lovelace
- *
+ * 
  */
 public class QuitMessage extends ProtocolMessage {
 	/**

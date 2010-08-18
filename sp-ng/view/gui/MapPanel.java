@@ -88,6 +88,7 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 	 * something.
 	 */
 	private final ActionHandler actionHandler = new ActionHandler();
+
 	/**
 	 * Constructor.
 	 * 

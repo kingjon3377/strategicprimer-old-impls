@@ -1,8 +1,10 @@
 package common;
+
 /**
  * A message to report failure in dealing with another message.
+ * 
  * @author Jonathan Lovelace
- *
+ * 
  */
 public class FailMessage extends ProtocolMessage {
 	/**
@@ -12,8 +14,11 @@ public class FailMessage extends ProtocolMessage {
 
 	/**
 	 * Constructor.
-	 * @param msg the message that caused the failure
-	 * @param except the exception that was raised, if any
+	 * 
+	 * @param msg
+	 *            the message that caused the failure
+	 * @param except
+	 *            the exception that was raised, if any
 	 */
 	public FailMessage(final ProtocolMessage msg, final Exception except) {
 		super(MessageType.Fail, msg, except);
