@@ -4,9 +4,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.net.ServerSocket;
 import java.net.Socket;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -37,31 +35,7 @@ public class SPServer extends Thread {
 	 *            Ignored
 	 */
 	public static void main(String[] args) {
-		final int port = 9099;
-		ServerSocket sock;
-		try {
-			sock = new ServerSocket(port);
-		} catch (IOException except) {
-			LOGGER.log(Level.SEVERE, "Failed to start server", except);
-			System.exit(1);
-			return;
-		}
-		while (true) {
-			LOGGER.info("Ready to receive clients");
-			Socket clientSock;
-			try {
-				clientSock = sock.accept();
-			} catch (IOException except) {
-				LOGGER.log(Level.SEVERE, "I/O error in accepting connection",
-						except);
-				return;
-			}
-			LOGGER.info("Accepted a client from "
-					+ clientSock.getInetAddress().getHostAddress() + " at "
-					+ new Date());
-			SPServer server = new SPServer(clientSock);
-			server.start();
-		}
+		SocketListener.LISTENER.start();
 	}
 
 	/**
@@ -110,8 +84,10 @@ public class SPServer extends Thread {
 				if (obj instanceof ProtocolMessage) {
 					handleProtocol((ProtocolMessage) obj, os);
 				}
-				if (quit)
+				if (quit) {
+					SocketListener.LISTENER.quit();
 					break;
+				}
 				obj = is.readObject();
 			}
 		} catch (IOException except) {
