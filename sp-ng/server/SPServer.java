@@ -5,15 +5,21 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import model.map.SPMap;
+
 import common.AckMessage;
+import common.ClientTile;
 import common.FailMessage;
 import common.NotReadyException;
 import common.ProtocolMessage;
 import common.QueryMessage;
 import common.ReplyMessage;
+import common.SPPoint;
 import common.UnknownMessageException;
 
 /**
@@ -212,12 +218,32 @@ public class SPServer extends Thread {
 	 * @throws NotReadyException
 	 *             when the map isn't loaded yet
 	 */
+	@SuppressWarnings("unchecked")
 	private static Object handleQuery(final QueryMessage msg)
 			throws UnknownMessageException, NotReadyException {
 		if ("size".equals(msg.getFirstArg())) {
 			return GameServer.getGameServer().getMapSize();
+		} else if ("tiles".equals(msg.getFirstArg())) {
+			if (msg.getSecondArg() instanceof List<?>) {
+				return getTiles((List<SPPoint>) msg.getSecondArg());
+			} else {
+				throw new IllegalStateException("Query didn't have expected argument");
+			}
 		} else {
 			throw new UnknownMessageException();
 		}
+	}
+	/**
+	 * @param points a list of points
+	 * @return a list of tiles (for use in the client) corresponding to those points
+	 * @todo should make sure the client can see these tiles.
+	 */
+	private static List<ClientTile> getTiles(final List<SPPoint> points) {
+		final List<ClientTile> retval = new ArrayList<ClientTile>();
+		final SPMap map = GameServer.getGameServer().getMap();
+		for (SPPoint point : points) {
+			retval.add(new ClientTile(point, map.terrainAt(point.row(), point.col()).getType()));
+		}
+		return retval;
 	}
 }
