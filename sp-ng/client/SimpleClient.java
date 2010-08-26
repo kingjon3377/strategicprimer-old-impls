@@ -9,6 +9,8 @@ import java.net.UnknownHostException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import server.SocketListener;
+
 import common.LoadMessage;
 import common.ProtocolMessage;
 import common.QueryMessage;
@@ -47,7 +49,16 @@ public class SimpleClient {
 			sock = new Socket(addr, port, InetAddress.getLocalHost(), 11236);
 		} catch (final IOException except) {
 			LOGGER.log(Level.SEVERE, "Opening socket failed", except);
-			System.exit(2);
+			SocketListener.LISTENER.start();
+			while (!SocketListener.LISTENER.ready()) {
+				try {
+					Thread.sleep(90);
+				} catch (InterruptedException e) {
+					// ignore
+				}
+			}
+			main(args);
+			// System.exit(2);
 			return;
 		}
 		ObjectOutputStream os;
