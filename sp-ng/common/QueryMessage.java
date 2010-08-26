@@ -20,4 +20,12 @@ public class QueryMessage extends ProtocolMessage {
 	public QueryMessage(final String query) {
 		super(ProtocolMessage.MessageType.Query, query);
 	}
+	/**
+	 * Constructor with argument.
+	 * @param query what we're querying
+	 * @param arg the argument
+	 */
+	public QueryMessage(final String query, final Object arg) {
+		super(ProtocolMessage.MessageType.Query, query, arg);
+	}
 }

@@ -6,11 +6,14 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import server.SocketListener;
 
+import common.ClientTile;
 import common.LoadMessage;
 import common.ProtocolMessage;
 import common.QueryMessage;
@@ -126,6 +129,41 @@ public class SimpleClient {
 					LOGGER.info("Server failed to determine map size");
 				} else {
 					LOGGER.warning("Unexpected reply to size query");
+				}
+			}
+		} catch (final IOException except) {
+			LOGGER.log(Level.SEVERE, "I/O error receiving reply", except);
+		} catch (final ClassNotFoundException except) {
+			LOGGER.log(Level.SEVERE, "Wasn't the Reply or Fail we expected",
+					except);
+		}
+		try {
+			List<SPPoint> tempList = new ArrayList<SPPoint>();
+			tempList.add(new SPPoint(0, 0));
+			os.writeObject(new QueryMessage("tiles", tempList));
+		} catch (final IOException except) {
+			LOGGER.log(Level.SEVERE,
+					"asking for tile failed; continuing", except);
+		}
+		try {
+			ack = is.readObject();
+			if (ack instanceof ProtocolMessage) {
+				if (ProtocolMessage.MessageType.Reply
+						.equals(((ProtocolMessage) ack).getMessageType())) {
+					if ("tiles".equals(((ProtocolMessage) ack).getFirstArg())
+							&& ((ProtocolMessage) ack).getSecondArg() instanceof List<?>) {
+						LOGGER.info("Tile at (0, 0) is "
+								+ ((List<ClientTile>) ((ProtocolMessage) ack)
+										.getSecondArg()).get(0).getType());
+					} else {
+						LOGGER
+								.warning("Didn't get the reply we expected to tile query.");
+					}
+				} else if (ProtocolMessage.MessageType.Fail
+						.equals(((ProtocolMessage) ack).getMessageType())) {
+					LOGGER.info("Server failed to get tile");
+				} else {
+					LOGGER.warning("Unexpected reply to tile query");
 				}
 			}
 		} catch (final IOException except) {
