@@ -23,8 +23,7 @@ import common.SPPoint;
 import common.UnknownMessageException;
 
 /**
- * A server for SP; this class, which perhaps ought to be renamed, is what
- * listens for connections from clients.
+ * A server for SP that handles API calls from the client.
  * 
  * @author Jonathan Lovelace
  * 
