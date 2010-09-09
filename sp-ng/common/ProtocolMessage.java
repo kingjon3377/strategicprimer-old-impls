@@ -43,7 +43,11 @@ public class ProtocolMessage implements Serializable {
 		/**
 		 * Reply to a query.
 		 */
-		Reply;
+		Reply,
+		/**
+		 * The initial message, saying whether this is an admin client or not.
+		 */
+		IsAdmin;
 	}
 
 	/**
