@@ -29,11 +29,11 @@ import common.UnknownMessageException;
  * @author Jonathan Lovelace
  * 
  */
-public class SPServer extends Thread {
+public class APIServer extends Thread {
 	/**
 	 * Logger
 	 */
-	private static final Logger LOGGER = Logger.getLogger(SPServer.class
+	private static final Logger LOGGER = Logger.getLogger(APIServer.class
 			.getName());
 
 	/**
@@ -55,7 +55,7 @@ public class SPServer extends Thread {
 	 * @param sock
 	 *            the socket connecting us to the client
 	 */
-	public SPServer(final Socket sock) {
+	public APIServer(final Socket sock) {
 		socket = sock;
 	}
 
