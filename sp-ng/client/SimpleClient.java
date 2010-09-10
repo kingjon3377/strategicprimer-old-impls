@@ -167,8 +167,8 @@ public class SimpleClient {
 			tempList.add(new SPPoint(0, 0));
 			os.writeObject(new QueryMessage("tiles", tempList));
 		} catch (final IOException except) {
-			LOGGER.log(Level.SEVERE,
-					"asking for tile failed; continuing", except);
+			LOGGER.log(Level.SEVERE, "asking for tile failed; continuing",
+					except);
 		}
 		try {
 			ack = is.readObject();
