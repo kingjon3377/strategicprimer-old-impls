@@ -74,16 +74,9 @@ public class SimpleClient {
 			System.exit(3);
 			return;
 		}
-		try {
-			api.send(new IsAdminMessage(true));
-			LOGGER.info("Sent initial message");
-		} catch (final IOException except) {
-			LOGGER.log(Level.SEVERE,
-					"Sending initial message failed; continuing", except);
-		}
 		ProtocolMessage ack;
 		try {
-			ack = api.receive();
+			ack = api.call(new IsAdminMessage(true));
 			if (ProtocolMessage.MessageType.Ack.equals(ack.getMessageType())) {
 				LOGGER.info("Initial message acknowledged");
 			} else if (ProtocolMessage.MessageType.Fail.equals(ack
@@ -99,13 +92,7 @@ public class SimpleClient {
 					except);
 		}
 		try {
-			api.send(new LoadMessage("/home/kingjon/test.map"));
-		} catch (final IOException except) {
-			LOGGER.log(Level.SEVERE, "Sending load message failed; continuing",
-					except);
-		}
-		try {
-			ack = api.receive();
+			ack = api.call(new LoadMessage("/home/kingjon/test.map"));
 			if (ProtocolMessage.MessageType.Ack.equals(ack.getMessageType())) {
 				LOGGER.info("Load message acknowledged");
 			} else if (ProtocolMessage.MessageType.Fail.equals(ack
@@ -121,13 +108,7 @@ public class SimpleClient {
 					except);
 		}
 		try {
-			api.send(new QueryMessage("size"));
-		} catch (final IOException except) {
-			LOGGER.log(Level.SEVERE,
-					"Sending size-query message failed; continuing", except);
-		}
-		try {
-			ack = api.receive();
+			ack = api.call(new QueryMessage("size"));
 			if (ProtocolMessage.MessageType.Reply.equals(ack.getMessageType())) {
 				if ("size".equals(ack.getFirstArg())
 						&& ack.getSecondArg() instanceof SPPoint) {
@@ -155,19 +136,13 @@ public class SimpleClient {
 		try {
 			List<SPPoint> tempList = new ArrayList<SPPoint>();
 			tempList.add(new SPPoint(0, 0));
-			api.send(new QueryMessage("tiles", tempList));
-		} catch (final IOException except) {
-			LOGGER.log(Level.SEVERE, "asking for tile failed; continuing",
-					except);
-		}
-		try {
-			ack = api.receive();
+			ack = api.call(new QueryMessage("tiles", tempList));
 			if (ProtocolMessage.MessageType.Reply.equals(ack.getMessageType())) {
-				if ("tiles".equals(((ProtocolMessage) ack).getFirstArg())
+				if ("tiles".equals(ack.getFirstArg())
 						&& ack.getSecondArg() instanceof List<?>) {
 					LOGGER.info("Tile at (0, 0) is "
-							+ ((List<ClientTile>) ((ProtocolMessage) ack)
-									.getSecondArg()).get(0).getType());
+							+ ((List<ClientTile>) ack.getSecondArg()).get(0)
+									.getType());
 				} else {
 					LOGGER
 							.warning("Didn't get the reply we expected to tile query.");
@@ -185,13 +160,7 @@ public class SimpleClient {
 					except);
 		}
 		try {
-			api.send(new QuitMessage());
-		} catch (final IOException except) {
-			LOGGER.log(Level.SEVERE, "Sending quit message failed; continuing",
-					except);
-		}
-		try {
-			ack = api.receive();
+			ack = api.call(new QuitMessage());
 			LOGGER.info("Quit acknowledged: " + ack);
 		} catch (final IOException except) {
 			LOGGER.log(Level.SEVERE, "I/O error receiving ACK", except);
