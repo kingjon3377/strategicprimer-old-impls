@@ -67,7 +67,7 @@ public class SocketListener extends Thread {
 			return;
 		}
 		try {
-			sock.setSoTimeout(1000);
+			sock.setSoTimeout(2000);
 		} catch (SocketException e) {
 			LOGGER.log(Level.SEVERE, "Exception setting server socket timeout",
 					e);
