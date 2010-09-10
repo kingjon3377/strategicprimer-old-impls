@@ -84,13 +84,14 @@ public class SimpleClient {
 		ProtocolMessage ack;
 		try {
 			ack = api.receive();
-				if (ProtocolMessage.MessageType.Ack.equals(ack.getMessageType())) {
-					LOGGER.info("Initial message acknowledged");
-				} else if (ProtocolMessage.MessageType.Fail.equals(ack.getMessageType())) {
-					LOGGER.warning("Initial message failed");
-				} else {
-					LOGGER.warning("Unexpected reply to initial message");
-				}
+			if (ProtocolMessage.MessageType.Ack.equals(ack.getMessageType())) {
+				LOGGER.info("Initial message acknowledged");
+			} else if (ProtocolMessage.MessageType.Fail.equals(ack
+					.getMessageType())) {
+				LOGGER.warning("Initial message failed");
+			} else {
+				LOGGER.warning("Unexpected reply to initial message");
+			}
 		} catch (final IOException except) {
 			LOGGER.log(Level.SEVERE, "I/O error receiving reply", except);
 		} catch (final ClassNotFoundException except) {
@@ -105,15 +106,14 @@ public class SimpleClient {
 		}
 		try {
 			ack = api.receive();
-				if (ProtocolMessage.MessageType.Ack
-						.equals(ack.getMessageType())) {
-					LOGGER.info("Load message acknowledged");
-				} else if (ProtocolMessage.MessageType.Fail
-						.equals(ack.getMessageType())) {
-					LOGGER.info("Server failed to load map");
-				} else {
-					LOGGER.warning("Unexpected reply to load message");
-				}
+			if (ProtocolMessage.MessageType.Ack.equals(ack.getMessageType())) {
+				LOGGER.info("Load message acknowledged");
+			} else if (ProtocolMessage.MessageType.Fail.equals(ack
+					.getMessageType())) {
+				LOGGER.info("Server failed to load map");
+			} else {
+				LOGGER.warning("Unexpected reply to load message");
+			}
 		} catch (final IOException except) {
 			LOGGER.log(Level.SEVERE, "I/O error receiving reply", except);
 		} catch (final ClassNotFoundException except) {
@@ -128,26 +128,24 @@ public class SimpleClient {
 		}
 		try {
 			ack = api.receive();
-				if (ProtocolMessage.MessageType.Reply
-						.equals(ack.getMessageType())) {
-					if ("size".equals(ack.getFirstArg())
-							&& ack.getSecondArg() instanceof SPPoint) {
-						LOGGER.info("Size of map is "
-								+ ((SPPoint) ack
-										.getSecondArg()).row()
-								+ " rows and "
-								+ ((SPPoint) ack
-										.getSecondArg()).col() + " columns.");
-					} else {
-						LOGGER
-								.warning("Didn't get the reply we expected to size query.");
-					}
-				} else if (ProtocolMessage.MessageType.Fail
-						.equals(ack.getMessageType())) {
-					LOGGER.info("Server failed to determine map size");
+			if (ProtocolMessage.MessageType.Reply.equals(ack.getMessageType())) {
+				if ("size".equals(ack.getFirstArg())
+						&& ack.getSecondArg() instanceof SPPoint) {
+					LOGGER.info("Size of map is "
+							+ ((SPPoint) ack.getSecondArg()).row()
+							+ " rows and "
+							+ ((SPPoint) ack.getSecondArg()).col()
+							+ " columns.");
 				} else {
-					LOGGER.warning("Unexpected reply to size query");
+					LOGGER
+							.warning("Didn't get the reply we expected to size query.");
 				}
+			} else if (ProtocolMessage.MessageType.Fail.equals(ack
+					.getMessageType())) {
+				LOGGER.info("Server failed to determine map size");
+			} else {
+				LOGGER.warning("Unexpected reply to size query");
+			}
 		} catch (final IOException except) {
 			LOGGER.log(Level.SEVERE, "I/O error receiving reply", except);
 		} catch (final ClassNotFoundException except) {
@@ -164,23 +162,22 @@ public class SimpleClient {
 		}
 		try {
 			ack = api.receive();
-				if (ProtocolMessage.MessageType.Reply
-						.equals(ack.getMessageType())) {
-					if ("tiles".equals(((ProtocolMessage) ack).getFirstArg())
-							&& ack.getSecondArg() instanceof List<?>) {
-						LOGGER.info("Tile at (0, 0) is "
-								+ ((List<ClientTile>) ((ProtocolMessage) ack)
-										.getSecondArg()).get(0).getType());
-					} else {
-						LOGGER
-								.warning("Didn't get the reply we expected to tile query.");
-					}
-				} else if (ProtocolMessage.MessageType.Fail
-						.equals(ack.getMessageType())) {
-					LOGGER.info("Server failed to get tile");
+			if (ProtocolMessage.MessageType.Reply.equals(ack.getMessageType())) {
+				if ("tiles".equals(((ProtocolMessage) ack).getFirstArg())
+						&& ack.getSecondArg() instanceof List<?>) {
+					LOGGER.info("Tile at (0, 0) is "
+							+ ((List<ClientTile>) ((ProtocolMessage) ack)
+									.getSecondArg()).get(0).getType());
 				} else {
-					LOGGER.warning("Unexpected reply to tile query");
+					LOGGER
+							.warning("Didn't get the reply we expected to tile query.");
 				}
+			} else if (ProtocolMessage.MessageType.Fail.equals(ack
+					.getMessageType())) {
+				LOGGER.info("Server failed to get tile");
+			} else {
+				LOGGER.warning("Unexpected reply to tile query");
+			}
 		} catch (final IOException except) {
 			LOGGER.log(Level.SEVERE, "I/O error receiving reply", except);
 		} catch (final ClassNotFoundException except) {
