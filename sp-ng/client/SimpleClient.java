@@ -14,6 +14,7 @@ import java.util.logging.Logger;
 import server.SocketListener;
 
 import common.ClientTile;
+import common.IsAdminMessage;
 import common.LoadMessage;
 import common.ProtocolMessage;
 import common.QueryMessage;
@@ -76,12 +77,36 @@ public class SimpleClient {
 			return;
 		}
 		try {
+			os.writeObject(new IsAdminMessage(true));
+			LOGGER.info("Sent initial message");
+		} catch (final IOException except) {
+			LOGGER.log(Level.SEVERE,
+					"Sending initial message failed; continuing", except);
+		}
+		Object ack;
+		try {
+			ack = is.readObject();
+			if (ack instanceof ProtocolMessage) {
+				if (ProtocolMessage.MessageType.Ack.equals(((ProtocolMessage) ack).getMessageType())) {
+					LOGGER.info("Initial message acknowledged");
+				} else if (ProtocolMessage.MessageType.Fail.equals(((ProtocolMessage) ack).getMessageType())) {
+					LOGGER.warning("Initial message failed");
+				} else {
+					LOGGER.warning("Unexpected reply to initial message");
+				}
+			}
+		} catch (final IOException except) {
+			LOGGER.log(Level.SEVERE, "I/O error receiving reply", except);
+		} catch (final ClassNotFoundException except) {
+			LOGGER.log(Level.SEVERE, "Wasn't the ACK or Fail we expected",
+					except);
+		}
+		try {
 			os.writeObject(new LoadMessage("/home/kingjon/test.map"));
 		} catch (final IOException except) {
 			LOGGER.log(Level.SEVERE, "Sending load message failed; continuing",
 					except);
 		}
-		Object ack;
 		try {
 			ack = is.readObject();
 			if (ack instanceof ProtocolMessage) {

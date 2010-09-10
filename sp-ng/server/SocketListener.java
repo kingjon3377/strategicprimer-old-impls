@@ -90,7 +90,7 @@ public class SocketListener extends Thread {
 				LOGGER.info("Accepted a client from "
 						+ clientSock.getInetAddress().getHostAddress() + " at "
 						+ new Date());
-				APIServer server = new APIServer(clientSock);
+				SPServer server = new SPServer(clientSock);
 				server.start();
 			}
 		}

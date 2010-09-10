@@ -47,15 +47,29 @@ public class APIServer extends Thread {
 	 * The connection to the client
 	 */
 	private Socket socket;
+	/**
+	 * The output stream from that socket.
+	 */
+	private ObjectOutputStream os;
+	/**
+	 * The input stream from the socket.
+	 */
+	private ObjectInputStream is;
 
 	/**
 	 * Constructor
 	 * 
 	 * @param sock
 	 *            the socket connecting us to the client
+	 * @param istream
+	 *            the socket's input stream
+	 * @param ostream
+	 *            the socket's output stream
 	 */
-	public APIServer(final Socket sock) {
+	public APIServer(final Socket sock, final ObjectInputStream istream, final ObjectOutputStream ostream) {
 		socket = sock;
+		is = istream;
+		os = ostream;
 	}
 
 	/**
@@ -71,17 +85,6 @@ public class APIServer extends Thread {
 		LOGGER.info("Running client");
 		if (GameServer.getGameServer() == null) {
 			new GameServer().start();
-		}
-		// ESCA-JAVA0177:
-		ObjectInputStream is;
-		// ESCA-JAVA0177:
-		ObjectOutputStream os;
-		try {
-			is = new ObjectInputStream(socket.getInputStream());
-			os = new ObjectOutputStream(socket.getOutputStream());
-		} catch (IOException except) {
-			LOGGER.log(Level.SEVERE, "I/O error setting up streams", except);
-			return;
 		}
 		try {
 			Object obj = is.readObject();
