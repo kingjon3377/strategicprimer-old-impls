@@ -7,6 +7,7 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import common.AckMessage;
 import common.FailMessage;
 import common.IsAdminMessage;
 import common.NotReadyException;
@@ -53,26 +54,38 @@ public class SPServer extends Thread {
 		try {
 			is = new ObjectInputStream(socket.getInputStream());
 			os = new ObjectOutputStream(socket.getOutputStream());
+			os.flush();
+			socket.setSoTimeout(0);
 		} catch (IOException except) {
 			LOGGER.log(Level.SEVERE, "I/O error setting up streams", except);
 			return;
 		}
 		try {
 			Object obj = is.readObject();
-			while("!quit".equals(obj) && !(obj instanceof QuitMessage)) {
+			LOGGER.info("Read what should be an IsAdminMessage");
+			while(!"quit".equals(obj) && !(obj instanceof QuitMessage)) {
 				if (obj instanceof IsAdminMessage) {
 					if ((Boolean) (((IsAdminMessage) obj).getFirstArg())) {
-						APIServer apiserv = new APIServer(socket);
+						LOGGER.info("Launching admin APIServer");
+						os.writeObject(new AckMessage((ProtocolMessage) obj));
+						APIServer apiserv = new APIServer(socket, is, os);
 						apiserv.start();
 						apiserv.join();
 					} else {
-						APIServer apiserv = new APIServer(socket);
+						LOGGER.info("Launching player APIServer");
+						os.writeObject(new AckMessage((ProtocolMessage) obj));
+						APIServer apiserv = new APIServer(socket, is, os);
 						apiserv.start();
 						apiserv.join();
 					}
+					break;
 				} else if (obj instanceof ProtocolMessage) {
+					LOGGER.info("A ProcolMessage we couldn't handle");
 					os.writeObject(new FailMessage((ProtocolMessage) obj, new NotReadyException("Send an IsAdminMessage first")));
+				} else {
+					LOGGER.warning("Read something other than a ProtocolMessage");
 				}
+				obj = is.readObject();
 			}
 		} catch (final IOException except){
 			LOGGER.log(Level.SEVERE, "I/O error in the loop", except);
@@ -80,11 +93,6 @@ public class SPServer extends Thread {
 			LOGGER.log(Level.SEVERE, "Protocol incompatibility", except);
 		} catch (final InterruptedException except) {
 			LOGGER.log(Level.INFO, "Interrupted after joining APIServer", except);
-		}
-		try {
-			socket.close();
-		} catch (IOException except) {
-			LOGGER.log(Level.SEVERE, "I/O error while closing socket", except);
 		}
 	}
 }
