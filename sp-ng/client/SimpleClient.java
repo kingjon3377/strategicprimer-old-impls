@@ -65,11 +65,9 @@ public class SimpleClient {
 			// System.exit(2);
 			return;
 		}
-		ObjectOutputStream os;
-		ObjectInputStream is;
+		ClientAPIWrapper api;
 		try {
-			os = new ObjectOutputStream(sock.getOutputStream());
-			is = new ObjectInputStream(sock.getInputStream());
+			api = new ClientAPIWrapper(sock);
 		} catch (IOException except) {
 			LOGGER.log(Level.SEVERE, "Opening streams failed", except);
 			closeSocket(sock);
@@ -77,24 +75,22 @@ public class SimpleClient {
 			return;
 		}
 		try {
-			os.writeObject(new IsAdminMessage(true));
+			api.send(new IsAdminMessage(true));
 			LOGGER.info("Sent initial message");
 		} catch (final IOException except) {
 			LOGGER.log(Level.SEVERE,
 					"Sending initial message failed; continuing", except);
 		}
-		Object ack;
+		ProtocolMessage ack;
 		try {
-			ack = is.readObject();
-			if (ack instanceof ProtocolMessage) {
-				if (ProtocolMessage.MessageType.Ack.equals(((ProtocolMessage) ack).getMessageType())) {
+			ack = api.receive();
+				if (ProtocolMessage.MessageType.Ack.equals(ack.getMessageType())) {
 					LOGGER.info("Initial message acknowledged");
-				} else if (ProtocolMessage.MessageType.Fail.equals(((ProtocolMessage) ack).getMessageType())) {
+				} else if (ProtocolMessage.MessageType.Fail.equals(ack.getMessageType())) {
 					LOGGER.warning("Initial message failed");
 				} else {
 					LOGGER.warning("Unexpected reply to initial message");
 				}
-			}
 		} catch (final IOException except) {
 			LOGGER.log(Level.SEVERE, "I/O error receiving reply", except);
 		} catch (final ClassNotFoundException except) {
@@ -102,24 +98,22 @@ public class SimpleClient {
 					except);
 		}
 		try {
-			os.writeObject(new LoadMessage("/home/kingjon/test.map"));
+			api.send(new LoadMessage("/home/kingjon/test.map"));
 		} catch (final IOException except) {
 			LOGGER.log(Level.SEVERE, "Sending load message failed; continuing",
 					except);
 		}
 		try {
-			ack = is.readObject();
-			if (ack instanceof ProtocolMessage) {
+			ack = api.receive();
 				if (ProtocolMessage.MessageType.Ack
-						.equals(((ProtocolMessage) ack).getMessageType())) {
+						.equals(ack.getMessageType())) {
 					LOGGER.info("Load message acknowledged");
 				} else if (ProtocolMessage.MessageType.Fail
-						.equals(((ProtocolMessage) ack).getMessageType())) {
+						.equals(ack.getMessageType())) {
 					LOGGER.info("Server failed to load map");
 				} else {
 					LOGGER.warning("Unexpected reply to load message");
 				}
-			}
 		} catch (final IOException except) {
 			LOGGER.log(Level.SEVERE, "I/O error receiving reply", except);
 		} catch (final ClassNotFoundException except) {
@@ -127,35 +121,33 @@ public class SimpleClient {
 					except);
 		}
 		try {
-			os.writeObject(new QueryMessage("size"));
+			api.send(new QueryMessage("size"));
 		} catch (final IOException except) {
 			LOGGER.log(Level.SEVERE,
 					"Sending size-query message failed; continuing", except);
 		}
 		try {
-			ack = is.readObject();
-			if (ack instanceof ProtocolMessage) {
+			ack = api.receive();
 				if (ProtocolMessage.MessageType.Reply
-						.equals(((ProtocolMessage) ack).getMessageType())) {
-					if ("size".equals(((ProtocolMessage) ack).getFirstArg())
-							&& ((ProtocolMessage) ack).getSecondArg() instanceof SPPoint) {
+						.equals(ack.getMessageType())) {
+					if ("size".equals(ack.getFirstArg())
+							&& ack.getSecondArg() instanceof SPPoint) {
 						LOGGER.info("Size of map is "
-								+ ((SPPoint) ((ProtocolMessage) ack)
+								+ ((SPPoint) ack
 										.getSecondArg()).row()
 								+ " rows and "
-								+ ((SPPoint) ((ProtocolMessage) ack)
+								+ ((SPPoint) ack
 										.getSecondArg()).col() + " columns.");
 					} else {
 						LOGGER
 								.warning("Didn't get the reply we expected to size query.");
 					}
 				} else if (ProtocolMessage.MessageType.Fail
-						.equals(((ProtocolMessage) ack).getMessageType())) {
+						.equals(ack.getMessageType())) {
 					LOGGER.info("Server failed to determine map size");
 				} else {
 					LOGGER.warning("Unexpected reply to size query");
 				}
-			}
 		} catch (final IOException except) {
 			LOGGER.log(Level.SEVERE, "I/O error receiving reply", except);
 		} catch (final ClassNotFoundException except) {
@@ -165,18 +157,17 @@ public class SimpleClient {
 		try {
 			List<SPPoint> tempList = new ArrayList<SPPoint>();
 			tempList.add(new SPPoint(0, 0));
-			os.writeObject(new QueryMessage("tiles", tempList));
+			api.send(new QueryMessage("tiles", tempList));
 		} catch (final IOException except) {
 			LOGGER.log(Level.SEVERE, "asking for tile failed; continuing",
 					except);
 		}
 		try {
-			ack = is.readObject();
-			if (ack instanceof ProtocolMessage) {
+			ack = api.receive();
 				if (ProtocolMessage.MessageType.Reply
-						.equals(((ProtocolMessage) ack).getMessageType())) {
+						.equals(ack.getMessageType())) {
 					if ("tiles".equals(((ProtocolMessage) ack).getFirstArg())
-							&& ((ProtocolMessage) ack).getSecondArg() instanceof List<?>) {
+							&& ack.getSecondArg() instanceof List<?>) {
 						LOGGER.info("Tile at (0, 0) is "
 								+ ((List<ClientTile>) ((ProtocolMessage) ack)
 										.getSecondArg()).get(0).getType());
@@ -185,12 +176,11 @@ public class SimpleClient {
 								.warning("Didn't get the reply we expected to tile query.");
 					}
 				} else if (ProtocolMessage.MessageType.Fail
-						.equals(((ProtocolMessage) ack).getMessageType())) {
+						.equals(ack.getMessageType())) {
 					LOGGER.info("Server failed to get tile");
 				} else {
 					LOGGER.warning("Unexpected reply to tile query");
 				}
-			}
 		} catch (final IOException except) {
 			LOGGER.log(Level.SEVERE, "I/O error receiving reply", except);
 		} catch (final ClassNotFoundException except) {
@@ -198,20 +188,24 @@ public class SimpleClient {
 					except);
 		}
 		try {
-			os.writeObject(new QuitMessage());
+			api.send(new QuitMessage());
 		} catch (final IOException except) {
 			LOGGER.log(Level.SEVERE, "Sending quit message failed; continuing",
 					except);
 		}
 		try {
-			ack = is.readObject();
+			ack = api.receive();
 			LOGGER.info("Quit acknowledged: " + ack);
 		} catch (final IOException except) {
 			LOGGER.log(Level.SEVERE, "I/O error receiving ACK", except);
 		} catch (final ClassNotFoundException except) {
 			LOGGER.log(Level.SEVERE, "Wasn't the ACK we expected", except);
 		}
-		closeSocket(sock);
+		try {
+			api.close();
+		} catch (IOException e) {
+			closeSocket(sock);
+		}
 		return;
 	}
 
