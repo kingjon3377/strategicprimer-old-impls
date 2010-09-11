@@ -47,4 +47,21 @@ public class SPPoint implements Serializable {
 		row = _row;
 		col = _col;
 	}
+
+	/**
+	 * @param obj another point
+	 * @return whether this is the same as it
+	 */
+	@Override
+	public boolean equals(final Object obj) {
+		return obj instanceof SPPoint && ((SPPoint) obj).row == row
+				&& ((SPPoint) obj).col == col;
+	}
+	/**
+	 * @return a hash value for this object
+	 */
+	@Override
+	public int hashCode() {
+		return 1024 * row + col;
+	}
 }
