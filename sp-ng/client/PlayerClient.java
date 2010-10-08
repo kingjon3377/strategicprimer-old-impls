@@ -1,5 +1,6 @@
 package client;
 
+import java.awt.BorderLayout;
 import java.io.IOException;
 import java.net.UnknownHostException;
 import java.util.logging.Level;
@@ -45,6 +46,7 @@ public class PlayerClient extends JFrame {
 	 * @param apiWrap Our API connection to the server.
 	 */
 	public PlayerClient(final ClientAPIWrapper apiWrap) {
+		setLayout(new BorderLayout());
 		api = apiWrap;
 	}
 }
