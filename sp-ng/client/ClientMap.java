@@ -96,4 +96,11 @@ public class ClientMap {
 	public int getCols() {
 		return cols;
 	}
+	/**
+	 * Invalidate the cache for a tile.
+	 * @param point the point to invalidate the cache for
+	 */
+	public void invalidate(final SPPoint point) {
+		map.remove(point);
+	}
 }
