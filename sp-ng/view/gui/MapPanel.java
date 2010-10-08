@@ -4,8 +4,8 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Graphics;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.util.EnumMap;
@@ -101,7 +101,7 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 				.getRows()
 				* TILE_HEIGHT));
 		setMinimumSize(getPreferredSize());
-		addMouseListener(new MouseListener() {
+		addMouseListener(new MouseAdapter() {
 			/**
 			 * Select the tile under the cursor as the current tile.
 			 * 
@@ -124,41 +124,6 @@ public class MapPanel extends JPanel implements PropertyChangeListener {
 				repaint();
 			}
 
-			/**
-			 * @param event
-			 *            ignored
-			 */
-			@Override
-			public void mouseEntered(final MouseEvent event) {
-				// Do nothing
-			}
-
-			/**
-			 * @param event
-			 *            ignored
-			 */
-			@Override
-			public void mouseExited(final MouseEvent event) {
-				// Do nothing
-			}
-
-			/**
-			 * @param event
-			 *            ignored
-			 */
-			@Override
-			public void mousePressed(final MouseEvent event) {
-				// Do nothing
-			}
-
-			/**
-			 * @param event
-			 *            ignored
-			 */
-			@Override
-			public void mouseReleased(final MouseEvent event) {
-				// Do nothing
-			}
 		});
 		initialized = false;
 		menu = new JMenuBar();
