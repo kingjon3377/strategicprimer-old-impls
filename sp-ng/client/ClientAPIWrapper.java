@@ -6,6 +6,7 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
+import java.util.Random;
 
 import server.SocketListener;
 
@@ -109,5 +110,15 @@ public class ClientAPIWrapper {
 				sock = new Socket(host, port, InetAddress.getLocalHost(), cport);				
 			}
 			return sock;
+	}
+	/**
+	 * Connect using default values: server running on localhost port 9099,
+	 * client running on a random port.
+	 * @throws IOException when the server won't start
+	 * @throws UnknownHostException if localhost isn't found
+	 * @return a connection to the server on localhost.
+	 */
+	public static Socket connect() throws UnknownHostException, IOException {
+		return connect(InetAddress.getLocalHost(), 9099, new Random().nextInt(64335) + 1200);
 	}
 }
