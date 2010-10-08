@@ -3,7 +3,11 @@ package client;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
 import java.net.Socket;
+import java.net.UnknownHostException;
+
+import server.SocketListener;
 
 import common.ProtocolMessage;
 
@@ -76,5 +80,34 @@ public class ClientAPIWrapper {
 		os.close();
 		is.close();
 		socket.close();
+	}
+	
+	/**
+	 * Connect to the server, starting it first if it isn't up.
+	 * @param host the host to connect to. (The "if not up" logic assumes it's the local host.)
+	 * @param port the port to connect on.
+	 * @param cport the client-side port.
+	 * @return a socket connected to the server
+	 * @throws IOException on I/O error after starting the server
+	 * @throws UnknownHostException when localhost is unknown
+	 */
+	public static Socket connect(final InetAddress host, final int port, final int cport) throws UnknownHostException, IOException {
+		// ESCA-JAVA0177:
+		Socket sock;
+			try {
+				sock = new Socket(host, port, InetAddress.getLocalHost(), cport);
+			} catch (IOException except) {
+				SocketListener.LISTENER.start();
+				while (!SocketListener.LISTENER.ready()) {
+					try {
+						// ESCA-JAVA0087:
+						Thread.sleep(90);
+					} catch (InterruptedException e) {
+						// ignore
+					}
+				}
+				sock = new Socket(host, port, InetAddress.getLocalHost(), cport);				
+			}
+			return sock;
 	}
 }

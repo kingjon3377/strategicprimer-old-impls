@@ -1,13 +1,12 @@
 package client;
 
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -40,29 +39,19 @@ public class SimpleClient {
 	 */
 	public static void main(final String[] args) {
 		InetAddress addr;
+		int port = 9099;
+		int cport = new Random().nextInt(64335) + 1200;
+		Socket sock;
 		try {
 			addr = InetAddress.getLocalHost();
+			sock = ClientAPIWrapper.connect(addr, port, cport);
 		} catch (final UnknownHostException except) {
 			LOGGER.log(Level.SEVERE, "Unknown host localhost", except);
 			System.exit(1);
 			return;
-		}
-		int port = 9099;
-		Socket sock;
-		try {
-			sock = new Socket(addr, port, InetAddress.getLocalHost(), 11236);
 		} catch (final IOException except) {
 			LOGGER.log(Level.SEVERE, "Opening socket failed", except);
-			SocketListener.LISTENER.start();
-			while (!SocketListener.LISTENER.ready()) {
-				try {
-					Thread.sleep(90);
-				} catch (InterruptedException e) {
-					// ignore
-				}
-			}
-			main(args);
-			// System.exit(2);
+			System.exit(2);
 			return;
 		}
 		ClientAPIWrapper api;
