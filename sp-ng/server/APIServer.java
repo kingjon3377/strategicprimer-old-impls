@@ -112,42 +112,42 @@ public class APIServer extends Thread {
 	}
 
 	private void handleProtocol(final ProtocolMessage obj,
-			final ObjectOutputStream os) {
+			final ObjectOutputStream ostream) {
 		switch (obj.getMessageType()) {
 		case Quit:
 			quit = true;
-			acknowledge(obj, os);
+			acknowledge(obj, ostream);
 			break;
 		case Load:
 			try {
 				GameServer.getGameServer().loadMap((String) obj.getFirstArg());
-				acknowledge(obj, os);
+				acknowledge(obj, ostream);
 			} catch (FileNotFoundException e) {
 				LOGGER
 						.log(Level.WARNING, "Tried to load a nonexistent file",
 								e);
-				fail(obj, e, os);
+				fail(obj, e, ostream);
 			} catch (IOException e) {
 				LOGGER.log(Level.WARNING, "Loading from file caused I/O error",
 						e);
-				fail(obj, e, os);
+				fail(obj, e, ostream);
 			}
 			break;
 		case Query:
 			try {
-				reply((QueryMessage) obj, handleQuery((QueryMessage) obj), os);
+				reply((QueryMessage) obj, handleQuery((QueryMessage) obj), ostream);
 			} catch (final UnknownMessageException except) {
 				LOGGER.log(Level.WARNING,
 						"Got a query we don't know how to handle", except);
-				fail(obj, except, os);
+				fail(obj, except, ostream);
 			} catch (NotReadyException except) {
 				LOGGER.log(Level.WARNING,
 						"Got query for map size before map was loaded", except);
-				fail(obj, except, os);
+				fail(obj, except, ostream);
 			}
 			break;
 		default:
-			fail(obj, new UnknownMessageException(), os);
+			fail(obj, new UnknownMessageException(), ostream);
 			break;
 		}
 	}
