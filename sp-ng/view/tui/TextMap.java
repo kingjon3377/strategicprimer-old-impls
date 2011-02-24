@@ -201,7 +201,7 @@ public class TextMap {
 	 * @param out
 	 *            The stream to draw to.
 	 */
-	private void paintTile(Tile tile, PrintStream out) {
+	private static void paintTile(Tile tile, PrintStream out) {
 		if (!(TerrainObject.NOTHING.equals(tile.getObject()))) {
 			out.append('*');
 			return;

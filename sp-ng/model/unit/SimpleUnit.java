@@ -30,6 +30,7 @@ public class SimpleUnit implements SPModule {
 	/**
 	 * @return which player owns this unit
 	 */
+	@Override
 	public int getOwner() {
 		return owner;
 	}
@@ -55,6 +56,7 @@ public class SimpleUnit implements SPModule {
 	/**
 	 * @return what actions this unit supports.
 	 */
+	@Override
 	public Set<UnitAction> supportedActions() {
 		// ESCA-JAVA0259: The collection we're returning is unmodifiable.
 		return MOVE_ACTION;
