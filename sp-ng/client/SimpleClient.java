@@ -30,12 +30,18 @@ public class SimpleClient {
 	 */
 	private static final Logger LOGGER = Logger.getLogger(SimpleClient.class
 			.getName());
-
+	/**
+	 * Private constructor, to get rid of warnings.
+	 */
+	private SimpleClient() {
+		// do nothing
+	}
 	/**
 	 * @param args
 	 *            Ignored
 	 */
 	public static void main(final String[] args) {
+		// ESCA-JAVA0177:
 		InetAddress addr;
 		int port = 9099;
 		int cport = new Random().nextInt(64335) + 1200;

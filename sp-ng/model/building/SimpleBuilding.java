@@ -31,6 +31,7 @@ public class SimpleBuilding implements SPModule {
 	/**
 	 * @return which player owns this building
 	 */
+	@Override
 	public int getOwner() {
 		return owner;
 	}
@@ -46,6 +47,7 @@ public class SimpleBuilding implements SPModule {
 	/**
 	 * @return the actions this building supports: none
 	 */
+	@Override
 	public Set<UnitAction> supportedActions() {
 		return EnumSet.noneOf(UnitAction.class);
 	}
