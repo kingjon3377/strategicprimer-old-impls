@@ -351,7 +351,7 @@ public final class Picture implements Serializable {
 	 * blur the image.
 	 */
 	public void blur() {
-		final Picture pictureCopy = copy();
+		final Picture pictureCopy = copy(); // NOPMD
 		for (int x = 0; x < getWidth(); x++) {
 			for (int y = 0; y < getHeight(); y++) {
 				final Pixel pix10 = pictureCopy.getPixel(MathExtension.modulus((x - 1),
