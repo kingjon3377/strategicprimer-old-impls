@@ -133,8 +133,10 @@ public class SimpleClient {
 			if (ProtocolMessage.MessageType.Reply.equals(ack.getMessageType())) {
 				if ("tiles".equals(ack.getFirstArg())
 						&& ack.getSecondArg() instanceof List<?>) {
+					@SuppressWarnings("unchecked")
+					final List<ClientTile> list = (List<ClientTile>) ack.getSecondArg();
 					LOGGER.info("Tile at (0, 0) is "
-							+ ((List<ClientTile>) ack.getSecondArg()).get(0)
+							+ list.get(0)
 									.getType());
 				} else {
 					LOGGER
