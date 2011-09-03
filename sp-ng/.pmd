@@ -233,7 +233,7 @@
         </rule>
         <rule>
             <name>SignatureDeclareThrowsException</name>
-            <ruleset>Strict Exception Rules</ruleset>
+            <ruleset>Type Resolution Rules</ruleset>
         </rule>
         <rule>
             <name>ExceptionAsFlowControl</name>
@@ -414,10 +414,6 @@
         <rule>
             <name>JUnitUseExpected</name>
             <ruleset>Migration Rules</ruleset>
-        </rule>
-        <rule>
-            <name>UseProperClassLoader</name>
-            <ruleset>J2EE Rules</ruleset>
         </rule>
         <rule>
             <name>MDBAndSessionBeanNamingConvention</name>
@@ -641,7 +637,7 @@
         </rule>
         <rule>
             <name>LooseCoupling</name>
-            <ruleset>Coupling Rules</ruleset>
+            <ruleset>Type Resolution Rules</ruleset>
         </rule>
         <rule>
             <name>DuplicateImports</name>
@@ -653,7 +649,7 @@
         </rule>
         <rule>
             <name>UnusedImports</name>
-            <ruleset>Import Statement Rules</ruleset>
+            <ruleset>Type Resolution Rules</ruleset>
         </rule>
         <rule>
             <name>ImportFromSamePackage</name>
@@ -945,7 +941,7 @@
         </rule>
         <rule>
             <name>CloneMethodMustImplementCloneable</name>
-            <ruleset>Clone Implementation Rules</ruleset>
+            <ruleset>Type Resolution Rules</ruleset>
         </rule>
     </rules>
     <includeDerivedFiles>false</includeDerivedFiles>
