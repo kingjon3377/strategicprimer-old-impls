@@ -1,0 +1,11 @@
+Have a MP stat, with actions decreasing it and ends of turns (for RTS
+in the long run) increasing it by the value of the speed stat.
+Attacking, bombarding, and moving all subtract from MP. Have a maxMP
+stat to prevent silliness.
+
+Rather than having players get resources from only those tiles their
+units are on, implement a "control of" property. To take control of a
+tile, a unit stands on or next to it at the end of that player's turn.
+(Since resources are allocated at the beginning of the player's turn,
+this makes contested ground worthless to both sides.) Units and
+buildings can also only be built on ground the player owns.
