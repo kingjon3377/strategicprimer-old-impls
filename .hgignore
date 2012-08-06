@@ -1,0 +1,14 @@
+syntax: glob
+*.class
+META-INF
+bin/.bzrignore
+bin/.pmd
+bin/.pmd
+bin/.classpath
+hs_err_pid*.log
+bin/res.jar
+bin/testMap.xml
+bin/model/module/todo.txt
+bin/.checkstyle
+bin/.fbprefs
+bin/.project
