@@ -1,0 +1,32 @@
+# Unit definition file
+[0]
+Name=PrinceSerg
+Speed=10
+Width=75
+Height=75
+ArmorType=4
+ArmorStrength=50
+Vision=10
+Stealth=0
+#Until we define the classes of stealth ...
+StealthDetect=0
+Hp=100
+MaxHp=150
+Regen=0
+#Assuming an array, set for now to three elements.
+Equipment=1,2,3
+MinCrew=10
+MaxCrew=20
+Crew=15
+#Assuming an array
+Cost=20,10,0,0,0
+Consumption=0,0,5,0,0
+
+
+[1]
+Name=Farm
+Width=75
+Height=50
+Cost=100,50,0,0,0
+BuildOn=1
+Moveable=0
