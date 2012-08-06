@@ -1,0 +1,141 @@
+<map rows="10" columns="10" version="0">
+	<player number="0" code_name="William T. Sherman" />
+	<player number="1" code_name="Myrridon" />
+	<player number="2" code_name="Unknown" />
+	<player number="3" code_name="Odysseus" />
+	<player number="4" code_name="Julius Caesar" />
+	<player number="5" code_name="Saladin" />
+	<player number="6" code_name="Richard Lionhearted" />
+	<row index="0">
+		<tile row="0" column="0" type="tundra" event="0"></tile>
+		<tile row="0" column="1" type="tundra" event="1"></tile>
+		<tile row="0" column="2" type="temperate_forest" event="3"></tile>
+		<tile row="0" column="3" type="temperate_forest" event="3"></tile>
+		<tile row="0" column="4" type="boreal_forest" event="5"></tile>
+		<tile row="0" column="5" type="tundra" event="5"></tile>
+		<tile row="0" column="6" type="tundra" event="5"></tile>
+		<tile row="0" column="7" type="temperate_forest" event="5"></tile>
+		<tile row="0" column="8" type="temperate_forest" event="5"></tile>
+		<tile row="0" column="9" type="boreal_forest" event="5">
+			<feature mid="6" image="/crater.png" name="Crater" />
+		</tile>
+	</row>
+	<row index="1">
+		<tile row="1" column="0" type="ocean" event="5"></tile>
+		<tile row="1" column="1" type="desert" event="5"></tile>
+		<tile row="1" column="2" type="plains" event="5"></tile>
+		<tile row="1" column="3" type="plains" event="5">
+			<feature mid="8" image="/oilwell.png" name="Oil Well" />
+		</tile>
+		<tile row="1" column="4" type="mountain" event="5"></tile>
+		<tile row="1" column="5" type="ocean" event="5"></tile>
+		<tile row="1" column="6" type="desert" event="5"></tile>
+		<tile row="1" column="7" type="plains" event="5"></tile>
+		<tile row="1" column="8" type="plains" event="5"></tile>
+		<tile row="1" column="9" type="mountain"></tile>
+	</row>
+	<row index="2">
+		<tile row="2" column="0" type="jungle" event="5"></tile>
+		<tile row="2" column="1" type="plains" event="5"></tile>
+		<tile row="2" column="2" type="plains" event="5">
+			<fortress name="HQ" owner="0">
+				<module mid="2" image="/sprite.png" name="SimpleUnit" owner="0"></module>
+			</fortress>
+		</tile>
+		<tile row="2" column="3" type="plains" event="5">
+			<module mid="3" image="/sprite_2.png" name="ExampleUnit" owner="1"></module>
+		</tile>
+		<tile row="2" column="4" type="plains" event="5"></tile>
+		<tile row="2" column="5" type="jungle" event="5"></tile>
+		<tile row="2" column="6" type="plains"></tile>
+		<tile row="2" column="7" type="plains"></tile>
+		<tile row="2" column="8" type="plains"></tile>
+		<tile row="2" column="9" type="plains">
+			<module mid="4" image="/square.png" name="SimpleBuilding" owner="2"></module>
+		</tile>
+	</row>
+	<row index="3">
+		<tile row="3" column="0" type="plains"></tile>
+		<tile row="3" column="1" type="plains"></tile>
+		<tile row="3" column="2" type="plains"></tile>
+		<tile row="3" column="3" type="plains"></tile>
+		<tile row="3" column="4" type="plains"></tile>
+		<tile row="3" column="5" type="plains"></tile>
+		<tile row="3" column="6" type="plains"></tile>
+		<tile row="3" column="7" type="plains"></tile>
+		<tile row="3" column="8" type="plains"></tile>
+		<tile row="3" column="9" type="plains"></tile>
+	</row>
+	<row index="4">
+		<tile row="4" column="0" type="plains"></tile>
+		<tile row="4" column="1" type="plains"></tile>
+		<tile row="4" column="2" type="plains"></tile>
+		<tile row="4" column="3" type="plains"></tile>
+		<tile row="4" column="4" type="plains"></tile>
+		<tile row="4" column="5" type="plains"></tile>
+		<tile row="4" column="6" type="plains"></tile>
+		<tile row="4" column="7" type="plains"></tile>
+		<tile row="4" column="8" type="plains"></tile>
+		<tile row="4" column="9" type="plains"></tile>
+	</row>
+	<row index="5">
+		<tile row="5" column="0" type="tundra"></tile>
+		<tile row="5" column="1" type="tundra"></tile>
+		<tile row="5" column="2" type="temperate_forest"></tile>
+		<tile row="5" column="3" type="temperate_forest"></tile>
+		<tile row="5" column="4" type="boreal_forest"></tile>
+		<tile row="5" column="5" type="tundra"></tile>
+		<tile row="5" column="6" type="tundra"></tile>
+		<tile row="5" column="7" type="temperate_forest"></tile>
+		<tile row="5" column="8" type="temperate_forest"></tile>
+		<tile row="5" column="9" type="boreal_forest"></tile>
+	</row>
+	<row index="6">
+		<tile row="6" column="0" type="ocean"></tile>
+		<tile row="6" column="1" type="desert"></tile>
+		<tile row="6" column="2" type="plains"></tile>
+		<tile row="6" column="3" type="plains"></tile>
+		<tile row="6" column="4" type="mountain"></tile>
+		<tile row="6" column="5" type="ocean"></tile>
+		<tile row="6" column="6" type="desert"></tile>
+		<tile row="6" column="7" type="plains"></tile>
+		<tile row="6" column="8" type="plains"></tile>
+		<tile row="6" column="9" type="mountain"></tile>
+	</row>
+	<row index="7">
+		<tile row="7" column="0" type="jungle"></tile>
+		<tile row="7" column="1" type="plains"></tile>
+		<tile row="7" column="2" type="plains"></tile>
+		<tile row="7" column="3" type="plains"></tile>
+		<tile row="7" column="4" type="plains"></tile>
+		<tile row="7" column="5" type="jungle"></tile>
+		<tile row="7" column="6" type="plains"></tile>
+		<tile row="7" column="7" type="plains"></tile>
+		<tile row="7" column="8" type="plains"></tile>
+		<tile row="7" column="9" type="plains"></tile>
+	</row>
+	<row index="8">
+		<tile row="8" column="0" type="plains"></tile>
+		<tile row="8" column="1" type="plains"></tile>
+		<tile row="8" column="2" type="plains"></tile>
+		<tile row="8" column="3" type="plains"></tile>
+		<tile row="8" column="4" type="plains"></tile>
+		<tile row="8" column="5" type="plains"></tile>
+		<tile row="8" column="6" type="plains"></tile>
+		<tile row="8" column="7" type="plains"></tile>
+		<tile row="8" column="8" type="plains"></tile>
+		<tile row="8" column="9" type="plains"></tile>
+	</row>
+	<row index="9">
+		<tile row="9" column="0" type="plains"></tile>
+		<tile row="9" column="1" type="plains"></tile>
+		<tile row="9" column="2" type="plains"></tile>
+		<tile row="9" column="3" type="plains"></tile>
+		<tile row="9" column="4" type="plains"></tile>
+		<tile row="9" column="5" type="plains"></tile>
+		<tile row="9" column="6" type="plains"></tile>
+		<tile row="9" column="7" type="plains"></tile>
+		<tile row="9" column="8" type="plains"></tile>
+		<tile row="9" column="9" type="plains"></tile>
+	</row>
+</map>

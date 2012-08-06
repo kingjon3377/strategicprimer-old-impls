@@ -1,0 +1,11 @@
+1. Integrate with Java prototype. [See todo.txt in that tree.]
+2. Full module system.
+3. Fog of war.
+4. Saving and loading the game
+5. Unit interaction (as in prototype, and further)
+  - Authenticated plugin system
+  - Clean and quick interface
+  - Develop plugin-based stat format.
+6. (!!!) Units should know what terrain types they can pass.
+7. CLI
+8. Inline documentation -- convert to doxygen?
