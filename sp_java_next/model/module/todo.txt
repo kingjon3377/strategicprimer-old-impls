@@ -1,0 +1,45 @@
+Figure out how to do something about buildings, i.e. places with rooms
+inside, etc.
+
+What to do in re locations? LocationSet seems prima facie OK, but now
+doesn't look good. Maybe an explicitly tiled system for now, but with
+tiles capable of being recursively tiled?
+
+[Diagram: (interface?) Location and its two subclasses, Building and
+Tile.] A Location contains Locations? A Building contains rooms,
+perhaps each a Tile. A Tile contains a matrix? (hex-grid if I can find
+a library) of Tiles (or just Locations?). At most? one? Building.
+
+We're going to need something like a LocationSet later for big
+(usually mechanical) units.
+
+Write a program to automatically generate SP modules' code (i.e.
+Advance classes?) from list2 and to-be-written stats files.
+
+Write tests for already-written SP code.
+
+Create a view for as much of the model as we have yet.
+
+Create a new set of milestones -- do as a graph.
+
+Separate Agents (AI or human; they pass each other messages, and may
+be associated with Units) from the Units with which they are
+associated. That will simplify things tremendously as we begin.
+
+Each Unit (though maybe only each Agent) has its own turn; Implements
+andResources probably shouldn't -- maybe Unit automatically handles it
+for all its Implements and Resources, and maybe a quasi-Unit holding
+all world Resources to handle renewing renewables and to keep
+non-empties from garbage collection.
+
+Maybe have an excluding-all-others Job "Group"?
+
+What to do about upkeep? (At least two kinds:Consumable supplies, such
+as food/water; repair/maintenance). Maybe Upkeep interface implemented
+by Unit, renewable Resources, and depreciating Implements?
+
+What about Statistics? (Beyond the obvious, there's things like
+remaining power for a laser. Though that could possibly be a
+Resource.)
+
+How to handle inter-unit communication?
